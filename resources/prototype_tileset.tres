@@ -5,7 +5,6 @@
 [ext_resource path="res://assets/graphics/terrain/tree.png" type="Texture" id=3]
 [ext_resource path="res://assets/graphics/terrain/water.png" type="Texture" id=4]
 
-
 [resource]
 0/name = "grass"
 0/texture = ExtResource( 1 )
