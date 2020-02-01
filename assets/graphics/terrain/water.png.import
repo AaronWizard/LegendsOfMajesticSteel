@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/archer.png-0149cf1e40c3ce32a78e04e34aacb1e2.stex"
+path="res://.import/water.png-606c07f50db3bbacaecb3634f3a1dd5c.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/actors/archer.png"
-dest_files=[ "res://.import/archer.png-0149cf1e40c3ce32a78e04e34aacb1e2.stex" ]
+source_file="res://assets/graphics/terrain/water.png"
+dest_files=[ "res://.import/water.png-606c07f50db3bbacaecb3634f3a1dd5c.stex" ]
 
 [params]
 

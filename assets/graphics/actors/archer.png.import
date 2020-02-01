@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/aoe.png-fb1691d8779103c867ad684ec94823a4.stex"
+path="res://.import/archer.png-12d63754461d3763972e028452a43a01.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/ui/aoe.png"
-dest_files=[ "res://.import/aoe.png-fb1691d8779103c867ad684ec94823a4.stex" ]
+source_file="res://assets/graphics/actors/archer.png"
+dest_files=[ "res://.import/archer.png-12d63754461d3763972e028452a43a01.stex" ]
 
 [params]
 

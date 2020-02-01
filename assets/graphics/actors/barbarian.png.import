@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/barbarian.png-3d708e3d8c0ca8358fde2ef5467812c4.stex"
+path="res://.import/barbarian.png-b03d122c83fa67527d59e1df44a13cc8.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/actors/barbarian.png"
-dest_files=[ "res://.import/barbarian.png-3d708e3d8c0ca8358fde2ef5467812c4.stex" ]
+source_file="res://assets/graphics/actors/barbarian.png"
+dest_files=[ "res://.import/barbarian.png-b03d122c83fa67527d59e1df44a13cc8.stex" ]
 
 [params]
 

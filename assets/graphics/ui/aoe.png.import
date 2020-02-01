@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/tree.png-68257202de628780557d8a98659a293a.stex"
+path="res://.import/aoe.png-e5671e1e505d58d5808956da09819671.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/terrain/tree.png"
-dest_files=[ "res://.import/tree.png-68257202de628780557d8a98659a293a.stex" ]
+source_file="res://assets/graphics/ui/aoe.png"
+dest_files=[ "res://.import/aoe.png-e5671e1e505d58d5808956da09819671.stex" ]
 
 [params]
 

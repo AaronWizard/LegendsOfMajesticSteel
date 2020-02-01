@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/mountain.png-552468ad352de7a4d4b5de20e0ec3b95.stex"
+path="res://.import/dwarf.png-c441a026330cbdcad61730d9398e99ad.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/terrain/mountain.png"
-dest_files=[ "res://.import/mountain.png-552468ad352de7a4d4b5de20e0ec3b95.stex" ]
+source_file="res://assets/graphics/actors/dwarf.png"
+dest_files=[ "res://.import/dwarf.png-c441a026330cbdcad61730d9398e99ad.stex" ]
 
 [params]
 

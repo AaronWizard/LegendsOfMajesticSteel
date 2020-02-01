@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/water.png-3986f13674dba5a52ddfdf698bb110e3.stex"
+path="res://.import/mountain.png-f9fa3d5c17a43dafeef4fa059436b791.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/terrain/water.png"
-dest_files=[ "res://.import/water.png-3986f13674dba5a52ddfdf698bb110e3.stex" ]
+source_file="res://assets/graphics/terrain/mountain.png"
+dest_files=[ "res://.import/mountain.png-f9fa3d5c17a43dafeef4fa059436b791.stex" ]
 
 [params]
 
