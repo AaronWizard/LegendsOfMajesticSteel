@@ -8,8 +8,7 @@ var cell_pos: Vector2 setget set_cell_pos
 
 
 func _ready() -> void:
-	var floating_cell := position / tile_size
-	var cell := Vector2(int(floating_cell.x), int(floating_cell.y))
+	var cell := position.snapped(tile_size) / tile_size
 	set_cell_pos(cell)
 	print(cell_pos)
 
