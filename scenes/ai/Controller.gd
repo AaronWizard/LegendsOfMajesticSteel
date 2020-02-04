@@ -4,6 +4,7 @@ extends Node
 var actor: Actor setget , get_actor
 var map: Map setget , get_map
 
+
 func get_actor() -> Actor:
 	var result = null
 	var parent = get_parent()
@@ -19,6 +20,7 @@ func get_map() -> Map:
 		result = a.owner as Map
 
 	return result
+
 
 func _ready() -> void:
 	assert(get_actor())
