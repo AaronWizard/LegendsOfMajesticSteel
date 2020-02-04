@@ -1,6 +1,8 @@
 class_name Actor
 extends Node2D
 
+signal animations_finished
+
 export var tile_size := Vector2(16, 16) setget set_tile_size
 
 var cell: Vector2 setget set_cell
@@ -8,6 +10,9 @@ var cell_offset: Vector2 setget set_cell_offset
 
 onready var _pivot: Position2D = get_node("Pivot")
 onready var _sprite: Sprite = get_node("Pivot/Sprite")
+
+onready var tween: Tween = get_node("Tween")
+onready var _anim: AnimationPlayer = get_node("AnimationPlayer")
 
 func _ready() -> void:
 	var new_cell := position.snapped(tile_size) / tile_size
@@ -41,3 +46,23 @@ func _set_pixel_position() -> void:
 
 func on_cell(c: Vector2) -> bool:
 	return cell == c
+
+
+func move_step(target_cell: Vector2) -> void:
+	assert(cell.distance_squared_to(target_cell) == 1)
+
+	var origin_cell = cell
+	set_cell(target_cell)
+
+	set_cell_offset(origin_cell - target_cell)
+	# warning-ignore:return_value_discarded
+	tween.interpolate_property(self, "cell_offset", cell_offset, Vector2.ZERO,
+			_anim.get_animation("move_step").length,
+			Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+	# warning-ignore:return_value_discarded
+	tween.start()
+	_anim.play("move_step")
+
+
+func _on_Tween_tween_all_completed() -> void:
+	emit_signal("animations_finished")
