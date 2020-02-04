@@ -43,14 +43,3 @@ func determine_action() -> void:
 func _ready() -> void:
 	._ready()
 	set_process_unhandled_input(false)
-
-	while true:
-		print("start turn")
-
-		determine_action()
-		var action: Action = yield(self, "determined_action")
-		if action:
-			action.start()
-			yield(action, "finished")
-
-		print("end turn")

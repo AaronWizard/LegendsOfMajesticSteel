@@ -27,6 +27,7 @@ func get_map() -> Map:
 func _ready() -> void:
 	assert(get_actor())
 	assert(get_map())
+	get_actor().controller = self
 
 
 func determine_action() -> void:
