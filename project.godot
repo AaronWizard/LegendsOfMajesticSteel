@@ -12,32 +12,32 @@ _global_script_classes=[ {
 "base": "Node",
 "class": "Action",
 "language": "GDScript",
-"path": "res://scenes/actions/Action.gd"
+"path": "res://src/actions/Action.gd"
 }, {
 "base": "Node2D",
 "class": "Actor",
 "language": "GDScript",
-"path": "res://scenes/actors/Actor.gd"
+"path": "res://src/actors/Actor.gd"
 }, {
 "base": "Node",
 "class": "Controller",
 "language": "GDScript",
-"path": "res://scenes/ai/Controller.gd"
+"path": "res://src/ai/Controller.gd"
 }, {
 "base": "Node",
 "class": "Map",
 "language": "GDScript",
-"path": "res://scenes/maps/Map.gd"
+"path": "res://src/maps/Map.gd"
 }, {
 "base": "Controller",
 "class": "Player",
 "language": "GDScript",
-"path": "res://scenes/ai/Player.gd"
+"path": "res://src/ai/Player.gd"
 }, {
 "base": "Node",
 "class": "TurnManager",
 "language": "GDScript",
-"path": "res://scenes/TurnManager.gd"
+"path": "res://src/TurnManager.gd"
 } ]
 _global_script_class_icons={
 "Action": "",
@@ -51,7 +51,7 @@ _global_script_class_icons={
 [application]
 
 config/name="Legends of Majestic Steel"
-run/main_scene="res://scenes/Game.tscn"
+run/main_scene="res://src/Game.tscn"
 config/icon="res://icon.png"
 
 [display]
