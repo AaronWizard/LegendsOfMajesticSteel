@@ -23,3 +23,9 @@ func get_actor(cell: Vector2) -> Actor:
 			result = actor
 
 	return result
+
+
+func get_mouse_cell() -> Vector2:
+	var mouse := _ground.get_local_mouse_position()
+	var result := _ground.world_to_map(mouse)
+	return result

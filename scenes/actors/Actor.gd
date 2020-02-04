@@ -26,12 +26,3 @@ func _set_pixel_position() -> void:
 
 func on_cell(cell: Vector2) -> bool:
 	return cell_pos == cell
-
-
-func _unhandled_input(event: InputEvent) -> void:
-	if event.is_action_pressed("click"):
-		var map := get_parent() as TileMap
-		if map:
-			var click_pos := map.get_local_mouse_position()
-			var click_cell := map.world_to_map(click_pos)
-			set_cell_pos(click_cell)

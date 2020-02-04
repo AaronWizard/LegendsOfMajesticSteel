@@ -1,7 +1,9 @@
 extends Node
 
 export(PackedScene) var start_map_file = null
+
 onready var _map_container := get_node("Map")
+onready var _turn_manager: TurnManager = get_node("TurnManager")
 
 func _ready() -> void:
 	if start_map_file:

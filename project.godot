@@ -15,13 +15,31 @@ _global_script_classes=[ {
 "path": "res://scenes/actors/Actor.gd"
 }, {
 "base": "Node",
+"class": "Controller",
+"language": "GDScript",
+"path": "res://scenes/ai/Controller.gd"
+}, {
+"base": "Node",
 "class": "Map",
 "language": "GDScript",
 "path": "res://scenes/maps/Map.gd"
+}, {
+"base": "Controller",
+"class": "Player",
+"language": "GDScript",
+"path": "res://scenes/ai/Player.gd"
+}, {
+"base": "Node",
+"class": "TurnManager",
+"language": "GDScript",
+"path": "res://scenes/TurnManager.gd"
 } ]
 _global_script_class_icons={
 "Actor": "",
-"Map": ""
+"Controller": "",
+"Map": "",
+"Player": "",
+"TurnManager": ""
 }
 
 [application]
