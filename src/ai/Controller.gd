@@ -1,6 +1,8 @@
 class_name Controller
 extends Node
 
+signal determined_action(action)
+
 var actor: Actor setget , get_actor
 var map: Map setget , get_map
 
@@ -27,5 +29,6 @@ func _ready() -> void:
 	assert(get_map())
 
 
-func get_action() -> Action:
-	return null
+func determine_action() -> void:
+	print("Controller: Must implement determine_action()")
+	emit_signal("determined_action", null)

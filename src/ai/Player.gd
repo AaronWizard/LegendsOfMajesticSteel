@@ -1,26 +1,56 @@
 class_name Player
 extends Controller
 
+signal _input_processed(action)
+
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("click"):
 		var target_cell = get_map().get_mouse_cell()
+		if target_cell != get_actor().cell:
+			var path = []
 
-		set_process_unhandled_input(false)
+			var c := Vector2(get_actor().cell)
+			if c == target_cell:
+				path.append(c)
+			else:
+				while c != target_cell:
+					if c.x < target_cell.x:
+						c.x += 1
+					elif c.x > target_cell.x:
+						c.x -= 1
+					elif c.y < target_cell.y:
+						c.y += 1
+					elif c.y > target_cell.y:
+						c.y -= 1
+					path.append(Vector2(c))
 
-		while get_actor().cell != target_cell:
-			var next_cell := get_actor().cell
+			var action := MoveAction.new()
+			action.actor = get_actor()
+			action.map = get_map()
+			action.path = path
 
-			if next_cell.x < target_cell.x:
-				next_cell.x += 1
-			elif next_cell.x > target_cell.x:
-				next_cell.x -= 1
-			elif next_cell.y < target_cell.y:
-				next_cell.y += 1
-			elif next_cell.y > target_cell.y:
-				next_cell.y -= 1
+			emit_signal("_input_processed", action)
 
-			get_actor().move_step(next_cell)
-			yield(get_actor(), "animations_finished")
 
-		set_process_unhandled_input(true)
+func determine_action() -> void:
+	set_process_unhandled_input(true)
+	var action: Action = yield(self, '_input_processed')
+	set_process_unhandled_input(false)
+	emit_signal("determined_action", action)
+
+
+func _ready() -> void:
+	._ready()
+	set_process_unhandled_input(false)
+
+	while true:
+		print("start turn")
+
+		determine_action()
+		var action: Action = yield(self, "determined_action")
+		if action:
+			action.start()
+			yield(action, "finished")
+
+		print("end turn")

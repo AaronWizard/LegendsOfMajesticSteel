@@ -29,6 +29,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/maps/Map.gd"
 }, {
+"base": "Action",
+"class": "MoveAction",
+"language": "GDScript",
+"path": "res://src/actions/MoveAction.gd"
+}, {
 "base": "Controller",
 "class": "Player",
 "language": "GDScript",
@@ -44,6 +49,7 @@ _global_script_class_icons={
 "Actor": "",
 "Controller": "",
 "Map": "",
+"MoveAction": "",
 "Player": "",
 "TurnManager": ""
 }
