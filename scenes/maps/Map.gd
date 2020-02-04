@@ -14,7 +14,7 @@ func get_tile_name(cell: Vector2) -> String:
 	return name
 
 
-func get_actor(cell: Vector2) -> Actor:
+func get_actor_on_cell(cell: Vector2) -> Actor:
 	var result: Actor = null
 
 	for a in get_actors():
