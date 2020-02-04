@@ -7,7 +7,6 @@ func _ready() -> void:
 	if start_map_file:
 		load_map(start_map_file)
 
-	print(get_current_map().get_actors()[0].name)
 
 func get_current_map() -> Map:
 	var result: Map = null
@@ -15,6 +14,7 @@ func get_current_map() -> Map:
 		result = _map_container.get_child(0) as Map
 
 	return result
+
 
 func load_map(map_file: PackedScene) -> void:
 	var test := map_file.instance()
