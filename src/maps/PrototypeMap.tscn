@@ -1,9 +1,9 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://resources/prototype_tileset.tres" type="TileSet" id=1]
 [ext_resource path="res://src/maps/Map.tscn" type="PackedScene" id=2]
 [ext_resource path="res://src/actors/WarriorPrincess.tscn" type="PackedScene" id=3]
-
+[ext_resource path="res://src/actors/Barbarian.tscn" type="PackedScene" id=4]
 
 [node name="PrototypeMap" instance=ExtResource( 2 )]
 
@@ -13,3 +13,6 @@ tile_data = PoolIntArray( 0, 1, 0, 1, 1, 0, 2, 1, 0, 3, 1, 0, 4, 1, 0, 5, 1, 0, 
 
 [node name="WarriorPrincess" parent="Ground" index="0" instance=ExtResource( 3 )]
 position = Vector2( 192, 368 )
+
+[node name="Barbarian" parent="Ground" index="1" instance=ExtResource( 4 )]
+position = Vector2( 288, 368 )
