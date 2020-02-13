@@ -1,11 +1,9 @@
 class_name TurnManager
 
-var actors := []
 var running := false
-
 var _current_index := 0
 
-func start() -> void:
+func start(actors: Array, camera: GameCamera) -> void:
 	running = true
 	_current_index = 0
 
@@ -13,6 +11,7 @@ func start() -> void:
 		var actor := actors[_current_index] as Actor
 		var controller := actor.controller
 		if controller:
+			camera.follow_actor(actor)
 			controller.determine_action()
 			var action: Action = yield(controller, "determined_action")
 			if action:

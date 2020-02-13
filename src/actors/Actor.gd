@@ -16,6 +16,10 @@ onready var _sprite: Sprite = get_node("Pivot/Sprite")
 onready var tween: Tween = get_node("Tween")
 onready var _anim: AnimationPlayer = get_node("AnimationPlayer")
 
+onready var remote_transform: RemoteTransform2D = get_node(
+		"Pivot/RemoteTransform2D")
+
+
 func _ready() -> void:
 	var new_cell := position.snapped(tile_size) / tile_size
 	set_cell(new_cell)

@@ -27,6 +27,9 @@ position = Vector2( 8, 8 )
 
 [node name="Sprite" type="Sprite" parent="Pivot"]
 
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="Pivot"]
+position = Vector2( -8, -8 )
+
 [node name="Tween" type="Tween" parent="."]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
