@@ -24,5 +24,8 @@ func get_current_map() -> Map:
 
 
 func load_map(map_file: PackedScene) -> void:
-	var test := map_file.instance()
+	var test: Map = map_file.instance()
+	assert(test != null)
 	_map_container.add_child(test)
+
+	_camera.set_bounds(test.get_pixel_rect())

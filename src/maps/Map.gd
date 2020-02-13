@@ -4,6 +4,13 @@ extends Node
 onready var _ground: TileMap = get_node("Ground")
 
 
+func get_pixel_rect() -> Rect2:
+	var rect := _ground.get_used_rect()
+	var rectpos := Vector2(rect.position * _ground.cell_size)
+	var rectsize := Vector2(rect.size * _ground.cell_size)
+	return Rect2(rectpos, rectsize)
+
+
 func get_actors() -> Array:
 	return _ground.get_children()
 
