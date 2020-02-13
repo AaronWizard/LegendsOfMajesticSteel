@@ -4,6 +4,11 @@ extends Controller
 signal _input_processed(action)
 
 
+func _ready() -> void:
+	._ready()
+	set_process_unhandled_input(false)
+
+
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("click"):
 		var target_cell = get_map().get_mouse_cell()
@@ -38,8 +43,3 @@ func determine_action() -> void:
 	var action: Action = yield(self, '_input_processed')
 	set_process_unhandled_input(false)
 	emit_signal("determined_action", action)
-
-
-func _ready() -> void:
-	._ready()
-	set_process_unhandled_input(false)

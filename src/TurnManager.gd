@@ -1,7 +1,9 @@
 class_name TurnManager
 
 var running := false
+
 var _current_index := 0
+
 
 func start(actors: Array, camera: GameCamera) -> void:
 	running = true

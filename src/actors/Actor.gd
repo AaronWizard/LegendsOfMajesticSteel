@@ -10,14 +10,14 @@ var cell_offset: Vector2 setget set_cell_offset
 
 var controller: TurnTaker = null
 
+onready var tween: Tween = get_node("Tween")
+onready var remote_transform: RemoteTransform2D = get_node(
+		"Pivot/RemoteTransform2D")
+
 onready var _pivot: Position2D = get_node("Pivot")
 onready var _sprite: Sprite = get_node("Pivot/Sprite")
 
-onready var tween: Tween = get_node("Tween")
 onready var _anim: AnimationPlayer = get_node("AnimationPlayer")
-
-onready var remote_transform: RemoteTransform2D = get_node(
-		"Pivot/RemoteTransform2D")
 
 
 func _ready() -> void:
@@ -46,10 +46,6 @@ func _set_pivot_position() -> void:
 	_pivot.position = pivot_cell_pos * tile_size
 
 
-func _set_pixel_position() -> void:
-	position = cell * tile_size
-
-
 func on_cell(c: Vector2) -> bool:
 	return cell == c
 
@@ -68,6 +64,10 @@ func move_step(target_cell: Vector2) -> void:
 	# warning-ignore:return_value_discarded
 	tween.start()
 	_anim.play("move_step")
+
+
+func _set_pixel_position() -> void:
+	position = cell * tile_size
 
 
 func _on_Tween_tween_all_completed() -> void:

@@ -6,11 +6,13 @@ onready var _map_container := get_node("Map")
 onready var _camera: GameCamera = get_node("GameCamera")
 onready var _turn_manager := TurnManager.new()
 
+
 func _ready() -> void:
 	if start_map_file:
 		load_map(start_map_file)
 
 	_turn_manager.start(get_current_map().get_actors(), _camera)
+
 
 func get_current_map() -> Map:
 	var result: Map = null

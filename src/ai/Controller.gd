@@ -1,9 +1,6 @@
 class_name Controller
 extends TurnTaker
 
-var actor: Actor setget , get_actor
-var map: Map setget , get_map
-
 
 func _ready() -> void:
 	assert(get_actor())
