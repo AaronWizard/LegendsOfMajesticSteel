@@ -44,6 +44,16 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/ai/Player.gd"
 }, {
+"base": "Node",
+"class": "TileProperties",
+"language": "GDScript",
+"path": "res://src/maps/TileProperties.gd"
+}, {
+"base": "Node",
+"class": "TilePropertiesSet",
+"language": "GDScript",
+"path": "res://src/maps/TilePropertiesSet.gd"
+}, {
 "base": "Reference",
 "class": "TurnManager",
 "language": "GDScript",
@@ -62,6 +72,8 @@ _global_script_class_icons={
 "Map": "",
 "MoveAction": "",
 "Player": "",
+"TileProperties": "",
+"TilePropertiesSet": "",
 "TurnManager": "",
 "TurnTaker": ""
 }

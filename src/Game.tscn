@@ -4,7 +4,6 @@
 [ext_resource path="res://src/GameCamera.tscn" type="PackedScene" id=2]
 [ext_resource path="res://src/maps/maps/PrototypeMap.tscn" type="PackedScene" id=3]
 
-
 [node name="Game" type="Node"]
 script = ExtResource( 1 )
 start_map_file = ExtResource( 3 )

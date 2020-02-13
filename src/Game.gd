@@ -1,6 +1,6 @@
 extends Node
 
-export(PackedScene) var start_map_file = null
+export var start_map_file: PackedScene = null
 
 onready var _map_container := get_node("Map")
 onready var _camera: GameCamera = get_node("GameCamera")

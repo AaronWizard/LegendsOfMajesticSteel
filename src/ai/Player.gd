@@ -11,8 +11,13 @@ func _ready() -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("click"):
-		var target_cell = get_map().get_mouse_cell()
-		if target_cell != get_actor().cell:
+		var target_cell := get_map().get_mouse_cell()
+
+		var same_cell := target_cell == get_actor().cell
+		var can_enter := not same_cell and get_map().actor_can_enter_cell(
+				get_actor(), target_cell)
+
+		if can_enter:
 			var path = []
 
 			var c := Vector2(get_actor().cell)
