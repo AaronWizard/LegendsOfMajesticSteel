@@ -1,7 +1,5 @@
 class_name Controller
-extends Node
-
-signal determined_action(action)
+extends TurnTaker
 
 var actor: Actor setget , get_actor
 var map: Map setget , get_map
@@ -26,10 +24,4 @@ func get_map() -> Map:
 
 func _ready() -> void:
 	assert(get_actor())
-	assert(get_map())
 	get_actor().controller = self
-
-
-func determine_action() -> void:
-	print("Controller: Must implement determine_action()")
-	emit_signal("determined_action", null)

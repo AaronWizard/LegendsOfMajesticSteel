@@ -2,7 +2,6 @@
 
 [ext_resource path="res://src/actors/Actor.gd" type="Script" id=1]
 
-
 [sub_resource type="Animation" id=1]
 resource_name = "move_step"
 length = 0.25

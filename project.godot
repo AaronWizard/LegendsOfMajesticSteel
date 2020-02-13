@@ -19,7 +19,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/actors/Actor.gd"
 }, {
-"base": "Node",
+"base": "TurnTaker",
 "class": "Controller",
 "language": "GDScript",
 "path": "res://src/ai/Controller.gd"
@@ -43,6 +43,11 @@ _global_script_classes=[ {
 "class": "TurnManager",
 "language": "GDScript",
 "path": "res://src/TurnManager.gd"
+}, {
+"base": "Node",
+"class": "TurnTaker",
+"language": "GDScript",
+"path": "res://src/ai/TurnTaker.gd"
 } ]
 _global_script_class_icons={
 "Action": "",
@@ -51,7 +56,8 @@ _global_script_class_icons={
 "Map": "",
 "MoveAction": "",
 "Player": "",
-"TurnManager": ""
+"TurnManager": "",
+"TurnTaker": ""
 }
 
 [application]

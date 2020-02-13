@@ -8,7 +8,7 @@ export var tile_size := Vector2(16, 16) setget set_tile_size
 var cell: Vector2 setget set_cell
 var cell_offset: Vector2 setget set_cell_offset
 
-var controller = null # Untyped to avoid cyclic references
+var controller: TurnTaker = null
 
 onready var _pivot: Position2D = get_node("Pivot")
 onready var _sprite: Sprite = get_node("Pivot/Sprite")

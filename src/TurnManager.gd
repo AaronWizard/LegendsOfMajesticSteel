@@ -11,7 +11,7 @@ func start() -> void:
 
 	while running:
 		var actor := actors[_current_index] as Actor
-		var controller := actor.controller as Controller
+		var controller := actor.controller
 		if controller:
 			controller.determine_action()
 			var action: Action = yield(controller, "determined_action")
