@@ -8,11 +8,11 @@ onready var tween: Tween = get_node("Tween")
 
 
 func set_bounds(rect: Rect2) -> void:
-	self.limit_left = rect.position.x
-	self.limit_top = rect.position.y
+	self.limit_left = int(rect.position.x)
+	self.limit_top = int(rect.position.y)
 
-	self.limit_right = rect.end.x
-	self.limit_bottom = rect.end.y
+	self.limit_right = int(rect.end.x)
+	self.limit_bottom = int(rect.end.y)
 
 
 func follow_actor(actor: Actor) -> void:
