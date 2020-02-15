@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://src/Game.gd" type="Script" id=1]
 [ext_resource path="res://src/GameCamera.tscn" type="PackedScene" id=2]
 [ext_resource path="res://src/maps/maps/PrototypeMap.tscn" type="PackedScene" id=3]
 [ext_resource path="res://src/maps/MapHighlights.tscn" type="PackedScene" id=4]
+[ext_resource path="res://src/TurnManager.gd" type="Script" id=5]
 
 [node name="Game" type="Node"]
 script = ExtResource( 1 )
@@ -15,4 +16,10 @@ start_map_file = ExtResource( 3 )
 
 [node name="GameCamera" parent="." instance=ExtResource( 2 )]
 
+[node name="TurnManager" type="Node" parent="."]
+script = ExtResource( 5 )
+
 [node name="GUI" type="CanvasLayer" parent="."]
+[connection signal="cleared_map_highlights" from="TurnManager" to="." method="_on_TurnManager_cleared_map_highlights"]
+[connection signal="followed_actor" from="TurnManager" to="." method="_on_TurnManager_followed_actor"]
+[connection signal="set_movement_range" from="TurnManager" to="." method="_on_TurnManager_set_movement_range"]
