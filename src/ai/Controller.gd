@@ -11,18 +11,18 @@ func _ready() -> void:
 
 
 func get_actor() -> Actor:
-	var result = null
+	var result: Actor = null
 	var parent = get_parent()
 	if parent is Actor:
-		result = parent as Actor
+		result = parent
 	return result
 
 
 func get_map() -> Map:
-	var result = null
+	var result: Map = null
 	var a = get_actor()
 	if a:
-		result = a.owner as Map
+		result = a.owner
 
 	return result
 

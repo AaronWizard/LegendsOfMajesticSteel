@@ -14,7 +14,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		var target_cell := get_map().get_mouse_cell()
 
 		if _can_walk_to_cell(target_cell):
-			var path = []
+			var path := []
 
 			var c := Vector2(get_actor().cell)
 			if c == target_cell:

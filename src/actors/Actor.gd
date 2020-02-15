@@ -44,7 +44,7 @@ func set_cell_offset(new_value: Vector2) -> void:
 
 
 func _set_pivot_position() -> void:
-	var pivot_cell_pos = cell_offset + (Vector2.ONE / 2.0)
+	var pivot_cell_pos := cell_offset + (Vector2.ONE / 2.0)
 	_pivot.position = pivot_cell_pos * tile_size
 
 
@@ -55,7 +55,7 @@ func on_cell(c: Vector2) -> bool:
 func move_step(target_cell: Vector2) -> void:
 	assert(cell.distance_squared_to(target_cell) == 1)
 
-	var origin_cell = cell
+	var origin_cell := cell
 	set_cell(target_cell)
 
 	set_cell_offset(origin_cell - target_cell)
