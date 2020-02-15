@@ -45,6 +45,11 @@ _global_script_classes=[ {
 "path": "res://src/ai/Player.gd"
 }, {
 "base": "Node",
+"class": "Stats",
+"language": "GDScript",
+"path": "res://src/actors/Stats.gd"
+}, {
+"base": "Node",
 "class": "TileProperties",
 "language": "GDScript",
 "path": "res://src/maps/TileProperties.gd"
@@ -72,6 +77,7 @@ _global_script_class_icons={
 "Map": "",
 "MoveAction": "",
 "Player": "",
+"Stats": "",
 "TileProperties": "",
 "TilePropertiesSet": "",
 "TurnManager": "",
