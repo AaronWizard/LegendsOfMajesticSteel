@@ -10,6 +10,8 @@ var cell_offset: Vector2 setget set_cell_offset
 
 var controller: TurnTaker = null
 
+onready var stats: Stats = get_node("Stats")
+
 onready var tween: Tween = get_node("Tween")
 onready var remote_transform: RemoteTransform2D = get_node(
 		"Pivot/RemoteTransform2D")
