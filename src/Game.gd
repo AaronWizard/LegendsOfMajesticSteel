@@ -3,6 +3,7 @@ extends Node
 export var start_map_file: PackedScene = null
 
 onready var _map_container := get_node("Map")
+onready var _map_highlights: MapHighlights = get_node("MapHighlights")
 onready var _camera: GameCamera = get_node("GameCamera")
 onready var _turn_manager := TurnManager.new()
 
