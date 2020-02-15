@@ -9,5 +9,8 @@
 [node name="Sprite" parent="Pivot" index="0"]
 texture = ExtResource( 1 )
 
+[node name="Stats" parent="." index="1"]
+move = 5
+
 [node name="Player" type="Node" parent="." index="3"]
 script = ExtResource( 3 )
