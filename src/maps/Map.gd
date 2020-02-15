@@ -50,13 +50,14 @@ func get_actor_on_cell(cell: Vector2) -> Actor:
 	return result
 
 
-func actor_can_enter_cell(actor: Actor, cell: Vector2) -> bool:
+func actor_can_enter_cell(actor: Actor, cell: Vector2,
+		ignore_other_actors: bool = false) -> bool:
 	var result = true
 
 	if not get_rect().has_point(cell):
 		result = false
 
-	if result:
+	if result and not ignore_other_actors:
 		var other_actor := get_actor_on_cell(cell)
 		if other_actor and (other_actor != actor):
 			result = false
