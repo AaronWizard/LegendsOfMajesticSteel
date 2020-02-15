@@ -2,6 +2,9 @@ class_name Controller
 extends TurnTaker
 
 
+var walk_cells := []
+
+
 func _ready() -> void:
 	assert(get_actor())
 	get_actor().controller = self
@@ -22,3 +25,7 @@ func get_map() -> Map:
 		result = a.owner as Map
 
 	return result
+
+
+func calculate_ranges() -> void:
+	walk_cells = BreadthFirstSearch.find_move_range(get_actor(), get_map())

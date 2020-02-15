@@ -13,11 +13,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("click"):
 		var target_cell := get_map().get_mouse_cell()
 
-		var same_cell := target_cell == get_actor().cell
-		var can_enter := not same_cell and get_map().actor_can_enter_cell(
-				get_actor(), target_cell)
-
-		if can_enter:
+		if _can_walk_to_cell(target_cell):
 			var path = []
 
 			var c := Vector2(get_actor().cell)
@@ -48,3 +44,9 @@ func determine_action() -> void:
 	var action: Action = yield(self, '_input_processed')
 	set_process_unhandled_input(false)
 	emit_signal("determined_action", action)
+
+
+func _can_walk_to_cell(cell: Vector2) -> bool:
+	var result := (cell != get_actor().cell) and (cell in walk_cells)
+
+	return result
