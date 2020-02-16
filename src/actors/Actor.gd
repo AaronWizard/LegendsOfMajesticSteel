@@ -8,7 +8,9 @@ export var tile_size := Vector2(16, 16) setget set_tile_size
 var cell: Vector2 setget set_cell
 var cell_offset: Vector2 setget set_cell_offset
 
-var controller = null # Is a Controller
+var map setget , get_map # -> Map
+
+var controller = null # -> Controller
 
 onready var stats: Stats = get_node("Stats")
 
@@ -45,6 +47,10 @@ func set_cell_offset(new_value: Vector2) -> void:
 
 func on_cell(c: Vector2) -> bool:
 	return cell == c
+
+
+func get_map(): # -> Map
+	return owner
 
 
 func move_step(target_cell: Vector2) -> void:
