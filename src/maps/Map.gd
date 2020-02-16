@@ -52,7 +52,7 @@ func get_actor_on_cell(cell: Vector2) -> Actor:
 
 func actor_can_enter_cell(actor: Actor, cell: Vector2,
 		ignore_other_actors: bool = false) -> bool:
-	var result = true
+	var result := true
 
 	if not get_rect().has_point(cell):
 		result = false
@@ -64,8 +64,11 @@ func actor_can_enter_cell(actor: Actor, cell: Vector2,
 
 	if result and _tile_properties_set:
 		var tile_name := get_tile_name(cell)
-		var properties := _tile_properties_set.get_properties(tile_name)
-		if properties and properties.blocks_move:
+		if tile_name:
+			var properties := _tile_properties_set.get_properties(tile_name)
+			if properties and properties.blocks_move:
+				result = false
+		else:
 			result = false
 
 	return result
