@@ -8,7 +8,7 @@ export var tile_size := Vector2(16, 16) setget set_tile_size
 var cell: Vector2 setget set_cell
 var cell_offset: Vector2 setget set_cell_offset
 
-var controller: TurnTaker = null
+var controller = null # Is a Controller
 
 onready var stats: Stats = get_node("Stats")
 

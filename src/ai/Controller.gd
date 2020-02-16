@@ -1,6 +1,7 @@
 class_name Controller
-extends TurnTaker
+extends Node
 
+signal determined_action(action)
 
 var walk_cells := []
 
@@ -29,3 +30,8 @@ func get_map() -> Map:
 
 func calculate_ranges() -> void:
 	walk_cells = BreadthFirstSearch.find_move_range(get_actor(), get_map())
+
+
+func determine_action() -> void:
+	print("Controller: Must implement determine_action()")
+	emit_signal("determined_action", null)

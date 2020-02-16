@@ -18,7 +18,7 @@ func start(map: Map) -> void:
 
 	while running:
 		var actor := actors[_current_index] as Actor
-		var controller := actor.controller
+		var controller := actor.controller as Controller
 		if controller:
 			_do_pathfinding(controller)
 
