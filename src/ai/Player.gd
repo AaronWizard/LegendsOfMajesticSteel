@@ -47,6 +47,7 @@ func determine_action() -> void:
 
 
 func _can_walk_to_cell(cell: Vector2) -> bool:
-	var result := (cell != get_actor().cell) and (cell in walk_cells)
+	var result := (cell != get_actor().cell) \
+			and (cell in get_battle_stats().walk_cells)
 
 	return result

@@ -20,7 +20,7 @@ func start(map: Map) -> void:
 		var actor := actors[_current_index] as Actor
 		var controller := actor.controller as Controller
 		if controller:
-			_do_pathfinding(controller)
+			_do_pathfinding(actor)
 
 			emit_signal("followed_actor", actor)
 
@@ -34,6 +34,7 @@ func start(map: Map) -> void:
 		_current_index = (_current_index + 1) % actors.size()
 
 
-func _do_pathfinding(controller: Controller) -> void:
-	controller.calculate_ranges()
-	emit_signal("set_movement_range", controller.walk_cells)
+func _do_pathfinding(actor: Actor) -> void:
+	var battle_stats := actor.battle_stats as BattleStats
+	battle_stats.find_paths()
+	emit_signal("set_movement_range", battle_stats.walk_cells)

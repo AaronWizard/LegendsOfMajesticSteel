@@ -3,8 +3,6 @@ extends Node
 
 signal determined_action(action)
 
-var walk_cells := []
-
 
 func _ready() -> void:
 	assert(get_actor())
@@ -23,8 +21,8 @@ func get_map() -> Map:
 	return get_actor().map
 
 
-func calculate_ranges() -> void:
-	walk_cells = BreadthFirstSearch.find_move_range(get_actor(), get_map())
+func get_battle_stats() -> BattleStats:
+	return get_actor().battle_stats
 
 
 func determine_action() -> void:

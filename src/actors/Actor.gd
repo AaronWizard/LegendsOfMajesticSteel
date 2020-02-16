@@ -13,6 +13,7 @@ var map setget , get_map # -> Map
 var controller = null # -> Controller
 
 onready var stats: Stats = get_node("Stats")
+onready var battle_stats = get_node("BattleStats") # -> BattleStats
 
 onready var tween: Tween = get_node("Tween")
 onready var remote_transform: RemoteTransform2D = get_node(
