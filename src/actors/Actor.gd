@@ -43,11 +43,6 @@ func set_cell_offset(new_value: Vector2) -> void:
 	_set_pivot_position()
 
 
-func _set_pivot_position() -> void:
-	var pivot_cell_pos := cell_offset + (Vector2.ONE / 2.0)
-	_pivot.position = pivot_cell_pos * tile_size
-
-
 func on_cell(c: Vector2) -> bool:
 	return cell == c
 
@@ -66,6 +61,11 @@ func move_step(target_cell: Vector2) -> void:
 	# warning-ignore:return_value_discarded
 	tween.start()
 	_anim.play("move_step")
+
+
+func _set_pivot_position() -> void:
+	var pivot_cell_pos := cell_offset + (Vector2.ONE / 2.0)
+	_pivot.position = pivot_cell_pos * tile_size
 
 
 func _set_pixel_position() -> void:
