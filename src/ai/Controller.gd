@@ -20,12 +20,7 @@ func get_actor() -> Actor:
 
 
 func get_map() -> Map:
-	var result: Map = null
-	var a = get_actor()
-	if a:
-		result = a.owner
-
-	return result
+	return get_actor().map
 
 
 func calculate_ranges() -> void:
