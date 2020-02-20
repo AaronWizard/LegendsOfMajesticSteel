@@ -42,7 +42,7 @@ _global_script_classes=[ {
 "base": "Camera2D",
 "class": "GameCamera",
 "language": "GDScript",
-"path": "res://src/GameCamera.gd"
+"path": "res://src/game/GameCamera.gd"
 }, {
 "base": "Node",
 "class": "Map",
@@ -79,10 +79,10 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/maps/TilePropertiesSet.gd"
 }, {
-"base": "Node",
+"base": "Reference",
 "class": "TurnManager",
 "language": "GDScript",
-"path": "res://src/TurnManager.gd"
+"path": "res://src/game/TurnManager.gd"
 } ]
 _global_script_class_icons={
 "Action": "",
@@ -105,7 +105,7 @@ _global_script_class_icons={
 [application]
 
 config/name="Legends of Majestic Steel"
-run/main_scene="res://src/Game.tscn"
+run/main_scene="res://src/game/Game.tscn"
 config/icon="res://icon.png"
 
 [display]
