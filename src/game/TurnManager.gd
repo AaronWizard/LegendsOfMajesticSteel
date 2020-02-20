@@ -10,7 +10,7 @@ var running := false
 var _current_index := 0
 
 
-func start(map: Map) -> void:
+func start(map: Map, gui: BattleGUI) -> void:
 	var actors := map.get_actors()
 
 	running = true
@@ -19,22 +19,23 @@ func start(map: Map) -> void:
 	while running:
 		var actor := actors[_current_index] as Actor
 		var controller := actor.controller as Controller
+		var battle_stats := actor.battle_stats as BattleStats
+
 		if controller:
-			_do_pathfinding(actor)
+			battle_stats.start_turn()
+			controller.connect_to_gui(gui)
 
 			emit_signal("followed_actor", actor)
+			emit_signal("set_movement_range", battle_stats.walk_cells)
 
-			controller.determine_action()
-			var action: Action = yield(controller, "determined_action")
+			while not battle_stats.finished:
+				controller.determine_action()
+				var action: Action = yield(controller, "determined_action")
+				if action:
+					action.start()
+					yield(action, "finished")
+
 			emit_signal("cleared_map_highlights")
-			if action:
-				action.start()
-				yield(action, "finished")
+			controller.disconnect_from_gui(gui)
 
 		_current_index = (_current_index + 1) % actors.size()
-
-
-func _do_pathfinding(actor: Actor) -> void:
-	var battle_stats := actor.battle_stats as BattleStats
-	battle_stats.find_paths()
-	emit_signal("set_movement_range", battle_stats.walk_cells)

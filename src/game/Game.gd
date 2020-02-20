@@ -6,13 +6,14 @@ onready var _map_container := get_node("Map")
 onready var _map_highlights: MapHighlights = get_node("MapHighlights")
 onready var _camera: GameCamera = get_node("GameCamera")
 onready var _turn_manager: TurnManager = get_node("TurnManager")
+onready var _gui: BattleGUI = get_node("BattleGUI")
 
 
 func _ready() -> void:
 	if start_map_file:
 		load_map(start_map_file)
 
-	_turn_manager.start(get_current_map())
+	_turn_manager.start(get_current_map(), _gui)
 
 
 func get_current_map() -> Map:
