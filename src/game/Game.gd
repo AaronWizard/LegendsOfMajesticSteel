@@ -26,11 +26,11 @@ func get_current_map() -> Map:
 
 
 func load_map(map_file: PackedScene) -> void:
-	var test: Map = map_file.instance()
-	assert(test != null)
-	_map_container.add_child(test)
+	var new_map: Map = map_file.instance()
+	assert(new_map != null)
+	_map_container.add_child(new_map)
 
-	_camera.set_bounds(test.get_pixel_rect())
+	_camera.set_bounds(new_map.get_pixel_rect())
 
 
 func _on_TurnManager_followed_actor(actor: Actor) -> void:
