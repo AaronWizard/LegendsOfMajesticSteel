@@ -12,7 +12,19 @@ func set_bounds(rect: Rect2) -> void:
 
 func drag(relative: Vector2) -> void:
 	stop_following_actor()
-	position -= relative
+
+	var new_position := position - relative
+
+	var resolution := get_viewport_rect().size
+	var half_res := resolution / 2
+
+	new_position.x = max(new_position.x, limit_left + half_res.x)
+	new_position.x = min(new_position.x, limit_right - half_res.x)
+
+	new_position.y = max(new_position.y, limit_top + half_res.y)
+	new_position.y = min(new_position.y, limit_bottom - half_res.y)
+
+	position = new_position
 
 
 func follow_actor(actor: Actor) -> void:
