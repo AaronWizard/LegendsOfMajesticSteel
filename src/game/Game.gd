@@ -33,6 +33,10 @@ func load_map(map_file: PackedScene) -> void:
 	_camera.set_bounds(new_map.get_pixel_rect())
 
 
+func _on_BattleGUI_mouse_dragged(relative: Vector2) -> void:
+	_camera.position -= relative
+
+
 func _on_TurnManager_followed_actor(actor: Actor) -> void:
 	_camera.follow_actor(actor)
 

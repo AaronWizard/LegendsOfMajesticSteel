@@ -2,7 +2,6 @@
 
 [ext_resource path="res://src/game/GameCamera.gd" type="Script" id=1]
 
-
 [node name="GameCamera" type="Camera2D"]
 current = true
 limit_left = 0

@@ -16,6 +16,10 @@ start_map_file = ExtResource( 3 )
 [node name="MapHighlights" parent="." instance=ExtResource( 4 )]
 
 [node name="GameCamera" parent="." instance=ExtResource( 2 )]
+drag_margin_left = 0.0
+drag_margin_top = 0.0
+drag_margin_right = 0.0
+drag_margin_bottom = 0.0
 
 [node name="TurnManager" type="Node" parent="."]
 script = ExtResource( 5 )
@@ -24,3 +28,4 @@ script = ExtResource( 5 )
 [connection signal="cleared_map_highlights" from="TurnManager" to="." method="_on_TurnManager_cleared_map_highlights"]
 [connection signal="followed_actor" from="TurnManager" to="." method="_on_TurnManager_followed_actor"]
 [connection signal="set_movement_range" from="TurnManager" to="." method="_on_TurnManager_set_movement_range"]
+[connection signal="mouse_dragged" from="BattleGUI" to="." method="_on_BattleGUI_mouse_dragged"]

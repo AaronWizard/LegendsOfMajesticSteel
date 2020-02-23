@@ -5,13 +5,11 @@
 [node name="BattleGUI" type="CanvasLayer"]
 script = ExtResource( 1 )
 
-[node name="Buttons" type="Control" parent="."]
-anchor_right = 1.0
-anchor_bottom = 1.0
-mouse_filter = 2
-__meta__ = {
-"_edit_use_anchors_": false
-}
+[node name="DragTimer" type="Timer" parent="."]
+wait_time = 0.1
+one_shot = true
+
+[node name="Buttons" type="Node" parent="."]
 
 [node name="Wait" type="Button" parent="Buttons"]
 anchor_left = 1.0
@@ -26,4 +24,5 @@ text = "Wait"
 __meta__ = {
 "_edit_use_anchors_": false
 }
+[connection signal="timeout" from="DragTimer" to="." method="_on_DragTimer_timeout"]
 [connection signal="pressed" from="Buttons/Wait" to="." method="_on_Wait_pressed"]
