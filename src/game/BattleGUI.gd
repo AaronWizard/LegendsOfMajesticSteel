@@ -19,7 +19,6 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
 		if event.button_index == BUTTON_LEFT:
 			if not event.pressed and _mouse_down and not _dragging:
-				print("clicked")
 				emit_signal("mouse_clicked", event.position)
 			_mouse_down = event.pressed
 	elif event is InputEventMouseMotion:
