@@ -28,11 +28,7 @@ func _map_clicked(_position) -> void:
 
 	var path := get_battle_stats().get_walk_path(target_cell)
 	if path.size() > 0:
-		var action := MoveAction.new()
-		action.actor = get_actor()
-		action.map = get_map()
-		action.path = path
-
+		var action := MoveAction.new(get_actor(), get_map(), path)
 		emit_signal("_input_processed", action)
 
 
