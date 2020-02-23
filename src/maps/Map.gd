@@ -3,7 +3,7 @@ extends Node
 
 export var tile_properties_set: PackedScene = null
 
-onready var _ground: TileMap = get_node("Ground")
+onready var _ground: TileMap = $Ground
 var _tile_properties_set: TilePropertiesSet = null
 
 

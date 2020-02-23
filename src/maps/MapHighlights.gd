@@ -7,7 +7,7 @@ enum Tiles {
 	AOE,
 }
 
-onready var _highlights: TileMap = get_node("Highlights")
+onready var _highlights: TileMap = $Highlights
 
 
 func set_move_highlight(cells: Array) -> void:

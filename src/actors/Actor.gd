@@ -12,17 +12,16 @@ var map setget , get_map # -> Map
 
 var controller = null # -> Controller
 
-onready var stats: Stats = get_node("Stats")
-onready var battle_stats = get_node("BattleStats") # -> BattleStats
+onready var stats: Stats = $Stats
+onready var battle_stats = $BattleStats # -> BattleStats
 
-onready var tween: Tween = get_node("Tween")
-onready var remote_transform: RemoteTransform2D = get_node(
-		"Pivot/RemoteTransform2D")
+onready var tween: Tween = $Tween
+onready var remote_transform: RemoteTransform2D = $Pivot/RemoteTransform2D
 
-onready var _pivot: Position2D = get_node("Pivot")
-onready var _sprite: Sprite = get_node("Pivot/Sprite")
+onready var _pivot: Position2D = $Pivot
+onready var _sprite: Sprite = $Pivot/Sprite
 
-onready var _anim: AnimationPlayer = get_node("AnimationPlayer")
+onready var _anim: AnimationPlayer = $AnimationPlayer
 
 
 func _ready() -> void:
