@@ -11,10 +11,7 @@ onready var _highlights: TileMap = $Highlights
 
 
 func set_move_highlight(cells: Array) -> void:
+	_highlights.clear()
 	for c in cells:
 		var cell: Vector2 = c
 		_highlights.set_cellv(cell, Tiles.WALK)
-
-
-func clear() -> void:
-	_highlights.clear()

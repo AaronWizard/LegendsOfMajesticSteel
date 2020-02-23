@@ -37,17 +37,11 @@ func _on_BattleGUI_mouse_dragged(relative: Vector2) -> void:
 	_camera.drag(relative)
 
 
-func _on_TurnManager_followed_actor(actor: Actor) -> void:
+func _on_TurnManager_turn_started(actor: Actor) -> void:
+	var battle_stats: BattleStats = actor.battle_stats
+	_map_highlights.set_move_highlight(battle_stats.walk_cells)
 	_camera.follow_actor(actor)
 
 
-func _on_TurnManager_set_movement_range(move_range: Array) -> void:
-	_map_highlights.set_move_highlight(move_range)
-
-
-func _on_TurnManager_action_start() -> void:
-	_camera.reset_offset()
-
-
-func _on_TurnManager_cleared_map_highlights() -> void:
-	_map_highlights.clear()
+func _on_TurnManager_action_started(actor: Actor) -> void:
+	_camera.follow_actor(actor)

@@ -21,8 +21,6 @@ start_map_file = ExtResource( 3 )
 script = ExtResource( 5 )
 
 [node name="BattleGUI" parent="." instance=ExtResource( 6 )]
-[connection signal="action_start" from="TurnManager" to="." method="_on_TurnManager_action_start"]
-[connection signal="cleared_map_highlights" from="TurnManager" to="." method="_on_TurnManager_cleared_map_highlights"]
-[connection signal="followed_actor" from="TurnManager" to="." method="_on_TurnManager_followed_actor"]
-[connection signal="set_movement_range" from="TurnManager" to="." method="_on_TurnManager_set_movement_range"]
+[connection signal="action_started" from="TurnManager" to="." method="_on_TurnManager_action_started"]
+[connection signal="turn_started" from="TurnManager" to="." method="_on_TurnManager_turn_started"]
 [connection signal="mouse_dragged" from="BattleGUI" to="." method="_on_BattleGUI_mouse_dragged"]
