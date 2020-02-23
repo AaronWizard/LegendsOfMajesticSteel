@@ -2,11 +2,11 @@ extends Node
 
 export var start_map_file: PackedScene = null
 
-onready var _map_container := get_node("Map")
-onready var _map_highlights: MapHighlights = get_node("MapHighlights")
-onready var _camera: GameCamera = get_node("GameCamera")
-onready var _turn_manager: TurnManager = get_node("TurnManager")
-onready var _gui: BattleGUI = get_node("BattleGUI")
+onready var _map_container := $Map
+onready var _map_highlights: MapHighlights = $MapHighlights
+onready var _camera: GameCamera = $GameCamera
+onready var _turn_manager: TurnManager = $TurnManager
+onready var _gui: BattleGUI = $BattleGUI
 
 
 func _ready() -> void:
