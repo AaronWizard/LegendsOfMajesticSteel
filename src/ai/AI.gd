@@ -18,7 +18,21 @@ func disconnect_from_gui(_gui: BattleGUI) -> void:
 
 
 func determine_action() -> void:
-	#print("Controller: Must implement determine_action()")
-	print("AI.determine_action")
+	var path = _pick_random_path()
+	var action := MoveAction.new(get_actor(), get_map(), path)
 	get_battle_stats().finished = true
-	emit_signal("determined_action", null)
+	emit_signal("determined_action", action)
+
+
+func _pick_random_path() -> Array:
+	var cells := get_battle_stats().enterable_cells.duplicate()
+	cells.erase(get_actor().cell)
+	assert(not (get_actor().cell in cells))
+
+	var index := _random.randi_range(0, cells.size() - 1)
+	var target: Vector2 = cells[index]
+
+	var path = get_battle_stats().get_walk_path(target)
+	assert(path.size() > 0)
+
+	return path
