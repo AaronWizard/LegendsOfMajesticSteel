@@ -9,6 +9,10 @@ func _ready() -> void:
 	_random.randomize()
 
 
+func get_pauses() -> bool:
+	return true
+
+
 func connect_to_gui(_gui: BattleGUI) -> void:
 	pass
 

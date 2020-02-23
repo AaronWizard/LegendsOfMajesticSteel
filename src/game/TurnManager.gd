@@ -31,11 +31,16 @@ func start(map: Map, gui: BattleGUI) -> void:
 			while not battle_stats.finished:
 				controller.call_deferred("determine_action")
 				var action: Action = yield(controller, "determined_action")
+				if controller.pauses:
+					yield(get_tree().create_timer(0.25), "timeout")
 				if action:
 					action.start()
 					emit_signal("action_started", actor)
 					yield(action, "finished")
 					emit_signal("action_ended", actor)
+
+			if controller.pauses:
+				yield(get_tree().create_timer(0.25), "timeout")
 
 			emit_signal("turn_ended", actor)
 			controller.disconnect_from_gui(gui)
