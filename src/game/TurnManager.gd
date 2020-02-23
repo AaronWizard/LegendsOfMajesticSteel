@@ -29,7 +29,7 @@ func start(map: Map, gui: BattleGUI) -> void:
 			emit_signal("turn_started", actor)
 
 			while not battle_stats.finished:
-				controller.determine_action()
+				controller.call_deferred("determine_action")
 				var action: Action = yield(controller, "determined_action")
 				if action:
 					action.start()

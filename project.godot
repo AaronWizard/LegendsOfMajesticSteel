@@ -9,6 +9,11 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Controller",
+"class": "AI",
+"language": "GDScript",
+"path": "res://src/ai/AI.gd"
+}, {
 "base": "Node",
 "class": "Action",
 "language": "GDScript",
@@ -90,6 +95,7 @@ _global_script_classes=[ {
 "path": "res://src/game/TurnManager.gd"
 } ]
 _global_script_class_icons={
+"AI": "",
 "Action": "",
 "Actor": "",
 "BattleGUI": "",

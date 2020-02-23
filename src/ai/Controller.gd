@@ -37,4 +37,5 @@ func disconnect_from_gui(gui: BattleGUI) -> void:
 
 func determine_action() -> void:
 	print("Controller: Must implement determine_action()")
+	get_battle_stats().finished = true
 	emit_signal("determined_action", null)
