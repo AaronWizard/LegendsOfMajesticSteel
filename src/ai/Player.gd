@@ -26,14 +26,15 @@ func determine_action() -> void:
 func _map_clicked(_position) -> void:
 	var target_cell := get_map().get_mouse_cell()
 
-	var path := get_battle_stats().get_walk_path(target_cell)
-	if path.size() > 0:
-		var action := MoveAction.new()
-		action.actor = get_actor()
-		action.map = get_map()
-		action.path = path
+	if get_map().actor_can_enter_cell(get_actor(), target_cell):
+		var path := get_battle_stats().get_walk_path(target_cell)
+		if path.size() > 0:
+			var action := MoveAction.new()
+			action.actor = get_actor()
+			action.map = get_map()
+			action.path = path
 
-		emit_signal("_input_processed", action)
+			emit_signal("_input_processed", action)
 
 
 func _wait_clicked() -> void:
