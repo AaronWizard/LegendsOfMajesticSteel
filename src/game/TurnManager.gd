@@ -3,6 +3,7 @@ extends Node
 
 signal followed_actor(actor)
 signal set_movement_range(move_range)
+signal action_start
 signal cleared_map_highlights
 
 var running := false
@@ -33,6 +34,7 @@ func start(map: Map, gui: BattleGUI) -> void:
 				var action: Action = yield(controller, "determined_action")
 				if action:
 					action.start()
+					emit_signal("action_start")
 					yield(action, "finished")
 
 			emit_signal("cleared_map_highlights")

@@ -45,5 +45,9 @@ func _on_TurnManager_set_movement_range(move_range: Array) -> void:
 	_map_highlights.set_move_highlight(move_range)
 
 
+func _on_TurnManager_action_start() -> void:
+	_camera.reset_offset()
+
+
 func _on_TurnManager_cleared_map_highlights() -> void:
 	_map_highlights.clear()
