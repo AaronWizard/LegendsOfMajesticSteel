@@ -26,11 +26,17 @@ script = ExtResource( 1 )
 
 [node name="Pivot" type="Position2D" parent="."]
 position = Vector2( 8, 8 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Sprite" type="Sprite" parent="Pivot"]
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="Pivot"]
 position = Vector2( -8, -8 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Stats" type="Node" parent="."]
 script = ExtResource( 2 )
