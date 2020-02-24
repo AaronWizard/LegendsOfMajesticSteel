@@ -55,16 +55,17 @@ func get_actor_on_cell(cell: Vector2) -> Actor:
 
 
 func actor_can_enter_cell(actor: Actor, cell: Vector2,
-		ignore_other_actors: bool = false) -> bool:
+		ignore_allied_actors: bool = false) -> bool:
 	var result := true
 
 	if not get_rect().has_point(cell):
 		result = false
 
-	if result and not ignore_other_actors:
+	if result:
 		var other_actor := get_actor_on_cell(cell)
 		if other_actor and (other_actor != actor):
-			result = false
+			result = ignore_allied_actors \
+					and (other_actor.faction == actor.faction)
 
 	if result and _tile_properties_set:
 		var tile_name := get_tile_name(cell)

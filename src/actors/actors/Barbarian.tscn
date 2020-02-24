@@ -5,6 +5,7 @@
 [ext_resource path="res://src/ai/Player.gd" type="Script" id=3]
 
 [node name="Barbarian" instance=ExtResource( 1 )]
+faction = 0
 
 [node name="Sprite" parent="Pivot" index="0"]
 texture = ExtResource( 2 )

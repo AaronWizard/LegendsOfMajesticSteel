@@ -3,7 +3,11 @@ extends Node2D
 
 signal animations_finished
 
+enum Faction { PLAYER, ENEMY }
+
 export var tile_size := Vector2(16, 16) setget set_tile_size
+
+export(Faction) var faction := Faction.ENEMY
 
 var cell: Vector2 setget set_cell
 var cell_offset: Vector2 setget set_cell_offset

@@ -5,6 +5,7 @@
 [ext_resource path="res://src/ai/Player.gd" type="Script" id=3]
 
 [node name="WarriorPrincess" instance=ExtResource( 2 )]
+faction = 0
 
 [node name="Sprite" parent="Pivot" index="0"]
 texture = ExtResource( 1 )
