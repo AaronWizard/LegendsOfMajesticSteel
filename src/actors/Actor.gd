@@ -19,12 +19,11 @@ var controller = null # -> Controller
 onready var stats: Stats = $Stats
 onready var battle_stats = $BattleStats # -> BattleStats
 
-onready var tween: Tween = $Tween
 onready var remote_transform: RemoteTransform2D = $Pivot/RemoteTransform2D
 
 onready var _pivot: Position2D = $Pivot
-onready var _sprite: Sprite = $Pivot/Sprite
 
+onready var _tween: Tween = $Tween
 onready var _anim: AnimationPlayer = $AnimationPlayer
 
 
@@ -65,11 +64,11 @@ func move_step(target_cell: Vector2) -> void:
 
 	set_cell_offset(origin_cell - target_cell)
 	# warning-ignore:return_value_discarded
-	tween.interpolate_property(self, "cell_offset", cell_offset, Vector2.ZERO,
+	_tween.interpolate_property(self, "cell_offset", cell_offset, Vector2.ZERO,
 			_anim.get_animation("move_step").length,
 			Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 	# warning-ignore:return_value_discarded
-	tween.start()
+	_tween.start()
 	_anim.play("move_step")
 
 
