@@ -21,10 +21,10 @@ position = Vector2( 192, 368 )
 position = Vector2( 288, 368 )
 
 [node name="Fighter" parent="Ground" index="2" instance=ExtResource( 6 )]
-position = Vector2( 240, 224 )
+position = Vector2( 224, 304 )
 
 [node name="Fighter2" parent="Ground" index="3" instance=ExtResource( 6 )]
-position = Vector2( 80, 224 )
+position = Vector2( 144, 336 )
 
 [node name="Fighter3" parent="Ground" index="4" instance=ExtResource( 6 )]
-position = Vector2( 400, 240 )
+position = Vector2( 352, 384 )
