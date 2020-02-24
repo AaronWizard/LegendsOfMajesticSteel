@@ -13,15 +13,7 @@ func get_pauses() -> bool:
 	return true
 
 
-func connect_to_gui(_gui: BattleGUI) -> void:
-	pass
-
-
-func disconnect_from_gui(_gui: BattleGUI) -> void:
-	pass
-
-
-func determine_action() -> void:
+func determine_action(_gui: BattleGUI) -> void:
 	var path = _pick_random_path()
 	var action := MoveAction.new(get_actor(), get_map(), path)
 	get_battle_stats().finished = true

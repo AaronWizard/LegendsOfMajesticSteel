@@ -24,12 +24,11 @@ func start(map: Map, gui: BattleGUI) -> void:
 
 		if controller:
 			battle_stats.start_turn()
-			controller.connect_to_gui(gui)
 
 			emit_signal("turn_started", actor)
 
 			while not battle_stats.finished:
-				controller.call_deferred("determine_action")
+				controller.call_deferred("determine_action", gui)
 				var action: Action = yield(controller, "determined_action")
 				if controller.pauses:
 					yield(get_tree().create_timer(0.25), "timeout")
@@ -43,6 +42,5 @@ func start(map: Map, gui: BattleGUI) -> void:
 				yield(get_tree().create_timer(0.25), "timeout")
 
 			emit_signal("turn_ended", actor)
-			controller.disconnect_from_gui(gui)
 
 		_current_index = (_current_index + 1) % actors.size()

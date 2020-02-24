@@ -32,16 +32,7 @@ func get_battle_stats() -> BattleStats:
 
 
 # warning-ignore:unused_argument
-func connect_to_gui(gui: BattleGUI) -> void:
-	print("Controller: Must implement connect_to_gui()")
-
-
-# warning-ignore:unused_argument
-func disconnect_from_gui(gui: BattleGUI) -> void:
-	print("Controller: Must implement disconnect_from_gui()")
-
-
-func determine_action() -> void:
+func determine_action(gui: BattleGUI) -> void:
 	print("Controller: Must implement determine_action()")
 	get_battle_stats().finished = true
 	emit_signal("determined_action", null)
