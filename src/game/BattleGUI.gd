@@ -8,6 +8,7 @@ signal wait_pressed
 const MIN_DRAG_SPEED_SQUARED = 8^2
 
 var buttons_visible := false setget set_buttons_visible
+var dragging_enabled := false
 
 var _mouse_down := false
 var _dragging := false
@@ -22,7 +23,7 @@ func _unhandled_input(event: InputEvent) -> void:
 				emit_signal("mouse_clicked", event.position)
 			_mouse_down = event.pressed
 	elif event is InputEventMouseMotion:
-		_dragging = _mouse_down \
+		_dragging = dragging_enabled and _mouse_down \
 				and (event.speed.length_squared() >= MIN_DRAG_SPEED_SQUARED)
 		if _dragging:
 			emit_signal("mouse_dragged", event.relative)
