@@ -40,6 +40,7 @@ func _get_actor() -> Actor:
 func _get_map() -> Map:
 	return _get_actor().map
 
+
 func _update_move_range() -> void:
 	enterable_cells.clear()
 	_walk_grid.clear()
