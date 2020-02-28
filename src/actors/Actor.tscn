@@ -3,23 +3,7 @@
 [ext_resource path="res://src/actors/Actor.gd" type="Script" id=1]
 [ext_resource path="res://src/actors/Stats.gd" type="Script" id=2]
 [ext_resource path="res://src/actors/BattleStats.gd" type="Script" id=3]
-
-[sub_resource type="Animation" id=1]
-resource_name = "move_step"
-length = 0.1
-step = 0.05
-tracks/0/type = "value"
-tracks/0/path = NodePath("Pivot/Sprite:position")
-tracks/0/interp = 2
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.05, 0.1 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
-"update": 0,
-"values": [ Vector2( 0, 0 ), Vector2( 0, -2 ), Vector2( 0, 0 ) ]
-}
+[ext_resource path="res://resources/animations/actor_move_step.tres" type="Animation" id=4]
 
 [node name="Actor" type="Node2D"]
 script = ExtResource( 1 )
@@ -47,5 +31,5 @@ script = ExtResource( 3 )
 [node name="Tween" type="Tween" parent="."]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/move_step = SubResource( 1 )
+anims/actor_move_step = ExtResource( 4 )
 [connection signal="tween_all_completed" from="Tween" to="." method="_on_Tween_tween_all_completed"]

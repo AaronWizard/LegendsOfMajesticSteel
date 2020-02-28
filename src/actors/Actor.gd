@@ -5,6 +5,8 @@ signal animations_finished
 
 enum Faction { PLAYER, ENEMY }
 
+const _MOVE_STEP_ANIM := "actor_move_step"
+
 export var tile_size := Vector2(16, 16) setget set_tile_size
 
 export(Faction) var faction := Faction.ENEMY
@@ -65,11 +67,11 @@ func move_step(target_cell: Vector2) -> void:
 	set_cell_offset(origin_cell - target_cell)
 	# warning-ignore:return_value_discarded
 	_tween.interpolate_property(self, "cell_offset", cell_offset, Vector2.ZERO,
-			_anim.get_animation("move_step").length,
+			_anim.get_animation(_MOVE_STEP_ANIM).length,
 			Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 	# warning-ignore:return_value_discarded
 	_tween.start()
-	_anim.play("move_step")
+	_anim.play(_MOVE_STEP_ANIM)
 
 
 func _set_pivot_position() -> void:
