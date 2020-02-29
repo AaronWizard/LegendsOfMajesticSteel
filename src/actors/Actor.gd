@@ -23,6 +23,8 @@ onready var battle_stats = $BattleStats # -> BattleStats
 
 onready var remote_transform: RemoteTransform2D = $Pivot/RemoteTransform2D
 
+onready var _abilities := $Abilities
+
 onready var _pivot: Position2D = $Pivot
 
 onready var _tween: Tween = $Tween
@@ -72,6 +74,10 @@ func move_step(target_cell: Vector2) -> void:
 	# warning-ignore:return_value_discarded
 	_tween.start()
 	_anim.play(_MOVE_STEP_ANIM)
+
+
+func get_abilities() -> Array:
+	return _abilities.get_children()
 
 
 func _set_pivot_position() -> void:
