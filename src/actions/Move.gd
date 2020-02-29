@@ -1,4 +1,4 @@
-class_name MoveAction
+class_name Move
 extends Action
 
 var path: Array

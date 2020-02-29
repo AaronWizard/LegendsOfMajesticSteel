@@ -65,9 +65,9 @@ _global_script_classes=[ {
 "path": "res://src/maps/MapHighlights.gd"
 }, {
 "base": "Action",
-"class": "MoveAction",
+"class": "Move",
 "language": "GDScript",
-"path": "res://src/actions/MoveAction.gd"
+"path": "res://src/actions/Move.gd"
 }, {
 "base": "Controller",
 "class": "Player",
@@ -106,7 +106,7 @@ _global_script_class_icons={
 "GameCamera": "",
 "Map": "",
 "MapHighlights": "",
-"MoveAction": "",
+"Move": "",
 "Player": "",
 "Stats": "",
 "TileProperties": "",
