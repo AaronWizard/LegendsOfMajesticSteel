@@ -15,6 +15,16 @@ _global_script_classes=[ {
 "path": "res://src/ai/AI.gd"
 }, {
 "base": "Node",
+"class": "Ability",
+"language": "GDScript",
+"path": "res://src/abilities/Ability.gd"
+}, {
+"base": "Action",
+"class": "AbilityAction",
+"language": "GDScript",
+"path": "res://src/actions/AbilityAction.gd"
+}, {
+"base": "Reference",
 "class": "Action",
 "language": "GDScript",
 "path": "res://src/actions/Action.gd"
@@ -96,6 +106,8 @@ _global_script_classes=[ {
 } ]
 _global_script_class_icons={
 "AI": "",
+"Ability": "",
+"AbilityAction": "",
 "Action": "",
 "Actor": "",
 "BattleGUI": "",
