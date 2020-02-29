@@ -23,6 +23,8 @@ func start(map: Map, gui: BattleGUI) -> void:
 		var battle_stats := actor.battle_stats as BattleStats
 
 		if controller:
+			gui.current_actor = actor
+
 			battle_stats.start_turn()
 
 			emit_signal("turn_started", actor)
@@ -42,5 +44,6 @@ func start(map: Map, gui: BattleGUI) -> void:
 				yield(get_tree().create_timer(0.25), "timeout")
 
 			emit_signal("turn_ended", actor)
+			gui.current_actor = null
 
 		_current_index = (_current_index + 1) % actors.size()

@@ -45,3 +45,7 @@ func _on_TurnManager_turn_started(actor: Actor) -> void:
 
 func _on_TurnManager_action_started(actor: Actor) -> void:
 	_camera.follow_actor(actor)
+
+
+func _on_BattleGUI_ability_pressed(ability: Ability) -> void:
+	print(ability.name)

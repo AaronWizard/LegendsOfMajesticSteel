@@ -4,16 +4,20 @@ extends CanvasLayer
 signal mouse_dragged(relative)
 signal mouse_clicked(position)
 signal wait_pressed
+signal ability_pressed(ability)
 
 const MIN_DRAG_SPEED_SQUARED = 8^2
 
 var buttons_visible := false setget set_buttons_visible
 var dragging_enabled := false
 
+var current_actor: Actor setget set_current_actor
+
 var _mouse_down := false
 var _dragging := false
 
-onready var _all_buttons: Node = $Buttons
+onready var _all_buttons := $Buttons
+onready var _ability_buttons := $Buttons/Abilities
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -30,9 +34,24 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func set_buttons_visible(value: bool) -> void:
-	for b in _all_buttons.get_children():
-		var button: Button = b
-		button.visible = value
+	_all_buttons.visible = value
+
+
+func set_current_actor(value: Actor) -> void:
+	current_actor = value
+	if current_actor:
+		for a in current_actor.get_abilities():
+			var ability: Ability = a
+			var button := Button.new()
+			button.text = ability.name
+			button.connect("pressed", self, "emit_signal",
+					["ability_pressed", ability])
+			_ability_buttons.add_child(button)
+	else:
+		while _ability_buttons.get_child_count() > 0:
+			var button := _ability_buttons.get_child(0)
+			_ability_buttons.remove_child(button)
+			button.queue_free()
 
 
 func _on_Wait_pressed() -> void:
