@@ -4,6 +4,7 @@ extends CanvasLayer
 signal mouse_dragged(relative)
 signal mouse_clicked(position)
 signal wait_pressed
+# warning-ignore:unused_signal
 signal ability_pressed(ability)
 
 const MIN_DRAG_SPEED_SQUARED = 8^2
@@ -44,6 +45,7 @@ func set_current_actor(value: Actor) -> void:
 			var ability: Ability = a
 			var button := Button.new()
 			button.text = ability.name
+			# warning-ignore:return_value_discarded
 			button.connect("pressed", self, "emit_signal",
 					["ability_pressed", ability])
 			_ability_buttons.add_child(button)
