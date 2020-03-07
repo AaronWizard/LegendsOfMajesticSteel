@@ -38,10 +38,12 @@ func get_current_aoe(target_cell: Vector2) -> Array:
 	return get_aoe(get_actor().cell, target_cell)
 
 
+# warning-ignore:unused_argument
 func get_aoe(source_cell: Vector2, target_cell: Vector2) -> Array:
 	return [target_cell]
 
 
+# warning-ignore:unused_argument
 func start(target: Vector2) -> void:
 	print("Ability must implement start()")
 	emit_signal("finished")
