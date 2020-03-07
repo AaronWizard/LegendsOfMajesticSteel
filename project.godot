@@ -34,6 +34,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/actors/Actor.gd"
 }, {
+"base": "Ability",
+"class": "Attack",
+"language": "GDScript",
+"path": "res://src/abilities/Attack.gd"
+}, {
 "base": "CanvasLayer",
 "class": "BattleGUI",
 "language": "GDScript",
@@ -89,6 +94,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/actors/Stats.gd"
 }, {
+"base": "Reference",
+"class": "TileGeometry",
+"language": "GDScript",
+"path": "res://src/maps/TileGeometry.gd"
+}, {
 "base": "Node",
 "class": "TileProperties",
 "language": "GDScript",
@@ -110,6 +120,7 @@ _global_script_class_icons={
 "AbilityAction": "",
 "Action": "",
 "Actor": "",
+"Attack": "",
 "BattleGUI": "",
 "BattleStats": "",
 "BreadthFirstSearch": "",
@@ -121,6 +132,7 @@ _global_script_class_icons={
 "Move": "",
 "Player": "",
 "Stats": "",
+"TileGeometry": "",
 "TileProperties": "",
 "TilePropertiesSet": "",
 "TurnManager": ""
