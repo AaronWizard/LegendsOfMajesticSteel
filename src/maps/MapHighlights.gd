@@ -7,9 +7,29 @@ enum Tiles {
 	AOE,
 }
 
+var moves_visible: bool setget set_moves_visible, get_moves_visible
+var targets_visible: bool setget set_targets_visible, get_targets_visible
+
 onready var _moves: TileMap = $Moves
 onready var _targets: TileMap = $Targets
 onready var _aoe: TileMap = $AOE
+
+
+func set_moves_visible(value: bool) -> void:
+	_moves.visible = value
+
+
+func get_moves_visible() -> bool:
+	return _moves.visible
+
+
+func set_targets_visible(value: bool) -> void:
+	_targets.visible = value
+	_aoe.visible = value
+
+
+func get_targets_visible() -> bool:
+	return _targets.visible
 
 
 func set_moves(cells: Array) -> void:
