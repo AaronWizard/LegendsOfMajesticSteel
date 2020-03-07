@@ -4,8 +4,8 @@ extends CanvasLayer
 signal mouse_dragged(relative)
 signal mouse_clicked(position)
 signal wait_pressed
-# warning-ignore:unused_signal
 signal ability_pressed(ability)
+signal ability_cleared
 
 const MIN_DRAG_SPEED_SQUARED = 8^2
 
@@ -13,12 +13,16 @@ var buttons_visible := false setget set_buttons_visible
 var dragging_enabled := false
 
 var current_actor: Actor setget set_current_actor
+var current_ability: Ability setget set_current_ability
 
 var _mouse_down := false
 var _dragging := false
 
-onready var _all_buttons := $Buttons
-onready var _ability_buttons := $Buttons/Abilities
+onready var _all_buttons: Container = $Buttons
+onready var _ability_buttons: Container = $Buttons/Abilities
+
+onready var _wait_button: Button = $Buttons/Wait
+onready var _ability_cancel_button: Button = $Buttons/AbilityCancel
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -46,15 +50,37 @@ func set_current_actor(value: Actor) -> void:
 			var button := Button.new()
 			button.text = ability.name
 			# warning-ignore:return_value_discarded
-			button.connect("pressed", self, "emit_signal",
-					["ability_pressed", ability])
+			button.connect("pressed", self, "_on_ability_pressed", [ability])
 			_ability_buttons.add_child(button)
 	else:
 		while _ability_buttons.get_child_count() > 0:
 			var button := _ability_buttons.get_child(0)
 			_ability_buttons.remove_child(button)
+			button.disconnect("pressed", self, "_on_ability_pressed")
 			button.queue_free()
+
+
+func set_current_ability(value: Ability) -> void:
+	current_ability = value
+	if current_ability:
+		_ability_buttons.visible = false
+		_wait_button.visible = false
+		_ability_cancel_button.visible = true
+	else:
+		_ability_buttons.visible = true
+		_wait_button.visible = true
+		_ability_cancel_button.visible = false
+
+
+func _on_ability_pressed(ability: Ability) -> void:
+	set_current_ability(ability)
+	emit_signal("ability_pressed", ability)
 
 
 func _on_Wait_pressed() -> void:
 	emit_signal("wait_pressed")
+
+
+func _on_AbilityCancel_pressed() -> void:
+	set_current_ability(null)
+	emit_signal("ability_cleared")

@@ -38,4 +38,15 @@ text = "Wait"
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="AbilityCancel" type="Button" parent="Buttons"]
+visible = false
+margin_left = 246.0
+margin_right = 312.0
+margin_bottom = 27.0
+text = "Cancel"
+__meta__ = {
+"_edit_use_anchors_": false
+}
 [connection signal="pressed" from="Buttons/Wait" to="." method="_on_Wait_pressed"]
+[connection signal="pressed" from="Buttons/AbilityCancel" to="." method="_on_AbilityCancel_pressed"]
