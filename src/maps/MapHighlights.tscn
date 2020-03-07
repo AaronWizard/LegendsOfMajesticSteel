@@ -3,11 +3,20 @@
 [ext_resource path="res://resources/tilesets/highlighting_tileset.tres" type="TileSet" id=1]
 [ext_resource path="res://src/maps/MapHighlights.gd" type="Script" id=2]
 
-
 [node name="MapHighlights" type="Node"]
 script = ExtResource( 2 )
 
-[node name="Highlights" type="TileMap" parent="."]
+[node name="Moves" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 16, 16 )
+format = 1
+
+[node name="Targets" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 16, 16 )
+format = 1
+
+[node name="AOE" type="TileMap" parent="."]
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 16, 16 )
 format = 1

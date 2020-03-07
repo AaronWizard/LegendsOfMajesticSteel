@@ -39,7 +39,7 @@ func _on_BattleGUI_mouse_dragged(relative: Vector2) -> void:
 
 func _on_TurnManager_turn_started(actor: Actor) -> void:
 	var battle_stats: BattleStats = actor.battle_stats
-	_map_highlights.set_move_highlight(battle_stats.move_range)
+	_map_highlights.set_moves(battle_stats.move_range)
 	_camera.follow_actor(actor)
 
 
