@@ -21,6 +21,11 @@ func get_range(source_cell: Vector2) -> Array:
 	return []
 
 
+func get_valid_targets(source_cell: Vector2) -> Array:
+	print("Ability must get_valid_targets get_range()")
+	return []
+
+
 func get_aoe(source_cell: Vector2, target_cell: Vector2) -> Array:
 	return [target_cell]
 
