@@ -25,4 +25,4 @@ script = ExtResource( 5 )
 [connection signal="turn_started" from="TurnManager" to="." method="_on_TurnManager_turn_started"]
 [connection signal="ability_cleared" from="BattleGUI" to="." method="_on_BattleGUI_ability_cleared"]
 [connection signal="ability_pressed" from="BattleGUI" to="." method="_on_BattleGUI_ability_pressed"]
-[connection signal="mouse_dragged" from="BattleGUI" to="." method="_on_BattleGUI_mouse_dragged"]
+[connection signal="camera_dragged" from="BattleGUI" to="." method="_on_BattleGUI_camera_dragged"]

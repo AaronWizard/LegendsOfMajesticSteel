@@ -25,15 +25,15 @@ func _move_step() -> void:
 
 func allow_cancel(gui: BattleGUI) -> void:
 	# warning-ignore:return_value_discarded
-	gui.connect("mouse_clicked", self, "_click_to_cancel", [], CONNECT_ONESHOT)
+	gui.connect("clicked_to_move", self, "_click_to_cancel", [], CONNECT_ONESHOT)
 	# In case move not cancelled
 	# warning-ignore:return_value_discarded
 	connect("finished", self, "_disconnect_from_gui", [gui], CONNECT_ONESHOT)
 
 
 func _disconnect_from_gui(gui: BattleGUI) -> void:
-	if gui.is_connected("mouse_clicked", self, "_click_to_cancel"):
-		gui.disconnect("mouse_clicked", self, "_click_to_cancel")
+	if gui.is_connected("clicked_to_move", self, "_click_to_cancel"):
+		gui.disconnect("clicked_to_move", self, "_click_to_cancel")
 
 
 func _click_to_cancel(_position) -> void:

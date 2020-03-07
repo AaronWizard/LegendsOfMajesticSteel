@@ -1,11 +1,14 @@
 class_name BattleGUI
 extends CanvasLayer
 
-signal mouse_dragged(relative)
-signal mouse_clicked(position)
-signal wait_pressed
+signal camera_dragged(relative)
+
+signal clicked_to_move(position)
+signal clicked_to_target(position, ability)
+
 signal ability_pressed(ability)
 signal ability_cleared
+signal wait_pressed
 
 const MIN_DRAG_SPEED_SQUARED = 8^2
 
@@ -29,13 +32,13 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
 		if event.button_index == BUTTON_LEFT:
 			if not event.pressed and _mouse_down and not _dragging:
-				emit_signal("mouse_clicked", event.position)
+				_on_mouse_clicked(event.position)
 			_mouse_down = event.pressed
 	elif event is InputEventMouseMotion:
 		_dragging = dragging_enabled and _mouse_down \
 				and (event.speed.length_squared() >= MIN_DRAG_SPEED_SQUARED)
 		if _dragging:
-			emit_signal("mouse_dragged", event.relative)
+			emit_signal("camera_dragged", event.relative)
 
 
 func set_buttons_visible(value: bool) -> void:
@@ -72,15 +75,22 @@ func set_current_ability(value: Ability) -> void:
 		_ability_cancel_button.visible = false
 
 
+func _on_mouse_clicked(position: Vector2) -> void:
+	if current_ability:
+		emit_signal("clicked_to_target", position, current_ability)
+	else:
+		emit_signal("clicked_to_move", position)
+
+
 func _on_ability_pressed(ability: Ability) -> void:
 	set_current_ability(ability)
 	emit_signal("ability_pressed", ability)
 
 
-func _on_Wait_pressed() -> void:
-	emit_signal("wait_pressed")
-
-
 func _on_AbilityCancel_pressed() -> void:
 	set_current_ability(null)
 	emit_signal("ability_cleared")
+
+
+func _on_Wait_pressed() -> void:
+	emit_signal("wait_pressed")

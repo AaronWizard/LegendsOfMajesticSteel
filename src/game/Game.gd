@@ -33,7 +33,7 @@ func load_map(map_file: PackedScene) -> void:
 	_camera.set_bounds(new_map.get_pixel_rect())
 
 
-func _on_BattleGUI_mouse_dragged(relative: Vector2) -> void:
+func _on_BattleGUI_camera_dragged(relative) -> void:
 	_camera.drag(relative)
 
 
