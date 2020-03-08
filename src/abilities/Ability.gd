@@ -25,12 +25,23 @@ func get_range(source_cell: Vector2) -> Array:
 	return [source_cell]
 
 
+func is_current_valid_target(target_cell: Vector2) -> bool:
+	return is_valid_target(target_cell, get_actor().cell)
+
+
+# warning-ignore:unused_argument
+# warning-ignore:unused_argument
+func is_valid_target(target_cell: Vector2, source_cell: Vector2) -> bool:
+	print("Ability must implement is_valid_target()")
+	return false
+
+
 func get_current_valid_targets() -> Array:
 	return get_valid_targets(get_actor().cell)
 
 
 func get_valid_targets(source_cell: Vector2) -> Array:
-	print("Ability must get_valid_targets get_range()")
+	print("Ability must implement get_valid_targets()")
 	return [source_cell]
 
 
