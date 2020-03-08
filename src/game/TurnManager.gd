@@ -39,6 +39,8 @@ func start(map: Map, gui: BattleGUI) -> void:
 					emit_signal("action_started", actor)
 					yield(action, "finished")
 					emit_signal("action_ended", actor)
+				else:
+					battle_stats.finished = true
 
 			if controller.pauses:
 				yield(get_tree().create_timer(0.25), "timeout")

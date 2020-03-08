@@ -48,5 +48,4 @@ func _target_ability(ability: Ability, target_cell: Vector2) -> void:
 
 
 func _wait_clicked() -> void:
-	get_battle_stats().finished = true
 	emit_signal("_input_processed", null)

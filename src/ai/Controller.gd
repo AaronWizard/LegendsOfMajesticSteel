@@ -34,5 +34,4 @@ func get_battle_stats() -> BattleStats:
 # warning-ignore:unused_argument
 func determine_action(gui: BattleGUI) -> void:
 	print("Controller: Must implement determine_action()")
-	get_battle_stats().finished = true
 	emit_signal("determined_action", null)

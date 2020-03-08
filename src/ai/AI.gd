@@ -3,10 +3,13 @@ extends Controller
 
 onready var _random := RandomNumberGenerator.new()
 
+var _moved := false
+
 
 func _ready() -> void:
 	._ready()
 	_random.randomize()
+	_moved = false
 
 
 func get_pauses() -> bool:
@@ -14,10 +17,15 @@ func get_pauses() -> bool:
 
 
 func determine_action(_gui: BattleGUI) -> void:
-	var path = _pick_random_path()
-	var action := Move.new(get_actor(), get_map(), path)
-	get_battle_stats().finished = true
-	emit_signal("determined_action", action)
+	var want_move = not _moved
+	_moved = want_move
+
+	if want_move:
+		var path = _pick_random_path()
+		var action := Move.new(get_actor(), get_map(), path)
+		emit_signal("determined_action", action)
+	else:
+		emit_signal("determined_action", null)
 
 
 func _pick_random_path() -> Array:
