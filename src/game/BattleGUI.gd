@@ -3,12 +3,14 @@ extends CanvasLayer
 
 signal camera_dragged(relative)
 
-signal clicked_to_move(position)
-signal clicked_to_target(position, ability)
+signal move_started(target_cell)
 
-signal ability_pressed(ability)
-signal ability_cleared
-signal wait_pressed
+signal ability_selected(ability)
+signal ability_target_placed(ability, target_cell)
+signal ability_started(ability, target_cell)
+signal ability_cancelled
+
+signal wait_started
 
 const MIN_DRAG_SPEED_SQUARED = 8^2
 
@@ -32,7 +34,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
 		if event.button_index == BUTTON_LEFT:
 			if not event.pressed and _mouse_down and not _dragging:
-				_on_mouse_clicked(event.position)
+				_on_mouse_clicked()
 			_mouse_down = event.pressed
 	elif event is InputEventMouseMotion:
 		_dragging = dragging_enabled and _mouse_down \
@@ -75,22 +77,25 @@ func set_current_ability(value: Ability) -> void:
 		_ability_cancel_button.visible = false
 
 
-func _on_mouse_clicked(position: Vector2) -> void:
+func _on_mouse_clicked() -> void:
+	var current_map: Map = current_actor.map
+	var target_cell = current_map.get_mouse_cell()
 	if current_ability:
-		emit_signal("clicked_to_target", position, current_ability)
+		if current_ability.is_current_valid_target(target_cell):
+			emit_signal("ability_target_placed", current_ability, target_cell)
 	else:
-		emit_signal("clicked_to_move", position)
+		emit_signal("move_started", target_cell)
 
 
 func _on_ability_pressed(ability: Ability) -> void:
 	set_current_ability(ability)
-	emit_signal("ability_pressed", ability)
+	emit_signal("ability_selected", ability)
 
 
 func _on_AbilityCancel_pressed() -> void:
 	set_current_ability(null)
-	emit_signal("ability_cleared")
+	emit_signal("ability_cancelled")
 
 
 func _on_Wait_pressed() -> void:
-	emit_signal("wait_pressed")
+	emit_signal("wait_started")

@@ -20,24 +20,22 @@ func _connect_to_gui(gui: BattleGUI) -> void:
 	gui.dragging_enabled = true
 
 	# warning-ignore:return_value_discarded
-	gui.connect("clicked_to_move", self, "_move")
+	gui.connect("move_started", self, "_move")
 	# warning-ignore:return_value_discarded
-	gui.connect("clicked_to_target", self, "_target_ability")
+	gui.connect("ability_started", self, "_target_ability")
 	# warning-ignore:return_value_discarded
-	gui.connect("wait_pressed", self, "_wait_clicked")
+	gui.connect("wait_started", self, "_wait_clicked")
 
 
 func _disconnect_from_gui(gui: BattleGUI) -> void:
 	gui.buttons_visible = false
 	gui.dragging_enabled = false
-	gui.disconnect("clicked_to_move", self, "_move")
-	gui.disconnect("clicked_to_target", self, "_target_ability")
-	gui.disconnect("wait_pressed", self, "_wait_clicked")
+	gui.disconnect("move_started", self, "_move")
+	gui.disconnect("ability_started", self, "_target_ability")
+	gui.disconnect("wait_started", self, "_wait_clicked")
 
 
-func _move(_position) -> void:
-	var target_cell := get_map().get_mouse_cell()
-
+func _move(target_cell: Vector2) -> void:
 	var path := get_battle_stats().get_walk_path(target_cell)
 	if path.size() > 0:
 		var action := Move.new(get_actor(), get_map(), path)
@@ -45,8 +43,8 @@ func _move(_position) -> void:
 		emit_signal("_input_processed", action)
 
 
-func _target_ability(position: Vector2, ability: Ability) -> void:
-	print(ability.name)
+func _target_ability(ability: Ability, target_cell: Vector2) -> void:
+	print(ability.name, ", ", target_cell)
 
 
 func _wait_clicked() -> void:

@@ -47,11 +47,18 @@ func _on_TurnManager_action_started(actor: Actor) -> void:
 	_camera.follow_actor(actor)
 
 
-func _on_BattleGUI_ability_pressed(ability: Ability) -> void:
+func _on_BattleGUI_ability_selected(ability: Ability) -> void:
 	_map_highlights.set_targets(ability.get_current_range())
 	_map_highlights.moves_visible = false
 
 
-func _on_BattleGUI_ability_cleared() -> void:
+func _on_BattleGUI_ability_target_placed(_ability, \
+		target_cell: Vector2) -> void:
+	_map_highlights.target_cursor_visible = true
+	_map_highlights.target_cursor_cell = target_cell
+
+
+func _on_BattleGUI_ability_cancelled() -> void:
+	_map_highlights.target_cursor_visible = false
 	_map_highlights.set_targets([])
 	_map_highlights.moves_visible = true
