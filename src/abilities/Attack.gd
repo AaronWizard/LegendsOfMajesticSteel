@@ -27,5 +27,5 @@ func get_valid_targets(source_cell: Vector2) -> Array:
 
 
 func start(target: Vector2) -> void:
-	print(target)
+	print(get_actor().name, "; ", name, "; ", target)
 	emit_signal("finished")
