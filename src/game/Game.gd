@@ -58,7 +58,7 @@ func _on_BattleGUI_ability_target_placed(_ability, \
 	_map_highlights.target_cursor_cell = target_cell
 
 
-func _on_BattleGUI_ability_cancelled() -> void:
+func _on_BattleGUI_ability_cleared() -> void:
 	_map_highlights.target_cursor_visible = false
 	_map_highlights.set_targets([])
 	_map_highlights.moves_visible = true

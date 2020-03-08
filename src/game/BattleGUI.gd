@@ -8,7 +8,7 @@ signal move_started(target_cell)
 signal ability_selected(ability)
 signal ability_target_placed(ability, target_cell)
 signal ability_started(ability, target_cell)
-signal ability_cancelled
+signal ability_cleared
 
 signal wait_started
 
@@ -76,10 +76,12 @@ func set_current_ability(value: Ability) -> void:
 		_ability_buttons.visible = false
 		_wait_button.visible = false
 		_ability_cancel_button.visible = true
+		emit_signal("ability_selected", _current_ability)
 	else:
 		_ability_buttons.visible = true
 		_wait_button.visible = true
 		_ability_cancel_button.visible = false
+		emit_signal("ability_cleared")
 
 
 func _on_mouse_clicked() -> void:
@@ -95,6 +97,7 @@ func _on_mouse_clicked() -> void:
 func _click_for_ability_target(target_cell: Vector2) -> void:
 	if _have_ability_target and (_current_ability_target == target_cell):
 		emit_signal("ability_started", _current_ability, target_cell)
+		set_current_ability(null)
 	else:
 		_have_ability_target = true
 		_current_ability_target = target_cell
@@ -103,12 +106,10 @@ func _click_for_ability_target(target_cell: Vector2) -> void:
 
 func _on_ability_pressed(ability: Ability) -> void:
 	set_current_ability(ability)
-	emit_signal("ability_selected", ability)
 
 
 func _on_AbilityCancel_pressed() -> void:
 	set_current_ability(null)
-	emit_signal("ability_cancelled")
 
 
 func _on_Wait_pressed() -> void:
