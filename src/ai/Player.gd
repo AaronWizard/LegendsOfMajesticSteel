@@ -44,7 +44,9 @@ func _move(target_cell: Vector2) -> void:
 
 
 func _target_ability(ability: Ability, target_cell: Vector2) -> void:
-	print(ability.name, ", ", target_cell)
+	var attack := AbilityAction.new(get_actor(), get_map(), ability,
+			target_cell)
+	emit_signal("_input_processed", attack)
 
 
 func _wait_clicked() -> void:
