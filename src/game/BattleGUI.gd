@@ -18,10 +18,13 @@ var buttons_visible := false setget set_buttons_visible
 var dragging_enabled := false
 
 var current_actor: Actor setget set_current_actor
-var current_ability: Ability setget set_current_ability
 
 var _mouse_down := false
 var _dragging := false
+
+var _current_ability: Ability setget set_current_ability
+var _have_ability_target := false
+var _current_ability_target: Vector2
 
 onready var _all_buttons: Container = $Buttons
 onready var _ability_buttons: Container = $Buttons/Abilities
@@ -66,8 +69,10 @@ func set_current_actor(value: Actor) -> void:
 
 
 func set_current_ability(value: Ability) -> void:
-	current_ability = value
-	if current_ability:
+	_current_ability = value
+	_have_ability_target = false
+
+	if _current_ability:
 		_ability_buttons.visible = false
 		_wait_button.visible = false
 		_ability_cancel_button.visible = true
@@ -80,11 +85,20 @@ func set_current_ability(value: Ability) -> void:
 func _on_mouse_clicked() -> void:
 	var current_map: Map = current_actor.map
 	var target_cell = current_map.get_mouse_cell()
-	if current_ability:
-		if current_ability.is_current_valid_target(target_cell):
-			emit_signal("ability_target_placed", current_ability, target_cell)
-	else:
+	if _current_ability \
+			and _current_ability.is_current_valid_target(target_cell):
+		_click_for_ability_target(target_cell)
+	elif not _current_ability:
 		emit_signal("move_started", target_cell)
+
+
+func _click_for_ability_target(target_cell: Vector2) -> void:
+	if _have_ability_target and (_current_ability_target == target_cell):
+		emit_signal("ability_started", _current_ability, target_cell)
+	else:
+		_have_ability_target = true
+		_current_ability_target = target_cell
+		emit_signal("ability_target_placed", _current_ability, target_cell)
 
 
 func _on_ability_pressed(ability: Ability) -> void:
