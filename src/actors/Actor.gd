@@ -13,7 +13,7 @@ export var tile_size := Vector2(16, 16) setget set_tile_size
 export(Faction) var faction := Faction.ENEMY
 
 onready var cell: Vector2 setget set_cell, get_cell
-var cell_offset: Vector2 setget set_cell_offset
+var cell_offset: Vector2 setget set_cell_offset, get_cell_offset
 
 var map setget , get_map # -> Map
 
@@ -22,11 +22,13 @@ var controller = null # -> Controller
 onready var stats := $Stats as Stats
 onready var battle_stats = $BattleStats # -> BattleStats
 
-onready var remote_transform := $Pivot/RemoteTransform2D as RemoteTransform2D
+onready var remote_transform := $Center/Offset/RemoteTransform2D \
+		as RemoteTransform2D
 
 onready var _abilities := $Abilities
 
-onready var _pivot := $Pivot as Position2D
+onready var _center := $Center as Position2D
+onready var _offset := $Center/Offset as Position2D
 
 onready var _tween := $Tween as Tween
 onready var _anim := $AnimationPlayer as AnimationPlayer
@@ -45,10 +47,17 @@ func _draw() -> void:
 
 
 func set_tile_size(new_value: Vector2) -> void:
-	var old_cell = get_cell() # Cell based on position and old tile_size
+	# Cell and cell offset based on old tile_size
+	var old_cell = get_cell()
+	var old_cell_offset = get_cell_offset()
+
 	tile_size = new_value
+	if _center:
+		_center.position = tile_size / 2
+
 	set_cell(old_cell)
-	_set_pivot_position()
+	set_cell_offset(old_cell_offset)
+
 	update()
 
 
@@ -61,8 +70,15 @@ func get_cell() -> Vector2:
 
 
 func set_cell_offset(new_value: Vector2) -> void:
-	cell_offset = new_value
-	_set_pivot_position()
+	if _offset:
+		_offset.position = new_value * tile_size
+
+
+func get_cell_offset() -> Vector2:
+	var result := Vector2.ZERO
+	if _offset:
+		result = _offset.position / tile_size
+	return result
 
 
 func on_cell(c: Vector2) -> bool:
@@ -81,7 +97,8 @@ func move_step(target_cell: Vector2) -> void:
 
 	set_cell_offset(origin_cell - target_cell)
 	# warning-ignore:return_value_discarded
-	_tween.interpolate_property(self, "cell_offset", cell_offset, Vector2.ZERO,
+	_tween.interpolate_property(
+			self, "cell_offset", get_cell_offset(), Vector2.ZERO,
 			_anim.get_animation(_MOVE_STEP_ANIM).length,
 			Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 	# warning-ignore:return_value_discarded
@@ -91,12 +108,6 @@ func move_step(target_cell: Vector2) -> void:
 
 func get_abilities() -> Array:
 	return _abilities.get_children()
-
-
-func _set_pivot_position() -> void:
-	if _pivot:
-		var pivot_cell_pos := cell_offset + (Vector2.ONE / 2.0)
-		_pivot.position = pivot_cell_pos * tile_size
 
 
 func _on_Tween_tween_all_completed() -> void:

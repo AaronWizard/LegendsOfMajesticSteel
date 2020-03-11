@@ -7,7 +7,7 @@
 [node name="Barbarian" instance=ExtResource( 1 )]
 faction = 0
 
-[node name="Sprite" parent="Pivot" index="0"]
+[node name="Sprite" parent="Center/Offset" index="0"]
 texture = ExtResource( 2 )
 
 [node name="Stats" parent="." index="1"]

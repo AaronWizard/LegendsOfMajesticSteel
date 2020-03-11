@@ -7,7 +7,6 @@
 [ext_resource path="res://src/maps/tiles/TilePropertiesSet.tscn" type="PackedScene" id=5]
 [ext_resource path="res://src/actors/actors/Fighter.tscn" type="PackedScene" id=6]
 
-
 [node name="PrototypeMap" instance=ExtResource( 2 )]
 tile_properties_set = ExtResource( 5 )
 
