@@ -16,6 +16,9 @@ __meta__ = {
 }
 
 [node name="Offset" type="Position2D" parent="Center"]
+__meta__ = {
+"_edit_group_": true
+}
 
 [node name="Sprite" type="Sprite" parent="Center/Offset"]
 
