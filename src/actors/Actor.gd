@@ -42,14 +42,14 @@ func _ready() -> void:
 
 func _draw() -> void:
 	if Engine.editor_hint:
-		var rect = Rect2(Vector2.ZERO, tile_size)
+		var rect := Rect2(Vector2.ZERO, tile_size)
 		draw_rect(rect, Color.magenta, false)
 
 
 func set_tile_size(new_value: Vector2) -> void:
 	# Cell and cell offset based on old tile_size
-	var old_cell = get_cell()
-	var old_cell_offset = get_cell_offset()
+	var old_cell := get_cell()
+	var old_cell_offset := get_cell_offset()
 
 	tile_size = new_value
 	if _center:
