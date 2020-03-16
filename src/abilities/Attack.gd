@@ -4,6 +4,13 @@ extends Ability
 export var min_dist: int = 1
 export var max_dist: int = 1
 
+const _ATTACK_ANIMS = {
+	Directions.NORTH: "actor_attack_north",
+	Directions.EAST: "actor_attack_east",
+	Directions.SOUTH: "actor_attack_south",
+	Directions.WEST: "actor_attack_west"
+}
+
 
 func get_range(source_cell: Vector2) -> Array:
 	return TileGeometry.cells_in_range(source_cell, min_dist, max_dist)
@@ -27,5 +34,8 @@ func get_valid_targets(source_cell: Vector2) -> Array:
 
 
 func start(target: Vector2) -> void:
-	print(get_actor().name, "; ", name, "; ", target)
+	var dir := target - get_actor().cell
+	var anim: String = _ATTACK_ANIMS[dir]
+	get_actor().play_anim(anim)
+	yield(get_actor(), "animations_finished")
 	emit_signal("finished")

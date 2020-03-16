@@ -6,7 +6,7 @@ signal animations_finished
 
 enum Faction { PLAYER, ENEMY }
 
-const MOVE_ANIMS = {
+const _MOVE_ANIMS = {
 	Directions.NORTH: "actor_move_north",
 	Directions.EAST: "actor_move_east",
 	Directions.SOUTH: "actor_move_south",
@@ -98,11 +98,15 @@ func move_step(target_cell: Vector2) -> void:
 
 	var origin_cell := get_cell()
 	var diff := target_cell - origin_cell
-	var move_anim: String = MOVE_ANIMS[diff]
+	var move_anim: String = _MOVE_ANIMS[diff]
 
 	set_cell(target_cell)
 	set_cell_offset(-diff)
 	_anim.play(move_anim)
+
+
+func play_anim(anim: String) -> void:
+	_anim.play(anim)
 
 
 func get_abilities() -> Array:
