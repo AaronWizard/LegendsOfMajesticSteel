@@ -19,7 +19,7 @@
 0/shape_one_way = false
 0/shape_one_way_margin = 0.0
 0/shapes = [  ]
-0/z_index = 0
+0/z_index = -1
 1/name = "mountain"
 1/texture = ExtResource( 4 )
 1/tex_offset = Vector2( 0, 0 )
@@ -61,4 +61,4 @@
 3/shape_one_way = false
 3/shape_one_way_margin = 0.0
 3/shapes = [  ]
-3/z_index = 0
+3/z_index = -1
