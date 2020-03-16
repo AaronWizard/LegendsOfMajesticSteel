@@ -1,10 +1,14 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://src/actors/Actor.gd" type="Script" id=1]
 [ext_resource path="res://src/actors/Stats.gd" type="Script" id=2]
 [ext_resource path="res://src/actors/BattleStats.gd" type="Script" id=3]
-[ext_resource path="res://resources/animations/actor_move_step.tres" type="Animation" id=4]
 [ext_resource path="res://src/abilities/Attack.gd" type="Script" id=5]
+[ext_resource path="res://resources/animations/actor_move_north.tres" type="Animation" id=6]
+[ext_resource path="res://resources/animations/actor_move_east.tres" type="Animation" id=7]
+[ext_resource path="res://resources/animations/actor_move_south.tres" type="Animation" id=8]
+[ext_resource path="res://resources/animations/actor_move_west.tres" type="Animation" id=9]
+[ext_resource path="res://resources/animations/actor_idle.tres" type="Animation" id=10]
 
 [node name="Actor" type="Node2D"]
 script = ExtResource( 1 )
@@ -39,8 +43,10 @@ script = ExtResource( 3 )
 [node name="Attack" type="Node" parent="Abilities"]
 script = ExtResource( 5 )
 
-[node name="Tween" type="Tween" parent="."]
-
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/actor_move_step = ExtResource( 4 )
-[connection signal="tween_all_completed" from="Tween" to="." method="_on_Tween_tween_all_completed"]
+anims/actor_idle = ExtResource( 10 )
+anims/actor_move_east = ExtResource( 7 )
+anims/actor_move_north = ExtResource( 6 )
+anims/actor_move_south = ExtResource( 8 )
+anims/actor_move_west = ExtResource( 9 )
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]

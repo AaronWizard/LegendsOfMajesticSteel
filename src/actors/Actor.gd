@@ -6,14 +6,19 @@ signal animations_finished
 
 enum Faction { PLAYER, ENEMY }
 
-const _MOVE_STEP_ANIM := "actor_move_step"
+const MOVE_ANIMS = {
+	Directions.NORTH: "actor_move_north",
+	Directions.EAST: "actor_move_east",
+	Directions.SOUTH: "actor_move_south",
+	Directions.WEST: "actor_move_west"
+}
 
 export var tile_size := Vector2(16, 16) setget set_tile_size
+export var cell_offset: Vector2 setget set_cell_offset, get_cell_offset
 
 export(Faction) var faction := Faction.ENEMY
 
 onready var cell: Vector2 setget set_cell, get_cell
-var cell_offset: Vector2 setget set_cell_offset, get_cell_offset
 
 var map setget , get_map # -> Map
 
@@ -30,7 +35,6 @@ onready var _abilities := $Abilities
 onready var _center := $Center as Position2D
 onready var _offset := $Center/Offset as Position2D
 
-onready var _tween := $Tween as Tween
 onready var _anim := $AnimationPlayer as AnimationPlayer
 
 
@@ -93,22 +97,17 @@ func move_step(target_cell: Vector2) -> void:
 	assert(get_cell().distance_squared_to(target_cell) == 1)
 
 	var origin_cell := get_cell()
-	set_cell(target_cell)
+	var diff := target_cell - origin_cell
+	var move_anim: String = MOVE_ANIMS[diff]
 
-	set_cell_offset(origin_cell - target_cell)
-	# warning-ignore:return_value_discarded
-	_tween.interpolate_property(
-			self, "cell_offset", get_cell_offset(), Vector2.ZERO,
-			_anim.get_animation(_MOVE_STEP_ANIM).length,
-			Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
-	# warning-ignore:return_value_discarded
-	_tween.start()
-	_anim.play(_MOVE_STEP_ANIM)
+	set_cell(target_cell)
+	set_cell_offset(-diff)
+	_anim.play(move_anim)
 
 
 func get_abilities() -> Array:
 	return _abilities.get_children()
 
 
-func _on_Tween_tween_all_completed() -> void:
+func _on_AnimationPlayer_animation_finished(_anim_name: String) -> void:
 	emit_signal("animations_finished")
