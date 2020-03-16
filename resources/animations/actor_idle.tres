@@ -2,6 +2,7 @@
 
 [resource]
 length = 0.1
+loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:cell_offset")
 tracks/0/interp = 1
