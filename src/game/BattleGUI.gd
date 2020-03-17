@@ -12,7 +12,7 @@ signal ability_cleared
 
 signal wait_started
 
-const MIN_DRAG_SPEED_SQUARED = 8^2
+const _MIN_DRAG_SPEED_SQUARED := 24^2
 
 var buttons_visible := false setget set_buttons_visible
 var dragging_enabled := false
@@ -26,24 +26,26 @@ var _current_ability: Ability setget set_current_ability
 var _have_ability_target := false
 var _current_ability_target: Vector2
 
-onready var _all_buttons: Container = $Buttons
-onready var _ability_buttons: Container = $Buttons/Abilities
+onready var _all_buttons: Container = $Buttons as Container
+onready var _ability_buttons: Container = $Buttons/Abilities as Container
 
-onready var _wait_button: Button = $Buttons/Wait
-onready var _ability_cancel_button: Button = $Buttons/AbilityCancel
+onready var _wait_button: Button = $Buttons/Wait as Button
+onready var _ability_cancel_button: Button = $Buttons/AbilityCancel as Button
 
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
-		if event.button_index == BUTTON_LEFT:
-			if not event.pressed and _mouse_down and not _dragging:
+		var mouseEvent: InputEventMouseButton = event
+		if mouseEvent.button_index == BUTTON_LEFT:
+			if not mouseEvent.pressed and _mouse_down and not _dragging:
 				_on_mouse_clicked()
-			_mouse_down = event.pressed
+			_mouse_down = mouseEvent.pressed
 	elif event is InputEventMouseMotion:
-		_dragging = dragging_enabled and _mouse_down \
-				and (event.speed.length_squared() >= MIN_DRAG_SPEED_SQUARED)
+		var mouseEvent: InputEventMouseMotion = event
+		_dragging = dragging_enabled and _mouse_down and \
+				(mouseEvent.speed.length_squared() >= _MIN_DRAG_SPEED_SQUARED)
 		if _dragging:
-			emit_signal("camera_dragged", event.relative)
+			emit_signal("camera_dragged", mouseEvent.relative)
 
 
 func set_buttons_visible(value: bool) -> void:
@@ -86,7 +88,7 @@ func set_current_ability(value: Ability) -> void:
 
 func _on_mouse_clicked() -> void:
 	var current_map: Map = current_actor.map
-	var target_cell = current_map.get_mouse_cell()
+	var target_cell := current_map.get_mouse_cell()
 	if _current_ability \
 			and _current_ability.is_current_valid_target(target_cell):
 		_click_for_ability_target(target_cell)
