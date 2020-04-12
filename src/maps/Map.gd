@@ -3,13 +3,14 @@ extends Node
 
 export var tile_properties_set: PackedScene = null
 
-onready var _ground: TileMap = $Ground
+onready var _ground := $Ground as TileMap
 var _tile_properties_set: TilePropertiesSet = null
 
 
 func _ready() -> void:
 	if tile_properties_set:
-		_tile_properties_set = tile_properties_set.instance()
+		_tile_properties_set = tile_properties_set.instance() \
+				as TilePropertiesSet
 
 
 func get_rect() -> Rect2:
