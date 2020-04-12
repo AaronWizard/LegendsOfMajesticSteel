@@ -23,7 +23,7 @@ onready var cell: Vector2 setget set_cell, get_cell
 var controller = null # -> Controller
 
 onready var stats := $Stats as Stats
-onready var battle_stats = $BattleStats # -> BattleStats
+onready var battle_stats := $BattleStats as BattleStats
 
 onready var remote_transform := $Center/Offset/RemoteTransform2D \
 		as RemoteTransform2D
