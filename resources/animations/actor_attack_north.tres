@@ -15,15 +15,3 @@ tracks/0/keys = {
 "update": 0,
 "values": [ Vector2( 0, 0 ), Vector2( 0, 0.5 ), Vector2( 0, -0.75 ), Vector2( 0, -0.75 ), Vector2( 0, 0 ) ]
 }
-tracks/1/type = "value"
-tracks/1/path = NodePath("Center/Offset/Sprite:scale")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0, 0.15, 0.26, 0.29, 0.4 ),
-"transitions": PoolRealArray( 0.5, 2, 1, 0.5, 1 ),
-"update": 0,
-"values": [ Vector2( 1, 1 ), Vector2( 1.125, 0.875 ), Vector2( 0.875, 1.125 ), Vector2( 0.875, 1.125 ), Vector2( 1, 1 ) ]
-}
