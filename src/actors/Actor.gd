@@ -20,8 +20,6 @@ export(Faction) var faction := Faction.ENEMY
 
 onready var cell: Vector2 setget set_cell, get_cell
 
-var map setget , get_map # -> Map
-
 var controller = null # -> Controller
 
 onready var stats := $Stats as Stats

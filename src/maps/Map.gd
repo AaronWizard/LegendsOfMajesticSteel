@@ -11,10 +11,6 @@ func _ready() -> void:
 	if tile_properties_set:
 		_tile_properties_set = tile_properties_set.instance()
 
-	for a in get_actors():
-		var actor := a as Actor
-		assert(actor.map == self)
-
 
 func get_rect() -> Rect2:
 	return _ground.get_used_rect()

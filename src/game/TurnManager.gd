@@ -12,6 +12,8 @@ var _current_index := 0
 
 
 func start(map: Map, gui: BattleGUI) -> void:
+	gui.current_map = map
+
 	var actors := map.get_actors()
 
 	running = true
@@ -25,7 +27,7 @@ func start(map: Map, gui: BattleGUI) -> void:
 		if controller:
 			gui.current_actor = actor
 
-			battle_stats.start_turn()
+			battle_stats.start_turn(map)
 
 			emit_signal("turn_started", actor)
 
@@ -33,7 +35,7 @@ func start(map: Map, gui: BattleGUI) -> void:
 				yield(get_tree().create_timer(0.3), "timeout")
 
 			while not battle_stats.finished:
-				controller.call_deferred("determine_action", gui)
+				controller.call_deferred("determine_action", map, gui)
 				var action: Action = yield(controller, "determined_action")
 
 				if action:

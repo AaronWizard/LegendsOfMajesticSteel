@@ -16,13 +16,13 @@ func get_pauses() -> bool:
 	return true
 
 
-func determine_action(_gui: BattleGUI) -> void:
+func determine_action(map: Map, _gui: BattleGUI) -> void:
 	var want_move = not _moved
 	_moved = want_move
 
 	if want_move:
 		var path = _pick_random_path()
-		var action := Move.new(get_actor(), get_map(), path)
+		var action := Move.new(get_actor(), map, path)
 		emit_signal("determined_action", action)
 	else:
 		emit_signal("determined_action", null)

@@ -17,7 +17,8 @@ const _MIN_DRAG_SPEED_SQUARED := 24^2
 var buttons_visible := false setget set_buttons_visible
 var dragging_enabled := false
 
-var current_actor: Actor setget set_current_actor
+var current_map: Map = null
+var current_actor: Actor = null setget set_current_actor
 
 var _mouse_down := false
 var _dragging := false
@@ -87,10 +88,9 @@ func set_current_ability(value: Ability) -> void:
 
 
 func _on_mouse_clicked() -> void:
-	var current_map: Map = current_actor.map
 	var target_cell := current_map.get_mouse_cell()
-	if _current_ability \
-			and _current_ability.is_current_valid_target(target_cell):
+	if _current_ability and _current_ability.is_current_valid_target(
+			target_cell, current_map):
 		_click_for_ability_target(target_cell)
 	elif not _current_ability:
 		emit_signal("move_started", target_cell)

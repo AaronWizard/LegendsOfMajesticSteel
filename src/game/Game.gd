@@ -48,7 +48,7 @@ func _on_TurnManager_action_started(actor: Actor) -> void:
 
 
 func _on_BattleGUI_ability_selected(ability: Ability) -> void:
-	_map_highlights.set_targets(ability.get_current_range())
+	_map_highlights.set_targets(ability.get_current_range(get_current_map()))
 	_map_highlights.moves_visible = false
 
 

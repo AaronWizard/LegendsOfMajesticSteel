@@ -12,28 +12,29 @@ const _ATTACK_ANIMS = {
 }
 
 
-func get_range(source_cell: Vector2) -> Array:
+func get_range(source_cell: Vector2, _map: Map) -> Array:
 	return TileGeometry.cells_in_range(source_cell, min_dist, max_dist)
 
 
-func is_valid_target(target_cell: Vector2, _source_cell: Vector2) -> bool:
-	var other_actor := get_map().get_actor_on_cell(target_cell)
+func is_valid_target(target_cell: Vector2, _source_cell: Vector2, map: Map) \
+		-> bool:
+	var other_actor := map.get_actor_on_cell(target_cell)
 	return other_actor and (other_actor.faction != get_actor().faction)
 
 
-func get_valid_targets(source_cell: Vector2) -> Array:
+func get_valid_targets(source_cell: Vector2, map: Map) -> Array:
 	var targets := []
 
-	var ability_range := get_range(source_cell)
+	var ability_range := get_range(source_cell, map)
 	for c in ability_range:
 		var cell: Vector2 = c
-		if is_valid_target(cell, source_cell):
+		if is_valid_target(cell, source_cell, map):
 			targets.append(cell)
 
 	return targets
 
 
-func start(target: Vector2) -> void:
+func start(target: Vector2, _map: Map) -> void:
 	var dir := target - get_actor().cell
 	var anim: String = _ATTACK_ANIMS[dir]
 	get_actor().play_anim(anim)

@@ -3,15 +3,20 @@ extends Controller
 
 signal _input_processed(action)
 
+var _map: Map = null
 var _gui: BattleGUI = null
 
-
-func determine_action(gui: BattleGUI) -> void:
+func determine_action(map: Map, gui: BattleGUI) -> void:
+	_map = map
 	_gui = gui
 	_connect_to_gui(gui)
+
 	var action: Action = yield(self, '_input_processed')
+
 	_disconnect_from_gui(gui)
 	_gui = null
+	_map = null
+
 	emit_signal("determined_action", action)
 
 
@@ -38,13 +43,13 @@ func _disconnect_from_gui(gui: BattleGUI) -> void:
 func _move(target_cell: Vector2) -> void:
 	var path := get_battle_stats().get_walk_path(target_cell)
 	if path.size() > 0:
-		var action := Move.new(get_actor(), get_map(), path)
+		var action := Move.new(get_actor(), _map, path)
 		action.allow_cancel(_gui)
 		emit_signal("_input_processed", action)
 
 
 func _target_ability(ability: Ability, target_cell: Vector2) -> void:
-	var attack := AbilityAction.new(get_actor(), get_map(), ability,
+	var attack := AbilityAction.new(get_actor(), _map, ability,
 			target_cell)
 	emit_signal("_input_processed", attack)
 

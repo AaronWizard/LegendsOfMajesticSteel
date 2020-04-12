@@ -8,12 +8,10 @@ var enterable_cells := []
 onready var _walk_grid := AStar2D.new()
 
 
-func start_turn() -> void:
+func start_turn(map: Map) -> void:
 	finished = false
-
-	var map: Map = _get_actor().map as Map
 	move_range = BreadthFirstSearch.find_move_range(_get_actor(), map)
-	_update_move_range()
+	_update_move_range(map)
 
 
 func get_walk_path(cell_to: Vector2) -> Array:
@@ -37,11 +35,7 @@ func _get_actor() -> Actor:
 	return owner as Actor
 
 
-func _get_map() -> Map:
-	return _get_actor().map
-
-
-func _update_move_range() -> void:
+func _update_move_range(map: Map) -> void:
 	enterable_cells.clear()
 	_walk_grid.clear()
 
@@ -53,7 +47,7 @@ func _update_move_range() -> void:
 			cell
 		)
 
-		if _get_map().actor_can_enter_cell(_get_actor(), cell):
+		if map.actor_can_enter_cell(_get_actor(), cell):
 			enterable_cells.append(cell)
 
 	for p in _walk_grid.get_points():
