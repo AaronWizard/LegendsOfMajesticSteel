@@ -8,10 +8,6 @@ func get_actor() -> Actor:
 	return owner as Actor
 
 
-func get_battle_stats() -> BattleStats:
-	return get_actor().battle_stats
-
-
 func get_current_range(map: Map) -> Array:
 	return get_range(get_actor().cell, map)
 

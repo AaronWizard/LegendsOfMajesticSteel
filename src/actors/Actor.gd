@@ -87,10 +87,6 @@ func on_cell(c: Vector2) -> bool:
 	return get_cell() == c
 
 
-func get_map(): # -> Map
-	return owner
-
-
 func move_step(target_cell: Vector2) -> void:
 	assert(get_cell().distance_squared_to(target_cell) == 1)
 

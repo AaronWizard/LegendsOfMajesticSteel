@@ -1,7 +1,7 @@
 class_name TurnManager
 extends Node
 
-signal turn_started(actor)
+signal turn_started(actor, range_data)
 signal action_started(actor)
 signal action_ended(actor)
 signal turn_ended(actor)
@@ -22,20 +22,21 @@ func start(map: Map, gui: BattleGUI) -> void:
 	while running:
 		var actor := actors[_current_index] as Actor
 		var controller := actor.controller as Controller
-		var battle_stats := actor.battle_stats as BattleStats
 
 		if controller:
 			gui.current_actor = actor
 
-			battle_stats.start_turn(map)
+			actor.battle_stats.start_turn()
+			var range_data := RangeData.new(actor, map)
 
-			emit_signal("turn_started", actor)
+			emit_signal("turn_started", actor, range_data)
 
 			if controller.pauses:
 				yield(get_tree().create_timer(0.3), "timeout")
 
-			while not battle_stats.finished:
-				controller.call_deferred("determine_action", map, gui)
+			while not actor.battle_stats.finished:
+				controller.call_deferred("determine_action",
+						map, range_data, gui)
 				var action: Action = yield(controller, "determined_action")
 
 				if action:
@@ -44,7 +45,7 @@ func start(map: Map, gui: BattleGUI) -> void:
 					yield(action, "finished")
 					emit_signal("action_ended", actor)
 				else:
-					battle_stats.finished = true
+					actor.battle_stats.finished = true
 					if controller.pauses:
 						yield(get_tree().create_timer(0.2), "timeout")
 

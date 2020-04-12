@@ -4,10 +4,12 @@ extends Controller
 signal _input_processed(action)
 
 var _map: Map = null
+var _range_data: RangeData = null
 var _gui: BattleGUI = null
 
-func determine_action(map: Map, gui: BattleGUI) -> void:
+func determine_action(map: Map, range_data: RangeData, gui: BattleGUI) -> void:
 	_map = map
+	_range_data = range_data
 	_gui = gui
 	_connect_to_gui(gui)
 
@@ -15,6 +17,7 @@ func determine_action(map: Map, gui: BattleGUI) -> void:
 
 	_disconnect_from_gui(gui)
 	_gui = null
+	_range_data = null
 	_map = null
 
 	emit_signal("determined_action", action)
@@ -41,7 +44,7 @@ func _disconnect_from_gui(gui: BattleGUI) -> void:
 
 
 func _move(target_cell: Vector2) -> void:
-	var path := get_battle_stats().get_walk_path(target_cell)
+	var path := _range_data.get_walk_path(get_actor().cell, target_cell)
 	if path.size() > 0:
 		var action := Move.new(get_actor(), _map, path)
 		action.allow_cancel(_gui)

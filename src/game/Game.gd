@@ -37,9 +37,8 @@ func _on_BattleGUI_camera_dragged(relative) -> void:
 	_camera.drag(relative)
 
 
-func _on_TurnManager_turn_started(actor: Actor) -> void:
-	var battle_stats: BattleStats = actor.battle_stats
-	_map_highlights.set_moves(battle_stats.move_range)
+func _on_TurnManager_turn_started(actor: Actor, range_data: RangeData) -> void:
+	_map_highlights.set_moves(range_data.move_range)
 	_camera.follow_actor(actor)
 
 
