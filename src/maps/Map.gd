@@ -1,6 +1,8 @@
 class_name Map
 extends Node
 
+signal actor_removed(actor)
+
 export var tile_properties_set: PackedScene = null
 
 onready var _ground := $Ground as TileMap
@@ -11,6 +13,11 @@ func _ready() -> void:
 	if tile_properties_set:
 		_tile_properties_set = tile_properties_set.instance() \
 				as TilePropertiesSet
+
+	for a in get_actors():
+		var actor := a as Actor
+		# warning-ignore:return_value_discarded
+		actor.connect("died", self, "remove_actor", [], CONNECT_ONESHOT)
 
 
 func get_rect() -> Rect2:
@@ -74,3 +81,9 @@ func actor_can_enter_cell(actor: Actor, cell: Vector2,
 			result = false
 
 	return result
+
+
+func remove_actor(actor: Actor) -> void:
+	assert(actor in _ground.get_children())
+	_ground.remove_child(actor)
+	emit_signal("actor_removed", actor)

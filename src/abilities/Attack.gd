@@ -34,9 +34,13 @@ func get_valid_targets(source_cell: Vector2, map: Map) -> Array:
 	return targets
 
 
-func start(target: Vector2, _map: Map) -> void:
+func start(target: Vector2, map: Map) -> void:
 	var dir := target - get_actor().cell
 	var anim: String = _ATTACK_ANIMS[dir]
 	get_actor().play_anim(anim)
 	yield(get_actor(), "animations_finished")
+
+	var target_actor := map.get_actor_on_cell(target)
+	target_actor.battle_stats.modify_stamina(-20)
+
 	emit_signal("finished")

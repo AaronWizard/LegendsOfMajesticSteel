@@ -3,6 +3,7 @@ class_name Actor
 extends Node2D
 
 signal animations_finished
+signal died(actor)
 
 enum Faction { PLAYER, ENEMY }
 
@@ -109,3 +110,7 @@ func get_abilities() -> Array:
 
 func _on_AnimationPlayer_animation_finished(_anim_name: String) -> void:
 	emit_signal("animations_finished")
+
+
+func _on_BattleStats_died() -> void:
+	emit_signal("died", self)

@@ -1,6 +1,9 @@
 class_name BattleStats
 extends Node
 
+signal stamina_changed(old_stamina, new_stamina)
+signal died
+
 const MAX_STAMINA := 20
 
 var stamina: int
@@ -21,3 +24,11 @@ func get_is_alive() -> bool:
 
 func get_finished() -> bool:
 	return did_ability
+
+
+func modify_stamina(mod: int) -> void:
+	var old_stamina := stamina
+	stamina += mod
+	emit_signal("stamina_changed", old_stamina, stamina)
+	if not get_is_alive():
+		emit_signal("died")

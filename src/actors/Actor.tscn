@@ -57,4 +57,5 @@ anims/actor_move_east = ExtResource( 7 )
 anims/actor_move_north = ExtResource( 6 )
 anims/actor_move_south = ExtResource( 8 )
 anims/actor_move_west = ExtResource( 9 )
+[connection signal="died" from="BattleStats" to="." method="_on_BattleStats_died"]
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
