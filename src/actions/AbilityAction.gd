@@ -14,4 +14,7 @@ func _init(new_actor: Actor, new_map: Map, new_ability: Ability, \
 func start() -> void:
 	ability.call_deferred("start", target, map)
 	yield(ability, "finished")
+
+	actor.battle_stats.did_ability = true
+
 	emit_signal("finished")
