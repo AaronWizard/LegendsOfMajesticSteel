@@ -34,6 +34,8 @@ onready var _abilities := $Abilities
 onready var _center := $Center as Position2D
 onready var _offset := $Center/Offset as Position2D
 
+onready var _stamina_bar := $Center/Offset/Sprite/StaminaBar as StaminaBar
+
 onready var _anim := $AnimationPlayer as AnimationPlayer
 
 
@@ -114,3 +116,7 @@ func _on_AnimationPlayer_animation_finished(_anim_name: String) -> void:
 
 func _on_BattleStats_died() -> void:
 	emit_signal("died", self)
+
+
+func _on_BattleStats_stamina_changed(_old_stamina: int, new_stamina: int) -> void:
+	_stamina_bar.current = new_stamina

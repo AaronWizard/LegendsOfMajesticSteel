@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://src/actors/Actor.gd" type="Script" id=1]
 [ext_resource path="res://src/actors/Stats.gd" type="Script" id=2]
@@ -13,6 +13,7 @@
 [ext_resource path="res://resources/animations/actor_attack_west.tres" type="Animation" id=11]
 [ext_resource path="res://resources/animations/actor_attack_north.tres" type="Animation" id=12]
 [ext_resource path="res://resources/animations/actor_attack_south.tres" type="Animation" id=13]
+[ext_resource path="res://src/ui/StaminaBar.tscn" type="PackedScene" id=14]
 
 [node name="Actor" type="Node2D"]
 script = ExtResource( 1 )
@@ -29,6 +30,9 @@ __meta__ = {
 }
 
 [node name="Sprite" type="Sprite" parent="Center/Offset"]
+
+[node name="StaminaBar" parent="Center/Offset/Sprite" instance=ExtResource( 14 )]
+position = Vector2( 0, -9 )
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="Center/Offset"]
 position = Vector2( -8, -8 )
@@ -58,4 +62,5 @@ anims/actor_move_north = ExtResource( 6 )
 anims/actor_move_south = ExtResource( 8 )
 anims/actor_move_west = ExtResource( 9 )
 [connection signal="died" from="BattleStats" to="." method="_on_BattleStats_died"]
+[connection signal="stamina_changed" from="BattleStats" to="." method="_on_BattleStats_stamina_changed"]
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]

@@ -1,9 +1,7 @@
 class_name StaminaBar
 extends Node2D
 
-const MAX_STAMINA := 20
-
-export(int, 0, 20) var current := MAX_STAMINA setget set_current
+export(int, 0, 20) var current := Constants.MAX_STAMINA setget set_current
 export var modifier := 0 setget set_modifier
 
 onready var _cells := $Cells as Node
@@ -38,13 +36,15 @@ func _update_cells() -> void:
 	if _healing:
 		if modifier > 0:
 			var min_value := current
-			var max_value := int(min(current + modifier, MAX_STAMINA))
+			var max_value := int(min(
+					current + modifier, Constants.MAX_STAMINA))
 			_update_modifier_cells(_healing, min_value, max_value)
 		else:
 			_healing.visible = false
 
 
-func _update_modifier_cells(modifier_cells: Node2D, min_value: int, max_value: int) -> void:
+func _update_modifier_cells(modifier_cells: Node2D,
+		min_value: int, max_value: int) -> void:
 	modifier_cells.visible = true
 
 	for c in modifier_cells.get_children():

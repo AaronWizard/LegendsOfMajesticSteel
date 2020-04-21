@@ -12,9 +12,11 @@ var did_ability: bool
 var is_alive: bool setget , get_is_alive
 var finished: bool setget , get_finished
 
+func start_battle() -> void:
+	stamina = MAX_STAMINA
+
 
 func start_turn() -> void:
-	stamina = MAX_STAMINA
 	did_ability = false
 
 

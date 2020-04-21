@@ -29,6 +29,10 @@ func _start(map: Map, gui: BattleGUI) -> void:
 
 	_gui.current_map = map
 
+	for a in map.get_actors():
+		var actor := a as Actor
+		actor.battle_stats.start_battle()
+
 	_actors = map.get_actors()
 	_next_index = 0
 

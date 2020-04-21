@@ -41,6 +41,9 @@ func start(target: Vector2, map: Map) -> void:
 	yield(get_actor(), "animations_finished")
 
 	var target_actor := map.get_actor_on_cell(target)
-	target_actor.battle_stats.modify_stamina(-20)
+
+	var attack_power := Stats.get_attack_power(
+			get_actor().stats, target_actor.stats)
+	target_actor.battle_stats.modify_stamina(-attack_power)
 
 	emit_signal("finished")
