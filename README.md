@@ -7,4 +7,4 @@ Power metal strategy RPG
 ## Credits
 
 Built in Godot 3.2: https://godotengine.org/  
-Font is "Lunchtime Doubly So" by codeman38: http://www.zone38.net/font/#lunchtime
+Font is "Wizard" by Omegaville: https://fontstruct.com/fontstructions/show/1506403/wizard-5
