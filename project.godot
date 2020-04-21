@@ -94,6 +94,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/ai/RangeData.gd"
 }, {
+"base": "Node2D",
+"class": "StaminaBar",
+"language": "GDScript",
+"path": "res://src/ui/StaminaBar.gd"
+}, {
 "base": "Node",
 "class": "Stats",
 "language": "GDScript",
@@ -137,6 +142,7 @@ _global_script_class_icons={
 "Move": "",
 "Player": "",
 "RangeData": "",
+"StaminaBar": "",
 "Stats": "",
 "TileGeometry": "",
 "TileProperties": "",

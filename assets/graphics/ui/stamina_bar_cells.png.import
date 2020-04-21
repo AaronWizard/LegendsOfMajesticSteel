@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/stamina_bar_cell_bottom.png-43f8427c51cd3119ed478a74ee757dd1.stex"
+path="res://.import/stamina_bar_cells.png-8e89ab72747024daddde3a8d97a209bd.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/graphics/ui/stamina_bar_cell_bottom.png"
-dest_files=[ "res://.import/stamina_bar_cell_bottom.png-43f8427c51cd3119ed478a74ee757dd1.stex" ]
+source_file="res://assets/graphics/ui/stamina_bar_cells.png"
+dest_files=[ "res://.import/stamina_bar_cells.png-8e89ab72747024daddde3a8d97a209bd.stex" ]
 
 [params]
 
