@@ -6,6 +6,9 @@
 
 [node name="StaminaBar" type="Node2D"]
 script = ExtResource( 4 )
+__meta__ = {
+"_edit_group_": true
+}
 
 [node name="Background" type="Sprite" parent="."]
 position = Vector2( 0, -2 )
@@ -237,6 +240,7 @@ region_enabled = true
 region_rect = Rect2( 0, 1, 1, 1 )
 
 [node name="Cell11" type="Sprite" parent="Damage"]
+visible = false
 position = Vector2( 5, 0 )
 texture = ExtResource( 2 )
 centered = false
@@ -244,6 +248,7 @@ region_enabled = true
 region_rect = Rect2( 1, 1, 1, 1 )
 
 [node name="Cell12" type="Sprite" parent="Damage"]
+visible = false
 position = Vector2( 5, -1 )
 texture = ExtResource( 2 )
 centered = false
@@ -414,6 +419,7 @@ region_enabled = true
 region_rect = Rect2( 1, 2, 1, 1 )
 
 [node name="Cell13" type="Sprite" parent="Healing"]
+visible = false
 position = Vector2( 6, 0 )
 texture = ExtResource( 2 )
 centered = false
@@ -421,6 +427,7 @@ region_enabled = true
 region_rect = Rect2( 0, 2, 1, 1 )
 
 [node name="Cell14" type="Sprite" parent="Healing"]
+visible = false
 position = Vector2( 6, -1 )
 texture = ExtResource( 2 )
 centered = false
@@ -428,6 +435,7 @@ region_enabled = true
 region_rect = Rect2( 0, 2, 1, 1 )
 
 [node name="Cell15" type="Sprite" parent="Healing"]
+visible = false
 position = Vector2( 7, 0 )
 texture = ExtResource( 2 )
 centered = false
@@ -435,6 +443,7 @@ region_enabled = true
 region_rect = Rect2( 1, 2, 1, 1 )
 
 [node name="Cell16" type="Sprite" parent="Healing"]
+visible = false
 position = Vector2( 7, -1 )
 texture = ExtResource( 2 )
 centered = false
@@ -442,6 +451,7 @@ region_enabled = true
 region_rect = Rect2( 1, 2, 1, 1 )
 
 [node name="Cell17" type="Sprite" parent="Healing"]
+visible = false
 position = Vector2( 8, 0 )
 texture = ExtResource( 2 )
 centered = false
@@ -449,6 +459,7 @@ region_enabled = true
 region_rect = Rect2( 0, 2, 1, 1 )
 
 [node name="Cell18" type="Sprite" parent="Healing"]
+visible = false
 position = Vector2( 8, -1 )
 texture = ExtResource( 2 )
 centered = false
@@ -456,6 +467,7 @@ region_enabled = true
 region_rect = Rect2( 0, 2, 1, 1 )
 
 [node name="Cell19" type="Sprite" parent="Healing"]
+visible = false
 position = Vector2( 9, 0 )
 texture = ExtResource( 2 )
 centered = false
@@ -463,8 +475,18 @@ region_enabled = true
 region_rect = Rect2( 1, 2, 1, 1 )
 
 [node name="Cell20" type="Sprite" parent="Healing"]
+visible = false
 position = Vector2( 9, -1 )
 texture = ExtResource( 2 )
 centered = false
 region_enabled = true
 region_rect = Rect2( 1, 2, 1, 1 )
+
+[node name="CellChangeDelay" type="Timer" parent="."]
+wait_time = 0.25
+one_shot = true
+
+[node name="CellChange" type="Timer" parent="."]
+wait_time = 0.05
+[connection signal="timeout" from="CellChangeDelay" to="." method="_on_CellChangeDelay_timeout"]
+[connection signal="timeout" from="CellChange" to="." method="_on_CellChange_timeout"]
