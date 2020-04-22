@@ -32,6 +32,7 @@ __meta__ = {
 [node name="Sprite" type="Sprite" parent="Center/Offset"]
 
 [node name="StaminaBar" parent="Center/Offset/Sprite" instance=ExtResource( 14 )]
+visible = false
 position = Vector2( 0, -9 )
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="Center/Offset"]
@@ -61,6 +62,7 @@ anims/actor_move_east = ExtResource( 7 )
 anims/actor_move_north = ExtResource( 6 )
 anims/actor_move_south = ExtResource( 8 )
 anims/actor_move_west = ExtResource( 9 )
+[connection signal="animation_finished" from="Center/Offset/Sprite/StaminaBar" to="." method="_on_StaminaBar_animation_finished"]
 [connection signal="died" from="BattleStats" to="." method="_on_BattleStats_died"]
 [connection signal="stamina_changed" from="BattleStats" to="." method="_on_BattleStats_stamina_changed"]
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]

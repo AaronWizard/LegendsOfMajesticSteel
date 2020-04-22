@@ -118,5 +118,13 @@ func _on_BattleStats_died() -> void:
 	emit_signal("died", self)
 
 
-func _on_BattleStats_stamina_changed(_old_stamina: int, new_stamina: int) -> void:
-	_stamina_bar.current = new_stamina
+func _on_BattleStats_stamina_changed(_old_stamina: int, new_stamina: int) \
+		-> void:
+	if battle_stats.is_alive:
+		_stamina_bar.visible = true
+		_stamina_bar.animate_change(new_stamina - _old_stamina)
+
+
+func _on_StaminaBar_animation_finished() -> void:
+	_stamina_bar.visible = false
+	emit_signal("animations_finished")

@@ -46,4 +46,7 @@ func start(target: Vector2, map: Map) -> void:
 			get_actor().stats, target_actor.stats)
 	target_actor.battle_stats.modify_stamina(-attack_power)
 
+	if target_actor.battle_stats.is_alive:
+		yield(target_actor, "animations_finished")
+
 	emit_signal("finished")
