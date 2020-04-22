@@ -5,7 +5,7 @@
 [ext_resource path="res://src/maps/maps/PrototypeMap.tscn" type="PackedScene" id=3]
 [ext_resource path="res://src/maps/MapHighlights.tscn" type="PackedScene" id=4]
 [ext_resource path="res://src/game/TurnManager.gd" type="Script" id=5]
-[ext_resource path="res://src/game/BattleGUI.tscn" type="PackedScene" id=6]
+[ext_resource path="res://src/ui/BattleGUI.tscn" type="PackedScene" id=6]
 
 [node name="Game" type="Node"]
 script = ExtResource( 1 )

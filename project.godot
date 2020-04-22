@@ -42,7 +42,7 @@ _global_script_classes=[ {
 "base": "CanvasLayer",
 "class": "BattleGUI",
 "language": "GDScript",
-"path": "res://src/game/BattleGUI.gd"
+"path": "res://src/ui/BattleGUI.gd"
 }, {
 "base": "Node",
 "class": "BattleStats",
