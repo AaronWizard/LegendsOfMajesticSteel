@@ -14,7 +14,8 @@ const _MOVE_ANIMS = {
 	Directions.WEST: "actor_move_west"
 }
 
-export var tile_size := Vector2(16, 16) setget set_tile_size
+export var tile_size := Vector2(Constants.TILE_SIZE, Constants.TILE_SIZE) \
+		setget set_tile_size
 export var cell_offset: Vector2 setget set_cell_offset, get_cell_offset
 
 export(Faction) var faction := Faction.ENEMY
