@@ -69,7 +69,25 @@ func set_aoe(cells: Array) -> void:
 
 
 func _set_cells(tilemap: TileMap, tile: int, cells: Array) -> void:
+	var region_set := false
+	var start := Vector2()
+	var end := Vector2()
+
 	tilemap.clear()
+
 	for c in cells:
 		var cell: Vector2 = c
 		tilemap.set_cellv(cell, tile)
+
+		if not region_set:
+			region_set = true
+			start = cell
+			end = cell
+		else:
+			start.x = min(start.x, cell.x)
+			start.y = min(start.y, cell.y)
+
+			end.x = max(end.x, cell.x)
+			end.y = max(end.y, cell.y)
+
+	tilemap.update_bitmask_region(start, end)
