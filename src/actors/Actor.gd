@@ -111,8 +111,10 @@ func get_abilities() -> Array:
 	return _abilities.get_children()
 
 
-func _on_AnimationPlayer_animation_finished(_anim_name: String) -> void:
-	emit_signal("animations_finished")
+func _on_AnimationPlayer_animation_finished(anim_name: String) -> void:
+	if anim_name != "actor_idle":
+		_anim.play("actor_idle")
+		emit_signal("animations_finished")
 
 
 func _on_BattleStats_died() -> void:
