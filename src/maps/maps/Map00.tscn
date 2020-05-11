@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://src/maps/Map.tscn" type="PackedScene" id=1]
 [ext_resource path="res://resources/tilesets/terrain_tileset.tres" type="TileSet" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://src/actors/actors/WarriorPrincess.tscn" type="PackedScene" id=4]
 [ext_resource path="res://src/actors/actors/Fighter.tscn" type="PackedScene" id=5]
 [ext_resource path="res://src/maps/tiles/TilePropertiesSet.tscn" type="PackedScene" id=6]
+[ext_resource path="res://src/actors/actors/Archer.tscn" type="PackedScene" id=7]
 
 [node name="Map00" instance=ExtResource( 1 )]
 tile_properties_set = ExtResource( 6 )
@@ -21,7 +22,7 @@ position = Vector2( 120, 288 )
 position = Vector2( 240, 288 )
 
 [node name="Fighter" parent="Ground" index="2" instance=ExtResource( 5 )]
-position = Vector2( 96, 96 )
+position = Vector2( 120, 120 )
 
 [node name="Fighter2" parent="Ground" index="3" instance=ExtResource( 5 )]
 position = Vector2( 48, 216 )
@@ -30,4 +31,10 @@ position = Vector2( 48, 216 )
 position = Vector2( 264, 96 )
 
 [node name="Fighter4" parent="Ground" index="5" instance=ExtResource( 5 )]
-position = Vector2( 336, 192 )
+position = Vector2( 312, 192 )
+
+[node name="Archer" parent="Ground" index="6" instance=ExtResource( 7 )]
+position = Vector2( 48, 120 )
+
+[node name="Archer2" parent="Ground" index="7" instance=ExtResource( 7 )]
+position = Vector2( 312, 96 )
