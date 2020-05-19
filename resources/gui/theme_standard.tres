@@ -1,6 +1,10 @@
-[gd_resource type="Theme" load_steps=2 format=2]
+[gd_resource type="Theme" load_steps=5 format=2]
 
 [ext_resource path="res://resources/gui/font_standard.tres" type="DynamicFont" id=1]
+[ext_resource path="res://resources/styleboxes/button_stylebox.tres" type="StyleBox" id=2]
+[ext_resource path="res://resources/styleboxes/button_pressed_stylebox.tres" type="StyleBox" id=3]
+
+[sub_resource type="StyleBoxEmpty" id=1]
 
 [resource]
 default_font = ExtResource( 1 )
@@ -11,10 +15,10 @@ Button/colors/font_color_pressed = Color( 0.941176, 0.964706, 0.941176, 1 )
 Button/constants/hseparation = 2
 Button/fonts/font = null
 Button/styles/disabled = null
-Button/styles/focus = null
-Button/styles/hover = null
-Button/styles/normal = null
-Button/styles/pressed = null
+Button/styles/focus = SubResource( 1 )
+Button/styles/hover = ExtResource( 2 )
+Button/styles/normal = ExtResource( 2 )
+Button/styles/pressed = ExtResource( 3 )
 Label/colors/font_color = Color( 0.941176, 0.964706, 0.941176, 1 )
 Label/colors/font_color_shadow = Color( 0, 0, 0, 0 )
 Label/colors/font_outline_modulate = Color( 1, 1, 1, 1 )
