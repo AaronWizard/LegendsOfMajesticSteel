@@ -20,7 +20,7 @@ var target_cursor_cell: Vector2 setget set_target_cursor_cell, \
 onready var _moves := $Moves as TileMap
 onready var _targets := $Targets as TileMap
 onready var _aoe := $AOE as TileMap
-onready var _target_cursor := $TargetCursor as Sprite
+onready var _target_cursor := $TargetCursor as TargetCursor
 
 
 func set_moves_visible(value: bool) -> void:

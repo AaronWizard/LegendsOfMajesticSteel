@@ -2,7 +2,7 @@
 
 [ext_resource path="res://resources/tilesets/highlighting_tileset.tres" type="TileSet" id=1]
 [ext_resource path="res://src/maps/MapHighlights.gd" type="Script" id=2]
-[ext_resource path="res://assets/graphics/ui/target_cursor.png" type="Texture" id=3]
+[ext_resource path="res://src/maps/TargetCursor.tscn" type="PackedScene" id=3]
 
 [node name="MapHighlights" type="Node"]
 script = ExtResource( 2 )
@@ -23,7 +23,5 @@ tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
 
-[node name="TargetCursor" type="Sprite" parent="."]
+[node name="TargetCursor" parent="." instance=ExtResource( 3 )]
 visible = false
-texture = ExtResource( 3 )
-centered = false
