@@ -6,7 +6,7 @@
 [ext_resource path="res://assets/graphics/ui/target01.png" type="Texture" id=4]
 
 [resource]
-frames = 4
+frames = 6
 fps = 9.0
 frame_0/texture = ExtResource( 1 )
 frame_1/texture = ExtResource( 4 )
@@ -15,3 +15,7 @@ frame_2/texture = ExtResource( 3 )
 frame_2/delay_sec = 0.0
 frame_3/texture = ExtResource( 2 )
 frame_3/delay_sec = 0.0
+frame_4/texture = ExtResource( 3 )
+frame_4/delay_sec = 0.0
+frame_5/texture = ExtResource( 4 )
+frame_5/delay_sec = 0.0
