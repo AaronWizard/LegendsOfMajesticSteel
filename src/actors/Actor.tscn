@@ -34,7 +34,7 @@ hframes = 4
 
 [node name="StaminaBar" parent="Center/Offset/Sprite" instance=ExtResource( 14 )]
 visible = false
-position = Vector2( 0, -9 )
+position = Vector2( 0, -12 )
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="Center/Offset"]
 position = Vector2( -8, -8 )
