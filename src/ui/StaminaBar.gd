@@ -23,10 +23,9 @@ func _ready() -> void:
 func animate_change(delta: float) -> void:
 	_set_modifier(0)
 
+	var old_stamina := _current_value
 	_current_value = clamp(_current_value + delta,
 			_stamina_front.min_value, _stamina_front.max_value)
-
-	var old_stamina := _stamina_front.value
 
 	if delta < 0:
 		_stamina_front.value = _current_value
@@ -37,6 +36,8 @@ func animate_change(delta: float) -> void:
 
 
 func _animate_bar(bar: Range, old_value: float, new_value: float) -> void:
+	bar.value = old_value
+
 	# warning-ignore:return_value_discarded
 	_tween.interpolate_property(
 			bar, "value", old_value, new_value,
@@ -56,18 +57,19 @@ func _set_modifier(new_value: float) -> void:
 	_stamina_front.value = _current_value
 	_stamina_back.value = _current_value
 
-	_prediction_timer.start()
+	if modifier != 0:
+		_prediction_timer.start()
+	else:
+		_prediction_timer.stop()
 
 
 func _on_PredictionTimer_timeout() -> void:
+	assert(modifier != 0)
+
 	if modifier > 0:
 		_stamina_back.value = _get_alternating_value(_stamina_back.value)
-	elif modifier < 0:
+	else: #if modifier < 0:
 		_stamina_front.value = _get_alternating_value(_stamina_front.value)
-	else:
-		_stamina_front.value = _current_value
-		_stamina_back.value = _current_value
-		_prediction_timer.stop()
 
 
 func _get_alternating_value(current: float) -> float:
