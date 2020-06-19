@@ -18,7 +18,8 @@ func _init(actor: Actor, map: Map) -> void:
 func get_walk_path(start: Vector2, end: Vector2) -> Array:
 	var result := []
 
-	if (start in enterable_cells) and (end in enterable_cells):
+	if (start != end) and (start in enterable_cells) \
+			and (end in enterable_cells):
 		var end_point := _walk_path_point(end)
 		if end_point > -1:
 			var start_point := _walk_path_point(start)

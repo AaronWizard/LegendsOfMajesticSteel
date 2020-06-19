@@ -2,7 +2,7 @@
 
 [ext_resource path="res://src/game/Game.gd" type="Script" id=1]
 [ext_resource path="res://src/game/GameCamera.tscn" type="PackedScene" id=2]
-[ext_resource path="res://src/maps/maps/PrototypeMap.tscn" type="PackedScene" id=3]
+[ext_resource path="res://src/maps/maps/Map00.tscn" type="PackedScene" id=3]
 [ext_resource path="res://src/maps/MapHighlights.tscn" type="PackedScene" id=4]
 [ext_resource path="res://src/game/TurnManager.gd" type="Script" id=5]
 [ext_resource path="res://src/ui/BattleGUI.tscn" type="PackedScene" id=6]

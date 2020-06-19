@@ -3,85 +3,77 @@ extends Node2D
 
 signal animation_finished
 
-var current := Constants.MAX_STAMINA setget set_current
-var modifier := 0 setget set_modifier
+const _CHANGE_PER_SECOND := 0.05
+const _CHANGE_DELAY := 0.2
 
-onready var _cells := $Cells as Node
+var modifier := 0.0 setget _set_modifier
 
-onready var _damage := $Damage as Node2D
-onready var _healing := $Healing as Node2D
+var _current_value: float
 
-onready var _cell_change_delay := $CellChangeDelay as Timer
-onready var _cell_change := $CellChange as Timer
-
-
-func set_current(value: int) -> void:
-	current = int(clamp(value, 0, Constants.MAX_STAMINA))
-	_update_cells()
+onready var _stamina_front := $Background/StaminaFront as Range
+onready var _stamina_back := $Background/StaminaBack as Range
+onready var _tween := $Tween as Tween
+onready var _prediction_timer := $PredictionTimer as Timer
 
 
-func set_modifier(value: int) -> void:
-	modifier = int(clamp(value, -current, Constants.MAX_STAMINA - current))
-	_update_cells()
+func _ready() -> void:
+	_current_value = _stamina_front.value
 
 
-func animate_change(delta: int) -> void:
-	if delta != 0:
-		set_modifier(modifier + delta)
-		if modifier != 0:
-			_cell_change.stop()
-			_cell_change_delay.start()
+func animate_change(delta: float) -> void:
+	_set_modifier(0)
+
+	var old_stamina := _current_value
+	_current_value = clamp(_current_value + delta,
+			_stamina_front.min_value, _stamina_front.max_value)
+
+	if delta < 0:
+		_stamina_front.value = _current_value
+		_animate_bar(_stamina_back, old_stamina, _current_value)
+	else:
+		_stamina_back.value = _current_value
+		_animate_bar(_stamina_front, old_stamina, _current_value)
 
 
-func _update_cells() -> void:
-	if _cells:
-		for c in _cells.get_children():
-			var cell := c as Node2D
-			cell.visible = cell.get_index() < current
+func _animate_bar(bar: Range, old_value: float, new_value: float) -> void:
+	bar.value = old_value
 
-	if _damage:
-		if modifier < 0:
-			assert(current + modifier >= 0)
-			var min_value := current + modifier
-			var max_value := current
-			_update_modifier_cells(_damage, min_value, max_value)
-		else:
-			_damage.visible = false
-
-	if _healing:
-		if modifier > 0:
-			assert(current + modifier <= Constants.MAX_STAMINA)
-			var min_value := current
-			var max_value := current + modifier
-			_update_modifier_cells(_healing, min_value, max_value)
-		else:
-			_healing.visible = false
+	# warning-ignore:return_value_discarded
+	_tween.interpolate_property(
+			bar, "value", old_value, new_value,
+			abs(new_value - old_value) * _CHANGE_PER_SECOND,
+			Tween.TRANS_LINEAR, Tween.EASE_IN_OUT, _CHANGE_DELAY)
+	# warning-ignore:return_value_discarded
+	_tween.start()
 
 
-func _update_modifier_cells(modifier_cells: Node2D,
-		min_value: int, max_value: int) -> void:
-	modifier_cells.visible = true
-
-	for c in modifier_cells.get_children():
-		var cell := c as Node2D
-		var index := cell.get_index() + 1
-		cell.visible = (index > min_value) and (index <= max_value)
+func _on_Tween_tween_all_completed() -> void:
+	emit_signal("animation_finished")
 
 
-func _on_CellChangeDelay_timeout() -> void:
+func _set_modifier(new_value: float) -> void:
+	modifier = new_value
+
+	_stamina_front.value = _current_value
+	_stamina_back.value = _current_value
+
+	if modifier != 0:
+		_prediction_timer.start()
+	else:
+		_prediction_timer.stop()
+
+
+func _on_PredictionTimer_timeout() -> void:
 	assert(modifier != 0)
-	assert((current >= 0) && (current <= Constants.MAX_STAMINA))
-	_cell_change.start()
+
+	if modifier > 0:
+		_stamina_back.value = _get_alternating_value(_stamina_back.value)
+	else: #if modifier < 0:
+		_stamina_front.value = _get_alternating_value(_stamina_front.value)
 
 
-func _on_CellChange_timeout() -> void:
-	assert(modifier != 0)
-	assert((current >= 0) && (current <= Constants.MAX_STAMINA))
-
-	var delta := int(sign(modifier))
-	set_modifier(modifier - delta)
-	set_current(current + delta)
-
-	if modifier == 0:
-		_cell_change.stop()
-		emit_signal("animation_finished")
+func _get_alternating_value(current: float) -> float:
+	var result := _current_value
+	if current == _current_value:
+		result += modifier
+	return result
