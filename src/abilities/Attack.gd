@@ -4,14 +4,6 @@ extends Ability
 export var min_dist: int = 1
 export var max_dist: int = 1
 
-const _ATTACK_ANIMS = {
-	Directions.NORTH: "actor_attack_north",
-	Directions.EAST: "actor_attack_east",
-	Directions.SOUTH: "actor_attack_south",
-	Directions.WEST: "actor_attack_west"
-}
-
-
 var _running_anims := 0
 
 
@@ -39,27 +31,28 @@ func get_valid_targets(source_cell: Vector2, map: Map) -> Array:
 
 func start(target: Vector2, map: Map) -> void:
 	var dir := target - get_actor().cell
-	var anim: String = _ATTACK_ANIMS[dir]
+	var anim: String = Actor.AnimationNames.ATTACK[dir]
 
 	var target_actor := map.get_actor_on_cell(target)
 
 	# warning-ignore:return_value_discarded
 	get_actor().connect("animation_trigger", self, "_attacker_anim_trigger",
-			[target_actor], CONNECT_ONESHOT)
+			[target_actor, dir], CONNECT_ONESHOT)
 	_connect_anim_finished(get_actor())
 
 	_running_anims = 1
 	get_actor().play_anim(anim)
 
 
-func _attacker_anim_trigger(trigger: String, target: Actor) -> void:
-	print(trigger)
-	assert(trigger == Actor.ATTACK_HIT_TRIGGER)
+func _attacker_anim_trigger(trigger: String, target: Actor, dir: Vector2) \
+		-> void:
+	assert(trigger == Actor.AnimationNames.ATTACK_HIT_TRIGGER)
 	var attack_power := Stats.get_attack_power(get_actor().stats, target.stats)
 	target.battle_stats.modify_stamina(-attack_power)
 	if target.battle_stats.is_alive:
-		_running_anims += 1
 		_connect_anim_finished(target)
+		_running_anims += 1
+		target.play_anim(Actor.AnimationNames.REACT[dir])
 
 
 func _connect_anim_finished(actor: Actor) -> void:

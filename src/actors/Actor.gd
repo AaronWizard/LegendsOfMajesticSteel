@@ -8,14 +8,29 @@ signal died(actor)
 
 enum Faction { PLAYER, ENEMY }
 
-const _MOVE_ANIMS = {
-	Directions.NORTH: "actor_move_north",
-	Directions.EAST: "actor_move_east",
-	Directions.SOUTH: "actor_move_south",
-	Directions.WEST: "actor_move_west"
-}
+class AnimationNames:
+	const MOVE = {
+		Directions.NORTH: "actor_move_north",
+		Directions.EAST: "actor_move_east",
+		Directions.SOUTH: "actor_move_south",
+		Directions.WEST: "actor_move_west"
+	}
 
-const ATTACK_HIT_TRIGGER = "attack_hit"
+	const ATTACK = {
+		Directions.NORTH: "actor_attack_north",
+		Directions.EAST: "actor_attack_east",
+		Directions.SOUTH: "actor_attack_south",
+		Directions.WEST: "actor_attack_west"
+	}
+
+	const REACT = {
+		Directions.NORTH: "actor_attack_react_north",
+		Directions.EAST: "actor_attack_react_east",
+		Directions.SOUTH: "actor_attack_react_south",
+		Directions.WEST: "actor_attack_react_west"
+	}
+
+	const ATTACK_HIT_TRIGGER = "attack_hit"
 
 export var cell_offset: Vector2 setget set_cell_offset, get_cell_offset
 
@@ -84,7 +99,7 @@ func move_step(target_cell: Vector2) -> void:
 
 	var origin_cell := get_cell()
 	var diff := target_cell - origin_cell
-	var move_anim: String = _MOVE_ANIMS[diff]
+	var move_anim: String = AnimationNames.MOVE[diff]
 
 	set_cell(target_cell)
 	set_cell_offset(-diff)
