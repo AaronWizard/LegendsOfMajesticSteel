@@ -12,6 +12,9 @@ const _ATTACK_ANIMS = {
 }
 
 
+var _running_anims := 0
+
+
 func get_range(source_cell: Vector2, _map: Map) -> Array:
 	return TileGeometry.cells_in_range(source_cell, min_dist, max_dist)
 
@@ -37,16 +40,35 @@ func get_valid_targets(source_cell: Vector2, map: Map) -> Array:
 func start(target: Vector2, map: Map) -> void:
 	var dir := target - get_actor().cell
 	var anim: String = _ATTACK_ANIMS[dir]
-	get_actor().play_anim(anim)
-	yield(get_actor(), "animations_finished")
 
 	var target_actor := map.get_actor_on_cell(target)
 
-	var attack_power := Stats.get_attack_power(
-			get_actor().stats, target_actor.stats)
-	target_actor.battle_stats.modify_stamina(-attack_power)
+	# warning-ignore:return_value_discarded
+	get_actor().connect("animation_trigger", self, "_attacker_anim_trigger",
+			[target_actor], CONNECT_ONESHOT)
+	_connect_anim_finished(get_actor())
 
-	if target_actor.battle_stats.is_alive:
-		yield(target_actor, "animations_finished")
+	_running_anims = 1
+	get_actor().play_anim(anim)
 
-	emit_signal("finished")
+
+func _attacker_anim_trigger(trigger: String, target: Actor) -> void:
+	print(trigger)
+	assert(trigger == Actor.ATTACK_HIT_TRIGGER)
+	var attack_power := Stats.get_attack_power(get_actor().stats, target.stats)
+	target.battle_stats.modify_stamina(-attack_power)
+	if target.battle_stats.is_alive:
+		_running_anims += 1
+		_connect_anim_finished(target)
+
+
+func _connect_anim_finished(actor: Actor) -> void:
+	# warning-ignore:return_value_discarded
+	actor.connect("animations_finished", self, "_anim_finished",
+			[], CONNECT_ONESHOT)
+
+
+func _anim_finished() -> void:
+	_running_anims -= 1
+	if _running_anims == 0:
+		emit_signal("finished")

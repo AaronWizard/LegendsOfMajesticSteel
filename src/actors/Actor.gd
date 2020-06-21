@@ -2,6 +2,7 @@ tool
 class_name Actor
 extends Node2D
 
+signal animation_trigger(trigger)
 signal animations_finished
 signal died(actor)
 
@@ -13,6 +14,8 @@ const _MOVE_ANIMS = {
 	Directions.SOUTH: "actor_move_south",
 	Directions.WEST: "actor_move_west"
 }
+
+const ATTACK_HIT_TRIGGER = "attack_hit"
 
 export var cell_offset: Vector2 setget set_cell_offset, get_cell_offset
 
@@ -117,3 +120,7 @@ func _on_BattleStats_stamina_changed(_old_stamina: int, new_stamina: int) \
 func _on_StaminaBar_animation_finished() -> void:
 	_stamina_bar.visible = false
 	emit_signal("animations_finished")
+
+
+func _animation_trigger(trigger: String) -> void:
+	emit_signal("animation_trigger", trigger)
