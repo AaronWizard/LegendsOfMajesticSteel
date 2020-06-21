@@ -30,6 +30,8 @@ func get_valid_targets(source_cell: Vector2, map: Map) -> Array:
 
 
 func start(target: Vector2, map: Map) -> void:
+	assert(_running_anims == 0)
+
 	var dir := target - get_actor().cell
 	var anim: String = Actor.AnimationNames.ATTACK[dir]
 
@@ -40,7 +42,6 @@ func start(target: Vector2, map: Map) -> void:
 			[target_actor, dir], CONNECT_ONESHOT)
 	_connect_anim_finished(get_actor())
 
-	_running_anims = 1
 	get_actor().play_anim(anim)
 
 
@@ -51,17 +52,31 @@ func _attacker_anim_trigger(trigger: String, target: Actor, dir: Vector2) \
 	target.battle_stats.modify_stamina(-attack_power)
 	if target.battle_stats.is_alive:
 		_connect_anim_finished(target)
+
 		_running_anims += 1
+		# warning-ignore:return_value_discarded
+		target.connect("stamina_animation_finished", self,
+				"_stamina_anim_finished", [], CONNECT_ONESHOT)
+
 		target.play_anim(Actor.AnimationNames.REACT[dir])
 
 
 func _connect_anim_finished(actor: Actor) -> void:
+	_running_anims += 1
 	# warning-ignore:return_value_discarded
 	actor.connect("animation_finished", self, "_anim_finished",
 			[], CONNECT_ONESHOT)
 
 
 func _anim_finished(_anim_name: String) -> void:
+	_finish_anim()
+
+
+func _stamina_anim_finished() -> void:
+	_finish_anim()
+
+
+func _finish_anim() -> void:
 	_running_anims -= 1
 	if _running_anims == 0:
 		emit_signal("finished")

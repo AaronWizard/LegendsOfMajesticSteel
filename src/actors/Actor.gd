@@ -3,8 +3,12 @@ class_name Actor
 extends Node2D
 
 signal move_finished
+
 signal animation_trigger(trigger)
 signal animation_finished(anim_name)
+
+signal stamina_animation_finished
+
 signal died(actor)
 
 enum Faction { PLAYER, ENEMY }
@@ -137,7 +141,7 @@ func _on_BattleStats_stamina_changed(_old_stamina: int, new_stamina: int) \
 
 func _on_StaminaBar_animation_finished() -> void:
 	_stamina_bar.visible = false
-	#emit_signal("animations_finished")
+	emit_signal("stamina_animation_finished")
 
 
 func _animation_trigger(trigger: String) -> void:
