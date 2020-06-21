@@ -110,8 +110,11 @@ func move_step(target_cell: Vector2) -> void:
 
 	set_cell(target_cell)
 	set_cell_offset(-diff)
+
 	_anim.play(move_anim)
 	yield(_anim, "animation_finished")
+	_anim.play(AnimationNames.IDLE)
+
 	emit_signal("move_finished")
 
 
