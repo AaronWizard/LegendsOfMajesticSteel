@@ -4,7 +4,7 @@ extends Node2D
 signal animation_finished
 
 const _CHANGE_PER_SECOND := 0.05
-const _CHANGE_DELAY := 0.2
+const _CHANGE_DELAY := 0.5
 
 var modifier := 0.0 setget _set_modifier
 
