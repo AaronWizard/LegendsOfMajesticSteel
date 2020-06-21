@@ -41,3 +41,15 @@ tracks/2/keys = {
 "method": "_animation_trigger"
 } ]
 }
+tracks/3/type = "value"
+tracks/3/path = NodePath("Center/Offset/Sprite:flip_h")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
