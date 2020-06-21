@@ -97,9 +97,10 @@ func get_abilities() -> Array:
 
 
 func _on_AnimationPlayer_animation_finished(anim_name: String) -> void:
-	if anim_name != "actor_idle":
-		_anim.play("actor_idle")
-		emit_signal("animations_finished")
+	if not Engine.editor_hint:
+		if anim_name != "actor_idle":
+			_anim.play("actor_idle")
+			emit_signal("animations_finished")
 
 
 func _on_BattleStats_died() -> void:
