@@ -17,7 +17,7 @@ func _move_step() -> void:
 	if path.size() > 0:
 		var cell: Vector2 = path.pop_front()
 		actor.move_step(cell)
-		yield(actor, "animations_finished")
+		yield(actor, "move_finished")
 		call_deferred("_move_step")
 	else:
 		emit_signal("finished")

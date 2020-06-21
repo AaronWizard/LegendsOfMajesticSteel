@@ -57,11 +57,11 @@ func _attacker_anim_trigger(trigger: String, target: Actor, dir: Vector2) \
 
 func _connect_anim_finished(actor: Actor) -> void:
 	# warning-ignore:return_value_discarded
-	actor.connect("animations_finished", self, "_anim_finished",
+	actor.connect("animation_finished", self, "_anim_finished",
 			[], CONNECT_ONESHOT)
 
 
-func _anim_finished() -> void:
+func _anim_finished(_anim_name: String) -> void:
 	_running_anims -= 1
 	if _running_anims == 0:
 		emit_signal("finished")

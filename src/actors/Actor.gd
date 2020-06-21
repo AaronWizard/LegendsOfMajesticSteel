@@ -2,35 +2,38 @@ tool
 class_name Actor
 extends Node2D
 
+signal move_finished
 signal animation_trigger(trigger)
-signal animations_finished
+signal animation_finished(anim_name)
 signal died(actor)
 
 enum Faction { PLAYER, ENEMY }
 
 class AnimationNames:
-	const MOVE = {
+	const IDLE := "actor_idle"
+
+	const MOVE := {
 		Directions.NORTH: "actor_move_north",
 		Directions.EAST: "actor_move_east",
 		Directions.SOUTH: "actor_move_south",
 		Directions.WEST: "actor_move_west"
 	}
 
-	const ATTACK = {
+	const ATTACK := {
 		Directions.NORTH: "actor_attack_north",
 		Directions.EAST: "actor_attack_east",
 		Directions.SOUTH: "actor_attack_south",
 		Directions.WEST: "actor_attack_west"
 	}
 
-	const REACT = {
+	const REACT := {
 		Directions.NORTH: "actor_attack_react_north",
 		Directions.EAST: "actor_attack_react_east",
 		Directions.SOUTH: "actor_attack_react_south",
 		Directions.WEST: "actor_attack_react_west"
 	}
 
-	const ATTACK_HIT_TRIGGER = "attack_hit"
+	const ATTACK_HIT_TRIGGER := "attack_hit"
 
 export var cell_offset: Vector2 setget set_cell_offset, get_cell_offset
 
@@ -104,21 +107,21 @@ func move_step(target_cell: Vector2) -> void:
 	set_cell(target_cell)
 	set_cell_offset(-diff)
 	_anim.play(move_anim)
+	yield(_anim, "animation_finished")
+	emit_signal("move_finished")
 
 
-func play_anim(anim: String) -> void:
-	_anim.play(anim)
+func play_anim(anim_name: String) -> void:
+	assert(anim_name != AnimationNames.IDLE)
+
+	_anim.play(anim_name)
+	yield(_anim, "animation_finished")
+	_anim.play("actor_idle")
+	emit_signal("animation_finished", anim_name)
 
 
 func get_abilities() -> Array:
 	return _abilities.get_children()
-
-
-func _on_AnimationPlayer_animation_finished(anim_name: String) -> void:
-	if not Engine.editor_hint:
-		if anim_name != "actor_idle":
-			_anim.play("actor_idle")
-			emit_signal("animations_finished")
 
 
 func _on_BattleStats_died() -> void:
@@ -134,7 +137,7 @@ func _on_BattleStats_stamina_changed(_old_stamina: int, new_stamina: int) \
 
 func _on_StaminaBar_animation_finished() -> void:
 	_stamina_bar.visible = false
-	emit_signal("animations_finished")
+	#emit_signal("animations_finished")
 
 
 func _animation_trigger(trigger: String) -> void:
