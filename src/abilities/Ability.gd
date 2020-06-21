@@ -25,7 +25,8 @@ func is_current_valid_target(target_cell: Vector2, map: Map) -> bool:
 # warning-ignore:unused_argument
 # warning-ignore:unused_argument
 # warning-ignore:unused_argument
-func is_valid_target(target_cell: Vector2, source_cell: Vector2, map: Map) -> bool:
+func is_valid_target(target_cell: Vector2, source_cell: Vector2, map: Map) \
+		-> bool:
 	print("Ability must implement is_valid_target()")
 	return false
 
