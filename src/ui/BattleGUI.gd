@@ -5,8 +5,8 @@ signal camera_dragged(relative)
 
 signal move_started(target_cell)
 
-signal ability_selected(ability)
-signal ability_target_placed(ability, target_cell)
+signal ability_selected(ability_range)
+signal ability_target_placed(target_cell, aoe)
 signal ability_started(ability, target_cell)
 signal ability_cleared
 
@@ -24,6 +24,8 @@ var _mouse_down := false
 var _dragging := false
 
 var _current_ability: Ability setget set_current_ability
+var _ability_targetting: Ability.TargettingData
+
 var _have_ability_target := false
 var _current_ability_target: Vector2
 
@@ -76,11 +78,16 @@ func set_current_ability(value: Ability) -> void:
 	_have_ability_target = false
 
 	if _current_ability:
+		_ability_targetting = _current_ability.get_targetting_data(
+				current_actor, current_map)
+
 		_ability_buttons.visible = false
 		_wait_button.visible = false
 		_ability_cancel_button.visible = true
-		emit_signal("ability_selected", _current_ability)
+		emit_signal("ability_selected", _ability_targetting.target_range)
 	else:
+		_ability_targetting = null
+
 		_ability_buttons.visible = true
 		_wait_button.visible = true
 		_ability_cancel_button.visible = false
@@ -89,8 +96,7 @@ func set_current_ability(value: Ability) -> void:
 
 func _on_mouse_clicked() -> void:
 	var target_cell := current_map.get_mouse_cell()
-	if _current_ability and _current_ability.is_current_valid_target(
-			target_cell, current_map):
+	if _current_ability and (target_cell in _ability_targetting.valid_targets):
 		_click_for_ability_target(target_cell)
 	elif not _current_ability:
 		emit_signal("move_started", target_cell)
@@ -103,7 +109,9 @@ func _click_for_ability_target(target_cell: Vector2) -> void:
 	else:
 		_have_ability_target = true
 		_current_ability_target = target_cell
-		emit_signal("ability_target_placed", _current_ability, target_cell)
+		var aoe := _current_ability.get_aoe(
+				current_actor, current_map, target_cell)
+		emit_signal("ability_target_placed", target_cell, aoe)
 
 
 func _on_ability_pressed(ability: Ability) -> void:

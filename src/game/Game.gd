@@ -46,13 +46,14 @@ func _on_TurnManager_action_started(actor: Actor) -> void:
 	_camera.follow_actor(actor)
 
 
-func _on_BattleGUI_ability_selected(ability: Ability) -> void:
-	_map_highlights.set_targets(ability.get_current_range(get_current_map()))
+func _on_BattleGUI_ability_selected(ability_range: Array) -> void:
+	_map_highlights.set_targets(ability_range)
 	_map_highlights.moves_visible = false
 
 
-func _on_BattleGUI_ability_target_placed(_ability, \
-		target_cell: Vector2) -> void:
+# warning-ignore:unused_argument
+func _on_BattleGUI_ability_target_placed(target_cell: Vector2, aoe: Array) \
+		-> void:
 	_map_highlights.target_cursor_visible = true
 	_map_highlights.target_cursor_cell = target_cell
 

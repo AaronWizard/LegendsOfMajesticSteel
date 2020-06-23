@@ -7,48 +7,36 @@ export var max_dist: int = 1
 var _running_anims := 0
 
 
-func get_range(source_cell: Vector2, _map: Map) -> Array:
-	return TileGeometry.cells_in_range(source_cell, min_dist, max_dist)
-
-
-func is_valid_target(target_cell: Vector2, _source_cell: Vector2, map: Map) \
-		-> bool:
-	var other_actor := map.get_actor_on_cell(target_cell)
-	return other_actor and (other_actor.faction != get_actor().faction)
-
-
-func get_valid_targets(source_cell: Vector2, map: Map) -> Array:
-	var targets := []
-
-	var ability_range := get_range(source_cell, map)
-	for c in ability_range:
-		var cell: Vector2 = c
-		if is_valid_target(cell, source_cell, map):
-			targets.append(cell)
-
-	return targets
-
-
-func start(target: Vector2, map: Map) -> void:
+func start(source_actor: Actor, map: Map, target: Vector2) -> void:
 	assert(_running_anims == 0)
 
-	var dir := target - get_actor().cell
+	var dir := target - source_actor.cell
 	var anim: String = Actor.AnimationNames.ATTACK[dir]
 
 	var target_actor := map.get_actor_on_cell(target)
 
 	# warning-ignore:return_value_discarded
-	get_actor().connect("animation_trigger", self, "_attacker_anim_trigger",
-			[target_actor, dir], CONNECT_ONESHOT)
-	_connect_anim_finished(get_actor())
+	source_actor.connect("animation_trigger", self, "_attacker_anim_trigger",
+			[source_actor, target_actor, dir], CONNECT_ONESHOT)
+	_connect_anim_finished(source_actor)
 
-	get_actor().play_anim(anim)
+	source_actor.play_anim(anim)
 
 
-func _attacker_anim_trigger(trigger: String, target: Actor, dir: Vector2) \
-		-> void:
+func _get_range(source_actor: Actor, _map: Map) -> Array:
+	return TileGeometry.cells_in_range(source_actor.cell, min_dist, max_dist)
+
+
+func _is_valid_target(source_actor: Actor, map: Map, target_cell: Vector2) \
+		-> bool:
+	var other_actor := map.get_actor_on_cell(target_cell)
+	return other_actor and (other_actor.faction != source_actor.faction)
+
+
+func _attacker_anim_trigger(trigger: String, source: Actor, target: Actor, \
+		dir: Vector2) -> void:
 	assert(trigger == Actor.AnimationNames.ATTACK_HIT_TRIGGER)
-	var attack_power := Stats.get_attack_power(get_actor().stats, target.stats)
+	var attack_power := Stats.get_attack_power(source.stats, target.stats)
 	target.battle_stats.modify_stamina(-attack_power)
 	if target.battle_stats.is_alive:
 		_connect_anim_finished(target)

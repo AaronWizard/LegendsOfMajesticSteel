@@ -1,58 +1,58 @@
 class_name Ability
 extends Node
 
+
+class TargettingData:
+	var target_range := []
+	var valid_targets := []
+
+	func _init(new_target_range: Array, new_valid_targets: Array) -> void:
+		target_range = new_target_range
+		valid_targets = new_valid_targets
+
+
 signal finished
 
 
-func get_actor() -> Actor:
-	return owner as Actor
+func get_targetting_data(source_actor: Actor, map: Map) -> TargettingData:
+	var target_range := _get_range(source_actor, map)
+
+	var valid_targets := []
+	for c in target_range:
+		var cell := c as Vector2
+		if _is_valid_target(source_actor, map, cell):
+			valid_targets.append(cell)
+
+	return TargettingData.new(target_range, valid_targets)
 
 
-func get_current_range(map: Map) -> Array:
-	return get_range(get_actor().cell, map)
-
-
-# warning-ignore:unused_argument
-func get_range(source_cell: Vector2, map: Map) -> Array:
-	print("Ability must implement get_range()")
-	return [source_cell]
-
-
-func is_current_valid_target(target_cell: Vector2, map: Map) -> bool:
-	return is_valid_target(target_cell, get_actor().cell, map)
-
-
+# Override in subclasses
+# Assumes target_cell is a valid target
 # warning-ignore:unused_argument
 # warning-ignore:unused_argument
-# warning-ignore:unused_argument
-func is_valid_target(target_cell: Vector2, source_cell: Vector2, map: Map) \
-		-> bool:
-	print("Ability must implement is_valid_target()")
-	return false
-
-
-func get_current_valid_targets(map: Map) -> Array:
-	return get_valid_targets(get_actor().cell, map)
-
-
-# warning-ignore:unused_argument
-func get_valid_targets(source_cell: Vector2, map: Map) -> Array:
-	print("Ability must implement get_valid_targets()")
-	return [source_cell]
-
-
-func get_current_aoe(target_cell: Vector2, map: Map) -> Array:
-	return get_aoe(get_actor().cell, target_cell, map)
-
-
-# warning-ignore:unused_argument
-# warning-ignore:unused_argument
-func get_aoe(source_cell: Vector2, target_cell: Vector2, map: Map) -> Array:
+func get_aoe(source_actor: Actor, map: Map, target_cell: Vector2) -> Array:
 	return [target_cell]
 
 
+# Override in subclasses
 # warning-ignore:unused_argument
 # warning-ignore:unused_argument
-func start(target: Vector2, map: Map) -> void:
+# warning-ignore:unused_argument
+func start(source_actor: Actor, map: Map, target: Vector2) -> void:
 	print("Ability must implement start()")
 	emit_signal("finished")
+
+
+# Override in subclasses
+# warning-ignore:unused_argument
+func _get_range(source_actor: Actor, map: Map) -> Array:
+	return [source_actor.cell]
+
+
+# Override in subclasses
+# warning-ignore:unused_argument
+# warning-ignore:unused_argument
+# warning-ignore:unused_argument
+func _is_valid_target(source_actor: Actor, map: Map, target_cell: Vector2) \
+		-> bool:
+	return true
