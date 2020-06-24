@@ -2,9 +2,7 @@ class_name TurnManager
 extends Node
 
 signal turn_started(actor, range_data)
-signal action_started(actor)
-signal action_ended(actor)
-signal turn_ended(actor)
+signal action_started(actor, show_map_highlights)
 
 var running := false
 
@@ -62,16 +60,15 @@ func _run() -> void:
 				var action: Action = yield(controller, "determined_action")
 
 				if action:
+					emit_signal("action_started", actor,
+							action.show_map_highlights())
 					action.start()
-					emit_signal("action_started", actor)
 					yield(action, "finished")
-					emit_signal("action_ended", actor)
 				else:
 					break
 
 			yield(get_tree().create_timer(0.2), "timeout")
 
-			emit_signal("turn_ended", actor)
 			_gui.current_actor = null
 
 	_end()

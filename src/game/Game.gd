@@ -33,17 +33,19 @@ func load_map(map_file: PackedScene) -> void:
 	_camera.set_bounds(new_map.get_pixel_rect())
 
 
-func _on_BattleGUI_camera_dragged(relative) -> void:
-	_camera.drag(relative)
-
-
 func _on_TurnManager_turn_started(actor: Actor, range_data: RangeData) -> void:
+	_map_highlights.moves_visible = true
 	_map_highlights.set_moves(range_data.move_range)
 	_camera.follow_actor(actor)
 
 
-func _on_TurnManager_action_started(actor: Actor) -> void:
+func _on_TurnManager_action_started(actor: Actor, show_map_highlights) -> void:
 	_camera.follow_actor(actor)
+	_map_highlights.moves_visible = show_map_highlights
+
+
+func _on_BattleGUI_camera_dragged(relative) -> void:
+	_camera.drag(relative)
 
 
 func _on_BattleGUI_ability_selected(ability_range: Array) -> void:

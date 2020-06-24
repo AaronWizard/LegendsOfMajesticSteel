@@ -9,6 +9,10 @@ func _init(new_actor: Actor, new_map: Map, new_path: Array) \
 	path = new_path
 
 
+func show_map_highlights() -> bool:
+	return true
+
+
 func start() -> void:
 	call_deferred("_move_step")
 

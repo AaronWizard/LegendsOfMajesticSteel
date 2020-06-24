@@ -11,6 +11,10 @@ func _init(new_actor: Actor, new_map: Map) -> void:
 	map = new_map
 
 
+func show_map_highlights() -> bool:
+	return false
+
+
 func start() -> void:
 	print("Action must implement start()")
 	emit_signal("finished")

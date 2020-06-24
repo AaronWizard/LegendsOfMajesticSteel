@@ -3,14 +3,14 @@ extends CanvasLayer
 
 signal camera_dragged(relative)
 
-signal move_started(target_cell)
-
 signal ability_selected(ability_range)
 signal ability_target_placed(target_cell, aoe)
-signal ability_started(ability, target_cell)
 signal ability_cleared
 
+signal move_started(target_cell)
+signal ability_started(ability, target_cell)
 signal wait_started
+
 
 const _MIN_DRAG_SPEED_SQUARED := 24^2
 
@@ -23,7 +23,7 @@ var current_actor: Actor = null setget set_current_actor
 var _mouse_down := false
 var _dragging := false
 
-var _current_ability: Ability setget set_current_ability
+var _current_ability: Ability
 var _ability_targetting: Ability.TargettingData
 
 var _have_ability_target := false
@@ -103,9 +103,13 @@ func _on_mouse_clicked() -> void:
 
 
 func _click_for_ability_target(target_cell: Vector2) -> void:
+	# Click target twice to start action
 	if _have_ability_target and (_current_ability_target == target_cell):
-		emit_signal("ability_started", _current_ability, target_cell)
+		# Clear ability from GUI
+		var ability := _current_ability
 		set_current_ability(null)
+		# Start ability
+		emit_signal("ability_started", ability, target_cell)
 	else:
 		_have_ability_target = true
 		_current_ability_target = target_cell
