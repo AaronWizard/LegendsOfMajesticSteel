@@ -3,9 +3,14 @@ extends Node
 
 signal actor_removed(actor)
 
+enum Decal { BLOOD_SPLATTER = 0 }
+
 export var tile_properties_set: PackedScene = null
 
 onready var _ground := $Ground as TileMap
+onready var _decals := $Decals as TileMap
+onready var _actors := $Actors as Node
+
 var _tile_properties_set: TilePropertiesSet = null
 
 
@@ -17,7 +22,7 @@ func _ready() -> void:
 	for a in get_actors():
 		var actor := a as Actor
 		# warning-ignore:return_value_discarded
-		actor.connect("died", self, "remove_actor", [], CONNECT_ONESHOT)
+		actor.connect("died", self, "_actor_died", [], CONNECT_ONESHOT)
 
 
 func get_rect() -> Rect2:
@@ -43,8 +48,12 @@ func get_tile_name(cell: Vector2) -> String:
 	return name
 
 
+func add_decal(decal: int, cell: Vector2) -> void:
+	_decals.set_cellv(cell, decal)
+
+
 func get_actors() -> Array:
-	return _ground.get_children()
+	return _actors.get_children()
 
 
 func get_actor_on_cell(cell: Vector2) -> Actor:
@@ -84,6 +93,11 @@ func actor_can_enter_cell(actor: Actor, cell: Vector2,
 
 
 func remove_actor(actor: Actor) -> void:
-	assert(actor in _ground.get_children())
-	_ground.remove_child(actor)
+	assert(actor in _actors.get_children())
+	_actors.remove_child(actor)
 	emit_signal("actor_removed", actor)
+
+
+func _actor_died(actor: Actor) -> void:
+	add_decal(Decal.BLOOD_SPLATTER, actor.cell)
+	remove_actor(actor)

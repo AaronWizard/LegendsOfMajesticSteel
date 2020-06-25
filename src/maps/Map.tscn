@@ -1,11 +1,18 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://src/maps/Map.gd" type="Script" id=1]
+[ext_resource path="res://resources/tilesets/decals_tileset.tres" type="TileSet" id=2]
 
 [node name="Map" type="Node"]
 script = ExtResource( 1 )
 
 [node name="Ground" type="TileMap" parent="."]
 cell_size = Vector2( 24, 24 )
-cell_y_sort = true
 format = 1
+
+[node name="Decals" type="TileMap" parent="."]
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 24, 24 )
+format = 1
+
+[node name="Actors" type="YSort" parent="."]
