@@ -22,7 +22,9 @@ func _ready() -> void:
 	for a in get_actors():
 		var actor := a as Actor
 		# warning-ignore:return_value_discarded
-		actor.connect("died", self, "_actor_died", [], CONNECT_ONESHOT)
+		actor.connect("dying", self, "_actor_dying", [actor], CONNECT_ONESHOT)
+		# warning-ignore:return_value_discarded
+		actor.connect("died", self, "remove_actor", [actor], CONNECT_ONESHOT)
 
 
 func get_rect() -> Rect2:
@@ -98,6 +100,5 @@ func remove_actor(actor: Actor) -> void:
 	emit_signal("actor_removed", actor)
 
 
-func _actor_died(actor: Actor) -> void:
+func _actor_dying(actor: Actor) -> void:
 	add_decal(Decal.BLOOD_SPLATTER, actor.cell)
-	remove_actor(actor)

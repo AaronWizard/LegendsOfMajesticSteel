@@ -18,8 +18,8 @@ func start(source_actor: Actor, map: Map, target: Vector2) -> void:
 	# warning-ignore:return_value_discarded
 	source_actor.connect("animation_trigger", self, "_attacker_anim_trigger",
 			[source_actor, target_actor, dir], CONNECT_ONESHOT)
-	_connect_anim_finished(source_actor)
 
+	_connect_anim_finished(source_actor)
 	source_actor.play_anim(anim)
 
 
@@ -36,17 +36,18 @@ func _is_valid_target(source_actor: Actor, map: Map, target_cell: Vector2) \
 func _attacker_anim_trigger(trigger: String, source: Actor, target: Actor, \
 		dir: Vector2) -> void:
 	assert(trigger == Actor.AnimationNames.ATTACK_HIT_TRIGGER)
+
 	var attack_power := Stats.get_attack_power(source.stats, target.stats)
 	target.battle_stats.modify_stamina(-attack_power)
+
 	if target.battle_stats.is_alive:
+		_connect_staimina_finished(target)
+
 		_connect_anim_finished(target)
-
-		_running_anims += 1
-		# warning-ignore:return_value_discarded
-		target.connect("stamina_animation_finished", self,
-				"_stamina_anim_finished", [], CONNECT_ONESHOT)
-
 		target.play_anim(Actor.AnimationNames.REACT[dir])
+	else:
+		_connect_died(target)
+		target.play_death_anim(dir)
 
 
 func _connect_anim_finished(actor: Actor) -> void:
@@ -56,11 +57,25 @@ func _connect_anim_finished(actor: Actor) -> void:
 			[], CONNECT_ONESHOT)
 
 
+func _connect_staimina_finished(actor: Actor) -> void:
+	_running_anims += 1
+	# warning-ignore:return_value_discarded
+	actor.connect("stamina_animation_finished", self,
+			"_other_anim_finished", [], CONNECT_ONESHOT)
+
+
+func _connect_died(actor: Actor) -> void:
+	_running_anims += 1
+	# warning-ignore:return_value_discarded
+	actor.connect("died", self,
+			"_other_anim_finished", [], CONNECT_ONESHOT)
+
+
 func _anim_finished(_anim_name: String) -> void:
 	_finish_anim()
 
 
-func _stamina_anim_finished() -> void:
+func _other_anim_finished() -> void:
 	_finish_anim()
 
 

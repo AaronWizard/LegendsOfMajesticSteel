@@ -9,7 +9,8 @@ signal animation_finished(anim_name)
 
 signal stamina_animation_finished
 
-signal died(actor)
+signal dying
+signal died
 
 enum Faction { PLAYER, ENEMY }
 
@@ -37,7 +38,17 @@ class AnimationNames:
 		Directions.WEST: "actor_attack_react_west"
 	}
 
+	const DEATH := {
+		Directions.NORTH: "actor_death_north",
+		Directions.EAST: "actor_death_east",
+		Directions.SOUTH: "actor_death_south",
+		Directions.WEST: "actor_death_west"
+	}
+
 	const ATTACK_HIT_TRIGGER := "attack_hit"
+
+const _DISSOLVE_MATERIAL := preload( \
+		"res://resources/materials/dissolve_shadermaterial.tres")
 
 export var cell_offset: Vector2 setget set_cell_offset, get_cell_offset
 
@@ -52,6 +63,8 @@ onready var battle_stats := $BattleStats as BattleStats
 
 onready var remote_transform := $Center/Offset/RemoteTransform2D \
 		as RemoteTransform2D
+
+onready var _sprite := $Center/Offset/Sprite as Sprite
 
 onready var _abilities := $Abilities
 
@@ -118,6 +131,19 @@ func move_step(target_cell: Vector2) -> void:
 	emit_signal("move_finished")
 
 
+func play_death_anim(direction: Vector2) -> void:
+	emit_signal("dying")
+
+	var anim_name := AnimationNames.DEATH[direction] as String
+
+	_sprite.material = _DISSOLVE_MATERIAL
+	_anim.play(anim_name)
+	yield(_anim, "animation_finished")
+	_sprite.material = null
+
+	emit_signal("died")
+
+
 func play_anim(anim_name: String) -> void:
 	assert(anim_name != AnimationNames.IDLE)
 
@@ -129,10 +155,6 @@ func play_anim(anim_name: String) -> void:
 
 func get_abilities() -> Array:
 	return _abilities.get_children()
-
-
-func _on_BattleStats_died() -> void:
-	emit_signal("died", self)
 
 
 func _on_BattleStats_stamina_changed(_old_stamina: int, new_stamina: int) \
