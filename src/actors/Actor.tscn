@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://src/actors/Actor.gd" type="Script" id=1]
 [ext_resource path="res://src/actors/Stats.gd" type="Script" id=2]
@@ -23,6 +23,17 @@
 [ext_resource path="res://resources/animations/actor_death_south.tres" type="Animation" id=22]
 [ext_resource path="res://resources/animations/actor_death_west.tres" type="Animation" id=23]
 
+[sub_resource type="ParticlesMaterial" id=1]
+flag_disable_z = true
+direction = Vector3( 0, 0, 0 )
+spread = 180.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 64.0
+initial_velocity_random = 1.0
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+color = Color( 0.941176, 0.964706, 0.941176, 1 )
+
 [node name="Actor" type="Node2D"]
 script = ExtResource( 1 )
 
@@ -39,7 +50,6 @@ __meta__ = {
 
 [node name="Sprite" type="Sprite" parent="Center/Offset"]
 hframes = 4
-frame = 3
 
 [node name="StaminaBar" parent="Center/Offset/Sprite" instance=ExtResource( 14 )]
 visible = false
@@ -50,6 +60,14 @@ position = Vector2( -8, -8 )
 __meta__ = {
 "_edit_lock_": true
 }
+
+[node name="BloodSplatter" type="Particles2D" parent="Center"]
+emitting = false
+amount = 32
+lifetime = 0.3
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource( 1 )
 
 [node name="Stats" type="Node" parent="."]
 script = ExtResource( 2 )

@@ -64,16 +64,17 @@ onready var battle_stats := $BattleStats as BattleStats
 onready var remote_transform := $Center/Offset/RemoteTransform2D \
 		as RemoteTransform2D
 
-onready var _sprite := $Center/Offset/Sprite as Sprite
-
-onready var _abilities := $Abilities
-
 onready var _center := $Center as Position2D
 onready var _offset := $Center/Offset as Position2D
 
-onready var _stamina_bar := $Center/Offset/Sprite/StaminaBar as StaminaBar
+onready var _abilities := $Abilities
 
 onready var _anim := $AnimationPlayer as AnimationPlayer
+
+onready var _sprite := $Center/Offset/Sprite as Sprite
+onready var _blood_splatter := $Center/BloodSplatter \
+		as Particles2D
+onready var _stamina_bar := $Center/Offset/Sprite/StaminaBar as StaminaBar
 
 
 func _ready() -> void:
@@ -135,6 +136,8 @@ func play_death_anim(direction: Vector2) -> void:
 	emit_signal("dying")
 
 	var anim_name := AnimationNames.DEATH[direction] as String
+
+	_blood_splatter.emitting = true
 
 	_sprite.material = _DISSOLVE_MATERIAL
 	_anim.play(anim_name)
