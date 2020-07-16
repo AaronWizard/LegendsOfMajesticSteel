@@ -39,6 +39,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/abilities/Attack.gd"
 }, {
+"base": "Node",
+"class": "BattleControl",
+"language": "GDScript",
+"path": "res://src/ui/BattleControl.gd"
+}, {
 "base": "CanvasLayer",
 "class": "BattleGUI",
 "language": "GDScript",
@@ -83,6 +88,11 @@ _global_script_classes=[ {
 "class": "MapHighlights",
 "language": "GDScript",
 "path": "res://src/maps/MapHighlights.gd"
+}, {
+"base": "Node",
+"class": "MouseControl",
+"language": "GDScript",
+"path": "res://src/ui/MouseControl.gd"
 }, {
 "base": "Action",
 "class": "Move",
@@ -141,6 +151,7 @@ _global_script_class_icons={
 "Action": "",
 "Actor": "",
 "Attack": "",
+"BattleControl": "",
 "BattleGUI": "",
 "BattleStats": "",
 "BreadthFirstSearch": "",
@@ -150,6 +161,7 @@ _global_script_class_icons={
 "GameCamera": "",
 "Map": "",
 "MapHighlights": "",
+"MouseControl": "",
 "Move": "",
 "Player": "",
 "RangeData": "",

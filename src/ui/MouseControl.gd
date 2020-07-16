@@ -1,3 +1,4 @@
+class_name MouseControl
 extends Node
 
 signal click(position)
@@ -26,8 +27,7 @@ func _mouse_click(event: InputEventMouseButton) -> void:
 			_mouse_down = true
 		else:
 			if _mouse_down and not _dragging:
-				print("mouse click")
-				emit_signal("click")
+				emit_signal("click", event.position)
 			_mouse_down = false
 			_dragging = false
 
@@ -38,5 +38,4 @@ func _mouse_move(event: InputEventMouseMotion) -> void:
 			_dragging = event.position.distance_squared_to( \
 					_first_mouse_down_pos) > _MIN_DRAG_DISTANCE_SQRD
 		if _dragging:
-			print("mouse drag")
 			emit_signal("drag", event.relative)

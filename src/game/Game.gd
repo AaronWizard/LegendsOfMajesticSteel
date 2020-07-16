@@ -3,17 +3,14 @@ extends Node
 export var start_map_file: PackedScene = null
 
 onready var _map_container := $Map
-onready var _map_highlights: MapHighlights = $MapHighlights
-onready var _camera: GameCamera = $GameCamera
-onready var _turn_manager: TurnManager = $TurnManager
-onready var _gui: BattleGUI = $BattleGUI
-
+onready var _turn_manager := $TurnManager as TurnManager
+onready var _control := $BattleControl as BattleControl
 
 func _ready() -> void:
 	if start_map_file:
 		load_map(start_map_file)
 
-	_turn_manager.start(get_current_map(), _gui)
+	_turn_manager.start(get_current_map(), _control)
 
 
 func get_current_map() -> Map:
@@ -30,37 +27,11 @@ func load_map(map_file: PackedScene) -> void:
 	assert(new_map != null)
 	_map_container.add_child(new_map)
 
-	_camera.set_bounds(new_map.get_pixel_rect())
-
-
-func _on_TurnManager_turn_started(actor: Actor, range_data: RangeData) -> void:
-	_map_highlights.moves_visible = true
-	_map_highlights.set_moves(range_data.move_range)
-	_camera.follow_actor(actor)
-
-
-func _on_TurnManager_action_started(actor: Actor, show_map_highlights) -> void:
-	_camera.follow_actor(actor)
-	_map_highlights.moves_visible = show_map_highlights
-
-
-func _on_BattleGUI_camera_dragged(relative) -> void:
-	_camera.drag(relative)
-
-
-func _on_BattleGUI_ability_selected(ability_range: Array) -> void:
-	_map_highlights.set_targets(ability_range)
-	_map_highlights.moves_visible = false
+	_control.camera.set_bounds(new_map.get_pixel_rect())
 
 
 # warning-ignore:unused_argument
-func _on_BattleGUI_ability_target_placed(target_cell: Vector2, aoe: Array) \
-		-> void:
-	_map_highlights.target_cursor_visible = true
-	_map_highlights.target_cursor_cell = target_cell
-
-
-func _on_BattleGUI_ability_cleared() -> void:
-	_map_highlights.target_cursor_visible = false
-	_map_highlights.set_targets([])
-	_map_highlights.moves_visible = true
+#func _on_BattleGUI_ability_target_placed(target_cell: Vector2, aoe: Array) \
+#		-> void:
+#	_map_highlights.target_cursor_visible = true
+#	_map_highlights.target_cursor_cell = target_cell

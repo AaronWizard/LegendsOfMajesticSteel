@@ -26,6 +26,7 @@ func get_actor() -> Actor:
 # warning-ignore:unused_argument
 # warning-ignore:unused_argument
 # warning-ignore:unused_argument
-func determine_action(map: Map, range_data: RangeData, gui: BattleGUI) -> void:
+func determine_action(map: Map, range_data: RangeData, control: BattleControl) \
+		-> void:
 	print("Controller: Must implement determine_action()")
 	emit_signal("determined_action", null)
