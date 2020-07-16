@@ -15,11 +15,12 @@ func set_current_actor(value: Actor) -> void:
 	gui.current_actor = value
 
 
-func _on_MouseControl_click(_position) -> void:
-	pass # Replace with function body.
+func set_target(target_cell: Vector2) -> void:
+	map_highlights.target_cursor_visible = true
+	map_highlights.target_cursor_cell = target_cell
 
 
-func _on_MouseControl_drag(relative) -> void:
+func _on_MouseControl_drag(relative: Vector2) -> void:
 	camera.drag(relative)
 
 
@@ -33,7 +34,3 @@ func _on_BattleGUI_ability_cleared() -> void:
 	map_highlights.target_cursor_visible = false
 	map_highlights.set_targets([])
 	map_highlights.moves_visible = true
-
-
-func _on_BattleGUI_wait_started() -> void:
-	pass # Replace with function body.

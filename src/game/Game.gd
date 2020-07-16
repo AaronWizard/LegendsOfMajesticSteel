@@ -23,15 +23,8 @@ func get_current_map() -> Map:
 
 
 func load_map(map_file: PackedScene) -> void:
-	var new_map: Map = map_file.instance()
+	var new_map := map_file.instance() as Map
 	assert(new_map != null)
 	_map_container.add_child(new_map)
 
 	_control.camera.set_bounds(new_map.get_pixel_rect())
-
-
-# warning-ignore:unused_argument
-#func _on_BattleGUI_ability_target_placed(target_cell: Vector2, aoe: Array) \
-#		-> void:
-#	_map_highlights.target_cursor_visible = true
-#	_map_highlights.target_cursor_cell = target_cell

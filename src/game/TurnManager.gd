@@ -55,6 +55,7 @@ func _run() -> void:
 				controller.call_deferred("determine_action",
 						_map, range_data, _control)
 				var action: Action = yield(controller, "determined_action")
+				_controller_cleanup()
 
 				if action:
 					_action_started(actor, action.show_map_highlights())
@@ -74,6 +75,12 @@ func _turn_started(actor: Actor, range_data: RangeData) -> void:
 	_control.map_highlights.moves_visible = true
 	_control.map_highlights.set_moves(range_data.move_range)
 	_control.camera.follow_actor(actor)
+
+
+func _controller_cleanup() -> void:
+	# Make sure these are true after a controller is run
+	_control.gui.buttons_visible = false
+	_control.mouse.dragging_enabled = false
 
 
 func _action_started(actor: Actor, show_map_highlights: bool) -> void:
