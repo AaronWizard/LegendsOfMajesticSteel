@@ -80,7 +80,6 @@ onready var _blood_splatter := $Center/BloodSplatter \
 onready var _stamina_bar := $Center/Offset/Sprite/StaminaBar as StaminaBar
 
 onready var _wait_icon := $Center/Offset/WaitIcon as CanvasItem
-onready var _wait_icon_timer := $Center/Offset/WaitIcon/WaitIconTimer as Timer
 
 onready var _target_cursor := $Center/Offset/TargetCursor as TargetCursor
 
@@ -193,14 +192,12 @@ func _on_WaitIconTimer_timeout() -> void:
 
 
 func _on_BattleStats_round_started() -> void:
-	_wait_icon_timer.stop()
 	_wait_icon.visible = false
 
 
 func _on_BattleStats_turn_taken() -> void:
 	if battle_stats.round_finished:
 		_wait_icon.visible = true
-		_wait_icon_timer.start()
 
 
 func _animation_trigger(trigger: String) -> void:
