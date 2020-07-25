@@ -1,8 +1,9 @@
 [gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://src/ai/Player.gd" type="Script" id=1]
+[ext_resource path="res://src/control/Player.gd" type="Script" id=1]
 [ext_resource path="res://src/actors/Actor.tscn" type="PackedScene" id=2]
 [ext_resource path="res://assets/graphics/actors/warrior_maiden.png" type="Texture" id=3]
+
 
 [node name="WarriorMaiden" instance=ExtResource( 2 )]
 faction = 0

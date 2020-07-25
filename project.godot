@@ -12,7 +12,7 @@ _global_script_classes=[ {
 "base": "Controller",
 "class": "AI",
 "language": "GDScript",
-"path": "res://src/ai/AI.gd"
+"path": "res://src/control/AI.gd"
 }, {
 "base": "Node",
 "class": "Ability",
@@ -57,7 +57,7 @@ _global_script_classes=[ {
 "base": "Reference",
 "class": "BreadthFirstSearch",
 "language": "GDScript",
-"path": "res://src/ai/BreadthFirstSearch.gd"
+"path": "res://src/control/BreadthFirstSearch.gd"
 }, {
 "base": "Reference",
 "class": "Constants",
@@ -67,7 +67,7 @@ _global_script_classes=[ {
 "base": "Node",
 "class": "Controller",
 "language": "GDScript",
-"path": "res://src/ai/Controller.gd"
+"path": "res://src/control/Controller.gd"
 }, {
 "base": "Reference",
 "class": "Directions",
@@ -102,12 +102,12 @@ _global_script_classes=[ {
 "base": "Controller",
 "class": "Player",
 "language": "GDScript",
-"path": "res://src/ai/Player.gd"
+"path": "res://src/control/Player.gd"
 }, {
 "base": "Reference",
 "class": "RangeData",
 "language": "GDScript",
-"path": "res://src/ai/RangeData.gd"
+"path": "res://src/control/RangeData.gd"
 }, {
 "base": "Node2D",
 "class": "StaminaBar",
