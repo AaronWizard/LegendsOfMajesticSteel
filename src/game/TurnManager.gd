@@ -6,13 +6,15 @@ var running := false
 var _map: Map
 var _control: BattleControl
 
-var _actors := []
-var _next_index := 0
+var _faction_order := []
+
+onready var _player_turn := $PlayerTurn as PlayerTurn
+onready var _ai_turn := $AITurn as AITurn
 
 
 func start(map: Map, control: BattleControl) -> void:
 	_start(map, control)
-	_run()
+	call_deferred("_take_turn")
 
 
 func _start(map: Map, control: BattleControl) -> void:
@@ -24,68 +26,45 @@ func _start(map: Map, control: BattleControl) -> void:
 
 	_control.current_map = map
 
-	_actors = map.get_actors()
-	_next_index = 0
-
 	_start_battle()
 
 	running = true
 
 
-func _run() -> void:
-	while running:
-		var actor := _get_next_actor()
-		var controller := actor.controller as ActorController
-
-		if controller:
-			_control.current_actor = actor
-
-			actor.battle_stats.start_turn()
-			var range_data := RangeData.new(actor, _map)
-
-			_turn_started(actor, range_data)
-
-			if controller.pauses:
-				yield(get_tree().create_timer(0.3), "timeout")
-
-			while actor.battle_stats.is_alive \
-					and not actor.battle_stats.turn_finished:
-				controller.call_deferred("determine_action",
-						_map, range_data, _control)
-				var action: Action = yield(controller, "determined_action")
-				_controller_cleanup()
-
-				if action:
-					_action_started(actor, action.show_map_highlights())
-					action.start()
-					yield(action, "finished")
-				else:
-					# Action is a wait
-					actor.battle_stats.take_turn()
-
-			yield(get_tree().create_timer(0.2), "timeout")
-
-			_control.current_actor = null
-
-	_end()
+func _take_turn():
+	if running:
+		_get_next_actor()
+	else:
+		_end()
 
 
 func _start_battle() -> void:
-	for a in _actors:
+	for a in _map.get_actors():
 		var actor := a as Actor
 		actor.battle_stats.start_battle()
 
 
 func _start_round() -> void:
-	for a in _actors:
+	_faction_order.clear()
+
+	for a in _map.get_actors():
 		var actor := a as Actor
 		actor.battle_stats.start_round()
+		_faction_order.append(actor.faction)
+
+	randomize()
+	_faction_order.shuffle()
+	print(_faction_order)
 
 
 func _turn_started(actor: Actor, range_data: RangeData) -> void:
 	_control.map_highlights.moves_visible = true
 	_control.map_highlights.set_moves(range_data.move_range)
 	_control.camera.follow_actor(actor)
+
+
+func _turn_ended() -> void:
+	_control.map_highlights.moves_visible = false
 
 
 func _controller_cleanup() -> void:
@@ -105,20 +84,74 @@ func _end() -> void:
 	_control = null
 
 
-func _get_next_actor() -> Actor:
-	if _next_index == 0:
+func _get_next_actor() -> void:
+	if _faction_order.empty():
 		_start_round()
 
-	var result := _actors[_next_index] as Actor
-	_next_index = (_next_index + 1) % _actors.size()
+	var faction := _faction_order.pop_front() as int
+
+	var controller: TurnController
+
+	match faction:
+		Actor.Faction.PLAYER:
+			controller = _player_turn
+		Actor.Faction.ENEMY:
+			controller = _ai_turn
+		_:
+			print("Error")
+
+	controller.pick_actor(_get_active_actors(faction), _control)
+
+
+func _get_active_actors(faction: int) -> Array:
+	var result = []
+
+	for a in _map.get_actors():
+		var actor := a as Actor
+		if (actor.faction == faction) and not actor.battle_stats.round_finished:
+			result.append(actor)
+
 	return result
 
 
+func _on_actor_picked(actor) -> void:
+	var controller := actor.controller as ActorController
+
+	if controller:
+		_control.current_actor = actor
+
+		actor.battle_stats.start_turn()
+		var range_data := RangeData.new(actor, _map)
+
+		_turn_started(actor, range_data)
+
+		if controller.pauses:
+			yield(get_tree().create_timer(0.3), "timeout")
+
+		while actor.battle_stats.is_alive \
+				and not actor.battle_stats.turn_finished:
+			controller.call_deferred("determine_action",
+					_map, range_data, _control)
+			var action: Action = yield(controller, "determined_action")
+			_controller_cleanup()
+
+			if action:
+				_action_started(actor, action.show_map_highlights())
+				action.start()
+				yield(action, "finished")
+			else:
+				# Action is a wait
+				actor.battle_stats.take_turn()
+
+		yield(get_tree().create_timer(0.2), "timeout")
+
+		_turn_ended()
+
+		_control.current_actor = null
+
+	call_deferred("_take_turn")
+
+
 func _on_actor_removed(actor: Actor) -> void:
-	var index := _actors.find(actor)
-	assert(index > -1)
-
-	_actors.remove(index)
-
-	if _next_index == index:
-		_next_index = _next_index % _actors.size()
+	var index := _faction_order.rfind(actor.faction)
+	_faction_order.remove(index)
