@@ -54,15 +54,17 @@ export var cell_offset: Vector2 setget set_cell_offset, get_cell_offset
 
 export(Faction) var faction := Faction.ENEMY
 
-onready var cell: Vector2 setget set_cell, get_cell
+var target_visible: bool setget set_target_visible, get_target_visible
 
 var controller = null # -> Controller
 
-onready var stats := $Stats as Stats
-onready var battle_stats := $BattleStats as BattleStats
+onready var cell: Vector2 setget set_cell, get_cell
 
 onready var remote_transform := $Center/Offset/RemoteTransform2D \
 		as RemoteTransform2D
+
+onready var stats := $Stats as Stats
+onready var battle_stats := $BattleStats as BattleStats
 
 onready var _center := $Center as Position2D
 onready var _offset := $Center/Offset as Position2D
@@ -74,7 +76,13 @@ onready var _anim := $AnimationPlayer as AnimationPlayer
 onready var _sprite := $Center/Offset/Sprite as Sprite
 onready var _blood_splatter := $Center/BloodSplatter \
 		as Particles2D
+
 onready var _stamina_bar := $Center/Offset/Sprite/StaminaBar as StaminaBar
+
+onready var _wait_icon := $Center/Offset/WaitIcon as CanvasItem
+onready var _wait_icon_timer := $Center/Offset/WaitIcon/WaitIconTimer as Timer
+
+onready var _target_cursor := $Center/Offset/TargetCursor as TargetCursor
 
 
 func _ready() -> void:
@@ -160,6 +168,14 @@ func get_abilities() -> Array:
 	return _abilities.get_children()
 
 
+func set_target_visible(new_value: bool) -> void:
+	_target_cursor.visible = new_value
+
+
+func get_target_visible() -> bool:
+	return _target_cursor.visible
+
+
 func _on_BattleStats_stamina_changed(_old_stamina: int, new_stamina: int) \
 		-> void:
 	if battle_stats.is_alive:
@@ -170,6 +186,21 @@ func _on_BattleStats_stamina_changed(_old_stamina: int, new_stamina: int) \
 func _on_StaminaBar_animation_finished() -> void:
 	_stamina_bar.visible = false
 	emit_signal("stamina_animation_finished")
+
+
+func _on_WaitIconTimer_timeout() -> void:
+	_wait_icon.visible = not _wait_icon.visible
+
+
+func _on_BattleStats_round_started() -> void:
+	_wait_icon_timer.stop()
+	_wait_icon.visible = false
+
+
+func _on_BattleStats_turn_taken() -> void:
+	if battle_stats.round_finished:
+		_wait_icon.visible = true
+		_wait_icon_timer.start()
 
 
 func _animation_trigger(trigger: String) -> void:
