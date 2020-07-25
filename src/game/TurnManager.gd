@@ -24,12 +24,10 @@ func _start(map: Map, control: BattleControl) -> void:
 
 	_control.current_map = map
 
-	for a in map.get_actors():
-		var actor := a as Actor
-		actor.battle_stats.start_battle()
-
 	_actors = map.get_actors()
 	_next_index = 0
+
+	_start_battle()
 
 	running = true
 
@@ -51,7 +49,7 @@ func _run() -> void:
 				yield(get_tree().create_timer(0.3), "timeout")
 
 			while actor.battle_stats.is_alive \
-					and not actor.battle_stats.finished:
+					and not actor.battle_stats.turn_finished:
 				controller.call_deferred("determine_action",
 						_map, range_data, _control)
 				var action: Action = yield(controller, "determined_action")
@@ -62,13 +60,26 @@ func _run() -> void:
 					action.start()
 					yield(action, "finished")
 				else:
-					break
+					# Action is a wait
+					actor.battle_stats.take_turn()
 
 			yield(get_tree().create_timer(0.2), "timeout")
 
 			_control.current_actor = null
 
 	_end()
+
+
+func _start_battle() -> void:
+	for a in _actors:
+		var actor := a as Actor
+		actor.battle_stats.start_battle()
+
+
+func _start_round() -> void:
+	for a in _actors:
+		var actor := a as Actor
+		actor.battle_stats.start_round()
 
 
 func _turn_started(actor: Actor, range_data: RangeData) -> void:
@@ -95,6 +106,9 @@ func _end() -> void:
 
 
 func _get_next_actor() -> Actor:
+	if _next_index == 0:
+		_start_round()
+
 	var result := _actors[_next_index] as Actor
 	_next_index = (_next_index + 1) % _actors.size()
 	return result
