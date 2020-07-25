@@ -4,6 +4,8 @@ extends TurnController
 
 signal _input_processed(actor)
 
+var _control: BattleControl = null
+var _actors := []
 
 func pick_actor(actors: Array, control: BattleControl) -> void:
 	_set_actor_cursors(actors, true)
@@ -13,7 +15,18 @@ func pick_actor(actors: Array, control: BattleControl) -> void:
 
 	control.mouse.dragging_enabled = true
 
+	# warning-ignore:return_value_discarded
+	control.mouse.connect("click", self, "_on_mouse_click")
+
+	_control = control
+	_actors = actors
+
 	var actor: Actor = yield(self, '_input_processed')
+
+	control.mouse.disconnect("click", self, "_on_mouse_click")
+
+	_control = null
+	_actors = []
 
 	_set_actor_cursors(actors, false)
 
@@ -36,3 +49,11 @@ func _average_position(actors: Array) -> Vector2:
 	result /= actors.size()
 
 	return result
+
+
+func _on_mouse_click(_position: Vector2) -> void:
+	var cell := _control.current_map.get_mouse_cell()
+	for a in _actors:
+		var actor := a as Actor
+		if actor.on_cell(cell):
+			emit_signal("_input_processed", actor)

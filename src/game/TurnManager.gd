@@ -54,7 +54,6 @@ func _start_round() -> void:
 
 	randomize()
 	_faction_order.shuffle()
-	print(_faction_order)
 
 
 func _turn_started(actor: Actor, range_data: RangeData) -> void:
@@ -90,17 +89,20 @@ func _get_next_actor() -> void:
 
 	var faction := _faction_order.pop_front() as int
 
-	var controller: TurnController
-
-	match faction:
-		Actor.Faction.PLAYER:
-			controller = _player_turn
-		Actor.Faction.ENEMY:
-			controller = _ai_turn
-		_:
-			print("Error")
-
-	controller.pick_actor(_get_active_actors(faction), _control)
+	var actors := _get_active_actors(faction)
+	if actors.size() > 1:
+		var controller: TurnController = null
+		match faction:
+			Actor.Faction.PLAYER:
+				controller = _player_turn
+			Actor.Faction.ENEMY:
+				controller = _ai_turn
+			_:
+				assert(false)
+		controller.pick_actor(_get_active_actors(faction), _control)
+	else:
+		var actor := actors[0] as Actor
+		_on_actor_picked(actor)
 
 
 func _get_active_actors(faction: int) -> Array:
@@ -114,7 +116,7 @@ func _get_active_actors(faction: int) -> Array:
 	return result
 
 
-func _on_actor_picked(actor) -> void:
+func _on_actor_picked(actor: Actor) -> void:
 	var controller := actor.controller as ActorController
 
 	if controller:
