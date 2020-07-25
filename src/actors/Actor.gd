@@ -56,7 +56,7 @@ export(Faction) var faction := Faction.ENEMY
 
 var target_visible: bool setget set_target_visible, get_target_visible
 
-var controller = null # -> Controller
+var controller = null # -> ActorController
 
 onready var cell: Vector2 setget set_cell, get_cell
 

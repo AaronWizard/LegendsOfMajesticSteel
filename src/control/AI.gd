@@ -1,5 +1,5 @@
 class_name AI
-extends Controller
+extends ActorController
 
 onready var _random := RandomNumberGenerator.new()
 

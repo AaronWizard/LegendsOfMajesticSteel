@@ -1,4 +1,4 @@
-class_name Controller
+class_name ActorController
 extends Node
 
 signal determined_action(action)
@@ -28,5 +28,5 @@ func get_actor() -> Actor:
 # warning-ignore:unused_argument
 func determine_action(map: Map, range_data: RangeData, control: BattleControl) \
 		-> void:
-	print("Controller: Must implement determine_action()")
+	print("ActorController: Must implement determine_action()")
 	emit_signal("determined_action", null)

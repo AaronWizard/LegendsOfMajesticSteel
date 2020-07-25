@@ -1,5 +1,5 @@
 class_name Player
-extends Controller
+extends ActorController
 
 signal _input_processed(action)
 

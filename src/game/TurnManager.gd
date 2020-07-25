@@ -35,7 +35,7 @@ func _start(map: Map, control: BattleControl) -> void:
 func _run() -> void:
 	while running:
 		var actor := _get_next_actor()
-		var controller := actor.controller as Controller
+		var controller := actor.controller as ActorController
 
 		if controller:
 			_control.current_actor = actor
