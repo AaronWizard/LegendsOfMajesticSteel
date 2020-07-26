@@ -1,8 +1,9 @@
-[gd_resource type="Theme" load_steps=5 format=2]
+[gd_resource type="Theme" load_steps=6 format=2]
 
 [ext_resource path="res://resources/gui/font_standard.tres" type="DynamicFont" id=1]
 [ext_resource path="res://resources/styleboxes/button_stylebox.tres" type="StyleBox" id=2]
 [ext_resource path="res://resources/styleboxes/button_pressed_stylebox.tres" type="StyleBox" id=3]
+[ext_resource path="res://resources/styleboxes/panel_stylebox.tres" type="StyleBox" id=4]
 
 [sub_resource type="StyleBoxEmpty" id=1]
 
@@ -28,3 +29,4 @@ Label/constants/shadow_offset_x = 1
 Label/constants/shadow_offset_y = 1
 Label/fonts/font = null
 Label/styles/normal = null
+Panel/styles/panel = ExtResource( 4 )
