@@ -27,6 +27,7 @@ func _start(map: Map, control: BattleControl) -> void:
 	_control.current_map = map
 
 	_start_battle()
+	_controller_cleanup()
 
 	running = true
 
