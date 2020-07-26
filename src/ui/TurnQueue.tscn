@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://resources/gui/theme_standard.tres" type="Theme" id=1]
+[ext_resource path="res://src/ui/TurnQueue.gd" type="Script" id=2]
+
+[node name="TurnQueue" type="PanelContainer"]
+margin_right = 87.0
+margin_bottom = 22.0
+theme = ExtResource( 1 )
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+margin_left = 3.0
+margin_top = 3.0
+margin_right = 84.0
+margin_bottom = 19.0
+rect_min_size = Vector2( 0, 16 )
+scroll_vertical_enabled = false
+
+[node name="Icons" type="HBoxContainer" parent="ScrollContainer"]

@@ -12,11 +12,13 @@ var current_actor: Actor = null setget set_current_actor
 
 var current_ability: Ability = null setget set_current_ability
 
-onready var _all_buttons: Container = $Buttons as Container
-onready var _ability_buttons: Container = $Buttons/Abilities as Container
+onready var turn_queue := $TurnQueue as TurnQueue
 
-onready var _wait_button: Button = $Buttons/Wait as Button
-onready var _ability_cancel_button: Button = $Buttons/AbilityCancel as Button
+onready var _all_buttons := $Buttons as Container
+onready var _ability_buttons := $Buttons/Abilities as Container
+
+onready var _wait_button := $Buttons/Wait as Button
+onready var _ability_cancel_button := $Buttons/AbilityCancel as Button
 
 
 func set_buttons_visible(value: bool) -> void:

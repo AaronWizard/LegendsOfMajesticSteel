@@ -158,6 +158,11 @@ _global_script_classes=[ {
 "class": "TurnManager",
 "language": "GDScript",
 "path": "res://src/game/TurnManager.gd"
+}, {
+"base": "PanelContainer",
+"class": "TurnQueue",
+"language": "GDScript",
+"path": "res://src/ui/TurnQueue.gd"
 } ]
 _global_script_class_icons={
 "AI": "",
@@ -189,7 +194,8 @@ _global_script_class_icons={
 "TileProperties": "",
 "TilePropertiesSet": "",
 "TurnController": "",
-"TurnManager": ""
+"TurnManager": "",
+"TurnQueue": ""
 }
 
 [application]

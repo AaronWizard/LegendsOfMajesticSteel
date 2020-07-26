@@ -56,6 +56,8 @@ func _start_round() -> void:
 	randomize()
 	_faction_order.shuffle()
 
+	_control.gui.turn_queue.set_queue(_faction_order)
+
 
 func _turn_started(actor: Actor, range_data: RangeData) -> void:
 	_control.map_highlights.moves_visible = true
