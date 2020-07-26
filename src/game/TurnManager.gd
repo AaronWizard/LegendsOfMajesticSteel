@@ -89,6 +89,8 @@ func _end() -> void:
 func _get_next_actor() -> void:
 	if _faction_order.empty():
 		_start_round()
+	else:
+		_control.gui.turn_queue.next_turn()
 
 	var faction := _faction_order.pop_front() as int
 
@@ -109,7 +111,7 @@ func _get_next_actor() -> void:
 
 
 func _get_active_actors(faction: int) -> Array:
-	var result = []
+	var result := []
 
 	for a in _map.get_actors():
 		var actor := a as Actor
@@ -137,7 +139,7 @@ func _on_actor_picked(actor: Actor) -> void:
 				and not actor.battle_stats.turn_finished:
 			controller.call_deferred("determine_action",
 					_map, range_data, _control)
-			var action: Action = yield(controller, "determined_action")
+			var action := yield(controller, "determined_action") as Action
 			_controller_cleanup()
 
 			if action:
@@ -158,5 +160,8 @@ func _on_actor_picked(actor: Actor) -> void:
 
 
 func _on_actor_removed(actor: Actor) -> void:
-	var index := _faction_order.rfind(actor.faction)
-	_faction_order.remove(index)
+	if not actor.battle_stats.round_finished:
+		var index := _faction_order.rfind(actor.faction)
+		if index > -1:
+			_faction_order.remove(index)
+			_control.gui.turn_queue.remove_icon(index)
