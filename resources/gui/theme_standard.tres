@@ -42,6 +42,7 @@ Label/constants/shadow_offset_y = 1
 Label/fonts/font = null
 Label/styles/normal = null
 Panel/styles/panel = ExtResource( 4 )
+PanelContainer/styles/panel = ExtResource( 4 )
 VScrollBar/icons/decrement = null
 VScrollBar/icons/decrement_highlight = null
 VScrollBar/icons/increment = null
