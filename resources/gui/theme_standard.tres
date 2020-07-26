@@ -1,9 +1,12 @@
-[gd_resource type="Theme" load_steps=6 format=2]
+[gd_resource type="Theme" load_steps=9 format=2]
 
 [ext_resource path="res://resources/gui/font_standard.tres" type="DynamicFont" id=1]
 [ext_resource path="res://resources/styleboxes/button_stylebox.tres" type="StyleBox" id=2]
 [ext_resource path="res://resources/styleboxes/button_pressed_stylebox.tres" type="StyleBox" id=3]
 [ext_resource path="res://resources/styleboxes/panel_stylebox.tres" type="StyleBox" id=4]
+[ext_resource path="res://resources/styleboxes/scroll_background_stylebox.tres" type="StyleBox" id=5]
+[ext_resource path="res://resources/styleboxes/scroll_h_grabber_stylebox.tres" type="StyleBox" id=6]
+[ext_resource path="res://resources/styleboxes/scroll_v_grabber_stylebox.tres" type="StyleBox" id=7]
 
 [sub_resource type="StyleBoxEmpty" id=1]
 
@@ -20,6 +23,15 @@ Button/styles/focus = SubResource( 1 )
 Button/styles/hover = ExtResource( 2 )
 Button/styles/normal = ExtResource( 2 )
 Button/styles/pressed = ExtResource( 3 )
+HScrollBar/icons/decrement = null
+HScrollBar/icons/decrement_highlight = null
+HScrollBar/icons/increment = null
+HScrollBar/icons/increment_highlight = null
+HScrollBar/styles/grabber = ExtResource( 6 )
+HScrollBar/styles/grabber_highlight = ExtResource( 6 )
+HScrollBar/styles/grabber_pressed = ExtResource( 6 )
+HScrollBar/styles/scroll = ExtResource( 5 )
+HScrollBar/styles/scroll_focus = ExtResource( 5 )
 Label/colors/font_color = Color( 0.941176, 0.964706, 0.941176, 1 )
 Label/colors/font_color_shadow = Color( 0, 0, 0, 0 )
 Label/colors/font_outline_modulate = Color( 1, 1, 1, 1 )
@@ -30,3 +42,12 @@ Label/constants/shadow_offset_y = 1
 Label/fonts/font = null
 Label/styles/normal = null
 Panel/styles/panel = ExtResource( 4 )
+VScrollBar/icons/decrement = null
+VScrollBar/icons/decrement_highlight = null
+VScrollBar/icons/increment = null
+VScrollBar/icons/increment_highlight = null
+VScrollBar/styles/grabber = ExtResource( 7 )
+VScrollBar/styles/grabber_highlight = ExtResource( 7 )
+VScrollBar/styles/grabber_pressed = ExtResource( 7 )
+VScrollBar/styles/scroll = ExtResource( 5 )
+VScrollBar/styles/scroll_focus = ExtResource( 5 )
