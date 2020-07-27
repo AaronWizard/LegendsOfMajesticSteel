@@ -40,6 +40,8 @@ func set_queue(factions: Array) -> void:
 
 
 func next_turn():
+	_scroll.scroll_horizontal = 0
+
 	var icon_margin_left := 0
 
 	if _icons.get_child_count() > 1:
@@ -106,5 +108,5 @@ func _add_icon(texture: Texture) -> void:
 #			_tween.start()
 
 
-func _on_IconsMargin_minimum_size_changed():
+func _on_IconsMargin_sort_children():
 	_icons_container.rect_min_size = _icons_margin.rect_size

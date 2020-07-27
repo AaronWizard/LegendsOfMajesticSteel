@@ -46,4 +46,4 @@ __meta__ = {
 }
 
 [node name="Tween" type="Tween" parent="."]
-[connection signal="minimum_size_changed" from="ScrollContainer/IconsContainer/IconsMargin" to="." method="_on_IconsMargin_minimum_size_changed"]
+[connection signal="sort_children" from="ScrollContainer/IconsContainer/IconsMargin" to="." method="_on_IconsMargin_sort_children"]
