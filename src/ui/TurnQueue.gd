@@ -69,14 +69,6 @@ func remove_icon(index: int) -> void:
 	icon.queue_free()
 
 
-#	# warning-ignore:return_value_discarded
-#	_tween.interpolate_property(icon, "margin_top", 0, icon.rect_size.y, 1)
-#	# warning-ignore:return_value_discarded
-#	_tween.interpolate_callback(icon, 1, "queue_free")
-#	# warning-ignore:return_value_discarded
-#	_tween.start()
-
-
 func _clear():
 	for c in _icons.get_children():
 		var child := c as Node
@@ -87,25 +79,6 @@ func _add_icon(texture: Texture) -> void:
 	var icon := TextureRect.new()
 	icon.texture = texture
 	_icons.add_child(icon)
-
-
-#func _update_cursor() -> void:
-#	if _icons.get_child_count() > 0:
-#		var icon := _icons.get_child(_index) as Control
-#
-#		var old_margin_left := _current_turn_icon.margin_left
-#		var new_margin_left := icon.margin_left
-#
-#		if old_margin_left != new_margin_left:
-#			#_scroll.scroll_horizontal = int(new_margin_left)
-#
-#			# warning-ignore:return_value_discarded
-#			_tween.interpolate_property(_current_turn_icon, "margin_left",
-#					old_margin_left, new_margin_left,
-#					_CURRENT_TURN_ICON_MOVE_TIME,
-#					Tween.TRANS_SINE, Tween.EASE_OUT)
-#			# warning-ignore:return_value_discarded
-#			_tween.start()
 
 
 func _on_IconsMargin_sort_children():
