@@ -68,6 +68,9 @@ func _turn_started(actor: Actor, range_data: RangeData) -> void:
 func _turn_ended() -> void:
 	_control.map_highlights.moves_visible = false
 
+	_control.gui.turn_queue.next_turn()
+	_faction_order.pop_front()
+
 
 func _controller_cleanup() -> void:
 	# Make sure these are true after a controller is run
@@ -89,10 +92,8 @@ func _end() -> void:
 func _get_next_actor() -> void:
 	if _faction_order.empty():
 		_start_round()
-	else:
-		_control.gui.turn_queue.next_turn()
 
-	var faction := _faction_order.pop_front() as int
+	var faction := _faction_order[0] as int
 
 	var actors := _get_active_actors(faction)
 	if actors.size() > 1:
