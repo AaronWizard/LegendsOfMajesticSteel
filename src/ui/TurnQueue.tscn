@@ -4,25 +4,36 @@
 [ext_resource path="res://src/ui/TurnQueue.gd" type="Script" id=2]
 [ext_resource path="res://assets/graphics/ui/current_turn_cursor.png" type="Texture" id=3]
 
-[node name="TurnQueue" type="PanelContainer"]
-margin_right = 87.0
-margin_bottom = 16.0
+[node name="TurnQueue" type="ReferenceRect"]
+margin_right = 16.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 16, 24 )
 theme = ExtResource( 1 )
 script = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ScrollContainer" type="ScrollContainer" parent="."]
+[node name="Panel" type="PanelContainer" parent="."]
+margin_right = 16.0
+margin_bottom = 16.0
+rect_clip_content = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Scroll" type="ScrollContainer" parent="Panel"]
 margin_left = 3.0
 margin_top = 3.0
-margin_right = 84.0
+margin_right = 13.0
 margin_bottom = 13.0
 scroll_vertical_enabled = false
 
-[node name="IconsContainer" type="Control" parent="ScrollContainer"]
+[node name="Container" type="Control" parent="Panel/Scroll"]
 
-[node name="IconsMargin" type="MarginContainer" parent="ScrollContainer/IconsContainer"]
+[node name="Margin" type="MarginContainer" parent="Panel/Scroll/Container"]
+margin_right = 2.0
+margin_bottom = 2.0
 custom_constants/margin_right = 1
 custom_constants/margin_top = 1
 custom_constants/margin_left = 1
@@ -31,13 +42,13 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Icons" type="HBoxContainer" parent="ScrollContainer/IconsContainer/IconsMargin"]
+[node name="Icons" type="HBoxContainer" parent="Panel/Scroll/Container/Margin"]
 margin_left = 1.0
 margin_top = 1.0
 margin_right = 1.0
 margin_bottom = 1.0
 
-[node name="CurrentTurnIcon" type="TextureRect" parent="ScrollContainer/IconsContainer"]
+[node name="CurrentTurnCursor" type="TextureRect" parent="Panel/Scroll/Container"]
 margin_right = 10.0
 margin_bottom = 10.0
 texture = ExtResource( 3 )
@@ -46,4 +57,3 @@ __meta__ = {
 }
 
 [node name="Tween" type="Tween" parent="."]
-[connection signal="sort_children" from="ScrollContainer/IconsContainer/IconsMargin" to="." method="_on_IconsMargin_sort_children"]

@@ -23,8 +23,8 @@ __meta__ = {
 }
 
 [node name="Abilities" type="HBoxContainer" parent="Buttons"]
-margin_left = 124.0
-margin_right = 124.0
+margin_left = 264.0
+margin_right = 264.0
 margin_bottom = 27.0
 mouse_filter = 2
 __meta__ = {
@@ -32,8 +32,8 @@ __meta__ = {
 }
 
 [node name="Wait" type="Button" parent="Buttons"]
-margin_left = 128.0
-margin_right = 172.0
+margin_left = 268.0
+margin_right = 312.0
 margin_bottom = 27.0
 text = "Wait"
 __meta__ = {
@@ -55,6 +55,7 @@ anchor_right = 1.0
 margin_left = 4.0
 margin_top = 4.0
 margin_right = -4.0
-margin_bottom = 20.0
+margin_bottom = 28.0
+editor_only = false
 [connection signal="pressed" from="Buttons/Wait" to="." method="_on_Wait_pressed"]
 [connection signal="pressed" from="Buttons/AbilityCancel" to="." method="_on_AbilityCancel_pressed"]
