@@ -4,15 +4,19 @@ extends ReferenceRect
 const _ICON_PLAYER := preload("res://assets/graphics/ui/icons/player_turn.png")
 const _ICON_ENEMY := preload("res://assets/graphics/ui/icons/enemy_turn.png")
 
-const _ANIM_TIME := 0.4
+const _NEW_ICONS_TIME := 0.6
+const _ICON_REMOVED_TIME := 0.4
 
 onready var _panel := $Panel as Control
-onready var _scroll := $Panel/Scroll as ScrollContainer
 
-onready var _container := $Panel/Scroll/Container as Control
-onready var _margin := $Panel/Scroll/Container/Margin as Control
+onready var _scroll_block := $Panel/ScrollBlock as Control
+onready var _scroll := $Panel/ScrollBlock/Scroll as ScrollContainer
 
-onready var _icons := $Panel/Scroll/Container/Margin/Icons as Control
+onready var _icons_block := $Panel/ScrollBlock/Scroll/IconsBlock as Control
+onready var _margin := $Panel/ScrollBlock/Scroll/IconsBlock/Margin \
+		as Control
+onready var _icons := $Panel/ScrollBlock/Scroll/IconsBlock/Margin/Icons \
+		as Control
 
 onready var _tween := $Tween as Tween
 
@@ -20,10 +24,9 @@ onready var _tween := $Tween as Tween
 func set_queue(factions: Array) -> void:
 	_clear()
 	_add_icons(factions)
-	_resize_container()
+	_resize_icons_block()
 
 	var old_panel_size := _panel.rect_size
-
 	_resize_panel()
 
 	_queue_animate_panel_size_change(old_panel_size)
@@ -41,7 +44,14 @@ func next_turn() -> void:
 		_icons.remove_child(icon)
 
 		if _panel.rect_size.x == rect_size.x:
-			_resize_container()
+			_resize_icons_block()
+			if _icons_block.rect_size.x < _scroll.rect_size.x:
+				var old_size := _panel.rect_size
+				_panel.rect_size.y -= _scroll.get_h_scrollbar().rect_size.y
+				_queue_animate_panel_size_change(old_size)
+				# warning-ignore:return_value_discarded
+				_tween.start()
+
 
 		_queue_animate_icons_shift(margins_width_start)
 		_queue_animate_icon_drop(icon, icon_position)
@@ -84,22 +94,36 @@ func _add_single_icon(texture: Texture) -> void:
 	_icons.add_child(icon)
 
 
-func _resize_container() -> void:
-	_margin.rect_size = Vector2.ZERO # Force margin to recalculate size
+func _resize_icons_block() -> void:
+	_margin.rect_size = Vector2.ZERO # Reset margin container size
 
-	_container.rect_min_size = _margin.rect_size
-	_container.rect_size = _margin.rect_size
+	_icons_block.rect_min_size = _margin.rect_size
+	_icons_block.rect_size = _margin.rect_size
 
 
 func _resize_panel() -> void:
 	_scroll.rect_min_size = _margin.rect_size
-	_scroll.rect_size = Vector2.ZERO
+	_scroll.rect_size = Vector2.ZERO # Reset scroll size
 
-	_panel.rect_size = Vector2.ZERO
-	_scroll.rect_min_size.x = 0
+	_scroll_block.rect_min_size = _scroll.rect_size
+	_panel.rect_size = Vector2.ZERO # Reset panel size
 
-	if _panel.rect_size.x > rect_size.x:
-		_panel.rect_size.x = rect_size.x
+	var diff := _panel.rect_size.x - rect_size.x
+	if diff > 0:
+		_scroll.scroll_horizontal_enabled = true
+		_scroll.rect_min_size.x -= diff
+		_scroll.rect_size = Vector2.ZERO # Reset scroll size with new width
+
+		_scroll_block.rect_min_size.x -= diff
+		_scroll_block.rect_min_size.y += _scroll.get_h_scrollbar().rect_size.y
+
+		_panel.rect_size = Vector2.ZERO # Reset panel size again
+	else:
+		_scroll.scroll_horizontal_enabled = false
+
+	# The scroll block's min size was only needed to figure out the panel's size
+	# This also needs to be zero so the panel's size can be animated
+	_scroll_block.rect_min_size = Vector2.ZERO
 
 
 func _queue_animate_panel_size_change(old_panel_size: Vector2) -> void:
@@ -108,7 +132,7 @@ func _queue_animate_panel_size_change(old_panel_size: Vector2) -> void:
 	_panel.rect_size = old_panel_size
 	# warning-ignore:return_value_discarded
 	_tween.interpolate_property(_panel, "rect_size",
-			old_panel_size, new_panel_size, _ANIM_TIME,
+			old_panel_size, new_panel_size, _NEW_ICONS_TIME,
 			Tween.TRANS_QUAD, Tween.EASE_OUT)
 
 
@@ -121,7 +145,7 @@ func _queue_animate_new_icons() -> void:
 	_margin.rect_position = old_pos
 	# warning-ignore:return_value_discarded
 	_tween.interpolate_property(_margin, "rect_position",
-			old_pos, new_pos, _ANIM_TIME,
+			old_pos, new_pos, _NEW_ICONS_TIME,
 			Tween.TRANS_QUAD, Tween.EASE_OUT)
 
 
@@ -136,20 +160,20 @@ func _queue_animate_icons_shift(margins_width_start: float) -> void:
 	_margin.rect_position = old_position
 	# warning-ignore:return_value_discarded
 	_tween.interpolate_property(_margin, "rect_position",
-			old_position, Vector2.ZERO, _ANIM_TIME,
+			old_position, Vector2.ZERO, _ICON_REMOVED_TIME,
 			Tween.TRANS_QUAD, Tween.EASE_OUT)
 
 
 func _queue_animate_icon_drop(icon: Control, icon_position: Vector2) -> void:
-	_container.add_child_below_node(_margin, icon)
+	_icons_block.add_child(icon)
 
 	var start_pos := icon_position + _icons.rect_position
-	var end_pos := Vector2(icon_position.x, _panel.rect_size.y)
+	var end_pos := Vector2(icon_position.x, -_margin.rect_size.y)
 
 	icon.rect_position = start_pos
 	# warning-ignore:return_value_discarded
 	_tween.interpolate_property(icon, "rect_position",
-			start_pos, end_pos, _ANIM_TIME,
-			Tween.TRANS_QUAD, Tween.EASE_OUT)
+			start_pos, end_pos, _ICON_REMOVED_TIME,
+			Tween.TRANS_QUAD, Tween.EASE_IN)
 	# warning-ignore:return_value_discarded
-	_tween.interpolate_callback(icon, _ANIM_TIME, "queue_free")
+	_tween.interpolate_callback(icon, _ICON_REMOVED_TIME, "queue_free")

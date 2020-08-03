@@ -18,21 +18,30 @@ __meta__ = {
 [node name="Panel" type="PanelContainer" parent="."]
 margin_right = 16.0
 margin_bottom = 16.0
-rect_clip_content = true
+rect_min_size = Vector2( 16, 16 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Scroll" type="ScrollContainer" parent="Panel"]
+[node name="ScrollBlock" type="Control" parent="Panel"]
 margin_left = 3.0
 margin_top = 3.0
 margin_right = 13.0
 margin_bottom = 13.0
+rect_clip_content = true
+
+[node name="Scroll" type="ScrollContainer" parent="Panel/ScrollBlock"]
+margin_right = 10.0
+margin_bottom = 10.0
+scroll_horizontal_enabled = false
 scroll_vertical_enabled = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
-[node name="Container" type="Control" parent="Panel/Scroll"]
+[node name="IconsBlock" type="Control" parent="Panel/ScrollBlock/Scroll"]
 
-[node name="Margin" type="MarginContainer" parent="Panel/Scroll/Container"]
+[node name="Margin" type="MarginContainer" parent="Panel/ScrollBlock/Scroll/IconsBlock"]
 margin_right = 2.0
 margin_bottom = 2.0
 custom_constants/margin_right = 1
@@ -43,13 +52,13 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Icons" type="HBoxContainer" parent="Panel/Scroll/Container/Margin"]
+[node name="Icons" type="HBoxContainer" parent="Panel/ScrollBlock/Scroll/IconsBlock/Margin"]
 margin_left = 1.0
 margin_top = 1.0
 margin_right = 1.0
 margin_bottom = 1.0
 
-[node name="CurrentTurnCursor" type="TextureRect" parent="Panel/Scroll/Container"]
+[node name="CurrentTurnCursor" type="TextureRect" parent="Panel/ScrollBlock/Scroll/IconsBlock"]
 margin_right = 10.0
 margin_bottom = 10.0
 texture = ExtResource( 3 )
