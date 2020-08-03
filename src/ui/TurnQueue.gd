@@ -105,6 +105,7 @@ func _resize_panel() -> void:
 func _queue_animate_panel_size_change(old_panel_size: Vector2) -> void:
 	var new_panel_size := _panel.rect_size
 
+	_panel.rect_size = old_panel_size
 	# warning-ignore:return_value_discarded
 	_tween.interpolate_property(_panel, "rect_size",
 			old_panel_size, new_panel_size, _ANIM_TIME,
@@ -117,6 +118,7 @@ func _queue_animate_new_icons() -> void:
 	var old_pos := Vector2(0, -height)
 	var new_pos := Vector2.ZERO
 
+	_margin.rect_position = old_pos
 	# warning-ignore:return_value_discarded
 	_tween.interpolate_property(_margin, "rect_position",
 			old_pos, new_pos, _ANIM_TIME,
@@ -129,10 +131,12 @@ func _queue_animate_icons_shift(margins_width_start: float) -> void:
 
 	var diff_x := margins_width_start - margins_width_end
 	assert(diff_x > 0)
+	var old_position := Vector2(diff_x, 0)
 
+	_margin.rect_position = old_position
 	# warning-ignore:return_value_discarded
 	_tween.interpolate_property(_margin, "rect_position",
-			Vector2(diff_x, 0), Vector2.ZERO, _ANIM_TIME,
+			old_position, Vector2.ZERO, _ANIM_TIME,
 			Tween.TRANS_QUAD, Tween.EASE_OUT)
 
 
@@ -142,6 +146,7 @@ func _queue_animate_icon_drop(icon: Control, icon_position: Vector2) -> void:
 	var start_pos := icon_position + _icons.rect_position
 	var end_pos := Vector2(icon_position.x, _panel.rect_size.y)
 
+	icon.rect_position = start_pos
 	# warning-ignore:return_value_discarded
 	_tween.interpolate_property(icon, "rect_position",
 			start_pos, end_pos, _ANIM_TIME,
