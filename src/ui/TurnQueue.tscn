@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://resources/gui/theme_standard.tres" type="Theme" id=1]
 [ext_resource path="res://src/ui/TurnQueue.gd" type="Script" id=2]
 [ext_resource path="res://assets/graphics/ui/current_turn_cursor.png" type="Texture" id=3]
+[ext_resource path="res://resources/styleboxes/panel_outline_stylebox.tres" type="StyleBox" id=4]
 
 [node name="TurnQueue" type="ReferenceRect"]
 margin_right = 16.0
@@ -19,6 +20,7 @@ __meta__ = {
 margin_right = 16.0
 margin_bottom = 16.0
 rect_min_size = Vector2( 16, 16 )
+custom_styles/panel = ExtResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
