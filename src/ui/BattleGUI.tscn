@@ -56,6 +56,5 @@ margin_left = 4.0
 margin_top = 4.0
 margin_right = -4.0
 margin_bottom = 28.0
-editor_only = false
 [connection signal="pressed" from="Buttons/Wait" to="." method="_on_Wait_pressed"]
 [connection signal="pressed" from="Buttons/AbilityCancel" to="." method="_on_AbilityCancel_pressed"]
