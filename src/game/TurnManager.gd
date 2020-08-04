@@ -22,7 +22,7 @@ func _start(map: Map, interface: BattleInterface) -> void:
 	_interface = interface
 
 	# warning-ignore:return_value_discarded
-	_map.connect("actor_removed", self, "_on_actor_removed")
+	_map.connect("actor_dying", self, "_on_actor_dying")
 
 	_interface.current_map = map
 
@@ -84,7 +84,7 @@ func _action_started(actor: Actor, show_map_highlights: bool) -> void:
 
 
 func _end() -> void:
-	_map.disconnect("actor_removed", self, "_on_actor_removed")
+	_map.disconnect("actor_dying", self, "_on_actor_dying")
 	_map = null
 	_interface = null
 
@@ -160,7 +160,7 @@ func _on_actor_picked(actor: Actor) -> void:
 	call_deferred("_take_turn")
 
 
-func _on_actor_removed(actor: Actor) -> void:
+func _on_actor_dying(actor: Actor) -> void:
 	if not actor.battle_stats.round_finished:
 		var index := _faction_order.rfind(actor.faction)
 		if index > -1:

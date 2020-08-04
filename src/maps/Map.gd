@@ -1,6 +1,7 @@
 class_name Map
 extends Node
 
+signal actor_dying(actor)
 signal actor_removed(actor)
 
 enum Decal { BLOOD_SPLATTER = 0 }
@@ -102,3 +103,4 @@ func remove_actor(actor: Actor) -> void:
 
 func _actor_dying(actor: Actor) -> void:
 	add_decal(Decal.BLOOD_SPLATTER, actor.cell)
+	emit_signal("actor_dying", actor)
