@@ -17,7 +17,7 @@ func get_pauses() -> bool:
 
 
 func determine_action(map: Map, range_data: RangeData, \
-		_control: BattleControl) -> void:
+		_control: BattleInterface) -> void:
 	var want_move := not _moved
 	_moved = want_move
 

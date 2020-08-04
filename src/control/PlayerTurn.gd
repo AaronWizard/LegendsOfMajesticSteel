@@ -4,10 +4,10 @@ extends TurnController
 
 signal _input_processed(actor)
 
-var _control: BattleControl = null
+var _control: BattleInterface = null
 var _actors := []
 
-func pick_actor(actors: Array, control: BattleControl) -> void:
+func pick_actor(actors: Array, control: BattleInterface) -> void:
 	_set_actor_cursors(actors, true)
 
 	var camera_position := _average_position(actors)

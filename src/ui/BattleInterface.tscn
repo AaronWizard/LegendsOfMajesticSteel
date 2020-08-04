@@ -4,9 +4,9 @@
 [ext_resource path="res://src/game/GameCamera.tscn" type="PackedScene" id=2]
 [ext_resource path="res://src/ui/BattleGUI.tscn" type="PackedScene" id=3]
 [ext_resource path="res://src/ui/MouseControl.gd" type="Script" id=4]
-[ext_resource path="res://src/ui/BattleControl.gd" type="Script" id=5]
+[ext_resource path="res://src/ui/BattleInterface.gd" type="Script" id=5]
 
-[node name="BattleControl" type="Node"]
+[node name="BattleInterface" type="Node"]
 script = ExtResource( 5 )
 
 [node name="MapHighlights" parent="." instance=ExtResource( 1 )]

@@ -4,13 +4,13 @@ export var start_map_file: PackedScene = null
 
 onready var _map_container := $Map
 onready var _turn_manager := $TurnManager as TurnManager
-onready var _control := $BattleControl as BattleControl
+onready var _interface := $BattleInterface as BattleInterface
 
 func _ready() -> void:
 	if start_map_file:
 		load_map(start_map_file)
 
-	_turn_manager.start(get_current_map(), _control)
+	_turn_manager.start(get_current_map(), _interface)
 
 
 func get_current_map() -> Map:
@@ -27,4 +27,4 @@ func load_map(map_file: PackedScene) -> void:
 	assert(new_map != null)
 	_map_container.add_child(new_map)
 
-	_control.camera.set_bounds(new_map.get_pixel_rect())
+	_interface.camera.set_bounds(new_map.get_pixel_rect())

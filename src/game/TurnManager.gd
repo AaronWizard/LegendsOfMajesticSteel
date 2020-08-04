@@ -4,7 +4,7 @@ extends Node
 var running := false
 
 var _map: Map
-var _control: BattleControl
+var _interface: BattleInterface
 
 var _faction_order := []
 
@@ -12,22 +12,22 @@ onready var _player_turn := $PlayerTurn as PlayerTurn
 onready var _ai_turn := $AITurn as AITurn
 
 
-func start(map: Map, control: BattleControl) -> void:
-	_start(map, control)
+func start(map: Map, interface: BattleInterface) -> void:
+	_start(map, interface)
 	call_deferred("_take_turn")
 
 
-func _start(map: Map, control: BattleControl) -> void:
+func _start(map: Map, interface: BattleInterface) -> void:
 	_map = map
-	_control = control
+	_interface = interface
 
 	# warning-ignore:return_value_discarded
 	_map.connect("actor_removed", self, "_on_actor_removed")
 
-	_control.current_map = map
+	_interface.current_map = map
 
 	_start_battle()
-	_controller_cleanup()
+	_interface_cleanup()
 
 	running = true
 
@@ -56,37 +56,37 @@ func _start_round() -> void:
 	randomize()
 	_faction_order.shuffle()
 
-	_control.gui.turn_queue.set_queue(_faction_order)
+	_interface.gui.turn_queue.set_queue(_faction_order)
 
 
 func _turn_started(actor: Actor, range_data: RangeData) -> void:
-	_control.map_highlights.moves_visible = true
-	_control.map_highlights.set_moves(range_data.move_range)
-	_control.camera.follow_actor(actor)
+	_interface.map_highlights.moves_visible = true
+	_interface.map_highlights.set_moves(range_data.move_range)
+	_interface.camera.follow_actor(actor)
 
 
 func _turn_ended() -> void:
-	_control.map_highlights.moves_visible = false
+	_interface.map_highlights.moves_visible = false
 
-	_control.gui.turn_queue.next_turn()
+	_interface.gui.turn_queue.next_turn()
 	_faction_order.pop_front()
 
 
-func _controller_cleanup() -> void:
+func _interface_cleanup() -> void:
 	# Make sure these are true after a controller is run
-	_control.gui.buttons_visible = false
-	_control.mouse.dragging_enabled = false
+	_interface.gui.buttons_visible = false
+	_interface.mouse.dragging_enabled = false
 
 
 func _action_started(actor: Actor, show_map_highlights: bool) -> void:
-	_control.camera.follow_actor(actor)
-	_control.map_highlights.moves_visible = show_map_highlights
+	_interface.camera.follow_actor(actor)
+	_interface.map_highlights.moves_visible = show_map_highlights
 
 
 func _end() -> void:
 	_map.disconnect("actor_removed", self, "_on_actor_removed")
 	_map = null
-	_control = null
+	_interface = null
 
 
 func _get_next_actor() -> void:
@@ -105,7 +105,7 @@ func _get_next_actor() -> void:
 				controller = _ai_turn
 			_:
 				assert(false)
-		controller.pick_actor(_get_active_actors(faction), _control)
+		controller.pick_actor(_get_active_actors(faction), _interface)
 	else:
 		var actor := actors[0] as Actor
 		_on_actor_picked(actor)
@@ -126,7 +126,7 @@ func _on_actor_picked(actor: Actor) -> void:
 	var controller := actor.controller as ActorController
 
 	if controller:
-		_control.current_actor = actor
+		_interface.current_actor = actor
 
 		actor.battle_stats.start_turn()
 		var range_data := RangeData.new(actor, _map)
@@ -139,9 +139,9 @@ func _on_actor_picked(actor: Actor) -> void:
 		while actor.battle_stats.is_alive \
 				and not actor.battle_stats.turn_finished:
 			controller.call_deferred("determine_action",
-					_map, range_data, _control)
+					_map, range_data, _interface)
 			var action := yield(controller, "determined_action") as Action
-			_controller_cleanup()
+			_interface_cleanup()
 
 			if action:
 				_action_started(actor, action.show_map_highlights())
@@ -155,7 +155,7 @@ func _on_actor_picked(actor: Actor) -> void:
 
 		_turn_ended()
 
-		_control.current_actor = null
+		_interface.current_actor = null
 
 	call_deferred("_take_turn")
 
@@ -165,4 +165,4 @@ func _on_actor_removed(actor: Actor) -> void:
 		var index := _faction_order.rfind(actor.faction)
 		if index > -1:
 			_faction_order.remove(index)
-			_control.gui.turn_queue.remove_icon(index)
+			_interface.gui.turn_queue.remove_icon(index)

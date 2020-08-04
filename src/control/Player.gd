@@ -11,14 +11,14 @@ enum State {
 
 var _map: Map = null
 var _range_data: RangeData = null
-var _control: BattleControl = null
+var _control: BattleInterface = null
 
 var _state: int
 
 var _ability_targetting: Ability.TargettingData
 var _ability_target: Vector2
 
-func determine_action(map: Map, range_data: RangeData, control: BattleControl) \
+func determine_action(map: Map, range_data: RangeData, control: BattleInterface) \
 		-> void:
 	_map = map
 	_range_data = range_data

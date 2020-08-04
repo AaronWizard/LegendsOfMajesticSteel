@@ -1,4 +1,4 @@
-class_name BattleControl
+class_name BattleInterface
 extends Node
 
 var current_map: Map = null
