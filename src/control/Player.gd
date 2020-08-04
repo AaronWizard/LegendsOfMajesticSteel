@@ -11,18 +11,18 @@ enum State {
 
 var _map: Map = null
 var _range_data: RangeData = null
-var _control: BattleInterface = null
+var _interface: BattleInterface = null
 
 var _state: int
 
 var _ability_targetting: Ability.TargettingData
 var _ability_target: Vector2
 
-func determine_action(map: Map, range_data: RangeData, control: BattleInterface) \
+func determine_action(map: Map, range_data: RangeData, interface: BattleInterface) \
 		-> void:
 	_map = map
 	_range_data = range_data
-	_control = control
+	_interface = interface
 	_connect_to_gui()
 
 	_state = State.MOVEMENT
@@ -30,7 +30,7 @@ func determine_action(map: Map, range_data: RangeData, control: BattleInterface)
 	var action: Action = yield(self, '_input_processed')
 
 	_disconnect_from_gui()
-	_control = null
+	_interface = null
 	_range_data = null
 	_map = null
 
@@ -40,26 +40,26 @@ func determine_action(map: Map, range_data: RangeData, control: BattleInterface)
 
 
 func _connect_to_gui() -> void:
-	_control.gui.buttons_visible = true
-	_control.mouse.dragging_enabled = true
+	_interface.gui.buttons_visible = true
+	_interface.mouse.dragging_enabled = true
 
 	# warning-ignore:return_value_discarded
-	_control.mouse.connect("click", self, "_mouse_click")
+	_interface.mouse.connect("click", self, "_mouse_click")
 
 	# warning-ignore:return_value_discarded
-	_control.gui.connect("ability_selected", self, "_ability_selected")
+	_interface.gui.connect("ability_selected", self, "_ability_selected")
 	# warning-ignore:return_value_discarded
-	_control.gui.connect("ability_cleared", self, "_ability_cleared")
+	_interface.gui.connect("ability_cleared", self, "_ability_cleared")
 	# warning-ignore:return_value_discarded
-	_control.gui.connect("wait_started", self, "_wait_clicked")
+	_interface.gui.connect("wait_started", self, "_wait_clicked")
 
 
 func _disconnect_from_gui() -> void:
-	_control.mouse.disconnect("click", self, "_mouse_click")
+	_interface.mouse.disconnect("click", self, "_mouse_click")
 
-	_control.gui.disconnect("ability_selected", self, "_ability_selected")
-	_control.gui.disconnect("ability_cleared", self, "_ability_cleared")
-	_control.gui.disconnect("wait_started", self, "_wait_clicked")
+	_interface.gui.disconnect("ability_selected", self, "_ability_selected")
+	_interface.gui.disconnect("ability_cleared", self, "_ability_cleared")
+	_interface.gui.disconnect("wait_started", self, "_wait_clicked")
 
 
 func _mouse_click(_position) -> void:
@@ -85,7 +85,7 @@ func _move(target_cell: Vector2) -> void:
 func _set_target(target_cell: Vector2) -> void:
 	if target_cell in _ability_targetting.valid_targets:
 		_ability_target = target_cell
-		_control.set_target(target_cell)
+		_interface.set_target(target_cell)
 
 		_state = State.ABILITY_CONFIRMATION
 
@@ -93,9 +93,9 @@ func _set_target(target_cell: Vector2) -> void:
 func _confirm_ability_target(target_cell: Vector2) -> void:
 	if _ability_target == target_cell:
 		var ability := AbilityAction.new(get_actor(), _map,
-				_control.gui.current_ability, target_cell)
+				_interface.gui.current_ability, target_cell)
 
-		_control.gui.current_ability = null
+		_interface.gui.current_ability = null
 		emit_signal("_input_processed", ability)
 	else:
 		_set_target(target_cell)
