@@ -1,4 +1,4 @@
-class_name TurnQueue
+class_name TurnQueuePanel
 extends ReferenceRect
 
 const _ICON_PLAYER := preload("res://assets/graphics/ui/icons/player_turn.png")

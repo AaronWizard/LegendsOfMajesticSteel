@@ -2,7 +2,7 @@
 
 [ext_resource path="res://src/ui/BattleGUI.gd" type="Script" id=1]
 [ext_resource path="res://resources/gui/theme_standard.tres" type="Theme" id=2]
-[ext_resource path="res://src/ui/TurnQueue.tscn" type="PackedScene" id=3]
+[ext_resource path="res://src/ui/TurnQueuePanel.tscn" type="PackedScene" id=3]
 
 [node name="BattleGUI" type="CanvasLayer"]
 script = ExtResource( 1 )
@@ -50,7 +50,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="TurnQueue" parent="." instance=ExtResource( 3 )]
+[node name="TurnQueuePanel" parent="." instance=ExtResource( 3 )]
 anchor_right = 1.0
 margin_left = 4.0
 margin_top = 4.0
