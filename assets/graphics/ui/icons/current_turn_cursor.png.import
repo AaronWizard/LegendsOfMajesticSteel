@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/current_turn_cursor.png-1e11ead8ffdfa983b91686c4cae5015e.stex"
+path="res://.import/current_turn_cursor.png-936346674031a7fde183bf79a408acc2.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/graphics/ui/current_turn_cursor.png"
-dest_files=[ "res://.import/current_turn_cursor.png-1e11ead8ffdfa983b91686c4cae5015e.stex" ]
+source_file="res://assets/graphics/ui/icons/current_turn_cursor.png"
+dest_files=[ "res://.import/current_turn_cursor.png-936346674031a7fde183bf79a408acc2.stex" ]
 
 [params]
 
