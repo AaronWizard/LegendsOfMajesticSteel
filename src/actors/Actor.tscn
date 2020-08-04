@@ -57,7 +57,6 @@ __meta__ = {
 
 [node name="Sprite" type="Sprite" parent="Center/Offset"]
 hframes = 4
-frame = 3
 
 [node name="StaminaBar" parent="Center/Offset/Sprite" instance=ExtResource( 14 )]
 visible = false
@@ -86,6 +85,7 @@ amount = 32
 lifetime = 0.3
 one_shot = true
 explosiveness = 1.0
+visibility_rect = Rect2( -16, -16, 32, 32 )
 process_material = SubResource( 2 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
