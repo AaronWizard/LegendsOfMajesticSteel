@@ -6,7 +6,8 @@ var running := false
 var _map: Map
 var _interface: BattleInterface
 
-var _faction_order := []
+var _turn_order := []
+var _turn_index := 0
 
 onready var _player_turn := $PlayerTurn as PlayerTurn
 onready var _ai_turn := $AITurn as AITurn
@@ -40,23 +41,24 @@ func _take_turn():
 
 
 func _start_battle() -> void:
+	_turn_order.clear()
+	_turn_index = 0
+
 	for a in _map.get_actors():
 		var actor := a as Actor
 		actor.battle_stats.start_battle()
+		_turn_order.append(actor.faction)
+
+	randomize()
+	_turn_order.shuffle()
 
 
 func _start_round() -> void:
-	_faction_order.clear()
-
 	for a in _map.get_actors():
 		var actor := a as Actor
 		actor.battle_stats.start_round()
-		_faction_order.append(actor.faction)
 
-	randomize()
-	_faction_order.shuffle()
-
-	_interface.gui.turn_queue.set_queue(_faction_order)
+	_interface.gui.turn_queue.set_queue(_turn_order)
 
 
 func _turn_started(actor: Actor, range_data: RangeData) -> void:
@@ -69,7 +71,7 @@ func _turn_ended() -> void:
 	_interface.map_highlights.moves_visible = false
 
 	_interface.gui.turn_queue.next_turn()
-	_faction_order.pop_front()
+	_turn_index = (_turn_index + 1) % _turn_order.size()
 
 
 func _interface_cleanup() -> void:
@@ -90,10 +92,10 @@ func _end() -> void:
 
 
 func _get_next_actor() -> void:
-	if _faction_order.empty():
+	if _turn_index == 0:
 		_start_round()
 
-	var faction := _faction_order[0] as int
+	var faction := _turn_order[_turn_index] as int
 
 	var actors := _get_active_actors(faction)
 	if actors.size() > 1:
@@ -162,7 +164,7 @@ func _on_actor_picked(actor: Actor) -> void:
 
 func _on_actor_dying(actor: Actor) -> void:
 	if not actor.battle_stats.round_finished:
-		var index := _faction_order.rfind(actor.faction)
+		var index := _turn_order.rfind(actor.faction)
 		if index > -1:
-			_faction_order.remove(index)
-			_interface.gui.turn_queue.remove_icon(index)
+			_turn_order.remove(index)
+			_interface.gui.turn_queue.remove_icon(index - _turn_index)
