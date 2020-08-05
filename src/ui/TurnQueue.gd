@@ -20,8 +20,12 @@ onready var _round_marker := $Icons/RoundMarker as Control
 func set_icons(turn_order: Array) -> void:
 	_clear()
 
-	for f in turn_order:
-		var faction := f as int
+	# Icons are positioned on the screen in the reverse of their order in the
+	# tree.
+	# i.e. [N, N-1, ..., 1, 0]; The bottommost icon represents the current turn
+
+	for i in range(turn_order.size() - 1, -1, -1):
+		var faction := turn_order[i] as int
 		match faction:
 			Actor.Faction.PLAYER:
 				_add_icon(_ICON_PLAYER)
@@ -118,9 +122,6 @@ func _add_icon(texture: Texture) -> void:
 
 
 func _set_icon_positions() -> void:
-	# Icons are positioned on the screen in the reverse of their order in the
-	# tree.
-	# i.e. [N, N-1, ..., 1, 0]; The bottommost icon represents the current turn
 	var x := 0.0
 	for i in range(_icons.get_child_count() - 1, -1, -1):
 		var icon := _icons.get_child(i) as Control
