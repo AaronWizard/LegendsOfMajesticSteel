@@ -51,14 +51,13 @@ func _start_battle() -> void:
 
 	randomize()
 	_turn_order.shuffle()
+	_interface.gui.turn_queue.set_queue(_turn_order)
 
 
 func _start_round() -> void:
 	for a in _map.get_actors():
 		var actor := a as Actor
 		actor.battle_stats.start_round()
-
-	_interface.gui.turn_queue.set_queue(_turn_order)
 
 
 func _turn_started(actor: Actor, range_data: RangeData) -> void:
@@ -163,8 +162,10 @@ func _on_actor_picked(actor: Actor) -> void:
 
 
 func _on_actor_dying(actor: Actor) -> void:
-	if not actor.battle_stats.round_finished:
-		var index := _turn_order.rfind(actor.faction)
-		if index > -1:
-			_turn_order.remove(index)
-			_interface.gui.turn_queue.remove_icon(index - _turn_index)
+	#if not actor.battle_stats.round_finished:
+	var index := _turn_order.rfind(actor.faction)
+	if index > -1:
+		_turn_order.remove(index)
+		_interface.gui.turn_queue.remove_icon(index)
+		if index < _turn_index:
+			_turn_index -= 1

@@ -1,7 +1,7 @@
 class_name TurnQueue
 extends ReferenceRect
 
-const _ANIM_TIME := 0.4
+const ANIM_TIME := 0.4
 
 const _ICON_PLAYER := preload("res://assets/graphics/ui/icons/player_turn.png")
 const _ICON_ENEMY := preload("res://assets/graphics/ui/icons/enemy_turn.png")
@@ -136,21 +136,21 @@ func _queue_anim_icon_move_end(icon: Control, last_icon: bool) -> void:
 		end_pos.x -= _round_marker.rect_size.x
 	# warning-ignore:return_value_discarded
 	_tween.interpolate_property(icon, "rect_position",
-			icon.rect_position, end_pos, _ANIM_TIME)
+			icon.rect_position, end_pos, ANIM_TIME)
 
 
 func _queue_anim_icon_move_next(icon: Control, dist: float) -> void:
 	var end_pos := icon.rect_position - Vector2(dist, 0)
 	# warning-ignore:return_value_discarded
 	_tween.interpolate_property(icon, "rect_position",
-			icon.rect_position, end_pos, _ANIM_TIME)
+			icon.rect_position, end_pos, ANIM_TIME)
 
 
 func _queue_anim_shrink(dist: float) -> void:
 	var end_size := rect_min_size - Vector2(dist, 0)
 	# warning-ignore:return_value_discarded
 	_tween.interpolate_property(self, "rect_min_size",
-			rect_min_size, end_size, _ANIM_TIME)
+			rect_min_size, end_size, ANIM_TIME)
 	# warning-ignore:return_value_discarded
 	_tween.interpolate_property(self, "rect_size",
-			rect_size, end_size, _ANIM_TIME)
+			rect_size, end_size, ANIM_TIME)
