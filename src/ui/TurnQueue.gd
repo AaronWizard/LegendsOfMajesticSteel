@@ -93,7 +93,10 @@ func remove_icon(index: int) -> void:
 	for i in range(0, real_index):
 		var icon := _icons.get_child(i) as Control
 		_queue_anim_icon_move_next(icon, dist)
-	_queue_anim_shrink(dist)
+
+	var size_change := Vector2(dist, 0)
+	rect_min_size -= size_change
+	rect_size -= size_change
 
 	# warning-ignore:return_value_discarded
 	_tween.start()
@@ -144,13 +147,3 @@ func _queue_anim_icon_move_next(icon: Control, dist: float) -> void:
 	# warning-ignore:return_value_discarded
 	_tween.interpolate_property(icon, "rect_position",
 			icon.rect_position, end_pos, ANIM_TIME)
-
-
-func _queue_anim_shrink(dist: float) -> void:
-	var end_size := rect_min_size - Vector2(dist, 0)
-	# warning-ignore:return_value_discarded
-	_tween.interpolate_property(self, "rect_min_size",
-			rect_min_size, end_size, ANIM_TIME)
-	# warning-ignore:return_value_discarded
-	_tween.interpolate_property(self, "rect_size",
-			rect_size, end_size, ANIM_TIME)
