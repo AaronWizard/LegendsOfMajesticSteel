@@ -79,7 +79,6 @@ func _move(target_cell: Vector2) -> void:
 	if path.size() > 0:
 		var action := Move.new(get_actor(), _map, path)
 		action.allow_cancel(_interface.mouse)
-		#action.allow_cancel(_gui)
 		emit_signal("_input_processed", action)
 
 
