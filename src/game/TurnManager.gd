@@ -162,8 +162,12 @@ func _on_actor_picked(actor: Actor) -> void:
 
 
 func _on_actor_dying(actor: Actor) -> void:
-	#if not actor.battle_stats.round_finished:
-	var index := _turn_order.rfind(actor.faction)
+	var index: int
+	if actor.battle_stats.round_finished:
+		index = _turn_order.find(actor.faction)
+	else:
+		index = _turn_order.rfind(actor.faction)
+
 	if index > -1:
 		_turn_order.remove(index)
 		_interface.gui.turn_queue.remove_icon(index)
