@@ -33,7 +33,7 @@ func set_current_actor(value: Actor) -> void:
 	_clear_ability_buttons()
 	_current_actor_portrait.icon = null
 
-	_current_actor_portrait.visible = current_actor != null
+	_current_actor_portrait.disabled = current_actor == null
 
 	if current_actor:
 		_create_ability_buttons()
