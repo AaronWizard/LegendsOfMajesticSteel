@@ -140,7 +140,7 @@ func _on_actor_picked(actor: Actor) -> void:
 		while actor.battle_stats.is_alive \
 				and not actor.battle_stats.turn_finished:
 			controller.call_deferred("determine_action",
-					_map, range_data, _interface)
+					actor, _map, range_data, _interface)
 			var action := yield(controller, "determined_action") as Action
 			_interface_cleanup()
 

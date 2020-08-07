@@ -9,6 +9,7 @@ enum State {
 	ABILITY_CONFIRMATION
 }
 
+var _actor: Actor = null
 var _map: Map = null
 var _range_data: RangeData = null
 var _interface: BattleInterface = null
@@ -18,8 +19,9 @@ var _state: int
 var _ability_targetting: Ability.TargettingData
 var _ability_target: Vector2
 
-func determine_action(map: Map, range_data: RangeData, interface: BattleInterface) \
-		-> void:
+func determine_action(actor: Actor, map: Map, range_data: RangeData,
+		interface: BattleInterface) -> void:
+	_actor = actor
 	_map = map
 	_range_data = range_data
 	_interface = interface
@@ -33,6 +35,7 @@ func determine_action(map: Map, range_data: RangeData, interface: BattleInterfac
 	_interface = null
 	_range_data = null
 	_map = null
+	_actor = null
 
 	_ability_targetting = null
 
@@ -75,9 +78,9 @@ func _mouse_click(_position) -> void:
 
 
 func _move(target_cell: Vector2) -> void:
-	var path := _range_data.get_walk_path(get_actor().cell, target_cell)
+	var path := _range_data.get_walk_path(_actor.cell, target_cell)
 	if path.size() > 0:
-		var action := Move.new(get_actor(), _map, path)
+		var action := Move.new(_actor, _map, path)
 		action.allow_cancel(_interface.mouse)
 		emit_signal("_input_processed", action)
 
@@ -92,7 +95,7 @@ func _set_target(target_cell: Vector2) -> void:
 
 func _confirm_ability_target(target_cell: Vector2) -> void:
 	if _ability_target == target_cell:
-		var ability := AbilityAction.new(get_actor(), _map,
+		var ability := AbilityAction.new(_actor, _map,
 				_interface.gui.current_ability, target_cell)
 
 		_interface.gui.current_ability = null
@@ -102,7 +105,7 @@ func _confirm_ability_target(target_cell: Vector2) -> void:
 
 
 func _ability_selected(ability: Ability) -> void:
-	_ability_targetting = ability.get_targetting_data(get_actor(), _map)
+	_ability_targetting = ability.get_targetting_data(_actor, _map)
 	_state = State.ABILITY_TARGETING
 
 
