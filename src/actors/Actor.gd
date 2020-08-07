@@ -56,6 +56,10 @@ export(Faction) var faction := Faction.ENEMY
 
 var target_visible: bool setget set_target_visible, get_target_visible
 
+var portrait: Texture setget , get_portrait
+
+var _portrait: AtlasTexture
+
 onready var cell: Vector2 setget set_cell, get_cell
 
 onready var remote_transform := $Center/Offset/RemoteTransform2D \
@@ -88,6 +92,12 @@ func _ready() -> void:
 	var new_cell := \
 			position.snapped(Constants.TILE_SIZE_V) / Constants.TILE_SIZE_V
 	set_cell(new_cell)
+
+	_portrait = AtlasTexture.new()
+	_portrait.atlas = _sprite.texture
+	_portrait.region.position = Vector2.ZERO
+	_portrait.region.size = \
+			_sprite.texture.get_size() / Vector2(_sprite.hframes, 1)
 
 
 func _draw() -> void:
@@ -163,6 +173,10 @@ func play_anim(anim_name: String) -> void:
 
 func get_abilities() -> Array:
 	return _abilities.get_children()
+
+
+func get_portrait() -> Texture:
+	return _portrait
 
 
 func set_target_visible(new_value: bool) -> void:

@@ -14,6 +14,8 @@ var current_ability: Ability = null setget set_current_ability
 
 onready var turn_queue := $TurnQueuePanel as TurnQueuePanel
 
+onready var _current_actor_portrait := $CurrentActorPortraitButton as Button
+
 onready var _all_buttons := $Buttons as Container
 onready var _ability_buttons := $Buttons/Abilities as Container
 
@@ -29,8 +31,13 @@ func set_current_actor(value: Actor) -> void:
 	current_actor = value
 
 	_clear_ability_buttons()
+	_current_actor_portrait.icon = null
+
+	_current_actor_portrait.visible = current_actor != null
+
 	if current_actor:
 		_create_ability_buttons()
+		_current_actor_portrait.icon = current_actor.portrait
 
 
 func set_current_ability(value: Ability) -> void:
@@ -76,3 +83,7 @@ func _on_AbilityCancel_pressed() -> void:
 
 func _on_Wait_pressed() -> void:
 	emit_signal("wait_started")
+
+
+func _on_CurrentActorPortraitButton_pressed() -> void:
+	pass # Replace with function body.
