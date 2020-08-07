@@ -164,7 +164,7 @@ func _on_actor_picked(actor: Actor) -> void:
 func _on_actor_dying(actor: Actor) -> void:
 	var index: int
 	if actor.battle_stats.round_finished:
-		index = _turn_order.find(actor.faction)
+		index = _turn_order.rfind(actor.faction, _turn_index)
 	else:
 		index = _turn_order.rfind(actor.faction)
 
