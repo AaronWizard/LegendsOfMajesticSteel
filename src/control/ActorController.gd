@@ -6,12 +6,6 @@ signal determined_action(action)
 var pauses := false setget , get_pauses
 
 
-func _ready() -> void:
-	var parent := get_parent() as Actor
-	if parent:
-		parent.controller = self
-
-
 func get_pauses() -> bool:
 	return false
 

@@ -7,7 +7,6 @@ var _moved := false
 
 
 func _ready() -> void:
-	._ready()
 	_random.randomize()
 	_moved = false
 

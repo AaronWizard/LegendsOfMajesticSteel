@@ -13,6 +13,7 @@ onready var _player_turn := $PlayerTurn as TurnController
 onready var _ai_turn := $AITurn as TurnController
 
 onready var _player := $Player as ActorController
+onready var _ai := $AI as ActorController
 
 
 func start(map: Map, interface: BattleInterface) -> void:
@@ -170,7 +171,7 @@ func _get_actor_controller(actor: Actor) -> ActorController:
 		Actor.Faction.PLAYER:
 			result = _player
 		Actor.Faction.ENEMY:
-			result = actor.controller as ActorController
+			result = _ai
 		_:
 			assert(false)
 
