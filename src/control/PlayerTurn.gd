@@ -21,7 +21,7 @@ func pick_actor(actors: Array, interface: BattleInterface) -> void:
 	_interface = interface
 	_actors = actors
 
-	var actor: Actor = yield(self, '_input_processed')
+	var actor := yield(self, '_input_processed') as Actor
 
 	interface.mouse.disconnect("click", self, "_on_mouse_click")
 
@@ -57,3 +57,4 @@ func _on_mouse_click(_position: Vector2) -> void:
 		var actor := a as Actor
 		if actor.on_cell(cell):
 			emit_signal("_input_processed", actor)
+			break
