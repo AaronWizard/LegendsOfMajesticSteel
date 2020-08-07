@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://src/game/TurnManager.gd" type="Script" id=1]
 [ext_resource path="res://src/control/PlayerTurn.gd" type="Script" id=2]
 [ext_resource path="res://src/control/AITurn.gd" type="Script" id=3]
+[ext_resource path="res://src/control/Player.gd" type="Script" id=4]
 
 [node name="TurnManager" type="Node"]
 script = ExtResource( 1 )
@@ -12,5 +13,8 @@ script = ExtResource( 2 )
 
 [node name="AITurn" type="Node" parent="."]
 script = ExtResource( 3 )
+
+[node name="Player" type="Node" parent="."]
+script = ExtResource( 4 )
 [connection signal="actor_picked" from="PlayerTurn" to="." method="_on_actor_picked"]
 [connection signal="actor_picked" from="AITurn" to="." method="_on_actor_picked"]

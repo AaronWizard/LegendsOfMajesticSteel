@@ -9,8 +9,10 @@ var _interface: BattleInterface
 var _turn_order := []
 var _turn_index := 0
 
-onready var _player_turn := $PlayerTurn as PlayerTurn
-onready var _ai_turn := $AITurn as AITurn
+onready var _player_turn := $PlayerTurn as TurnController
+onready var _ai_turn := $AITurn as TurnController
+
+onready var _player := $Player as ActorController
 
 
 func start(map: Map, interface: BattleInterface) -> void:
@@ -124,7 +126,7 @@ func _get_active_actors(faction: int) -> Array:
 
 
 func _on_actor_picked(actor: Actor) -> void:
-	var controller := actor.controller as ActorController
+	var controller := _get_actor_controller(actor)
 
 	if controller:
 		_interface.current_actor = actor
@@ -159,6 +161,20 @@ func _on_actor_picked(actor: Actor) -> void:
 		_interface.current_actor = null
 
 	call_deferred("_take_turn")
+
+
+func _get_actor_controller(actor: Actor) -> ActorController:
+	var result: ActorController = null
+
+	match actor.faction:
+		Actor.Faction.PLAYER:
+			result = _player
+		Actor.Faction.ENEMY:
+			result = actor.controller as ActorController
+		_:
+			assert(false)
+
+	return result
 
 
 func _on_actor_dying(actor: Actor) -> void:

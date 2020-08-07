@@ -1,18 +1,10 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://src/actors/Actor.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/graphics/actors/barbarian.png" type="Texture" id=2]
-[ext_resource path="res://src/control/Player.gd" type="Script" id=3]
-
 
 [node name="Barbarian" instance=ExtResource( 1 )]
 faction = 0
 
 [node name="Sprite" parent="Center/Offset" index="0"]
 texture = ExtResource( 2 )
-
-[node name="Stats" parent="." index="1"]
-move = 5
-
-[node name="Player" type="Node" parent="." index="5"]
-script = ExtResource( 3 )
