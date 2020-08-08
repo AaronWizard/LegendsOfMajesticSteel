@@ -8,8 +8,8 @@
 
 [node name="TurnQueuePanel" type="ReferenceRect"]
 margin_right = 18.0
-margin_bottom = 26.0
-rect_min_size = Vector2( 18, 26 )
+margin_bottom = 24.0
+rect_min_size = Vector2( 18, 24 )
 mouse_filter = 2
 theme = ExtResource( 2 )
 script = ExtResource( 1 )
