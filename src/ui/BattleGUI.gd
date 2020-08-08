@@ -12,9 +12,14 @@ var current_actor: Actor = null setget set_current_actor
 
 var current_ability: Ability = null setget set_current_ability
 
-onready var turn_queue := $TurnQueuePanel as TurnQueuePanel
+onready var turn_queue := $TopMargin/TopContainer/TurnQueuePanel \
+		as TurnQueuePanel
 
-onready var _current_actor_portrait := $CurrentActorPortraitButton as Button
+onready var _current_actor_portrait := $TopMargin/TopContainer/ \
+		ActorStatusPanel/ActorStatusContainer/CurrentActorPortraitButton \
+		as Button
+onready var _current_actor_name := $TopMargin/TopContainer/ActorStatusPanel/ \
+		ActorStatusContainer/CurrentActorName as Label
 
 onready var _all_buttons := $Buttons as Container
 onready var _ability_buttons := $Buttons/Abilities as Container
@@ -32,12 +37,15 @@ func set_current_actor(value: Actor) -> void:
 
 	_clear_ability_buttons()
 	_current_actor_portrait.icon = null
+	_current_actor_name.text = ""
 
 	_current_actor_portrait.disabled = current_actor == null
+	_current_actor_name.visible = current_actor != null
 
 	if current_actor:
 		_create_ability_buttons()
 		_current_actor_portrait.icon = current_actor.portrait
+		_current_actor_name.text = current_actor.character_name
 
 
 func set_current_ability(value: Ability) -> void:
