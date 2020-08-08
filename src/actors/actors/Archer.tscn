@@ -4,9 +4,7 @@
 [ext_resource path="res://assets/graphics/actors/archer.png" type="Texture" id=2]
 
 [node name="Archer" instance=ExtResource( 1 )]
+character_name = "Archer"
 
 [node name="Sprite" parent="Center/Offset" index="0"]
 texture = ExtResource( 2 )
-
-[node name="WaitIcon" parent="Center/Offset" index="3"]
-frame = 1

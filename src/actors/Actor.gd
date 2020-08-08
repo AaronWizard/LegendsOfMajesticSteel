@@ -52,6 +52,7 @@ const _DISSOLVE_MATERIAL := preload( \
 
 export var cell_offset: Vector2 setget set_cell_offset, get_cell_offset
 
+export var character_name := "Actor"
 export(Faction) var faction := Faction.ENEMY
 
 var target_visible: bool setget set_target_visible, get_target_visible

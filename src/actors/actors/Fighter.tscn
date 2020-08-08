@@ -4,6 +4,7 @@
 [ext_resource path="res://src/actors/Actor.tscn" type="PackedScene" id=2]
 
 [node name="Fighter" instance=ExtResource( 2 )]
+character_name = "Fighter"
 
 [node name="Sprite" parent="Center/Offset" index="0"]
 texture = ExtResource( 1 )
