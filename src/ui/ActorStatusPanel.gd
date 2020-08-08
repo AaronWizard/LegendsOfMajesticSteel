@@ -1,13 +1,14 @@
 class_name ActorStatusPanel
-extends HBoxContainer
+extends PanelContainer
 
 signal portrait_pressed
 
-onready var _portrait := $PortraitButton as Button
-onready var _name := $VBoxContainer/Name as Label
-onready var _stamina := $VBoxContainer/HBoxContainer/Stamina as Range
-onready var _stamina_number := $VBoxContainer/HBoxContainer/StaminaNumber \
-		as Label
+onready var _portrait := $HBoxContainer/PortraitButton as Button
+onready var _name := $HBoxContainer/VBoxContainer/Name as Label
+onready var _stamina := $HBoxContainer/VBoxContainer/HBoxContainer/ \
+		Stamina as Range
+onready var _stamina_number := $HBoxContainer/VBoxContainer/HBoxContainer/ \
+		StaminaNumber as Label
 
 
 func set_actor(actor: Actor) -> void:

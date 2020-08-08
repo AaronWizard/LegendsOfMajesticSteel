@@ -44,7 +44,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/control/ActorController.gd"
 }, {
-"base": "HBoxContainer",
+"base": "PanelContainer",
 "class": "ActorStatusPanel",
 "language": "GDScript",
 "path": "res://src/ui/ActorStatusPanel.gd"
