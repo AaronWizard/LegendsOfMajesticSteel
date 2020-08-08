@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://src/ui/BattleGUI.gd" type="Script" id=1]
 [ext_resource path="res://resources/gui/theme_standard.tres" type="Theme" id=2]
 [ext_resource path="res://src/ui/TurnQueuePanel.tscn" type="PackedScene" id=3]
+[ext_resource path="res://src/ui/ActorStatusPanel.tscn" type="PackedScene" id=4]
 
 [node name="BattleGUI" type="CanvasLayer"]
 script = ExtResource( 1 )
@@ -18,50 +19,19 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="TopContainer" type="HBoxContainer" parent="TopMargin"]
+[node name="TopContainer" type="VBoxContainer" parent="TopMargin"]
 margin_left = 4.0
 margin_top = 4.0
 margin_right = 316.0
-margin_bottom = 50.0
+margin_bottom = 66.0
 mouse_filter = 2
 theme = ExtResource( 2 )
-custom_constants/separation = 0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="ActorStatusPanel" type="PanelContainer" parent="TopMargin/TopContainer"]
-margin_right = 46.0
-margin_bottom = 46.0
-
-[node name="ActorStatusContainer" type="VBoxContainer" parent="TopMargin/TopContainer/ActorStatusPanel"]
-margin_left = 3.0
-margin_top = 3.0
-margin_right = 43.0
-margin_bottom = 43.0
-
-[node name="CurrentActorPortraitButton" type="Button" parent="TopMargin/TopContainer/ActorStatusPanel/ActorStatusContainer"]
-margin_right = 40.0
-margin_bottom = 40.0
-rect_min_size = Vector2( 40, 40 )
-size_flags_horizontal = 4
-theme = ExtResource( 2 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="CurrentActorName" type="Label" parent="TopMargin/TopContainer/ActorStatusPanel/ActorStatusContainer"]
-visible = false
-margin_top = 44.0
-margin_right = 40.0
-margin_bottom = 52.0
-align = 1
 
 [node name="TurnQueuePanel" parent="TopMargin/TopContainer" instance=ExtResource( 3 )]
-margin_left = 46.0
 margin_right = 312.0
-margin_bottom = 46.0
 size_flags_horizontal = 3
+
+[node name="CurrentActorStatus" parent="TopMargin/TopContainer" instance=ExtResource( 4 )]
 
 [node name="Buttons" type="HBoxContainer" parent="."]
 anchor_top = 1.0
@@ -79,8 +49,8 @@ __meta__ = {
 }
 
 [node name="Abilities" type="HBoxContainer" parent="Buttons"]
-margin_left = 264.0
-margin_right = 264.0
+margin_left = 268.0
+margin_right = 268.0
 margin_bottom = 27.0
 mouse_filter = 2
 __meta__ = {
@@ -88,7 +58,7 @@ __meta__ = {
 }
 
 [node name="Wait" type="Button" parent="Buttons"]
-margin_left = 268.0
+margin_left = 270.0
 margin_right = 312.0
 margin_bottom = 27.0
 text = "Wait"
@@ -105,6 +75,6 @@ text = "Cancel"
 __meta__ = {
 "_edit_use_anchors_": false
 }
-[connection signal="pressed" from="TopMargin/TopContainer/ActorStatusPanel/ActorStatusContainer/CurrentActorPortraitButton" to="." method="_on_CurrentActorPortraitButton_pressed"]
+[connection signal="portrait_pressed" from="TopMargin/TopContainer/CurrentActorStatus" to="." method="_on_CurrentActorStatus_portrait_pressed"]
 [connection signal="pressed" from="Buttons/Wait" to="." method="_on_Wait_pressed"]
 [connection signal="pressed" from="Buttons/AbilityCancel" to="." method="_on_AbilityCancel_pressed"]

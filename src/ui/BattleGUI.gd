@@ -15,11 +15,8 @@ var current_ability: Ability = null setget set_current_ability
 onready var turn_queue := $TopMargin/TopContainer/TurnQueuePanel \
 		as TurnQueuePanel
 
-onready var _current_actor_portrait := $TopMargin/TopContainer/ \
-		ActorStatusPanel/ActorStatusContainer/CurrentActorPortraitButton \
-		as Button
-onready var _current_actor_name := $TopMargin/TopContainer/ActorStatusPanel/ \
-		ActorStatusContainer/CurrentActorName as Label
+onready var _current_actor_status := $TopMargin/TopContainer/ \
+		CurrentActorStatus as ActorStatusPanel
 
 onready var _all_buttons := $Buttons as Container
 onready var _ability_buttons := $Buttons/Abilities as Container
@@ -36,16 +33,13 @@ func set_current_actor(value: Actor) -> void:
 	current_actor = value
 
 	_clear_ability_buttons()
-	_current_actor_portrait.icon = null
-	_current_actor_name.text = ""
+	_current_actor_status.clear()
 
-	_current_actor_portrait.disabled = current_actor == null
-	_current_actor_name.visible = current_actor != null
+	_current_actor_status.visible = current_actor != null
 
 	if current_actor:
+		_current_actor_status.set_actor(current_actor)
 		_create_ability_buttons()
-		_current_actor_portrait.icon = current_actor.portrait
-		_current_actor_name.text = current_actor.character_name
 
 
 func set_current_ability(value: Ability) -> void:
@@ -93,5 +87,5 @@ func _on_Wait_pressed() -> void:
 	emit_signal("wait_started")
 
 
-func _on_CurrentActorPortraitButton_pressed() -> void:
+func _on_CurrentActorStatus_portrait_pressed() -> void:
 	pass # Replace with function body.
