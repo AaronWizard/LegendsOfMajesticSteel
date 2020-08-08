@@ -2,14 +2,17 @@ class_name GameCamera
 extends Camera2D
 
 var _current_actor: Actor = null
+var _bounds := Rect2()
+
+
+func _ready() -> void:
+	# warning-ignore:return_value_discarded
+	get_tree().get_root().connect("size_changed", self, "_update_bounds")
 
 
 func set_bounds(rect: Rect2) -> void:
-	self.limit_left = int(rect.position.x)
-	self.limit_top = int(rect.position.y)
-
-	self.limit_right = int(rect.end.x)
-	self.limit_bottom = int(rect.end.y)
+	_bounds = rect
+	_update_bounds()
 
 
 func drag(relative: Vector2) -> void:
@@ -57,3 +60,25 @@ func _set_smoothing(smoothing: bool) -> void:
 	drag_margin_h_enabled = smoothing
 	drag_margin_v_enabled = smoothing
 	smoothing_enabled = smoothing
+
+
+func _update_bounds() -> void:
+	limit_left = int(_bounds.position.x)
+	limit_top = int(_bounds.position.y)
+
+	limit_right = int(_bounds.end.x)
+	limit_bottom = int(_bounds.end.y)
+
+	var viewport := get_viewport()
+	if viewport:
+		var view_size := viewport.get_visible_rect().size
+
+		if view_size.x > _bounds.size.x:
+			var margin := int((view_size.x - _bounds.size.x) / 2)
+			limit_left -= margin
+			limit_right += margin
+
+		if view_size.y > _bounds.size.y:
+			var margin := int((view_size.y - _bounds.size.y) / 2)
+			limit_top -= margin
+			limit_bottom += margin
