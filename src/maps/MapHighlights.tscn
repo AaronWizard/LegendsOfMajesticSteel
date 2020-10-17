@@ -8,7 +8,6 @@
 script = ExtResource( 2 )
 
 [node name="Moves" type="TileMap" parent="."]
-z_index = -1
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
@@ -25,3 +24,5 @@ format = 1
 
 [node name="TargetCursor" parent="." instance=ExtResource( 3 )]
 visible = false
+tile_size = Vector2( 1, 1 )
+centered = false
