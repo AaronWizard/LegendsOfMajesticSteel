@@ -8,5 +8,5 @@ script = ExtResource( 1 )
 
 [node name="TileProperties" type="Node" parent="."]
 script = ExtResource( 2 )
-tile_names = PoolStringArray( "mountain", "tree", "water" )
+tile_names = PoolStringArray( "mountain", "water" )
 blocks_move = true
