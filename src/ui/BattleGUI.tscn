@@ -23,7 +23,7 @@ __meta__ = {
 margin_left = 4.0
 margin_top = 4.0
 margin_right = 316.0
-margin_bottom = 66.0
+margin_bottom = 72.0
 mouse_filter = 2
 theme = ExtResource( 2 )
 
@@ -33,7 +33,8 @@ size_flags_horizontal = 3
 
 [node name="CurrentActorStatus" parent="TopMargin/TopContainer" instance=ExtResource( 4 )]
 margin_top = 26.0
-margin_bottom = 62.0
+margin_right = 84.0
+margin_bottom = 68.0
 
 [node name="Buttons" type="HBoxContainer" parent="."]
 anchor_top = 1.0
