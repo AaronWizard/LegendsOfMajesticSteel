@@ -8,3 +8,10 @@ character_name = "Archer"
 
 [node name="Sprite" parent="Center/Offset" index="0"]
 texture = ExtResource( 2 )
+
+[node name="WaitIcon" parent="Center/Offset" index="3"]
+frame = 1
+
+[node name="Stats" parent="." index="2"]
+move = 5
+max_stamina = 2

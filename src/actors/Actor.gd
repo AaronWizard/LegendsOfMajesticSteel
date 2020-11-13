@@ -100,6 +100,8 @@ func _ready() -> void:
 	_portrait.region.size = \
 			_sprite.texture.get_size() / Vector2(_sprite.hframes, 1)
 
+	_stamina_bar.max_stamina = stats.max_stamina
+
 
 func _draw() -> void:
 	if Engine.editor_hint:
@@ -186,6 +188,11 @@ func set_target_visible(new_value: bool) -> void:
 
 func get_target_visible() -> bool:
 	return _target_cursor.visible
+
+
+func start_battle() -> void:
+	battle_stats.start_battle(stats.max_stamina)
+	_stamina_bar.reset()
 
 
 func _on_BattleStats_stamina_changed(_old_stamina: int, new_stamina: int) \

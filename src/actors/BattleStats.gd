@@ -5,8 +5,6 @@ signal round_started
 signal turn_taken
 signal stamina_changed(old_stamina, new_stamina)
 
-const MAX_STAMINA := 20
-
 var stamina: int
 
 var turn_finished: bool setget , get_turn_finished
@@ -18,8 +16,8 @@ var _did_ability: bool = false
 var _turns_left: int = false
 
 
-func start_battle() -> void:
-	stamina = MAX_STAMINA
+func start_battle(max_stamina: int) -> void:
+	stamina = max_stamina
 
 
 func start_round() -> void:

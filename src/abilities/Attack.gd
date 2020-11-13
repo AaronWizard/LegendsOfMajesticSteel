@@ -37,7 +37,7 @@ func _attacker_anim_trigger(trigger: String, source: Actor, target: Actor, \
 		dir: Vector2) -> void:
 	assert(trigger == Actor.AnimationNames.ATTACK_HIT_TRIGGER)
 
-	var attack_power := Stats.get_attack_power(source.stats, target.stats)
+	var attack_power := source.stats.attack
 	target.battle_stats.modify_stamina(-attack_power)
 
 	if target.battle_stats.is_alive:

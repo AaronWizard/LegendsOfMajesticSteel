@@ -3,9 +3,10 @@ extends Node2D
 
 signal animation_finished
 
-const _CHANGE_PER_SECOND := 0.05
+const _CHANGE_PER_SECOND := 0.1
 const _CHANGE_DELAY := 0.5
 
+var max_stamina := 20 setget _set_max_stamina, _get_max_stamina
 var modifier := 0.0 setget _set_modifier
 
 var _current_value: float
@@ -16,8 +17,9 @@ onready var _tween := $Tween as Tween
 onready var _prediction_timer := $PredictionTimer as Timer
 
 
-func _ready() -> void:
-	_current_value = _stamina_front.value
+func reset() -> void:
+	_current_value = float(_get_max_stamina())
+	_stamina_front.value = _current_value
 
 
 func animate_change(delta: float) -> void:
@@ -49,6 +51,15 @@ func _animate_bar(bar: Range, old_value: float, new_value: float) -> void:
 
 func _on_Tween_tween_all_completed() -> void:
 	emit_signal("animation_finished")
+
+
+func _set_max_stamina(new_value: int) -> void:
+	_stamina_front.max_value = new_value
+	_stamina_back.max_value = new_value
+
+
+func _get_max_stamina() -> int:
+	return int(_stamina_front.max_value)
 
 
 func _set_modifier(new_value: float) -> void:

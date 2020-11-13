@@ -49,7 +49,7 @@ func _start_battle() -> void:
 
 	for a in _map.get_actors():
 		var actor := a as Actor
-		actor.battle_stats.start_battle()
+		actor.start_battle()
 		_turn_order.append(actor.faction)
 
 	randomize()

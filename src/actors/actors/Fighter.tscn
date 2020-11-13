@@ -10,4 +10,5 @@ character_name = "Fighter"
 texture = ExtResource( 1 )
 
 [node name="Stats" parent="." index="2"]
-move = 5
+attack = 2
+max_stamina = 3
