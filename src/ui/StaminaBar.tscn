@@ -32,7 +32,6 @@ margin_right = -2.0
 margin_bottom = -2.0
 step = 0.0
 texture_progress = ExtResource( 2 )
-nine_patch_stretch = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -45,7 +44,6 @@ margin_top = 2.0
 margin_right = -2.0
 margin_bottom = -2.0
 texture_progress = ExtResource( 3 )
-nine_patch_stretch = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
