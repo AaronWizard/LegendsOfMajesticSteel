@@ -6,11 +6,11 @@ signal portrait_pressed
 onready var _portrait := $HBoxContainer/PortraitButton as Button
 onready var _name := $HBoxContainer/VBoxContainer/Name as Label
 
-onready var _stamina_bar := $HBoxContainer/VBoxContainer/HBoxContainer/Stamina \
-		as Range
-onready var _current_stamina := $HBoxContainer/VBoxContainer/HBoxContainer/ \
+onready var _stamina_bar := $HBoxContainer/VBoxContainer/VBoxContainer/ \
+		StaminaBackground/CenterContainer/StaminaBar as Range
+onready var _current_stamina := $HBoxContainer/VBoxContainer/VBoxContainer/ \
 		HBoxContainer/CurrentStamina as Label
-onready var _max_stamina := $HBoxContainer/VBoxContainer/HBoxContainer/ \
+onready var _max_stamina := $HBoxContainer/VBoxContainer/VBoxContainer/ \
 		HBoxContainer/MaxStamina as Label
 
 
