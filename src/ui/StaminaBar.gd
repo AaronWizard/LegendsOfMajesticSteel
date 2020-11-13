@@ -4,7 +4,7 @@ extends Node2D
 signal animation_finished
 
 const _CHANGE_PER_SECOND := 0.1
-const _CHANGE_DELAY := 0.5
+const _CHANGE_DELAY := 0.25
 
 var max_stamina := 20 setget _set_max_stamina, _get_max_stamina
 var modifier := 0.0 setget _set_modifier
@@ -50,6 +50,7 @@ func _animate_bar(bar: Range, old_value: float, new_value: float) -> void:
 
 
 func _on_Tween_tween_all_completed() -> void:
+	yield(get_tree().create_timer(_CHANGE_DELAY), "timeout")
 	emit_signal("animation_finished")
 
 
