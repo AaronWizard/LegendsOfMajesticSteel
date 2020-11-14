@@ -94,11 +94,12 @@ func _ready() -> void:
 			position.snapped(Constants.TILE_SIZE_V) / Constants.TILE_SIZE_V
 	set_cell(new_cell)
 
-	_portrait = AtlasTexture.new()
-	_portrait.atlas = _sprite.texture
-	_portrait.region.position = Vector2.ZERO
-	_portrait.region.size = \
-			_sprite.texture.get_size() / Vector2(_sprite.hframes, 1)
+	if _sprite.texture:
+		_portrait = AtlasTexture.new()
+		_portrait.atlas = _sprite.texture
+		_portrait.region.position = Vector2.ZERO
+		_portrait.region.size = \
+				_sprite.texture.get_size() / Vector2(_sprite.hframes, 1)
 
 	_stamina_bar.max_stamina = stats.max_stamina
 
