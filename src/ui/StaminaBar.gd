@@ -1,3 +1,4 @@
+tool
 class_name StaminaBar
 extends Node2D
 
