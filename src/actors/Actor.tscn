@@ -77,7 +77,6 @@ __meta__ = {
 visible = false
 position = Vector2( 8, 8 )
 frames = SubResource( 1 )
-frame = 1
 playing = true
 
 [node name="BloodSplatter" type="Particles2D" parent="Center"]
