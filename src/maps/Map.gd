@@ -51,6 +51,12 @@ func get_tile_name(cell: Vector2) -> String:
 	return name
 
 
+func get_cell_move_cost(cell: Vector2) -> int:
+	var tile_name := get_tile_name(cell)
+	var result := _tile_properties_set.move_cost(tile_name)
+	return result
+
+
 func add_decal(decal: int, cell: Vector2) -> void:
 	_decals.set_cellv(cell, decal)
 
