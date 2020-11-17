@@ -1,13 +1,10 @@
-class_name Attack
-extends Ability
-
-export var min_dist: int = 1
-export var max_dist: int = 1
+class_name MeleeAttackEffect
+extends AbilityEffect
 
 var _running_anims := 0
 
 
-func start(source_actor: Actor, map: Map, target: Vector2) -> void:
+func start(target: Vector2, source_actor: Actor, map: Map) -> void:
 	assert(_running_anims == 0)
 
 	var dir := target - source_actor.cell
@@ -16,21 +13,12 @@ func start(source_actor: Actor, map: Map, target: Vector2) -> void:
 	var target_actor := map.get_actor_on_cell(target)
 
 	# warning-ignore:return_value_discarded
+
 	source_actor.connect("animation_trigger", self, "_attacker_anim_trigger",
 			[source_actor, target_actor, dir], CONNECT_ONESHOT)
 
 	_connect_anim_finished(source_actor)
 	source_actor.play_anim(anim)
-
-
-func _get_range(source_actor: Actor, _map: Map) -> Array:
-	return TileGeometry.cells_in_range(source_actor.cell, min_dist, max_dist)
-
-
-func _is_valid_target(source_actor: Actor, map: Map, target_cell: Vector2) \
-		-> bool:
-	var other_actor := map.get_actor_on_cell(target_cell)
-	return other_actor and (other_actor.faction != source_actor.faction)
 
 
 func _attacker_anim_trigger(trigger: String, source: Actor, target: Actor, \

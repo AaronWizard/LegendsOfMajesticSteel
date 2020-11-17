@@ -72,8 +72,6 @@ onready var battle_stats := $BattleStats as BattleStats
 onready var _center := $Center as Position2D
 onready var _offset := $Center/Offset as Position2D
 
-onready var _abilities := $Abilities
-
 onready var _anim := $AnimationPlayer as AnimationPlayer
 
 onready var _sprite := $Center/Offset/Sprite as Sprite
@@ -173,10 +171,6 @@ func play_anim(anim_name: String) -> void:
 	yield(_anim, "animation_finished")
 	_anim.play("actor_idle")
 	emit_signal("animation_finished", anim_name)
-
-
-func get_abilities() -> Array:
-	return _abilities.get_children()
 
 
 func get_portrait() -> Texture:

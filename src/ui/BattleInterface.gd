@@ -25,7 +25,8 @@ func _on_MouseControl_drag(relative: Vector2) -> void:
 
 
 func _on_BattleGUI_ability_selected(ability: Ability) -> void:
-	var ability_range := ability.get_targetting_data(current_actor, current_map)
+	var ability_range := ability.get_targetting_data(current_actor.cell,
+			current_actor, current_map)
 	map_highlights.set_targets(ability_range.target_range)
 	map_highlights.moves_visible = false
 

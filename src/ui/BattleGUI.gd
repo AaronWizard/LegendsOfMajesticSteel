@@ -58,7 +58,7 @@ func set_current_ability(value: Ability) -> void:
 
 
 func _create_ability_buttons() -> void:
-	for a in current_actor.get_abilities():
+	for a in current_actor.stats.abilities:
 		var ability := a as Ability
 		var button := Button.new()
 		button.text = ability.name
