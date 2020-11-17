@@ -6,12 +6,13 @@ signal actor_removed(actor)
 
 enum Decal { BLOOD_SPLATTER = 0 }
 
-export(Resource) var tile_properties_set: Resource
+export var tile_properties_set: Resource
 
 onready var _ground := $Ground as TileMap
 onready var _decals := $Decals as TileMap
 onready var _actors := $Actors as Node
 
+# Because I can't use TilePropertiesSet as an export hint
 var _tile_properties_set: TilePropertiesSet = null
 
 
