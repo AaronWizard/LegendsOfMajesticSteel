@@ -105,7 +105,7 @@ func _confirm_ability_target(target_cell: Vector2) -> void:
 
 
 func _ability_selected(ability: Ability) -> void:
-	_ability_targetting = ability.get_targetting_data(_actor, _map)
+	_ability_targetting = ability.get_targetting_data(_actor.cell, _actor, _map)
 	_state = State.ABILITY_TARGETING
 
 

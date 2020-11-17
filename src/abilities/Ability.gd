@@ -1,6 +1,18 @@
 class_name Ability
 extends Resource
 
+class TargettingData:
+	var source_cell := Vector2()
+	var target_range := []
+	var valid_targets := []
+
+	func _init(new_source_cell: Vector2, new_target_range: Array,
+			new_valid_targets: Array) -> void:
+		source_cell = new_source_cell
+		target_range = new_target_range
+		valid_targets = new_valid_targets
+
+
 enum TargetType { ANY, ANY_ACTOR, ENEMY, ALLY }
 
 export var name := "Ability"
@@ -11,6 +23,17 @@ export(TargetType) var target_type := TargetType.ANY
 export var aoe_type: Resource
 
 export var ability_effect: Resource
+
+
+func get_targetting_data(source_cell: Vector2, source_actor: Actor, map: Map) \
+		-> TargettingData:
+	var target_range := get_range(source_cell, source_actor, map)
+	var valid_targets := []
+	for c in target_range:
+		var cell := c as Vector2
+		if is_valid_target(cell, source_actor, map):
+			valid_targets.append(cell)
+	return TargettingData.new(source_cell, target_range, valid_targets)
 
 
 func get_range(source_cell: Vector2, source_actor: Actor, map: Map) -> Array:
