@@ -1,10 +1,9 @@
-[gd_scene load_steps=27 format=2]
+[gd_scene load_steps=26 format=2]
 
 [ext_resource path="res://src/actors/Actor.gd" type="Script" id=1]
 [ext_resource path="res://src/actors/Stats.gd" type="Script" id=2]
 [ext_resource path="res://src/actors/BattleStats.gd" type="Script" id=3]
 [ext_resource path="res://resources/animations/actor_attack_east.tres" type="Animation" id=4]
-[ext_resource path="res://src/abilities/Attack.gd" type="Script" id=5]
 [ext_resource path="res://resources/animations/actor_move_north.tres" type="Animation" id=6]
 [ext_resource path="res://resources/animations/actor_move_east.tres" type="Animation" id=7]
 [ext_resource path="res://resources/animations/actor_move_south.tres" type="Animation" id=8]
@@ -115,9 +114,6 @@ script = ExtResource( 2 )
 script = ExtResource( 3 )
 
 [node name="Abilities" type="Node" parent="."]
-
-[node name="Attack" type="Node" parent="Abilities"]
-script = ExtResource( 5 )
 [connection signal="animation_finished" from="Center/Offset/Sprite/StaminaBar" to="." method="_on_StaminaBar_animation_finished"]
 [connection signal="round_started" from="BattleStats" to="." method="_on_BattleStats_round_started"]
 [connection signal="stamina_changed" from="BattleStats" to="." method="_on_BattleStats_stamina_changed"]

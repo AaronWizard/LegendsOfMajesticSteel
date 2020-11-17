@@ -1,58 +1,64 @@
 class_name Ability
-extends Node
+extends Resource
+
+enum TargetType { ANY, ANY_ACTOR, ENEMY, ALLY }
+
+export var name := "Ability"
+
+export var range_type: Resource
+export(TargetType) var target_type := TargetType.ANY
+
+export var aoe_type: Resource
+
+export var ability_effect: Resource
 
 
-class TargettingData:
-	var target_range := []
-	var valid_targets := []
-
-	func _init(new_target_range: Array, new_valid_targets: Array) -> void:
-		target_range = new_target_range
-		valid_targets = new_valid_targets
+func get_range(source_cell: Vector2, source_actor: Actor, map: Map) -> Array:
+	var result := [source_cell]
+	if _get_range_type():
+		result = _get_range_type().get_range(source_cell, source_actor, map)
+	return result
 
 
-signal finished
-
-
-func get_targetting_data(source_actor: Actor, map: Map) -> TargettingData:
-	var target_range := _get_range(source_actor, map)
-
-	var valid_targets := []
-	for c in target_range:
-		var cell := c as Vector2
-		if _is_valid_target(source_actor, map, cell):
-			valid_targets.append(cell)
-
-	return TargettingData.new(target_range, valid_targets)
-
-
-# Override in subclasses
-# Assumes target_cell is a valid target
-# warning-ignore:unused_argument
-# warning-ignore:unused_argument
-func get_aoe(source_actor: Actor, map: Map, target_cell: Vector2) -> Array:
-	return [target_cell]
-
-
-# Override in subclasses
-# warning-ignore:unused_argument
-# warning-ignore:unused_argument
-# warning-ignore:unused_argument
-func start(source_actor: Actor, map: Map, target: Vector2) -> void:
-	print("Ability must implement start()")
-	emit_signal("finished")
-
-
-# Override in subclasses
-# warning-ignore:unused_argument
-func _get_range(source_actor: Actor, map: Map) -> Array:
-	return [source_actor.cell]
-
-
-# Override in subclasses
-# warning-ignore:unused_argument
-# warning-ignore:unused_argument
-# warning-ignore:unused_argument
-func _is_valid_target(source_actor: Actor, map: Map, target_cell: Vector2) \
+# Assumes target_cell is in range
+func is_valid_target(target_cell: Vector2, source_actor: Actor, map: Map) \
 		-> bool:
-	return true
+	var result := false
+
+	match target_type:
+		TargetType.ANY_ACTOR:
+			result = map.get_actor_on_cell(target_cell) != null
+		TargetType.ENEMY, TargetType.ALLY:
+			var other_actor := map.get_actor_on_cell(target_cell)
+			if other_actor:
+				match target_type:
+					TargetType.ENEMY:
+						result = other_actor.faction != source_actor.faction
+					_:
+						assert(target_type == TargetType.ALLY)
+						result = other_actor.faction == source_actor.faction
+			else:
+				assert(target_type == TargetType.ANY)
+				result = false
+		_:
+			result = true
+
+	return result
+
+
+# Assumes target_cell is in range
+func get_aoe(target_cell: Vector2, source_cell: Vector2, source_actor: Actor,
+		map: Map) -> Array:
+	var result := [target_cell]
+	if _get_aoe_type():
+		result = _get_aoe_type().get_aoe(target_cell, source_cell, source_actor,
+				map)
+	return result
+
+
+func _get_range_type() -> AbilityRange:
+	return range_type as AbilityRange
+
+
+func _get_aoe_type() -> AbilityAOE:
+	return aoe_type as AbilityAOE

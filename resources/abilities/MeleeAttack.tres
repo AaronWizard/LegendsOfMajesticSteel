@@ -1,0 +1,20 @@
+[gd_resource type="Resource" load_steps=6 format=2]
+
+[ext_resource path="res://src/abilities/Ability.gd" type="Script" id=1]
+[ext_resource path="res://src/abilities/ranges/DiamondRange.gd" type="Script" id=2]
+[ext_resource path="res://src/abilities/effects/MeleeAttack.gd" type="Script" id=3]
+
+[sub_resource type="Resource" id=2]
+script = ExtResource( 3 )
+
+[sub_resource type="Resource" id=1]
+script = ExtResource( 2 )
+min_dist = 1
+max_dist = 1
+
+[resource]
+script = ExtResource( 1 )
+name = "Attack"
+range_type = SubResource( 1 )
+target_type = 2
+ability_effect = SubResource( 2 )
