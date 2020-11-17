@@ -1,13 +1,16 @@
 class_name TilePropertiesSet
-extends Node
+extends Resource
+
+export(Array, Resource) var properties := []
+
 
 func get_properties(tile_name: String) -> TileProperties:
 	var result: TileProperties = null
 
-	for p in get_children():
-		var properties := p as TileProperties
-		if tile_name in properties.tile_names:
-			result = properties
+	for p in properties:
+		var prop := p as TileProperties
+		if tile_name in prop.tile_names:
+			result = prop
 			break
 
 	return result

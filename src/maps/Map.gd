@@ -6,7 +6,7 @@ signal actor_removed(actor)
 
 enum Decal { BLOOD_SPLATTER = 0 }
 
-export var tile_properties_set: PackedScene = null
+export(Resource) var tile_properties_set: Resource
 
 onready var _ground := $Ground as TileMap
 onready var _decals := $Decals as TileMap
@@ -17,8 +17,7 @@ var _tile_properties_set: TilePropertiesSet = null
 
 func _ready() -> void:
 	if tile_properties_set:
-		_tile_properties_set = tile_properties_set.instance() \
-				as TilePropertiesSet
+		_tile_properties_set = tile_properties_set as TilePropertiesSet
 
 	for a in get_actors():
 		var actor := a as Actor

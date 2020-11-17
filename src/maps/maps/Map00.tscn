@@ -5,7 +5,7 @@
 [ext_resource path="res://src/actors/actors/player/Neil.tscn" type="PackedScene" id=3]
 [ext_resource path="res://src/actors/actors/player/Kenna.tscn" type="PackedScene" id=4]
 [ext_resource path="res://src/actors/actors/Fighter.tscn" type="PackedScene" id=5]
-[ext_resource path="res://src/maps/tiles/TilePropertiesSet.tscn" type="PackedScene" id=6]
+[ext_resource path="res://resources/tileproperties/tilepropertiesset.tres" type="Resource" id=6]
 [ext_resource path="res://src/actors/actors/Archer.tscn" type="PackedScene" id=7]
 
 [node name="Map00" instance=ExtResource( 1 )]
@@ -17,24 +17,38 @@ tile_data = PoolIntArray( -196612, 2, 0, -196611, 2, 1, -196610, 2, 1, -196609, 
 
 [node name="WarriorPrincess" parent="Actors" index="0" instance=ExtResource( 4 )]
 position = Vector2( 168, 288 )
+cell_offset = Vector2( 0, 0 )
 
 [node name="Barbarian" parent="Actors" index="1" instance=ExtResource( 3 )]
 position = Vector2( 192, 288 )
+cell_offset = Vector2( 0, 0 )
 
 [node name="Fighter" parent="Actors" index="2" instance=ExtResource( 5 )]
 position = Vector2( 120, 120 )
+cell_offset = Vector2( 0, 0 )
+faction = 1
 
 [node name="Fighter2" parent="Actors" index="3" instance=ExtResource( 5 )]
 position = Vector2( 48, 216 )
+cell_offset = Vector2( 0, 0 )
+faction = 1
 
 [node name="Fighter3" parent="Actors" index="4" instance=ExtResource( 5 )]
 position = Vector2( 264, 96 )
+cell_offset = Vector2( 0, 0 )
+faction = 1
 
 [node name="Fighter4" parent="Actors" index="5" instance=ExtResource( 5 )]
 position = Vector2( 312, 192 )
+cell_offset = Vector2( 0, 0 )
+faction = 1
 
 [node name="Archer" parent="Actors" index="6" instance=ExtResource( 7 )]
 position = Vector2( 48, 120 )
+cell_offset = Vector2( 0, 0 )
+faction = 1
 
 [node name="Archer2" parent="Actors" index="7" instance=ExtResource( 7 )]
 position = Vector2( 312, 96 )
+cell_offset = Vector2( 0, 0 )
+faction = 1

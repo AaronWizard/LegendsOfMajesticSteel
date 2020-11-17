@@ -1,0 +1,9 @@
+[gd_resource type="Resource" load_steps=2 format=2]
+
+[ext_resource path="res://src/maps/TileProperties.gd" type="Script" id=1]
+
+[resource]
+script = ExtResource( 1 )
+tile_names = [ "forest" ]
+move_cost = 2
+defence = 0.1

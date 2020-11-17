@@ -144,12 +144,12 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/maps/TileGeometry.gd"
 }, {
-"base": "Node",
+"base": "Resource",
 "class": "TileProperties",
 "language": "GDScript",
 "path": "res://src/maps/TileProperties.gd"
 }, {
-"base": "Node",
+"base": "Resource",
 "class": "TilePropertiesSet",
 "language": "GDScript",
 "path": "res://src/maps/TilePropertiesSet.gd"
