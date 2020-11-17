@@ -15,6 +15,8 @@ class TargettingData:
 
 enum TargetType { ANY, ANY_ACTOR, ENEMY, ALLY }
 
+signal finished
+
 export var name := "Ability"
 
 export var range_type: Resource
@@ -61,9 +63,9 @@ func is_valid_target(target_cell: Vector2, source_actor: Actor, map: Map) \
 						assert(target_type == TargetType.ALLY)
 						result = other_actor.faction == source_actor.faction
 			else:
-				assert(target_type == TargetType.ANY)
 				result = false
 		_:
+			assert(target_type == TargetType.ANY)
 			result = true
 
 	return result
@@ -79,9 +81,19 @@ func get_aoe(target_cell: Vector2, source_cell: Vector2, source_actor: Actor,
 	return result
 
 
+func start(source_actor: Actor, map: Map, target: Vector2) -> void:
+	_get_effect_type().start(target, source_actor, map)
+	yield(_get_effect_type(), "finished")
+	emit_signal("finished")
+
+
 func _get_range_type() -> AbilityRange:
 	return range_type as AbilityRange
 
 
 func _get_aoe_type() -> AbilityAOE:
 	return aoe_type as AbilityAOE
+
+
+func _get_effect_type() -> AbilityEffect:
+	return ability_effect as AbilityEffect

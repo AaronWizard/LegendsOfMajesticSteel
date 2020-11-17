@@ -1,10 +1,10 @@
-class_name MeleeAttack
+class_name MeleeAttackEffect
 extends AbilityEffect
 
 var _running_anims := 0
 
 
-func start(source_actor: Actor, map: Map, target: Vector2) -> void:
+func start(target: Vector2, source_actor: Actor, map: Map) -> void:
 	assert(_running_anims == 0)
 
 	var dir := target - source_actor.cell

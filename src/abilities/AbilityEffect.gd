@@ -7,6 +7,6 @@ signal finished
 # warning-ignore:unused_argument
 # warning-ignore:unused_argument
 # warning-ignore:unused_argument
-func start(source_actor: Actor, map: Map, target: Vector2) -> void:
+func start(target: Vector2, source_actor: Actor, map: Map) -> void:
 	print("AbilityEffect must implement start()")
 	emit_signal("finished")
