@@ -29,7 +29,7 @@ func determine_action(actor: Actor, map: Map, range_data: RangeData, \
 
 
 func _pick_random_path(start_cell: Vector2, range_data: RangeData) -> Array:
-	var cells := range_data.enterable_cells.duplicate()
+	var cells := range_data.move_range.keys()
 	cells.erase(start_cell)
 	assert(not (start_cell in cells))
 

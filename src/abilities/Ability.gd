@@ -1,7 +1,7 @@
 class_name Ability
 extends Resource
 
-class TargettingData:
+class TargetingData:
 	var source_cell := Vector2()
 	var target_range := []
 	var valid_targets := []
@@ -28,14 +28,14 @@ export var ability_effect: Resource
 
 
 func get_targetting_data(source_cell: Vector2, source_actor: Actor, map: Map) \
-		-> TargettingData:
+		-> TargetingData:
 	var target_range := get_range(source_cell, source_actor, map)
 	var valid_targets := []
 	for c in target_range:
 		var cell := c as Vector2
 		if is_valid_target(cell, source_actor, map):
 			valid_targets.append(cell)
-	return TargettingData.new(source_cell, target_range, valid_targets)
+	return TargetingData.new(source_cell, target_range, valid_targets)
 
 
 func get_range(source_cell: Vector2, source_actor: Actor, map: Map) -> Array:

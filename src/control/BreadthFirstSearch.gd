@@ -1,5 +1,6 @@
 class_name BreadthFirstSearch
 
+# Ignores allied actors
 static func find_move_range(actor: Actor, map: Map) -> Array:
 	var result := [actor.cell]
 

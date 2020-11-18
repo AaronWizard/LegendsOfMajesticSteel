@@ -16,7 +16,7 @@ var _interface: BattleInterface = null
 
 var _state: int
 
-var _ability_targetting: Ability.TargettingData
+var _ability_targetting: Ability.TargetingData
 var _ability_target: Vector2
 
 func determine_action(actor: Actor, map: Map, range_data: RangeData,

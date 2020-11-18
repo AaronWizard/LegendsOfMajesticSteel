@@ -65,7 +65,7 @@ func _start_round() -> void:
 
 func _turn_started(actor: Actor, range_data: RangeData) -> void:
 	_interface.map_highlights.moves_visible = true
-	_interface.map_highlights.set_moves(range_data.move_range)
+	_interface.map_highlights.set_moves(range_data.visible_move_range.keys())
 	_interface.camera.follow_actor(actor)
 
 
