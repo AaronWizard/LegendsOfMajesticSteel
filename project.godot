@@ -99,6 +99,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/maps/Directions.gd"
 }, {
+"base": "RandomNumberGenerator",
+"class": "ExtRandomNumberGenerator",
+"language": "GDScript",
+"path": "res://src/game/ExtRandomNumberGenerator.gd"
+}, {
 "base": "Camera2D",
 "class": "GameCamera",
 "language": "GDScript",
@@ -213,6 +218,7 @@ _global_script_class_icons={
 "Constants": "",
 "DiamondRange": "",
 "Directions": "",
+"ExtRandomNumberGenerator": "",
 "GameCamera": "",
 "Map": "",
 "MapHighlights": "",
