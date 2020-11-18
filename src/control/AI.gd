@@ -17,10 +17,10 @@ func get_pauses() -> bool:
 
 func determine_action(actor: Actor, map: Map, range_data: RangeData, \
 		_interface: BattleInterface) -> void:
-	if not range_data.valid_ability_sources.empty():
+	if not range_data.ability_source_cells.empty():
 		_moved = false
 
-		if range_data.valid_ability_sources.has(actor.cell):
+		if range_data.ability_source_cells.has(actor.cell):
 			var action := _pick_random_ability(actor, map, range_data)
 			emit_signal("determined_action", action)
 		else:
@@ -49,7 +49,7 @@ func _pick_random_path(start_cell: Vector2, range_data: RangeData) -> Array:
 
 func _pick_random_action_path(start_cell: Vector2, range_data: RangeData) \
 		-> Array:
-	var cells := range_data.valid_ability_sources.keys()
+	var cells := range_data.ability_source_cells.keys()
 	return _random_path(start_cell, range_data, cells)
 
 
@@ -65,14 +65,12 @@ func _random_path(start_cell: Vector2, range_data: RangeData, cells: Array) \
 
 func _pick_random_ability(actor: Actor, map: Map, range_data: RangeData) \
 		-> AbilityAction:
-	var ability_indicies := (range_data.valid_ability_sources[actor.cell] \
-			as Dictionary).keys()
+	var ability_indicies := range_data.get_abilities_at_cell(actor.cell)
 	var ability_index = _random.rand_array_element(ability_indicies) as int
 
 	var ability := actor.stats.abilities[ability_index] as Ability
-	var targeting_data \
-			:= range_data.valid_ability_sources[actor.cell][ability_index] \
-			as Ability.TargetingData
+	var targeting_data := \
+			range_data.get_targeting_data(actor.cell, ability_index)
 
 	# Pick random target
 	var target_cell := \
