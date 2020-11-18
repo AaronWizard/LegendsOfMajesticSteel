@@ -27,7 +27,7 @@ export var aoe_type: Resource
 export var ability_effect: Resource
 
 
-func get_targetting_data(source_cell: Vector2, source_actor: Actor, map: Map) \
+func get_targeting_data(source_cell: Vector2, source_actor: Actor, map: Map) \
 		-> TargetingData:
 	var target_range := get_range(source_cell, source_actor, map)
 	var valid_targets := []

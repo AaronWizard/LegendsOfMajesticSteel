@@ -3,6 +3,11 @@ class_name RangeData
 var visible_move_range := {} # Set; keys are cells
 var move_range := {} # Set; keys are cells
 
+# Keys are cells
+# Values are dictionaries
+#		keys are indicies to actor ability, values are TargetingData
+var valid_ability_sources := {}
+
 var _walk_grid := AStar2D.new()
 
 
@@ -10,6 +15,7 @@ func _init(actor: Actor, map: Map) -> void:
 	_init_visible_move_range(actor, map)
 	_init_move_range(actor, map)
 	_init_walk_grid_paths()
+	_init_valid_ability_sources(actor, map)
 
 
 func get_walk_path(start: Vector2, end: Vector2) -> Array:
@@ -67,3 +73,24 @@ func _walk_path_point(cell: Vector2) -> int:
 	if (result == -1) or (_walk_grid.get_point_position(result) != cell):
 		result = -1
 	return result
+
+
+func _init_valid_ability_sources(actor: Actor, map: Map) -> void:
+	for sc in move_range.keys():
+		var source_cell := sc as Vector2
+		for i in range(actor.stats.abilities.size()):
+			var index := i as int
+			var ability := actor.stats.abilities[index] as Ability
+			var targeting_data := ability.get_targeting_data(source_cell, actor, map)
+			assert(targeting_data.source_cell == source_cell)
+			if not targeting_data.valid_targets.empty():
+				_set_valid_ability_source(targeting_data, index)
+
+func _set_valid_ability_source(targeting_data: Ability.TargetingData,
+		ability_index: int) -> void:
+	if not valid_ability_sources.has(targeting_data.source_cell):
+		valid_ability_sources[targeting_data.source_cell] = {}
+	var data := valid_ability_sources[targeting_data.source_cell] as Dictionary
+
+	assert(not data.has(ability_index))
+	data[ability_index] = targeting_data
