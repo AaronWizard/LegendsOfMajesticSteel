@@ -16,7 +16,7 @@ onready var _max_stamina := $HBoxContainer/VBoxContainer/VBoxContainer/ \
 
 func set_actor(actor: Actor) -> void:
 	clear()
-	_portrait.icon = actor.portrait
+	_portrait.icon = actor.stats.portrait
 	_portrait.disabled = false
 	_name.text = actor.character_name
 

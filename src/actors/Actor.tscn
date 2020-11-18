@@ -1,10 +1,8 @@
-[gd_scene load_steps=27 format=2]
+[gd_scene load_steps=26 format=2]
 
 [ext_resource path="res://src/actors/Actor.gd" type="Script" id=1]
-[ext_resource path="res://src/actors/Stats.gd" type="Script" id=2]
 [ext_resource path="res://src/actors/BattleStats.gd" type="Script" id=3]
 [ext_resource path="res://resources/animations/actor_attack_east.tres" type="Animation" id=4]
-[ext_resource path="res://resources/abilities/MeleeAttack.tres" type="Resource" id=5]
 [ext_resource path="res://resources/animations/actor_move_north.tres" type="Animation" id=6]
 [ext_resource path="res://resources/animations/actor_move_east.tres" type="Animation" id=7]
 [ext_resource path="res://resources/animations/actor_move_south.tres" type="Animation" id=8]
@@ -24,6 +22,7 @@
 [ext_resource path="res://resources/animations/actor_death_south.tres" type="Animation" id=22]
 [ext_resource path="res://resources/animations/actor_death_west.tres" type="Animation" id=23]
 [ext_resource path="res://assets/graphics/ui/icons/wait.png" type="Texture" id=24]
+[ext_resource path="res://assets/graphics/actors/fighter.png" type="Texture" id=25]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
@@ -56,6 +55,7 @@ __meta__ = {
 [node name="Offset" type="Position2D" parent="Center"]
 
 [node name="Sprite" type="Sprite" parent="Center/Offset"]
+texture = ExtResource( 25 )
 hframes = 4
 frame = 3
 
@@ -108,10 +108,6 @@ anims/actor_move_east = ExtResource( 7 )
 anims/actor_move_north = ExtResource( 6 )
 anims/actor_move_south = ExtResource( 8 )
 anims/actor_move_west = ExtResource( 9 )
-
-[node name="Stats" type="Node" parent="."]
-script = ExtResource( 2 )
-abilities = [ ExtResource( 5 ) ]
 
 [node name="BattleStats" type="Node" parent="."]
 script = ExtResource( 3 )

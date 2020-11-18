@@ -53,20 +53,20 @@ const _DISSOLVE_MATERIAL := preload( \
 export var cell_offset: Vector2 setget set_cell_offset, get_cell_offset
 
 export var character_name := "Actor"
+
+export(Resource) var stat_resource: Resource \
+		setget set_stat_resource, get_stat_resource
+
 export(Faction) var faction := Faction.ENEMY
 
+var stats: Stats
 var target_visible: bool setget set_target_visible, get_target_visible
-
-var portrait: Texture setget , get_portrait
-
-var _portrait: AtlasTexture
 
 onready var cell: Vector2 setget set_cell, get_cell
 
 onready var remote_transform := $Center/Offset/RemoteTransform2D \
 		as RemoteTransform2D
 
-onready var stats := $Stats as Stats
 onready var battle_stats := $BattleStats as BattleStats
 
 onready var _center := $Center as Position2D
@@ -92,14 +92,8 @@ func _ready() -> void:
 			position.snapped(Constants.TILE_SIZE_V) / Constants.TILE_SIZE_V
 	set_cell(new_cell)
 
-	if _sprite.texture:
-		_portrait = AtlasTexture.new()
-		_portrait.atlas = _sprite.texture
-		_portrait.region.position = Vector2.ZERO
-		_portrait.region.size = \
-				_sprite.texture.get_size() / Vector2(_sprite.hframes, 1)
-
-	_stamina_bar.max_stamina = stats.max_stamina
+	if stats:
+		_stamina_bar.max_stamina = stats.max_stamina
 
 
 func _draw() -> void:
@@ -173,8 +167,14 @@ func play_anim(anim_name: String) -> void:
 	emit_signal("animation_finished", anim_name)
 
 
-func get_portrait() -> Texture:
-	return _portrait
+func set_stat_resource(new_value: Resource) -> void:
+	stats = new_value as Stats
+	if stats and _sprite:
+		_sprite.texture = stats.texture
+
+
+func get_stat_resource() -> Resource:
+	return stats
 
 
 func set_target_visible(new_value: bool) -> void:

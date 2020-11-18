@@ -149,7 +149,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/ui/StaminaBar.gd"
 }, {
-"base": "Node",
+"base": "Resource",
 "class": "Stats",
 "language": "GDScript",
 "path": "res://src/actors/Stats.gd"
