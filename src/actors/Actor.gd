@@ -47,9 +47,6 @@ class AnimationNames:
 
 	const ATTACK_HIT_TRIGGER := "attack_hit"
 
-const _DISSOLVE_MATERIAL := preload( \
-		"res://resources/materials/dissolve_shadermaterial.tres")
-
 export var cell_offset: Vector2 setget set_cell_offset, get_cell_offset
 
 export var character_name := "Actor"
@@ -147,13 +144,8 @@ func play_death_anim(direction: Vector2) -> void:
 	emit_signal("dying")
 
 	var anim_name := AnimationNames.DEATH[direction] as String
-
-	_blood_splatter.emitting = true
-
-	_sprite.material = _DISSOLVE_MATERIAL
 	_anim.play(anim_name)
 	yield(_anim, "animation_finished")
-	_sprite.material = null
 
 	emit_signal("died")
 

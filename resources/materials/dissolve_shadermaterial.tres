@@ -9,6 +9,7 @@ seed = 1
 noise = SubResource( 1 )
 
 [resource]
+resource_local_to_scene = true
 shader = ExtResource( 1 )
 shader_param/dissolve = 0.0
 shader_param/dissolve_texture = SubResource( 2 )

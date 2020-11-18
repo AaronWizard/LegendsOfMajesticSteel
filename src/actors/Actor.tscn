@@ -1,6 +1,7 @@
-[gd_scene load_steps=26 format=2]
+[gd_scene load_steps=27 format=2]
 
 [ext_resource path="res://src/actors/Actor.gd" type="Script" id=1]
+[ext_resource path="res://resources/materials/dissolve_shadermaterial.tres" type="Material" id=2]
 [ext_resource path="res://src/actors/BattleStats.gd" type="Script" id=3]
 [ext_resource path="res://resources/animations/actor_attack_east.tres" type="Animation" id=4]
 [ext_resource path="res://resources/animations/actor_move_north.tres" type="Animation" id=6]
@@ -55,9 +56,9 @@ __meta__ = {
 [node name="Offset" type="Position2D" parent="Center"]
 
 [node name="Sprite" type="Sprite" parent="Center/Offset"]
+material = ExtResource( 2 )
 texture = ExtResource( 25 )
 hframes = 4
-frame = 3
 
 [node name="StaminaBar" parent="Center/Offset/Sprite" instance=ExtResource( 14 )]
 visible = false
