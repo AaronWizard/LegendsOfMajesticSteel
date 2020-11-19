@@ -11,6 +11,7 @@ export var tile_properties_set: Resource
 onready var _ground := $Ground as TileMap
 onready var _decals := $Decals as TileMap
 onready var _actors := $Actors as Node
+onready var _effects := $Effects as Node
 
 # Because I can't use TilePropertiesSet as an export hint
 var _tile_properties_set: TilePropertiesSet = null
@@ -105,6 +106,10 @@ func remove_actor(actor: Actor) -> void:
 	assert(actor in _actors.get_children())
 	_actors.remove_child(actor)
 	emit_signal("actor_removed", actor)
+
+
+func add_effect(effect: Node2D) -> void:
+	_effects.add_child(effect)
 
 
 func _actor_dying(actor: Actor) -> void:

@@ -16,3 +16,5 @@ cell_size = Vector2( 24, 24 )
 format = 1
 
 [node name="Actors" type="YSort" parent="."]
+
+[node name="Effects" type="Node2D" parent="."]

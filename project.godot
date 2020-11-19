@@ -144,6 +144,16 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/control/PlayerTurn.gd"
 }, {
+"base": "Node2D",
+"class": "Projectile",
+"language": "GDScript",
+"path": "res://src/maps/effects/Projectile.gd"
+}, {
+"base": "AbilityEffect",
+"class": "ProjectileAttackEffect",
+"language": "GDScript",
+"path": "res://src/abilities/effects/ProjectileAttackEffect.gd"
+}, {
 "base": "Reference",
 "class": "RangeData",
 "language": "GDScript",
@@ -227,6 +237,8 @@ _global_script_class_icons={
 "Move": "",
 "Player": "",
 "PlayerTurn": "",
+"Projectile": "",
+"ProjectileAttackEffect": "",
 "RangeData": "",
 "StaminaBar": "",
 "Stats": "",

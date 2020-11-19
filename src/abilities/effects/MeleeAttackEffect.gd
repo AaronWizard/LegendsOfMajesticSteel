@@ -25,8 +25,7 @@ func _attacker_anim_trigger(trigger: String, source: Actor, target: Actor, \
 		dir: Vector2) -> void:
 	assert(trigger == Actor.AnimationNames.ATTACK_HIT_TRIGGER)
 
-	var attack_power := source.stats.attack
-	target.battle_stats.modify_stamina(-attack_power)
+	target.battle_stats.modify_stamina(-source.stats.attack)
 
 	if target.battle_stats.is_alive:
 		_connect_staimina_finished(target)
