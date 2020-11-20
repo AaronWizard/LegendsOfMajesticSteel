@@ -17,13 +17,6 @@ enum Faction { PLAYER, ENEMY }
 class AnimationNames:
 	const IDLE := "actor_idle"
 
-	const MOVE := {
-		Directions.NORTH: "actor_move_north",
-		Directions.EAST: "actor_move_east",
-		Directions.SOUTH: "actor_move_south",
-		Directions.WEST: "actor_move_west"
-	}
-
 	const ATTACK := {
 		Directions.NORTH: "actor_attack_north",
 		Directions.EAST: "actor_attack_east",
@@ -46,6 +39,8 @@ class AnimationNames:
 	}
 
 	const ATTACK_HIT_TRIGGER := "attack_hit"
+
+const _MOVE_TIME := 0.15
 
 export var cell_offset: Vector2 setget set_cell_offset, get_cell_offset
 
@@ -70,6 +65,7 @@ onready var _center := $Center as Position2D
 onready var _offset := $Center/Offset as Position2D
 
 onready var _anim := $AnimationPlayer as AnimationPlayer
+onready var _tween := $Tween as Tween
 
 onready var _sprite := $Center/Offset/Sprite as Sprite
 onready var _blood_splatter := $Center/BloodSplatter \
@@ -128,15 +124,30 @@ func move_step(target_cell: Vector2) -> void:
 
 	var origin_cell := get_cell()
 	var diff := target_cell - origin_cell
-	var move_anim: String = AnimationNames.MOVE[diff]
 
 	set_cell(target_cell)
 	set_cell_offset(-diff)
 
-	_anim.play(move_anim)
-	yield(_anim, "animation_finished")
-	_anim.play(AnimationNames.IDLE)
+	if diff.x < 0:
+		_sprite.flip_h = true
+	elif diff.x > 0:
+		_sprite.flip_h = false
+	# else change nothing
 
+	_anim.stop(true)
+	_sprite.frame = 0
+
+	# warning-ignore:return_value_discarded
+	_tween.interpolate_property(
+			self, "cell_offset",
+			get_cell_offset(), Vector2(), _MOVE_TIME,
+			Tween.TRANS_QUAD, Tween.EASE_OUT
+	)
+	# warning-ignore:return_value_discarded
+	_tween.start()
+	yield(_tween, "tween_all_completed")
+
+	_anim.play() # Play idle animation again
 	emit_signal("move_finished")
 
 
