@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://src/actors/Actor.gd" type="Script" id=1]
 [ext_resource path="res://resources/materials/dissolve_shadermaterial.tres" type="Material" id=2]
@@ -9,10 +9,6 @@
 [ext_resource path="res://resources/animations/actor_attack_north.tres" type="Animation" id=12]
 [ext_resource path="res://resources/animations/actor_attack_south.tres" type="Animation" id=13]
 [ext_resource path="res://src/ui/StaminaBar.tscn" type="PackedScene" id=14]
-[ext_resource path="res://resources/animations/actor_attack_react_west.tres" type="Animation" id=15]
-[ext_resource path="res://resources/animations/actor_attack_react_east.tres" type="Animation" id=16]
-[ext_resource path="res://resources/animations/actor_attack_react_north.tres" type="Animation" id=17]
-[ext_resource path="res://resources/animations/actor_attack_react_south.tres" type="Animation" id=18]
 [ext_resource path="res://src/maps/TargetCursor.tscn" type="PackedScene" id=19]
 [ext_resource path="res://resources/animations/actor_death_north.tres" type="Animation" id=20]
 [ext_resource path="res://resources/animations/actor_death_east.tres" type="Animation" id=21]
@@ -91,10 +87,6 @@ process_material = SubResource( 2 )
 autoplay = "actor_idle"
 anims/actor_attack_east = ExtResource( 4 )
 anims/actor_attack_north = ExtResource( 12 )
-anims/actor_attack_react_east = ExtResource( 16 )
-anims/actor_attack_react_north = ExtResource( 17 )
-anims/actor_attack_react_south = ExtResource( 18 )
-anims/actor_attack_react_west = ExtResource( 15 )
 anims/actor_attack_south = ExtResource( 13 )
 anims/actor_attack_west = ExtResource( 11 )
 anims/actor_death_east = ExtResource( 21 )

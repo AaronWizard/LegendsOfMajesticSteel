@@ -21,11 +21,12 @@ func start(target: Vector2, source_actor: Actor, map: Map) -> void:
 
 func _projectile_hit(target: Actor, source: Actor) \
 		-> void:
-	target.battle_stats.modify_stamina(-source.stats.attack)
+	var dir := source.cell.direction_to(target.cell).normalized()
 
+	target.battle_stats.modify_stamina(-source.stats.attack)
 	if target.battle_stats.is_alive:
-		target.play_anim(Actor.AnimationNames.REACT[Directions.NORTH])
-		yield(target, "animation_finished")
+		target.animate_hit(dir)
+		yield(target, "hit_reaction_finished")
 	else:
 		target.play_death_anim(Directions.NORTH)
 		yield(target, "died")

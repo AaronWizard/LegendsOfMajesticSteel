@@ -3,6 +3,7 @@ class_name Actor
 extends Node2D
 
 signal move_finished
+signal hit_reaction_finished
 
 signal animation_trigger(trigger)
 signal animation_finished(anim_name)
@@ -24,13 +25,6 @@ class AnimationNames:
 		Directions.WEST: "actor_attack_west"
 	}
 
-	const REACT := {
-		Directions.NORTH: "actor_attack_react_north",
-		Directions.EAST: "actor_attack_react_east",
-		Directions.SOUTH: "actor_attack_react_south",
-		Directions.WEST: "actor_attack_react_west"
-	}
-
 	const DEATH := {
 		Directions.NORTH: "actor_death_north",
 		Directions.EAST: "actor_death_east",
@@ -41,6 +35,15 @@ class AnimationNames:
 	const ATTACK_HIT_TRIGGER := "attack_hit"
 
 const _MOVE_TIME := 0.15
+
+const _HIT_REACT_DIST := 0.25
+
+const _HIT_REACT_TIME := 0.1
+const _HIT_RECOVER_TIME := 0.2
+
+const _WALK_FRAME := 0
+const _REACT_FRAME := 2
+const _ACTION_FRAME := 3
 
 export var cell_offset: Vector2 setget set_cell_offset, get_cell_offset
 
@@ -135,12 +138,12 @@ func move_step(target_cell: Vector2) -> void:
 	# else change nothing
 
 	_anim.stop(true)
-	_sprite.frame = 0
+	_sprite.frame = _WALK_FRAME
 
 	# warning-ignore:return_value_discarded
 	_tween.interpolate_property(
 			self, "cell_offset",
-			get_cell_offset(), Vector2(), _MOVE_TIME,
+			-diff, Vector2.ZERO, _MOVE_TIME,
 			Tween.TRANS_QUAD, Tween.EASE_OUT
 	)
 	# warning-ignore:return_value_discarded
@@ -149,6 +152,35 @@ func move_step(target_cell: Vector2) -> void:
 
 	_anim.play() # Play idle animation again
 	emit_signal("move_finished")
+
+
+func animate_hit(direction: Vector2) -> void:
+	assert(direction.is_normalized())
+
+	_anim.stop(true)
+	_sprite.frame = _REACT_FRAME
+
+	var end := direction * _HIT_REACT_DIST
+
+	# warning-ignore:return_value_discarded
+	_tween.interpolate_property(
+			self, "cell_offset",
+			Vector2.ZERO, end, _HIT_REACT_TIME,
+			Tween.TRANS_QUAD, Tween.EASE_IN_OUT
+	)
+	# warning-ignore:return_value_discarded
+	_tween.interpolate_property(
+			self, "cell_offset",
+			end, Vector2.ZERO, _HIT_RECOVER_TIME,
+			Tween.TRANS_BACK, Tween.EASE_OUT,
+			_HIT_REACT_TIME
+	)
+	# warning-ignore:return_value_discarded
+	_tween.start()
+	yield(_tween, "tween_all_completed")
+
+	_anim.play() # Play idle animation again
+	emit_signal("hit_reaction_finished")
 
 
 func play_death_anim(direction: Vector2) -> void:

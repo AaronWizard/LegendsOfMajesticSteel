@@ -30,8 +30,8 @@ func _attacker_anim_trigger(trigger: String, source: Actor, target: Actor, \
 	if target.battle_stats.is_alive:
 		_connect_staimina_finished(target)
 
-		_connect_anim_finished(target)
-		target.play_anim(Actor.AnimationNames.REACT[dir])
+		_connect_react_finished(target)
+		target.animate_hit(dir)
 	else:
 		_connect_died(target)
 		target.play_death_anim(dir)
@@ -48,6 +48,13 @@ func _connect_staimina_finished(actor: Actor) -> void:
 	_running_anims += 1
 	# warning-ignore:return_value_discarded
 	actor.connect("stamina_animation_finished", self,
+			"_other_anim_finished", [], CONNECT_ONESHOT)
+
+
+func _connect_react_finished(actor: Actor) -> void:
+	_running_anims += 1
+	# warning-ignore:return_value_discarded
+	actor.connect("hit_reaction_finished", self,
 			"_other_anim_finished", [], CONNECT_ONESHOT)
 
 
