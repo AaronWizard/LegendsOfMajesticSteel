@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://src/actors/Actor.gd" type="Script" id=1]
 [ext_resource path="res://resources/materials/dissolve_shadermaterial.tres" type="Material" id=2]
@@ -10,10 +10,6 @@
 [ext_resource path="res://resources/animations/actor_attack_south.tres" type="Animation" id=13]
 [ext_resource path="res://src/ui/StaminaBar.tscn" type="PackedScene" id=14]
 [ext_resource path="res://src/maps/TargetCursor.tscn" type="PackedScene" id=19]
-[ext_resource path="res://resources/animations/actor_death_north.tres" type="Animation" id=20]
-[ext_resource path="res://resources/animations/actor_death_east.tres" type="Animation" id=21]
-[ext_resource path="res://resources/animations/actor_death_south.tres" type="Animation" id=22]
-[ext_resource path="res://resources/animations/actor_death_west.tres" type="Animation" id=23]
 [ext_resource path="res://assets/graphics/ui/icons/wait.png" type="Texture" id=24]
 [ext_resource path="res://assets/graphics/actors/fighter.png" type="Texture" id=25]
 
@@ -71,7 +67,6 @@ __meta__ = {
 visible = false
 position = Vector2( 8, 8 )
 frames = SubResource( 1 )
-frame = 1
 playing = true
 
 [node name="BloodSplatter" type="Particles2D" parent="Center"]
@@ -89,10 +84,6 @@ anims/actor_attack_east = ExtResource( 4 )
 anims/actor_attack_north = ExtResource( 12 )
 anims/actor_attack_south = ExtResource( 13 )
 anims/actor_attack_west = ExtResource( 11 )
-anims/actor_death_east = ExtResource( 21 )
-anims/actor_death_north = ExtResource( 20 )
-anims/actor_death_south = ExtResource( 22 )
-anims/actor_death_west = ExtResource( 23 )
 anims/actor_idle = ExtResource( 10 )
 
 [node name="Tween" type="Tween" parent="."]

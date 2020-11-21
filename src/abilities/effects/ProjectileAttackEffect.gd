@@ -28,7 +28,7 @@ func _projectile_hit(target: Actor, source: Actor) \
 		target.animate_hit(dir)
 		yield(target, "hit_reaction_finished")
 	else:
-		target.play_death_anim(Directions.NORTH)
+		target.animate_death(dir)
 		yield(target, "died")
 
 	emit_signal("finished")

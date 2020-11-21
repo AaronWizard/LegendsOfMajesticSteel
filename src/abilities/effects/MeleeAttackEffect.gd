@@ -34,7 +34,7 @@ func _attacker_anim_trigger(trigger: String, source: Actor, target: Actor, \
 		target.animate_hit(dir)
 	else:
 		_connect_died(target)
-		target.play_death_anim(dir)
+		target.animate_death(dir)
 
 
 func _connect_anim_finished(actor: Actor) -> void:

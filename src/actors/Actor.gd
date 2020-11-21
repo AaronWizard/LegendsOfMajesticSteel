@@ -25,13 +25,6 @@ class AnimationNames:
 		Directions.WEST: "actor_attack_west"
 	}
 
-	const DEATH := {
-		Directions.NORTH: "actor_death_north",
-		Directions.EAST: "actor_death_east",
-		Directions.SOUTH: "actor_death_south",
-		Directions.WEST: "actor_death_west"
-	}
-
 	const ATTACK_HIT_TRIGGER := "attack_hit"
 
 const _MOVE_TIME := 0.15
@@ -40,6 +33,9 @@ const _HIT_REACT_DIST := 0.25
 
 const _HIT_REACT_TIME := 0.1
 const _HIT_RECOVER_TIME := 0.2
+
+const _DEATH_DIST := 0.5
+const _DEATH_TIME := 0.3
 
 const _WALK_FRAME := 0
 const _REACT_FRAME := 2
@@ -183,12 +179,31 @@ func animate_hit(direction: Vector2) -> void:
 	emit_signal("hit_reaction_finished")
 
 
-func play_death_anim(direction: Vector2) -> void:
+func animate_death(direction: Vector2) -> void:
+	assert(direction.is_normalized())
+
 	emit_signal("dying")
 
-	var anim_name := AnimationNames.DEATH[direction] as String
-	_anim.play(anim_name)
-	yield(_anim, "animation_finished")
+	_blood_splatter.emitting = true
+	_anim.stop(true)
+	_sprite.frame = _REACT_FRAME
+
+	var end := direction * _DEATH_DIST
+
+	# warning-ignore:return_value_discarded
+	_tween.interpolate_property(
+			self, "cell_offset",
+			Vector2.ZERO, end, _DEATH_TIME,
+			Tween.TRANS_EXPO, Tween.EASE_OUT
+	)
+	# warning-ignore:return_value_discarded
+	_tween.interpolate_property(
+			_sprite.material, "shader_param/dissolve",
+			0, 1, _DEATH_TIME
+	)
+	# warning-ignore:return_value_discarded
+	_tween.start()
+	yield(_tween, "tween_all_completed")
 
 	emit_signal("died")
 
