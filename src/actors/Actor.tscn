@@ -1,13 +1,9 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://src/actors/Actor.gd" type="Script" id=1]
 [ext_resource path="res://resources/materials/dissolve_shadermaterial.tres" type="Material" id=2]
 [ext_resource path="res://src/actors/BattleStats.gd" type="Script" id=3]
-[ext_resource path="res://resources/animations/actor_attack_east.tres" type="Animation" id=4]
 [ext_resource path="res://resources/animations/actor_idle.tres" type="Animation" id=10]
-[ext_resource path="res://resources/animations/actor_attack_west.tres" type="Animation" id=11]
-[ext_resource path="res://resources/animations/actor_attack_north.tres" type="Animation" id=12]
-[ext_resource path="res://resources/animations/actor_attack_south.tres" type="Animation" id=13]
 [ext_resource path="res://src/ui/StaminaBar.tscn" type="PackedScene" id=14]
 [ext_resource path="res://src/maps/TargetCursor.tscn" type="PackedScene" id=19]
 [ext_resource path="res://assets/graphics/ui/icons/wait.png" type="Texture" id=24]
@@ -80,10 +76,6 @@ process_material = SubResource( 2 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 autoplay = "actor_idle"
-anims/actor_attack_east = ExtResource( 4 )
-anims/actor_attack_north = ExtResource( 12 )
-anims/actor_attack_south = ExtResource( 13 )
-anims/actor_attack_west = ExtResource( 11 )
 anims/actor_idle = ExtResource( 10 )
 
 [node name="Tween" type="Tween" parent="."]

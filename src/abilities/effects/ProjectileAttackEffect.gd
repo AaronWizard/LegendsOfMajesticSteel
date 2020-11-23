@@ -9,6 +9,10 @@ var _projectile: Projectile
 func start(target: Vector2, source_actor: Actor, map: Map) -> void:
 	var target_actor := map.get_actor_on_cell(target)
 
+	var dir := source_actor.cell.direction_to(target_actor.cell)
+	source_actor.animate_attack(dir, true)
+	yield(source_actor, "attack_hit")
+
 	_projectile = projectile_scene.instance() as Projectile
 	_projectile.start_cell = source_actor.cell
 	_projectile.end_cell = target

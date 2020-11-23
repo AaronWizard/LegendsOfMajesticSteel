@@ -3,10 +3,9 @@ class_name Actor
 extends Node2D
 
 signal move_finished
+signal attack_hit
+signal attack_finished
 signal hit_reaction_finished
-
-signal animation_trigger(trigger)
-signal animation_finished(anim_name)
 
 signal stamina_animation_finished
 
@@ -15,19 +14,16 @@ signal died
 
 enum Faction { PLAYER, ENEMY }
 
-class AnimationNames:
-	const IDLE := "actor_idle"
-
-	const ATTACK := {
-		Directions.NORTH: "actor_attack_north",
-		Directions.EAST: "actor_attack_east",
-		Directions.SOUTH: "actor_attack_south",
-		Directions.WEST: "actor_attack_west"
-	}
-
-	const ATTACK_HIT_TRIGGER := "attack_hit"
-
 const _MOVE_TIME := 0.15
+
+const _ATTACK_PREP_DIST := 0.5
+const _ATTACK_HIT_DIST_REDUCED := 0.5
+const _ATTACK_HIT_DIST := 0.75
+
+const _ATTACK_PREP_TIME := 0.15
+const _ATTACK_HIT_TIME := 0.1
+const _ATTACK_PAUSE_TIME := 0.05
+const _ATTACK_RECOVER_TIME := 0.1
 
 const _HIT_REACT_DIST := 0.25
 
@@ -127,11 +123,7 @@ func move_step(target_cell: Vector2) -> void:
 	set_cell(target_cell)
 	set_cell_offset(-diff)
 
-	if diff.x < 0:
-		_sprite.flip_h = true
-	elif diff.x > 0:
-		_sprite.flip_h = false
-	# else change nothing
+	_set_facing(diff)
 
 	_anim.stop(true)
 	_sprite.frame = _WALK_FRAME
@@ -148,6 +140,54 @@ func move_step(target_cell: Vector2) -> void:
 
 	_anim.play() # Play idle animation again
 	emit_signal("move_finished")
+
+
+func animate_attack(direction: Vector2, reduced_lunge := false) -> void:
+	assert(direction.is_normalized())
+
+	_anim.stop(true)
+	_sprite.frame = _ACTION_FRAME
+
+	_set_facing(direction)
+
+	var prep_pos := -direction * _ATTACK_PREP_DIST
+	var attack_pos: Vector2
+	if reduced_lunge:
+		attack_pos = direction * _ATTACK_HIT_DIST_REDUCED
+	else:
+		attack_pos = direction * _ATTACK_HIT_DIST
+
+	# warning-ignore:return_value_discarded
+	_tween.interpolate_property(
+			self, "cell_offset",
+			Vector2.ZERO, prep_pos, _ATTACK_PREP_TIME,
+			Tween.TRANS_QUAD, Tween.EASE_OUT
+	)
+	# warning-ignore:return_value_discarded
+	_tween.interpolate_property(
+			self, "cell_offset",
+			prep_pos, attack_pos, _ATTACK_HIT_TIME,
+			Tween.TRANS_QUAD, Tween.EASE_IN,
+			_ATTACK_PREP_TIME
+	)
+	# warning-ignore:return_value_discarded
+	_tween.start()
+	yield(_tween, "tween_all_completed")
+	emit_signal("attack_hit")
+
+	# warning-ignore:return_value_discarded
+	_tween.interpolate_property(
+			self, "cell_offset",
+			attack_pos, Vector2.ZERO, _ATTACK_RECOVER_TIME,
+			Tween.TRANS_QUAD, Tween.EASE_OUT,
+			_ATTACK_PAUSE_TIME
+	)
+	# warning-ignore:return_value_discarded
+	_tween.start()
+	yield(_tween, "tween_all_completed")
+
+	_anim.play() # Play idle animation again
+	emit_signal("attack_finished")
 
 
 func animate_hit(direction: Vector2) -> void:
@@ -208,15 +248,6 @@ func animate_death(direction: Vector2) -> void:
 	emit_signal("died")
 
 
-func play_anim(anim_name: String) -> void:
-	assert(anim_name != AnimationNames.IDLE)
-
-	_anim.play(anim_name)
-	yield(_anim, "animation_finished")
-	_anim.play("actor_idle")
-	emit_signal("animation_finished", anim_name)
-
-
 func set_stat_resource(new_value: Resource) -> void:
 	stats = new_value as Stats
 	if stats and _sprite:
@@ -238,6 +269,14 @@ func get_target_visible() -> bool:
 func start_battle() -> void:
 	battle_stats.start_battle(stats.max_stamina)
 	_stamina_bar.reset()
+
+
+func _set_facing(direction: Vector2) -> void:
+	if direction.x < 0:
+		_sprite.flip_h = true
+	elif direction.x > 0:
+		_sprite.flip_h = false
+	# else change nothing
 
 
 func _on_BattleStats_stamina_changed(_old_stamina: int, new_stamina: int) \
@@ -263,7 +302,3 @@ func _on_BattleStats_round_started() -> void:
 func _on_BattleStats_turn_taken() -> void:
 	if battle_stats.round_finished:
 		_wait_icon.visible = true
-
-
-func _animation_trigger(trigger: String) -> void:
-	emit_signal("animation_trigger", trigger)
