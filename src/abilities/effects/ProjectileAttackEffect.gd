@@ -4,35 +4,36 @@ extends AbilityEffect
 export var projectile_scene: PackedScene
 export var rotate_projectile := false
 
-var _projectile: Projectile
+var _waiter := SignalWaiter.new()
+
 
 func start(target: Vector2, source_actor: Actor, map: Map) -> void:
 	var target_actor := map.get_actor_on_cell(target)
+
+	_waiter.wait_for_signal(source_actor, "attack_finished")
 
 	var dir := source_actor.cell.direction_to(target_actor.cell)
 	source_actor.animate_attack(dir, true)
 	yield(source_actor, "attack_hit")
 
-	_projectile = projectile_scene.instance() as Projectile
-	_projectile.start_cell = source_actor.cell
-	_projectile.end_cell = target
-	_projectile.rotate_sprite = rotate_projectile
-	# warning-ignore:return_value_discarded
-	_projectile.connect("finished", self, "_projectile_hit",
-			[target_actor, source_actor])
-	map.add_effect(_projectile)
+	var projectile := projectile_scene.instance() as Projectile
+	projectile.start_cell = source_actor.cell
+	projectile.end_cell = target
+	projectile.rotate_sprite = rotate_projectile
+	map.add_effect(projectile)
 
+	yield(projectile, "finished")
 
-func _projectile_hit(target: Actor, source: Actor) \
-		-> void:
-	var dir := source.cell.direction_to(target.cell).normalized()
-
-	target.battle_stats.modify_stamina(-source.stats.attack)
-	if target.battle_stats.is_alive:
-		target.animate_hit(dir)
-		yield(target, "hit_reaction_finished")
+	target_actor.battle_stats.modify_stamina(-source_actor.stats.attack)
+	if target_actor.battle_stats.is_alive:
+		_waiter.wait_for_signal(target_actor, "stamina_animation_finished")
+		_waiter.wait_for_signal(target_actor, "hit_reaction_finished")
+		target_actor.animate_hit(dir)
 	else:
-		target.animate_death(dir)
-		yield(target, "died")
+		target_actor.animate_death(dir)
+		yield(target_actor, "died")
+
+	if _waiter.waiting:
+		yield(_waiter, "finished")
 
 	emit_signal("finished")
