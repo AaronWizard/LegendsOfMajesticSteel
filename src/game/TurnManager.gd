@@ -1,6 +1,14 @@
 class_name TurnManager
 extends Node
 
+signal battle_started(turn_order)
+signal turn_started(actor, range_data)
+signal action_chosen
+signal action_starting(actor, show_map_highlights)
+signal turn_ended
+
+signal actor_died(turn_index)
+
 var running := false
 
 var _map: Map
@@ -28,10 +36,7 @@ func _start(map: Map, interface: BattleInterface) -> void:
 	# warning-ignore:return_value_discarded
 	_map.connect("actor_dying", self, "_on_actor_dying")
 
-	_interface.current_map = map
-
 	_start_battle()
-	_interface_cleanup()
 
 	running = true
 
@@ -54,37 +59,14 @@ func _start_battle() -> void:
 
 	randomize()
 	_turn_order.shuffle()
-	_interface.gui.turn_queue.set_queue(_turn_order)
+
+	emit_signal("battle_started", _turn_order)
 
 
 func _start_round() -> void:
 	for a in _map.get_actors():
 		var actor := a as Actor
 		actor.battle_stats.start_round()
-
-
-func _turn_started(actor: Actor, range_data: RangeData) -> void:
-	_interface.map_highlights.moves_visible = true
-	_interface.map_highlights.set_moves(range_data.visible_move_range.keys())
-	_interface.camera.follow_actor(actor)
-
-
-func _turn_ended() -> void:
-	_interface.map_highlights.moves_visible = false
-
-	_interface.gui.turn_queue.next_turn()
-	_turn_index = (_turn_index + 1) % _turn_order.size()
-
-
-func _interface_cleanup() -> void:
-	# Make sure these are true after a controller is run
-	_interface.gui.buttons_visible = false
-	_interface.mouse.dragging_enabled = false
-
-
-func _action_started(actor: Actor, show_map_highlights: bool) -> void:
-	_interface.camera.follow_actor(actor)
-	_interface.map_highlights.moves_visible = show_map_highlights
 
 
 func _end() -> void:
@@ -130,12 +112,10 @@ func _on_actor_picked(actor: Actor) -> void:
 	var controller := _get_actor_controller(actor)
 
 	if controller:
-		_interface.current_actor = actor
-
 		actor.battle_stats.start_turn()
 		var range_data := RangeData.new(actor, _map)
 
-		_turn_started(actor, range_data)
+		emit_signal("turn_started", actor, range_data)
 
 		if controller.pauses:
 			yield(get_tree().create_timer(0.3), "timeout")
@@ -145,10 +125,11 @@ func _on_actor_picked(actor: Actor) -> void:
 			controller.call_deferred("determine_action",
 					actor, _map, range_data, _interface)
 			var action := yield(controller, "determined_action") as Action
-			_interface_cleanup()
+			emit_signal("action_chosen")
 
 			if action:
-				_action_started(actor, action.show_map_highlights())
+				emit_signal("action_starting", actor,
+						action.show_map_highlights())
 				action.start()
 				yield(action, "finished")
 			else:
@@ -157,9 +138,8 @@ func _on_actor_picked(actor: Actor) -> void:
 
 		yield(get_tree().create_timer(0.2), "timeout")
 
-		_turn_ended()
-
-		_interface.current_actor = null
+		_turn_index = (_turn_index + 1) % _turn_order.size()
+		emit_signal("turn_ended")
 
 	call_deferred("_take_turn")
 
@@ -187,6 +167,6 @@ func _on_actor_dying(actor: Actor) -> void:
 
 	if index > -1:
 		_turn_order.remove(index)
-		_interface.gui.turn_queue.remove_icon(index)
+		emit_signal("actor_died", index)
 		if index < _turn_index:
 			_turn_index -= 1

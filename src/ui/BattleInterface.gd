@@ -1,13 +1,18 @@
 class_name BattleInterface
 extends Node
 
-var current_map: Map = null
+var current_map: Map = null setget set_current_map
 var current_actor: Actor = null setget set_current_actor
 
 onready var map_highlights := $MapHighlights as MapHighlights
 onready var camera := $GameCamera as GameCamera
 onready var mouse := $MouseControl as MouseControl
 onready var gui := $BattleGUI as BattleGUI
+
+
+func set_current_map(value: Map) -> void:
+	current_map = value
+	camera.set_bounds(current_map.get_pixel_rect())
 
 
 func set_current_actor(value: Actor) -> void:
