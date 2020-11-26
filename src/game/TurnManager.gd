@@ -9,8 +9,8 @@ signal turn_ended
 
 signal actor_died(turn_index)
 
-const _PRE_ACTION_WAIT_TIME := 0.3
-const _POST_ACTION_WAIT_TIME := 0.2
+const _PRE_TURN_WAIT_TIME := 0.3
+const _POST_TURN_WAIT_TIME := 0.2
 
 var running := false
 
@@ -121,7 +121,7 @@ func _on_actor_picked(actor: Actor) -> void:
 		emit_signal("turn_started", actor, range_data)
 
 		if controller.pauses:
-			yield(get_tree().create_timer(_PRE_ACTION_WAIT_TIME), "timeout")
+			yield(get_tree().create_timer(_PRE_TURN_WAIT_TIME), "timeout")
 
 		while actor.battle_stats.is_alive \
 				and not actor.battle_stats.turn_finished:
@@ -139,7 +139,7 @@ func _on_actor_picked(actor: Actor) -> void:
 				# Action is a wait
 				actor.battle_stats.take_turn()
 
-		yield(get_tree().create_timer(_POST_ACTION_WAIT_TIME), "timeout")
+		yield(get_tree().create_timer(_POST_TURN_WAIT_TIME), "timeout")
 
 		_turn_index = (_turn_index + 1) % _turn_order.size()
 		emit_signal("turn_ended")
