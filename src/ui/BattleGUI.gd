@@ -12,11 +12,9 @@ var current_actor: Actor = null setget set_current_actor
 
 var current_ability: Ability = null setget set_current_ability
 
-onready var turn_queue := $TopMargin/TopContainer/TurnQueuePanel \
-		as TurnQueuePanel
+onready var turn_queue := $TurnQueuePanel as TurnQueuePanel
 
-onready var _current_actor_status := $TopMargin/TopContainer/ \
-		CurrentActorStatus as ActorStatusPanel
+onready var _current_actor_status := $CurrentActorStatus as ActorStatusPanel
 
 onready var _all_buttons := $Buttons as Container
 onready var _ability_buttons := $Buttons/Abilities as Container

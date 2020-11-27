@@ -57,16 +57,32 @@ func _resize_panel() -> void:
 
 		_panel.rect_size = Vector2.ZERO
 
+	_panel.rect_position.x = _panel_pos()
+
+
+func _panel_pos() -> float:
+	var diff := rect_size.x - _panel.rect_size.x
+	return diff / 2
+
 
 func _animate_resize() -> void:
 	# warning-ignore:return_value_discarded
 	_tween.stop_all()
 
+	var old_pos := _panel.rect_position
 	var old_size := _panel.rect_size
+
 	_resize_panel()
+
+	var new_pos := _panel.rect_position
 	var new_size := _panel.rect_size
 
+	_panel.rect_position = old_pos
 	_panel.rect_size = old_size
+
+	# warning-ignore:return_value_discarded
+	_tween.interpolate_property(_panel, "rect_position",
+			old_pos, new_pos, TurnQueue.ANIM_TIME)
 	# warning-ignore:return_value_discarded
 	_tween.interpolate_property(_panel, "rect_size",
 			old_size, new_size, TurnQueue.ANIM_TIME)
