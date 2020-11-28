@@ -18,5 +18,6 @@ start_map_file = ExtResource( 3 )
 [connection signal="action_starting" from="TurnManager" to="." method="_on_TurnManager_action_starting"]
 [connection signal="actor_died" from="TurnManager" to="." method="_on_TurnManager_actor_died"]
 [connection signal="battle_started" from="TurnManager" to="." method="_on_TurnManager_battle_started"]
+[connection signal="player_waiting_for_input" from="TurnManager" to="." method="_on_TurnManager_player_waiting_for_input"]
 [connection signal="turn_ended" from="TurnManager" to="." method="_on_TurnManager_turn_ended"]
 [connection signal="turn_started" from="TurnManager" to="." method="_on_TurnManager_turn_started"]

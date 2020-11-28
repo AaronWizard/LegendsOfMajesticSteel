@@ -7,7 +7,7 @@ var ability_source_cells := {} # Set; keys are cells
 # Keys are cells
 # Values are dictionaries
 #		keys are indicies to actor ability, values are TargetingData
-var _ability_data := {}
+var _targetting_data := {}
 
 var _walk_grid := AStar2D.new()
 
@@ -35,16 +35,17 @@ func get_walk_path(start: Vector2, end: Vector2) -> Array:
 	return result
 
 
-func get_abilities_at_cell(cell: Vector2) -> Array:
+func get_valid_abilities_at_cell(cell: Vector2) -> Array:
 	var result := []
-	if _ability_data.has(cell):
-		var data := _ability_data[cell] as Dictionary
+	if _targetting_data.has(cell):
+		var data := _targetting_data[cell] as Dictionary
 		result = data.keys()
 	return result
 
 
-func get_targeting_data(cell: Vector2, ability_index: int) -> Ability.TargetingData:
-	var data := _ability_data[cell] as Dictionary
+func get_targeting_data(cell: Vector2, ability_index: int) \
+		-> Ability.TargetingData:
+	var data := _targetting_data[cell] as Dictionary
 	var result := data[ability_index] as Ability.TargetingData
 	return result
 
@@ -96,17 +97,20 @@ func _init_valid_ability_sources(actor: Actor, map: Map) -> void:
 		for i in range(actor.stats.abilities.size()):
 			var index := i as int
 			var ability := actor.stats.abilities[index] as Ability
-			var targeting_data := ability.get_targeting_data(source_cell, actor, map)
-			assert(targeting_data.source_cell == source_cell)
+			var targeting_data := ability.get_targeting_data(
+					source_cell, actor, map)
+
+			_set_targetting_data(targeting_data, index)
+
 			if not targeting_data.valid_targets.empty():
 				ability_source_cells[source_cell] = true
-				_set_valid_ability_source(targeting_data, index)
 
-func _set_valid_ability_source(targeting_data: Ability.TargetingData,
+
+func _set_targetting_data(targeting_data: Ability.TargetingData,
 		ability_index: int) -> void:
-	if not _ability_data.has(targeting_data.source_cell):
-		_ability_data[targeting_data.source_cell] = {}
-	var data := _ability_data[targeting_data.source_cell] as Dictionary
+	if not _targetting_data.has(targeting_data.source_cell):
+		_targetting_data[targeting_data.source_cell] = {}
+	var data := _targetting_data[targeting_data.source_cell] as Dictionary
 
 	assert(not data.has(ability_index))
 	data[ability_index] = targeting_data

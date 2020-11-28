@@ -15,8 +15,9 @@ func get_pauses() -> bool:
 	return true
 
 
-func determine_action(actor: Actor, map: Map, range_data: RangeData, \
-		_interface: BattleInterface) -> void:
+func determine_action(actor: Actor, map: Map) -> void:
+	var range_data := RangeData.new(actor, map)
+
 	if not range_data.ability_source_cells.empty():
 		_moved = false
 
@@ -65,7 +66,7 @@ func _random_path(start_cell: Vector2, range_data: RangeData, cells: Array) \
 
 func _pick_random_ability(actor: Actor, map: Map, range_data: RangeData) \
 		-> AbilityAction:
-	var ability_indicies := range_data.get_abilities_at_cell(actor.cell)
+	var ability_indicies := range_data.get_valid_abilities_at_cell(actor.cell)
 	var ability_index = _random.rand_array_element(ability_indicies) as int
 
 	var ability := actor.stats.abilities[ability_index] as Ability

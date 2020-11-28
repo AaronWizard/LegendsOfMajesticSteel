@@ -1,7 +1,7 @@
 class_name BattleGUI
 extends CanvasLayer
 
-signal ability_selected(ability)
+signal ability_selected(ability_index)
 signal ability_cleared
 
 signal wait_started
@@ -10,7 +10,7 @@ var buttons_visible := false setget set_buttons_visible
 
 var current_actor: Actor = null setget set_current_actor
 
-var current_ability: Ability = null setget set_current_ability
+var current_ability_index: int = -1 setget set_current_ability_index
 
 onready var turn_queue := $TurnQueuePanel as TurnQueuePanel
 
@@ -40,14 +40,14 @@ func set_current_actor(value: Actor) -> void:
 		_create_ability_buttons()
 
 
-func set_current_ability(value: Ability) -> void:
-	current_ability = value
+func set_current_ability_index(value: int) -> void:
+	current_ability_index = value
 
-	if current_ability:
+	if current_ability_index > -1:
 		_ability_buttons.visible = false
 		_wait_button.visible = false
 		_ability_cancel_button.visible = true
-		emit_signal("ability_selected", current_ability)
+		emit_signal("ability_selected", current_ability_index)
 	else:
 		_ability_buttons.visible = true
 		_wait_button.visible = true
@@ -56,12 +56,14 @@ func set_current_ability(value: Ability) -> void:
 
 
 func _create_ability_buttons() -> void:
-	for a in current_actor.stats.abilities:
-		var ability := a as Ability
+	for i in range(current_actor.stats.abilities.size()):
+		var index := i as int
+		var ability := current_actor.stats.abilities[index] as Ability
+
 		var button := Button.new()
 		button.text = ability.name
 		# warning-ignore:return_value_discarded
-		button.connect("pressed", self, "_on_ability_pressed", [ability])
+		button.connect("pressed", self, "_on_ability_pressed", [index])
 		_ability_buttons.add_child(button)
 
 
@@ -73,12 +75,12 @@ func _clear_ability_buttons() -> void:
 		button.queue_free()
 
 
-func _on_ability_pressed(ability: Ability) -> void:
-	set_current_ability(ability)
+func _on_ability_pressed(index: int) -> void:
+	set_current_ability_index(index)
 
 
 func _on_AbilityCancel_pressed() -> void:
-	set_current_ability(null)
+	set_current_ability_index(-1)
 
 
 func _on_Wait_pressed() -> void:

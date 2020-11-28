@@ -22,3 +22,4 @@ script = ExtResource( 4 )
 script = ExtResource( 5 )
 [connection signal="actor_picked" from="PlayerTurn" to="." method="_on_actor_picked"]
 [connection signal="actor_picked" from="AITurn" to="." method="_on_actor_picked"]
+[connection signal="waiting_for_input" from="Player" to="." method="_on_Player_waiting_for_input"]

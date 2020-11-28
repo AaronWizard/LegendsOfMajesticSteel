@@ -9,6 +9,8 @@ signal turn_ended
 
 signal actor_died(turn_index)
 
+signal player_waiting_for_input(player, actor, map)
+
 const _PRE_TURN_WAIT_TIME := 0.3
 const _POST_TURN_WAIT_TIME := 0.2
 
@@ -125,8 +127,7 @@ func _on_actor_picked(actor: Actor) -> void:
 
 		while actor.battle_stats.is_alive \
 				and not actor.battle_stats.turn_finished:
-			controller.call_deferred("determine_action",
-					actor, _map, range_data, _interface)
+			controller.call_deferred("determine_action", actor, _map)
 			var action := yield(controller, "determined_action") as Action
 			emit_signal("action_chosen")
 
@@ -173,3 +174,8 @@ func _on_actor_dying(actor: Actor) -> void:
 		emit_signal("actor_died", index)
 		if index < _turn_index:
 			_turn_index -= 1
+
+
+func _on_Player_waiting_for_input(player: Player, actor: Actor, map: Map) \
+		-> void:
+	emit_signal("player_waiting_for_input", player, actor, map)

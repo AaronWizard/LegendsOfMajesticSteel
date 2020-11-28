@@ -68,3 +68,8 @@ func _on_TurnManager_actor_died(turn_index: int) -> void:
 func _interface_lock() -> void:
 	_interface.gui.buttons_visible = false
 	_interface.mouse.dragging_enabled = false
+
+
+func _on_TurnManager_player_waiting_for_input(
+		player: Player, _actor: Actor, _map: Map) -> void:
+	_interface.player = player
