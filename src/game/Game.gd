@@ -10,7 +10,7 @@ func _ready() -> void:
 	if start_map_file:
 		load_map(start_map_file)
 
-	_turn_manager.start(get_current_map(), _interface)
+	_turn_manager.start(get_current_map())
 
 
 func get_current_map() -> Map:
@@ -70,6 +70,11 @@ func _interface_lock() -> void:
 	_interface.mouse.dragging_enabled = false
 
 
+func _on_TurnManager_player_turn_waiting_for_input( \
+		player_turn: PlayerTurn, actors: Array) -> void:
+	_interface.start_player_turn(player_turn, actors)
+
+
 func _on_TurnManager_player_waiting_for_input(
 		player: Player, _actor: Actor, _map: Map) -> void:
-	_interface.player = player
+	_interface.start_player(player)

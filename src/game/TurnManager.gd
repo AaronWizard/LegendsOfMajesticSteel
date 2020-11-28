@@ -9,6 +9,7 @@ signal turn_ended
 
 signal actor_died(turn_index)
 
+signal player_turn_waiting_for_input(player_turn, actors)
 signal player_waiting_for_input(player, actor, map)
 
 const _PRE_TURN_WAIT_TIME := 0.3
@@ -17,7 +18,6 @@ const _POST_TURN_WAIT_TIME := 0.2
 var running := false
 
 var _map: Map
-var _interface: BattleInterface
 
 var _turn_order := []
 var _turn_index := 0
@@ -29,14 +29,13 @@ onready var _player := $Player as ActorController
 onready var _ai := $AI as ActorController
 
 
-func start(map: Map, interface: BattleInterface) -> void:
-	_start(map, interface)
+func start(map: Map) -> void:
+	_start(map)
 	call_deferred("_take_turn")
 
 
-func _start(map: Map, interface: BattleInterface) -> void:
+func _start(map: Map) -> void:
 	_map = map
-	_interface = interface
 
 	# warning-ignore:return_value_discarded
 	_map.connect("actor_dying", self, "_on_actor_dying")
@@ -77,7 +76,6 @@ func _start_round() -> void:
 func _end() -> void:
 	_map.disconnect("actor_dying", self, "_on_actor_dying")
 	_map = null
-	_interface = null
 
 
 func _get_next_actor() -> void:
@@ -96,7 +94,7 @@ func _get_next_actor() -> void:
 				controller = _ai_turn
 			_:
 				assert(false)
-		controller.pick_actor(_get_active_actors(faction), _interface)
+		controller.pick_actor(_get_active_actors(faction))
 	else:
 		var actor := actors[0] as Actor
 		_on_actor_picked(actor)
@@ -174,6 +172,11 @@ func _on_actor_dying(actor: Actor) -> void:
 		emit_signal("actor_died", index)
 		if index < _turn_index:
 			_turn_index -= 1
+
+
+func _on_PlayerTurn_waiting_for_input(player_turn: PlayerTurn, actors: Array) \
+		-> void:
+	emit_signal("player_turn_waiting_for_input", player_turn, actors)
 
 
 func _on_Player_waiting_for_input(player: Player, actor: Actor, map: Map) \
