@@ -86,14 +86,7 @@ func _get_next_actor() -> void:
 
 	var actors := _get_active_actors(faction)
 	if actors.size() > 1:
-		var controller: TurnController = null
-		match faction:
-			Actor.Faction.PLAYER:
-				controller = _player_turn
-			Actor.Faction.ENEMY:
-				controller = _ai_turn
-			_:
-				assert(false)
+		var controller := _get_actor_turn_controller(faction)
 		controller.pick_actor(_get_active_actors(faction))
 	else:
 		var actor := actors[0] as Actor
@@ -142,6 +135,20 @@ func _on_actor_picked(actor: Actor) -> void:
 		emit_signal("turn_ended")
 
 	call_deferred("_take_turn")
+
+
+func _get_actor_turn_controller(faction: int) -> TurnController:
+	var result: TurnController = null
+
+	match faction:
+		Actor.Faction.PLAYER:
+			result = _player_turn
+		Actor.Faction.ENEMY:
+			result = _ai_turn
+		_:
+			assert(false)
+
+	return result
 
 
 func _get_actor_controller(actor: Actor) -> ActorController:
