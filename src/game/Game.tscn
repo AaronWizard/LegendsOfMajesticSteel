@@ -14,7 +14,6 @@ start_map_file = ExtResource( 3 )
 [node name="TurnManager" parent="." instance=ExtResource( 4 )]
 
 [node name="BattleInterface" parent="." instance=ExtResource( 2 )]
-[connection signal="action_chosen" from="TurnManager" to="." method="_on_TurnManager_action_chosen"]
 [connection signal="action_starting" from="TurnManager" to="." method="_on_TurnManager_action_starting"]
 [connection signal="actor_died" from="TurnManager" to="." method="_on_TurnManager_actor_died"]
 [connection signal="battle_started" from="TurnManager" to="." method="_on_TurnManager_battle_started"]

@@ -2,9 +2,9 @@ class_name TurnManager
 extends Node
 
 signal battle_started(turn_order)
+
 signal turn_started(actor, range_data)
-signal action_chosen
-signal action_starting(actor, show_map_highlights)
+signal action_starting(action)
 signal turn_ended
 
 signal actor_died(turn_index)
@@ -127,11 +127,9 @@ func _on_actor_picked(actor: Actor) -> void:
 				and not actor.battle_stats.turn_finished:
 			controller.call_deferred("determine_action", actor, _map)
 			var action := yield(controller, "determined_action") as Action
-			emit_signal("action_chosen")
 
 			if action:
-				emit_signal("action_starting", actor,
-						action.show_map_highlights())
+				emit_signal("action_starting", action)
 				action.start()
 				yield(action, "finished")
 			else:
