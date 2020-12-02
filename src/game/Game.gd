@@ -37,11 +37,7 @@ func _on_TurnManager_battle_started(turn_order: Array) -> void:
 
 
 func _on_TurnManager_turn_started(actor: Actor, range_data: RangeData) -> void:
-	_interface.map_highlights.moves_visible = true
-	_interface.map_highlights.set_moves(range_data.visible_move_range.keys())
-	_interface.camera.follow_actor(actor)
-
-	_interface.current_actor = actor
+	_interface.set_actor(actor, range_data)
 
 
 func _on_TurnManager_action_starting(action: Action) -> void:
@@ -53,10 +49,8 @@ func _on_TurnManager_action_starting(action: Action) -> void:
 
 
 func _on_TurnManager_turn_ended() -> void:
-	_interface.map_highlights.moves_visible = false
 	_interface.gui.turn_queue.next_turn()
-
-	_interface.current_actor = null
+	_interface.clear_actor()
 
 
 func _on_TurnManager_actor_died(turn_index: int) -> void:
@@ -68,6 +62,5 @@ func _on_TurnManager_player_turn_waiting_for_input( \
 	_interface.start_player_turn(player_turn, actors)
 
 
-func _on_TurnManager_player_waiting_for_input(
-		player: Player, _actor: Actor, _map: Map) -> void:
+func _on_TurnManager_player_waiting_for_input(player: Player) -> void:
 	_interface.start_player(player)

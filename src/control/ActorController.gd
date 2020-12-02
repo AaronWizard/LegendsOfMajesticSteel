@@ -12,6 +12,7 @@ func get_pauses() -> bool:
 
 # warning-ignore:unused_argument
 # warning-ignore:unused_argument
-func determine_action(actor: Actor, map: Map) -> void:
+# warning-ignore:unused_argument
+func determine_action(actor: Actor, map: Map, range_data: RangeData) -> void:
 	print("ActorController: Must implement determine_action()")
 	emit_signal("determined_action", null)

@@ -10,18 +10,19 @@ enum State {
 }
 
 var current_map: Map = null setget set_current_map
-var current_actor: Actor = null setget set_current_actor
 
 onready var map_highlights := $MapHighlights as MapHighlights
 onready var camera := $GameCamera as GameCamera
 onready var mouse := $MouseControl as MouseControl
 onready var gui := $BattleGUI as BattleGUI
 
+var _actor: Actor = null
+var _range_data: RangeData = null
+
 var _player_turn: PlayerTurn = null
 var _player_turn_actors := []
 
 var _player: Player = null
-var _range_data: RangeData = null
 var _ability_target: Vector2
 
 var _state: int = State.WAITING
@@ -32,14 +33,23 @@ func set_current_map(value: Map) -> void:
 	camera.set_bounds(current_map.get_pixel_rect())
 
 
-func set_current_actor(value: Actor) -> void:
-	current_actor = value
-	gui.current_actor = value
+func set_actor(actor: Actor, range_data: RangeData) -> void:
+	_actor = actor
+	_range_data = range_data
 
-	if current_actor:
-		_range_data = RangeData.new(current_actor, current_map)
-	else:
-		_range_data = null
+	map_highlights.moves_visible = true
+	map_highlights.set_moves(_range_data.visible_move_range.keys())
+	camera.follow_actor(_actor)
+	gui.current_actor = _actor
+
+
+func clear_actor() -> void:
+	_actor = null
+	_range_data = null
+
+	map_highlights.moves_visible = false
+	map_highlights.set_moves([])
+	gui.current_actor = null
 
 
 func start_player_turn(new_player_turn: PlayerTurn, actors: Array) -> void:
@@ -76,7 +86,7 @@ func _on_MouseControl_drag(relative: Vector2) -> void:
 
 func _on_BattleGUI_ability_selected(ability_index: int) -> void:
 	var targeting_data := _range_data.get_targeting_data(
-			current_actor.cell, ability_index)
+			_actor.cell, ability_index)
 	map_highlights.set_targets(targeting_data.target_range)
 	map_highlights.moves_visible = false
 
@@ -120,9 +130,9 @@ func _player_turn_pick_actor(target_cell: Vector2) -> void:
 
 
 func _player_move(target_cell: Vector2) -> void:
-	var path := _range_data.get_walk_path(current_actor.cell, target_cell)
+	var path := _range_data.get_walk_path(_actor.cell, target_cell)
 	if path.size() > 0:
-		var action := Move.new(current_actor, current_map, path)
+		var action := Move.new(_actor, current_map, path)
 		action.allow_cancel(mouse)
 		_player_action(action)
 
@@ -130,7 +140,7 @@ func _player_move(target_cell: Vector2) -> void:
 func _player_target(target_cell: Vector2) -> void:
 	var ability_index := gui.current_ability_index
 	var targeting_data := _range_data.get_targeting_data(
-			current_actor.cell, ability_index)
+			_actor.cell, ability_index)
 
 	if target_cell in targeting_data.valid_targets:
 		map_highlights.target_cursor_visible = true
@@ -142,10 +152,10 @@ func _player_target(target_cell: Vector2) -> void:
 
 func _player_target_confirm(target_cell: Vector2) -> void:
 	if _ability_target == target_cell:
-		var ability := current_actor.stats.abilities[ \
+		var ability := _actor.stats.abilities[ \
 				gui.current_ability_index] as Ability
 		var action := AbilityAction.new( \
-				current_actor, current_map, ability, target_cell)
+				_actor, current_map, ability, target_cell)
 		gui.current_ability_index = -1
 		_player_action(action)
 
