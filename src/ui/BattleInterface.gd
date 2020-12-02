@@ -16,11 +16,11 @@ onready var camera := $GameCamera as GameCamera
 onready var mouse := $MouseControl as MouseControl
 onready var gui := $BattleGUI as BattleGUI
 
-var _actor: Actor = null
-var _range_data: RangeData = null
-
 var _player_turn: PlayerTurn = null
 var _player_turn_actors := []
+
+var _actor: Actor = null
+var _range_data: RangeData = null
 
 var _player: Player = null
 var _ability_target: Vector2
@@ -31,6 +31,25 @@ var _state: int = State.WAITING
 func set_current_map(value: Map) -> void:
 	current_map = value
 	camera.set_bounds(current_map.get_pixel_rect())
+
+
+func start_player_turn(new_player_turn: PlayerTurn, actors: Array) -> void:
+	_player_turn = new_player_turn
+	_player_turn_actors = actors
+
+	_set_actor_cursors(true)
+	_position_player_turn_camera()
+
+	_state = State.PLAYER_PICK_ACTOR
+
+
+func start_player(new_player: Player) -> void:
+	_player = new_player
+
+	gui.buttons_visible = true
+	mouse.dragging_enabled = true
+
+	_state = State.PLAYER_TURN_MOVE
 
 
 func set_actor(actor: Actor, range_data: RangeData) -> void:
@@ -50,21 +69,6 @@ func clear_actor() -> void:
 	map_highlights.moves_visible = false
 	map_highlights.set_moves([])
 	gui.current_actor = null
-
-
-func start_player_turn(new_player_turn: PlayerTurn, actors: Array) -> void:
-	_player_turn = new_player_turn
-	_player_turn_actors = actors
-	_set_actor_cursors(true)
-	_position_player_turn_camera()
-	_state = State.PLAYER_PICK_ACTOR
-
-
-func start_player(new_player: Player) -> void:
-	_player = new_player
-	gui.buttons_visible = true
-	mouse.dragging_enabled = true
-	_state = State.PLAYER_TURN_MOVE
 
 
 func _on_MouseControl_click(_position: Vector2) -> void:
@@ -138,9 +142,8 @@ func _player_move(target_cell: Vector2) -> void:
 
 
 func _player_target(target_cell: Vector2) -> void:
-	var ability_index := gui.current_ability_index
 	var targeting_data := _range_data.get_targeting_data(
-			_actor.cell, ability_index)
+			_actor.cell, gui.current_ability_index)
 
 	if target_cell in targeting_data.valid_targets:
 		map_highlights.target_cursor_visible = true
@@ -158,19 +161,25 @@ func _player_target_confirm(target_cell: Vector2) -> void:
 				_actor, current_map, ability, target_cell)
 		gui.current_ability_index = -1
 		_player_action(action)
+	else:
+		_player_target(target_cell)
 
 
 func _pick_player_actor(actor: Actor) -> void:
 	_set_actor_cursors(false)
 	_player_turn_actors.clear()
+
 	_player_turn.use_actor(actor)
+
 	_player_turn = null
 	_state = State.WAITING
 
 
 func _player_action(action: Action) -> void:
-	_player.do_action(action)
-	_player = null
 	gui.buttons_visible = false
 	mouse.dragging_enabled = false
+
+	_player.do_action(action)
+
+	_player = null
 	_state = State.WAITING
