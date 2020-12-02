@@ -10,8 +10,6 @@ func _ready() -> void:
 	if start_map_file:
 		load_map(start_map_file)
 
-	_interface.gui.buttons_visible = false
-	_interface.mouse.dragging_enabled = false
 	_turn_manager.start(get_current_map())
 
 
@@ -41,11 +39,7 @@ func _on_TurnManager_turn_started(actor: Actor, range_data: RangeData) -> void:
 
 
 func _on_TurnManager_action_starting(action: Action) -> void:
-	_interface.gui.buttons_visible = false
-	_interface.mouse.dragging_enabled = false
-
-	_interface.camera.follow_actor(action.actor)
-	_interface.map_highlights.moves_visible = action.show_map_highlights()
+	_interface.action_starting(action)
 
 
 func _on_TurnManager_turn_ended() -> void:

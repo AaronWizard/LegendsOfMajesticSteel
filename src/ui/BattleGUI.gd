@@ -6,10 +6,9 @@ signal ability_cleared
 
 signal wait_started
 
-var buttons_visible := false setget set_buttons_visible
+export var buttons_visible := false setget set_buttons_visible
 
 var current_actor: Actor = null setget set_current_actor
-
 var current_ability_index: int = -1 setget set_current_ability_index
 
 onready var turn_queue := $TurnQueuePanel as TurnQueuePanel

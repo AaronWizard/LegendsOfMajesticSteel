@@ -6,7 +6,7 @@ signal drag(relative)
 
 const _MIN_DRAG_DISTANCE_SQRD := 3 * 3
 
-var dragging_enabled := false
+export var dragging_enabled := false
 
 var _mouse_down := false
 var _first_mouse_down_pos: Vector2

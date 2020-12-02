@@ -40,6 +40,8 @@ func start_player_turn(new_player_turn: PlayerTurn, actors: Array) -> void:
 	_set_actor_cursors(true)
 	_position_player_turn_camera()
 
+	mouse.dragging_enabled = true
+
 	_state = State.PLAYER_PICK_ACTOR
 
 
@@ -69,6 +71,14 @@ func clear_actor() -> void:
 	map_highlights.moves_visible = false
 	map_highlights.set_moves([])
 	gui.current_actor = null
+
+
+func action_starting(action: Action) -> void:
+	gui.buttons_visible = false
+	mouse.dragging_enabled = false
+
+	camera.follow_actor(action.actor)
+	map_highlights.moves_visible = action.show_map_highlights()
 
 
 func _on_MouseControl_click(_position: Vector2) -> void:
@@ -176,9 +186,6 @@ func _pick_player_actor(actor: Actor) -> void:
 
 
 func _player_action(action: Action) -> void:
-	gui.buttons_visible = false
-	mouse.dragging_enabled = false
-
 	_player.do_action(action)
 
 	_player = null
