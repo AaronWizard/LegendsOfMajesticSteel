@@ -100,7 +100,7 @@ static func _create_valid_source_cells(targeting_data_set: Dictionary) \
 		var key := k as Vector3
 		var cell := Vector2(key.x, key.y)
 		var ability_index := int(key.z)
-		var targeting_data := targeting_data_set[key] as Ability.TargetingData
+		var targeting_data := targeting_data_set[key] as TargetingData
 
 		if not targeting_data.valid_targets.empty():
 			if not result.has(cell):

@@ -1,18 +1,6 @@
 class_name Ability
 extends Resource
 
-class TargetingData:
-	var source_cell := Vector2()
-	var target_range := []
-	var valid_targets := []
-
-	func _init(new_source_cell: Vector2, new_target_range: Array,
-			new_valid_targets: Array) -> void:
-		source_cell = new_source_cell
-		target_range = new_target_range
-		valid_targets = new_valid_targets
-
-
 enum TargetType { ANY, ANY_ACTOR, ENEMY, ALLY }
 
 signal finished

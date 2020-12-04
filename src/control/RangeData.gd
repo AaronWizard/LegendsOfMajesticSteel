@@ -43,10 +43,9 @@ func get_walk_path(start: Vector2, end: Vector2) -> Array:
 	return result
 
 
-func get_targeting_data(cell: Vector2, ability_index: int) \
-		-> Ability.TargetingData:
+func get_targeting_data(cell: Vector2, ability_index: int) -> TargetingData:
 	var key := Vector3(cell.x, cell.y, ability_index)
-	var result := _targeting_data_set[key] as Ability.TargetingData
+	var result := _targeting_data_set[key] as TargetingData
 	return result
 
 
