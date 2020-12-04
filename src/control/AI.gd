@@ -16,10 +16,10 @@ func get_pauses() -> bool:
 
 
 func determine_action(actor: Actor, map: Map, range_data: RangeData) -> void:
-	if not range_data.ability_source_cells.empty():
+	if not range_data.get_valid_ability_source_cells().empty():
 		_moved = false
 
-		if range_data.ability_source_cells.has(actor.cell):
+		if not range_data.get_valid_ability_indices_at_cell(actor.cell).empty():
 			var action := _pick_random_ability(actor, map, range_data)
 			emit_signal("determined_action", action)
 		else:
@@ -39,7 +39,7 @@ func determine_action(actor: Actor, map: Map, range_data: RangeData) -> void:
 
 
 func _pick_random_path(start_cell: Vector2, range_data: RangeData) -> Array:
-	var cells := range_data.move_range.keys()
+	var cells := range_data.get_move_range()
 	cells.erase(start_cell)
 	assert(not (start_cell in cells))
 
@@ -48,7 +48,7 @@ func _pick_random_path(start_cell: Vector2, range_data: RangeData) -> Array:
 
 func _pick_random_action_path(start_cell: Vector2, range_data: RangeData) \
 		-> Array:
-	var cells := range_data.ability_source_cells.keys()
+	var cells := range_data.get_valid_ability_source_cells()
 	return _random_path(start_cell, range_data, cells)
 
 
@@ -64,7 +64,8 @@ func _random_path(start_cell: Vector2, range_data: RangeData, cells: Array) \
 
 func _pick_random_ability(actor: Actor, map: Map, range_data: RangeData) \
 		-> AbilityAction:
-	var ability_indicies := range_data.get_valid_abilities_at_cell(actor.cell)
+	var ability_indicies := range_data.get_valid_ability_indices_at_cell(
+			actor.cell)
 	var ability_index = _random.rand_array_element(ability_indicies) as int
 
 	var ability := actor.stats.abilities[ability_index] as Ability

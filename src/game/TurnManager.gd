@@ -109,7 +109,7 @@ func _on_actor_picked(actor: Actor) -> void:
 
 	if controller:
 		actor.battle_stats.start_turn()
-		var range_data := RangeData.new(actor, _map)
+		var range_data := RangeDataFactory.create_range_data(actor, _map)
 
 		emit_signal("turn_started", actor, range_data)
 

@@ -59,7 +59,7 @@ func set_actor(actor: Actor, range_data: RangeData) -> void:
 	_range_data = range_data
 
 	map_highlights.moves_visible = true
-	map_highlights.set_moves(_range_data.visible_move_range.keys())
+	map_highlights.set_moves(_range_data.get_visible_move_range())
 	camera.follow_actor(_actor)
 	gui.current_actor = _actor
 

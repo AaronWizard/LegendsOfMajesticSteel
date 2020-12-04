@@ -160,6 +160,11 @@ _global_script_classes=[ {
 "path": "res://src/control/RangeData.gd"
 }, {
 "base": "Reference",
+"class": "RangeDataFactory",
+"language": "GDScript",
+"path": "res://src/control/RangeDataFactory.gd"
+}, {
+"base": "Reference",
 "class": "SignalWaiter",
 "language": "GDScript",
 "path": "res://src/game/SignalWaiter.gd"
@@ -245,6 +250,7 @@ _global_script_class_icons={
 "Projectile": "",
 "ProjectileAttackEffect": "",
 "RangeData": "",
+"RangeDataFactory": "",
 "SignalWaiter": "",
 "StaminaBar": "",
 "Stats": "",
