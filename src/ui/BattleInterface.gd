@@ -69,7 +69,7 @@ func clear_actor() -> void:
 	_range_data = null
 
 	map_highlights.moves_visible = false
-	map_highlights.set_moves([])
+	map_highlights.clear_moves()
 	gui.current_actor = null
 
 
@@ -109,7 +109,7 @@ func _on_BattleGUI_ability_selected(ability_index: int) -> void:
 
 func _on_BattleGUI_ability_cleared() -> void:
 	map_highlights.target_cursor_visible = false
-	map_highlights.set_targets([])
+	map_highlights.clear_targets()
 	map_highlights.moves_visible = true
 
 	_state = State.PLAYER_TURN_MOVE

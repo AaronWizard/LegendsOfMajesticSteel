@@ -7,6 +7,11 @@
 [node name="MapHighlights" type="Node"]
 script = ExtResource( 2 )
 
+[node name="OtherMoves" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+
 [node name="Moves" type="TileMap" parent="."]
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
