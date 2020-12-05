@@ -29,7 +29,7 @@ cell_offset = Vector2( 0, 0 )
 faction = 1
 
 [node name="Fighter2" parent="Actors" index="3" instance=ExtResource( 5 )]
-position = Vector2( 192, 264 )
+position = Vector2( 120, 240 )
 cell_offset = Vector2( 0, 0 )
 faction = 1
 
@@ -39,7 +39,7 @@ cell_offset = Vector2( 0, 0 )
 faction = 1
 
 [node name="Fighter4" parent="Actors" index="5" instance=ExtResource( 5 )]
-position = Vector2( 216, 288 )
+position = Vector2( 264, 240 )
 cell_offset = Vector2( 0, 0 )
 faction = 1
 
