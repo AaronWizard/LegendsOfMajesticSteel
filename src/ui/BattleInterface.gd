@@ -20,7 +20,6 @@ var _player_turn: PlayerTurn = null
 var _player_turn_actors := []
 
 var _actor: Actor = null
-var _range_data: RangeData = null
 
 var _player: Player = null
 var _ability_target: Vector2
@@ -54,19 +53,18 @@ func start_player(new_player: Player) -> void:
 	_state = State.PLAYER_TURN_MOVE
 
 
-func set_actor(actor: Actor, range_data: RangeData) -> void:
+func set_actor(actor: Actor, _range_data: RangeData) -> void:
 	_actor = actor
-	_range_data = range_data
 
 	map_highlights.moves_visible = true
-	map_highlights.set_moves(_range_data.get_visible_move_range())
+	map_highlights.set_moves(
+			_actor.battle_stats.range_data.get_visible_move_range())
 	camera.follow_actor(_actor)
 	gui.current_actor = _actor
 
 
 func clear_actor() -> void:
 	_actor = null
-	_range_data = null
 
 	map_highlights.moves_visible = false
 	map_highlights.clear_moves()
@@ -99,10 +97,11 @@ func _on_MouseControl_drag(relative: Vector2) -> void:
 
 
 func _on_BattleGUI_ability_selected(ability_index: int) -> void:
-	var targeting_data := _range_data.get_targeting_data(
+	var targeting_data := _actor.battle_stats.range_data.get_targeting_data(
 			_actor.cell, ability_index)
 	map_highlights.set_targets(targeting_data.target_range)
 	map_highlights.moves_visible = false
+	map_highlights.clear_other_moves()
 
 	_state = State.PLAYER_TURN_TARGET
 
@@ -144,15 +143,27 @@ func _player_turn_pick_actor(target_cell: Vector2) -> void:
 
 
 func _player_move(target_cell: Vector2) -> void:
-	var path := _range_data.get_walk_path(_actor.cell, target_cell)
+	var path := _actor.battle_stats.range_data.get_walk_path(
+			_actor.cell, target_cell)
 	if path.size() > 0:
 		var action := Move.new(_actor, current_map, path)
 		action.allow_cancel(mouse)
 		_player_action(action)
+	else:
+		_player_other_actor_clicked(target_cell)
+
+
+func _player_other_actor_clicked(target_cell: Vector2) -> void:
+	var actor := current_map.get_actor_on_cell(target_cell)
+	if (actor != null) and (actor != _actor):
+		map_highlights.set_other_moves(
+				actor.battle_stats.range_data.get_visible_move_range())
+	else:
+		map_highlights.clear_other_moves()
 
 
 func _player_target(target_cell: Vector2) -> void:
-	var targeting_data := _range_data.get_targeting_data(
+	var targeting_data := _actor.battle_stats.range_data.get_targeting_data(
 			_actor.cell, gui.current_ability_index)
 
 	if target_cell in targeting_data.valid_targets:
@@ -186,6 +197,7 @@ func _pick_player_actor(actor: Actor) -> void:
 
 
 func _player_action(action: Action) -> void:
+	map_highlights.clear_other_moves()
 	_player.do_action(action)
 
 	_player = null

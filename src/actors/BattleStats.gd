@@ -5,6 +5,7 @@ signal round_started
 signal turn_taken
 signal stamina_changed(old_stamina, new_stamina)
 
+var range_data: RangeData
 var stamina: int
 
 var turn_finished: bool setget , get_turn_finished

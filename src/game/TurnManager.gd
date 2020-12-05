@@ -47,6 +47,7 @@ func _start(map: Map) -> void:
 
 func _take_turn():
 	if running:
+		_refresh_range_data()
 		_get_next_actor()
 	else:
 		_end()
@@ -65,6 +66,14 @@ func _start_battle() -> void:
 	_turn_order.shuffle()
 
 	emit_signal("battle_started", _turn_order)
+
+
+func _refresh_range_data(actor_to_exclude: Actor = null) -> void:
+	for a in _map.get_actors():
+		var actor := a as Actor
+		if actor != actor_to_exclude:
+			actor.battle_stats.range_data = RangeDataFactory.create_range_data(
+					actor, _map)
 
 
 func _start_round() -> void:
@@ -109,9 +118,7 @@ func _on_actor_picked(actor: Actor) -> void:
 
 	if controller:
 		actor.battle_stats.start_turn()
-		var range_data := RangeDataFactory.create_range_data(actor, _map)
-
-		emit_signal("turn_started", actor, range_data)
+		emit_signal("turn_started", actor, actor.battle_stats.range_data)
 
 		if controller.pauses:
 			yield(get_tree().create_timer(_PRE_TURN_WAIT_TIME), "timeout")
@@ -119,7 +126,7 @@ func _on_actor_picked(actor: Actor) -> void:
 		while actor.battle_stats.is_alive \
 				and not actor.battle_stats.turn_finished:
 			controller.call_deferred(
-					"determine_action", actor, _map, range_data)
+					"determine_action", actor, _map, actor.battle_stats.range_data)
 			var action := yield(controller, "determined_action") as Action
 
 			if action:
@@ -129,6 +136,10 @@ func _on_actor_picked(actor: Actor) -> void:
 			else:
 				# Action is a wait
 				actor.battle_stats.take_turn()
+
+			if actor.battle_stats.is_alive \
+					and not actor.battle_stats.turn_finished:
+				_refresh_range_data(actor)
 
 		yield(get_tree().create_timer(_POST_TURN_WAIT_TIME), "timeout")
 
