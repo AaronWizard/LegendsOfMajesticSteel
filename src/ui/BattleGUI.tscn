@@ -22,7 +22,7 @@ anchor_top = 1.0
 anchor_bottom = 1.0
 margin_left = 2.0
 margin_top = -46.0
-margin_right = 92.0
+margin_right = 98.0
 margin_bottom = -2.0
 
 [node name="Buttons" type="HBoxContainer" parent="."]
