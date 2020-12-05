@@ -2,6 +2,8 @@ extends Node
 
 export var start_map_file: PackedScene = null
 
+var _state_machine := StateMachine.new()
+
 onready var _map_container := $Map
 onready var _turn_manager := $TurnManager as TurnManager
 onready var _interface := $BattleInterface as BattleInterface
@@ -34,8 +36,8 @@ func _on_TurnManager_battle_started(turn_order: Array) -> void:
 	_interface.gui.turn_queue.set_queue(turn_order)
 
 
-func _on_TurnManager_turn_started(actor: Actor, range_data: RangeData) -> void:
-	_interface.set_actor(actor, range_data)
+func _on_TurnManager_turn_started(actor: Actor, _range_data: RangeData) -> void:
+	_interface.set_actor(actor)
 
 
 func _on_TurnManager_action_starting(action: Action) -> void:
@@ -53,8 +55,11 @@ func _on_TurnManager_actor_died(turn_index: int) -> void:
 
 func _on_TurnManager_player_turn_waiting_for_input( \
 		player_turn: PlayerTurn, actors: Array) -> void:
-	_interface.start_player_turn(player_turn, actors)
+	var state := PlayerPickActorState.new(_interface, player_turn, actors)
+	_state_machine.change_state(state)
 
 
-func _on_TurnManager_player_waiting_for_input(player: Player) -> void:
-	_interface.start_player(player)
+func _on_TurnManager_player_waiting_for_input(player: Player, actor: Actor) \
+		-> void:
+	var state := PlayerActorMoveState.new(_interface, player, actor)
+	_state_machine.change_state(state)
