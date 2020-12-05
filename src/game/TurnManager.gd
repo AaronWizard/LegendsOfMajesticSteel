@@ -118,15 +118,14 @@ func _on_actor_picked(actor: Actor) -> void:
 
 	if controller:
 		actor.battle_stats.start_turn()
-		emit_signal("turn_started", actor, actor.battle_stats.range_data)
+		emit_signal("turn_started", actor)
 
 		if controller.pauses:
 			yield(get_tree().create_timer(_PRE_TURN_WAIT_TIME), "timeout")
 
 		while actor.battle_stats.is_alive \
 				and not actor.battle_stats.turn_finished:
-			controller.call_deferred("determine_action",
-					actor, _map, actor.battle_stats.range_data)
+			controller.call_deferred("determine_action", actor, _map)
 			var action := yield(controller, "determined_action") as Action
 
 			if action:

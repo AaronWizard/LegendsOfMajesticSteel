@@ -4,7 +4,7 @@ extends ActorController
 signal waiting_for_input(player, actor)
 
 
-func determine_action(actor: Actor, _map: Map, _range_data: RangeData) -> void:
+func determine_action(actor: Actor, _map: Map) -> void:
 	emit_signal("waiting_for_input", self, actor)
 
 

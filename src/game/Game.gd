@@ -36,7 +36,7 @@ func _on_TurnManager_battle_started(turn_order: Array) -> void:
 	_interface.gui.turn_queue.set_queue(turn_order)
 
 
-func _on_TurnManager_turn_started(actor: Actor, _range_data: RangeData) -> void:
+func _on_TurnManager_turn_started(actor: Actor) -> void:
 	_interface.set_actor(actor)
 
 

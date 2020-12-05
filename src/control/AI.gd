@@ -15,7 +15,8 @@ func get_pauses() -> bool:
 	return true
 
 
-func determine_action(actor: Actor, map: Map, range_data: RangeData) -> void:
+func determine_action(actor: Actor, map: Map) -> void:
+	var range_data := actor.battle_stats.range_data
 	if not range_data.get_valid_ability_source_cells().empty():
 		_moved = false
 
