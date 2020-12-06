@@ -308,10 +308,10 @@ config/icon="res://icon.png"
 
 [display]
 
-window/size/width=320
-window/size/height=180
-window/size/test_width=1280
-window/size/test_height=720
+window/size/width=224
+window/size/height=224
+window/size/test_width=896
+window/size/test_height=896
 window/stretch/mode="viewport"
 window/stretch/aspect="expand"
 
