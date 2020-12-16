@@ -1,18 +1,18 @@
-class_name Ability
+class_name Skill
 extends Resource
 
 enum TargetType { ANY, ANY_ACTOR, ENEMY, ALLY }
 
 signal finished
 
-export var name := "Ability"
+export var name := "Skill"
 
 export var range_type: Resource
 export(TargetType) var target_type := TargetType.ANY
 
 export var aoe_type: Resource
 
-export var ability_effect: Resource
+export var skill_effect: Resource
 
 
 func get_targeting_data(source_cell: Vector2, source_actor: Actor, map: Map) \
@@ -75,13 +75,13 @@ func start(source_actor: Actor, map: Map, target: Vector2) -> void:
 	emit_signal("finished")
 
 
-func _get_range_type() -> AbilityRange:
-	return range_type as AbilityRange
+func _get_range_type() -> SkillRange:
+	return range_type as SkillRange
 
 
-func _get_aoe_type() -> AbilityAOE:
-	return aoe_type as AbilityAOE
+func _get_aoe_type() -> SkillAOE:
+	return aoe_type as SkillAOE
 
 
-func _get_effect_type() -> AbilityEffect:
-	return ability_effect as AbilityEffect
+func _get_effect_type() -> SkillEffect:
+	return skill_effect as SkillEffect

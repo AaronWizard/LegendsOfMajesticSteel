@@ -1,5 +1,5 @@
 class_name DiamondRange
-extends AbilityRange
+extends SkillRange
 
 
 export var min_dist := 1

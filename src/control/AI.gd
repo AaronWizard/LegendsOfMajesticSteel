@@ -17,11 +17,11 @@ func get_pauses() -> bool:
 
 func determine_action(actor: Actor, map: Map) -> void:
 	var range_data := actor.battle_stats.range_data
-	if not range_data.get_valid_ability_source_cells().empty():
+	if not range_data.get_valid_skill_source_cells().empty():
 		_moved = false
 
-		if not range_data.get_valid_ability_indices_at_cell(actor.cell).empty():
-			var action := _pick_random_ability(actor, map, range_data)
+		if not range_data.get_valid_skill_indices_at_cell(actor.cell).empty():
+			var action := _pick_random_skill(actor, map, range_data)
 			emit_signal("determined_action", action)
 		else:
 			var path := _pick_random_action_path(actor.cell, range_data)
@@ -49,7 +49,7 @@ func _pick_random_path(start_cell: Vector2, range_data: RangeData) -> Array:
 
 func _pick_random_action_path(start_cell: Vector2, range_data: RangeData) \
 		-> Array:
-	var cells := range_data.get_valid_ability_source_cells()
+	var cells := range_data.get_valid_skill_source_cells()
 	return _random_path(start_cell, range_data, cells)
 
 
@@ -63,20 +63,20 @@ func _random_path(start_cell: Vector2, range_data: RangeData, cells: Array) \
 	return path
 
 
-func _pick_random_ability(actor: Actor, map: Map, range_data: RangeData) \
-		-> AbilityAction:
-	var ability_indicies := range_data.get_valid_ability_indices_at_cell(
+func _pick_random_skill(actor: Actor, map: Map, range_data: RangeData) \
+		-> SkillAction:
+	var skill_indicies := range_data.get_valid_skill_indices_at_cell(
 			actor.cell)
-	var ability_index = _random.rand_array_element(ability_indicies) as int
+	var skill_index = _random.rand_array_element(skill_indicies) as int
 
-	var ability := actor.stats.abilities[ability_index] as Ability
+	var skill := actor.stats.skills[skill_index] as Skill
 	var targeting_data := \
-			range_data.get_targeting_data(actor.cell, ability_index)
+			range_data.get_targeting_data(actor.cell, skill_index)
 
 	# Pick random target
 	var target_cell := \
 			_random.rand_array_element(targeting_data.valid_targets) as Vector2
 
-	var result := AbilityAction.new(actor, map, ability, target_cell)
+	var result := SkillAction.new(actor, map, skill, target_cell)
 
 	return result

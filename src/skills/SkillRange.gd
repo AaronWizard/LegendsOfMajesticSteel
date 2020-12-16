@@ -1,4 +1,4 @@
-class_name AbilityRange
+class_name SkillRange
 extends Resource
 
 # Array of Vector2

@@ -1,7 +1,7 @@
 [gd_resource type="Resource" load_steps=4 format=2]
 
 [ext_resource path="res://src/actors/Stats.gd" type="Script" id=1]
-[ext_resource path="res://resources/abilities/MeleeAttack.tres" type="Resource" id=2]
+[ext_resource path="res://resources/skills/MeleeAttack.tres" type="Resource" id=2]
 [ext_resource path="res://assets/graphics/actors/warrior_maiden.png" type="Texture" id=3]
 
 [resource]
@@ -10,4 +10,4 @@ texture = ExtResource( 3 )
 max_stamina = 12
 attack = 1
 move = 4
-abilities = [ ExtResource( 2 ) ]
+skills = [ ExtResource( 2 ) ]

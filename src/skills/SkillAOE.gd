@@ -1,4 +1,4 @@
-class_name AbilityAOE
+class_name SkillAOE
 extends Resource
 
 

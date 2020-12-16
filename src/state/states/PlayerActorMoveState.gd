@@ -26,13 +26,13 @@ func start() -> void:
 	# warning-ignore:return_value_discarded
 	_interface.gui.connect("wait_started", self, "_wait_started")
 	# warning-ignore:return_value_discarded
-	_interface.gui.connect("ability_selected", self, "_ability_selected")
+	_interface.gui.connect("skill_selected", self, "_skill_selected")
 
 
 func end() -> void:
 	_interface.mouse.disconnect("click", self, "_mouse_click")
 	_interface.gui.disconnect("wait_started", self, "_wait_started")
-	_interface.gui.disconnect("ability_selected", self, "_ability_selected")
+	_interface.gui.disconnect("skill_selected", self, "_skill_selected")
 	_interface.map_highlights.clear_other_moves()
 
 	if _doing_action:
@@ -43,9 +43,9 @@ func _wait_started() -> void:
 	_choose_action(null)
 
 
-func _ability_selected(_ability_index: int) -> void:
+func _skill_selected(_skill_index: int) -> void:
 	var state := PlayerActorTargetState.new(_interface, _player, _actor,
-			_ability_index, self)
+			_skill_index, self)
 	emit_signal("change_state", state)
 
 

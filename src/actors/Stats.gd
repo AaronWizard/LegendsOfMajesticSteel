@@ -9,7 +9,7 @@ export var max_stamina := 1
 export var attack := 1
 export var move := 4
 
-export(Array, Resource) var abilities := []
+export(Array, Resource) var skills := []
 
 var portrait: AtlasTexture = null
 

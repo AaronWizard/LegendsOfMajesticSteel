@@ -13,7 +13,7 @@ var round_finished: bool setget , get_round_finished
 
 var is_alive: bool setget , get_is_alive
 
-var _did_ability: bool = false
+var _did_skill: bool = false
 var _turns_left: int = false
 
 
@@ -27,11 +27,11 @@ func start_round() -> void:
 
 
 func start_turn() -> void:
-	_did_ability = false
+	_did_skill = false
 
 
 func get_turn_finished() -> bool:
-	return _did_ability
+	return _did_skill
 
 
 func get_round_finished() -> bool:
@@ -39,7 +39,7 @@ func get_round_finished() -> bool:
 
 
 func take_turn() -> void:
-	_did_ability = true
+	_did_skill = true
 	_turns_left -= 1
 	emit_signal("turn_taken")
 

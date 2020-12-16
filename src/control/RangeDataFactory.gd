@@ -70,7 +70,7 @@ static func _init_walk_grid_paths(walk_grid: AStar2D) -> void:
 				walk_grid.connect_points(point, adj_point)
 
 
-# Keys are Vector3s. (key.x, key.y) is the source cell, key.z is the ability
+# Keys are Vector3s. (key.x, key.y) is the source cell, key.z is the skill
 # index.
 # Values are TargetingData
 static func _create_targeting_data_set(move_range: Dictionary,
@@ -79,13 +79,13 @@ static func _create_targeting_data_set(move_range: Dictionary,
 
 	for sc in move_range.keys():
 		var source_cell := sc as Vector2
-		for i in range(actor.stats.abilities.size()):
-			var ability_index := i as int
-			var ability := actor.stats.abilities[ability_index] as Ability
-			var targeting_data := ability.get_targeting_data(
+		for i in range(actor.stats.skills.size()):
+			var skill_index := i as int
+			var skill := actor.stats.skills[skill_index] as Skill
+			var targeting_data := skill.get_targeting_data(
 					source_cell, actor, map)
 
-			var key = Vector3(source_cell.x, source_cell.y, ability_index)
+			var key = Vector3(source_cell.x, source_cell.y, skill_index)
 			result[key] = targeting_data
 
 	return result
@@ -99,12 +99,12 @@ static func _create_valid_source_cells(targeting_data_set: Dictionary) \
 	for k in targeting_data_set:
 		var key := k as Vector3
 		var cell := Vector2(key.x, key.y)
-		var ability_index := int(key.z)
+		var skill_index := int(key.z)
 		var targeting_data := targeting_data_set[key] as TargetingData
 
 		if not targeting_data.valid_targets.empty():
 			if not result.has(cell):
 				result[cell] = {}
-			(result[cell] as Dictionary)[ability_index] = true
+			(result[cell] as Dictionary)[skill_index] = true
 
 	return result

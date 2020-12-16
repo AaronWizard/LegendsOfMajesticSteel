@@ -40,9 +40,9 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Abilities" type="HBoxContainer" parent="Buttons"]
-margin_left = 182.0
-margin_right = 182.0
+[node name="Skills" type="HBoxContainer" parent="Buttons"]
+margin_left = 86.0
+margin_right = 86.0
 margin_bottom = 27.0
 mouse_filter = 2
 __meta__ = {
@@ -50,15 +50,15 @@ __meta__ = {
 }
 
 [node name="Wait" type="Button" parent="Buttons"]
-margin_left = 184.0
-margin_right = 226.0
+margin_left = 88.0
+margin_right = 130.0
 margin_bottom = 27.0
 text = "Wait"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="AbilityCancel" type="Button" parent="Buttons"]
+[node name="SkillCancel" type="Button" parent="Buttons"]
 visible = false
 margin_left = 246.0
 margin_right = 312.0
@@ -69,4 +69,4 @@ __meta__ = {
 }
 [connection signal="portrait_pressed" from="CurrentActorStatus" to="." method="_on_CurrentActorStatus_portrait_pressed"]
 [connection signal="pressed" from="Buttons/Wait" to="." method="_on_Wait_pressed"]
-[connection signal="pressed" from="Buttons/AbilityCancel" to="." method="_on_AbilityCancel_pressed"]
+[connection signal="pressed" from="Buttons/SkillCancel" to="." method="_on_SkillCancel_pressed"]
