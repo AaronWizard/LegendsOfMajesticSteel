@@ -13,3 +13,4 @@ script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+[connection signal="sort_children" from="." to="." method="_on_RadialContainer_sort_children"]
