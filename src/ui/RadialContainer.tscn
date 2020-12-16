@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://src/ui/RadialContainer.gd" type="Script" id=1]
+[ext_resource path="res://resources/gui/theme_standard.tres" type="Theme" id=2]
+
+[node name="RadialContainer" type="Container"]
+margin_right = 90.0
+margin_bottom = 90.0
+rect_min_size = Vector2( 90, 90 )
+mouse_filter = 2
+theme = ExtResource( 2 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
