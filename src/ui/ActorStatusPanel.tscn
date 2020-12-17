@@ -5,10 +5,10 @@
 [ext_resource path="res://assets/graphics/ui/staminabar_big_fill.png" type="Texture" id=3]
 [ext_resource path="res://assets/graphics/ui/staminabar_big_background.png" type="Texture" id=4]
 
-
 [node name="ActorStatusPanel" type="PanelContainer"]
-margin_right = 96.0
+margin_right = 90.0
 margin_bottom = 44.0
+rect_min_size = Vector2( 100, 44 )
 mouse_filter = 2
 size_flags_horizontal = 0
 theme = ExtResource( 1 )
@@ -20,7 +20,7 @@ __meta__ = {
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 margin_left = 3.0
 margin_top = 3.0
-margin_right = 93.0
+margin_right = 97.0
 margin_bottom = 41.0
 
 [node name="PortraitButton" type="Button" parent="HBoxContainer"]
@@ -35,12 +35,12 @@ __meta__ = {
 
 [node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer"]
 margin_left = 40.0
-margin_right = 90.0
+margin_right = 94.0
 margin_bottom = 38.0
 size_flags_horizontal = 3
 
 [node name="Name" type="Label" parent="HBoxContainer/VBoxContainer"]
-margin_right = 50.0
+margin_right = 54.0
 margin_bottom = 8.0
 size_flags_vertical = 0
 text = "Test"
@@ -48,7 +48,7 @@ clip_text = true
 
 [node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/VBoxContainer"]
 margin_top = 10.0
-margin_right = 50.0
+margin_right = 54.0
 margin_bottom = 28.0
 
 [node name="StaminaBackground" type="TextureRect" parent="HBoxContainer/VBoxContainer/VBoxContainer"]
@@ -76,7 +76,7 @@ texture_progress = ExtResource( 3 )
 
 [node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/VBoxContainer/VBoxContainer"]
 margin_top = 10.0
-margin_right = 50.0
+margin_right = 54.0
 margin_bottom = 18.0
 
 [node name="CurrentStamina" type="Label" parent="HBoxContainer/VBoxContainer/VBoxContainer/HBoxContainer"]

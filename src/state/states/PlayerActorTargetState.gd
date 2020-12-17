@@ -28,6 +28,8 @@ func start() -> void:
 	# warning-ignore:return_value_discarded
 	_interface.gui.connect("skill_cleared", self, "_skill_cleared")
 
+	_interface.gui.show_cancel = true
+
 	var targeting_data := _actor.battle_stats.range_data.get_targeting_data(
 			_actor.cell, _skill_index)
 	_interface.map_highlights.set_targets(targeting_data.target_range)
@@ -38,7 +40,8 @@ func start() -> void:
 func end() -> void:
 	_interface.mouse.disconnect("click", self, "_mouse_click")
 	_interface.gui.disconnect("skill_cleared", self, "_skill_cleared")
-	_interface.gui.current_skill_index = -1
+
+	_interface.gui.show_cancel = false
 
 	_interface.map_highlights.target_cursor_visible = false
 	_interface.map_highlights.clear_targets()
@@ -63,7 +66,7 @@ func _mouse_click(_position: Vector2) -> void:
 
 func _set_target(target_cell: Vector2) -> void:
 	var targeting_data := _actor.battle_stats.range_data.get_targeting_data(
-			_actor.cell, _interface.gui.current_skill_index)
+			_actor.cell, _skill_index)
 
 	if target_cell in targeting_data.valid_targets:
 		_interface.map_highlights.target_cursor_visible = true
@@ -75,8 +78,7 @@ func _set_target(target_cell: Vector2) -> void:
 
 func _confirm_target(target_cell: Vector2) -> void:
 	if _skill_target == target_cell:
-		var skill := _actor.stats.skills[ \
-				_interface.gui.current_skill_index] as Skill
+		var skill := _actor.stats.skills[_skill_index] as Skill
 		_chosen_action = SkillAction.new( \
 				_actor, _interface.current_map, skill, target_cell)
 		emit_signal("pop_state")

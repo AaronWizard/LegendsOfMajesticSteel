@@ -27,15 +27,15 @@ func start() -> void:
 	# warning-ignore:return_value_discarded
 	_interface.gui.connect("wait_started", self, "_wait_started")
 	# warning-ignore:return_value_discarded
-	#_interface.gui.connect("skill_selected", self, "_skill_selected")
+	_interface.gui.connect("skill_selected", self, "_skill_selected")
 
 
 func end() -> void:
 	_interface.mouse.disconnect("click", self, "_mouse_click")
 	_interface.gui.disconnect("wait_started", self, "_wait_started")
-	#_interface.gui.disconnect("skill_selected", self, "_skill_selected")
+	_interface.gui.disconnect("skill_selected", self, "_skill_selected")
 
-	_interface.gui.hide_action_menu()
+	_set_action_menu_visible(false)
 	_interface.map_highlights.clear_other_moves()
 
 	if _doing_action:
@@ -43,6 +43,7 @@ func end() -> void:
 
 
 func _wait_started() -> void:
+	_set_action_menu_visible(false)
 	_choose_action(null)
 
 
@@ -56,7 +57,7 @@ func _mouse_click(_position: Vector2) -> void:
 	var target_cell := _interface.current_map.get_mouse_cell()
 
 	if target_cell == _actor.cell:
-		_player_clicked()
+		_set_action_menu_visible(not _action_menu_visible)
 	elif not _action_menu_visible:
 		var path := _actor.battle_stats.range_data.get_walk_path(
 				_actor.cell, target_cell)
@@ -68,8 +69,8 @@ func _mouse_click(_position: Vector2) -> void:
 			_player_other_actor_clicked(target_cell)
 
 
-func _player_clicked() -> void:
-	_action_menu_visible = not _action_menu_visible
+func _set_action_menu_visible(visible: bool) -> void:
+	_action_menu_visible = visible
 	_interface.mouse.dragging_enabled = not _action_menu_visible
 
 	if _action_menu_visible:
