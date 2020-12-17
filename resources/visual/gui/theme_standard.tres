@@ -1,13 +1,13 @@
 [gd_resource type="Theme" load_steps=10 format=2]
 
-[ext_resource path="res://resources/gui/font_standard.tres" type="DynamicFont" id=1]
-[ext_resource path="res://resources/styleboxes/button_stylebox.tres" type="StyleBox" id=2]
-[ext_resource path="res://resources/styleboxes/button_pressed_stylebox.tres" type="StyleBox" id=3]
-[ext_resource path="res://resources/styleboxes/panel_stylebox.tres" type="StyleBox" id=4]
-[ext_resource path="res://resources/styleboxes/scroll_background_stylebox.tres" type="StyleBox" id=5]
-[ext_resource path="res://resources/styleboxes/scroll_h_grabber_stylebox.tres" type="StyleBox" id=6]
-[ext_resource path="res://resources/styleboxes/scroll_v_grabber_stylebox.tres" type="StyleBox" id=7]
-[ext_resource path="res://resources/styleboxes/button_disabled_stylebox.tres" type="StyleBox" id=8]
+[ext_resource path="res://resources/visual/gui/font_standard.tres" type="DynamicFont" id=1]
+[ext_resource path="res://resources/visual/styleboxes/button_stylebox.tres" type="StyleBox" id=2]
+[ext_resource path="res://resources/visual/styleboxes/button_pressed_stylebox.tres" type="StyleBox" id=3]
+[ext_resource path="res://resources/visual/styleboxes/panel_stylebox.tres" type="StyleBox" id=4]
+[ext_resource path="res://resources/visual/styleboxes/scroll_background_stylebox.tres" type="StyleBox" id=5]
+[ext_resource path="res://resources/visual/styleboxes/scroll_h_grabber_stylebox.tres" type="StyleBox" id=6]
+[ext_resource path="res://resources/visual/styleboxes/scroll_v_grabber_stylebox.tres" type="StyleBox" id=7]
+[ext_resource path="res://resources/visual/styleboxes/button_disabled_stylebox.tres" type="StyleBox" id=8]
 
 [sub_resource type="StyleBoxEmpty" id=1]
 

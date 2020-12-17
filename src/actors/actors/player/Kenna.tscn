@@ -2,8 +2,11 @@
 
 [ext_resource path="res://src/actors/Actor.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/graphics/actors/warrior_maiden.png" type="Texture" id=2]
-[ext_resource path="res://resources/actorstats/player/Kenna.tres" type="Resource" id=3]
-[ext_resource path="res://resources/shaders/dissolve_shader.shader" type="Shader" id=4]
+[ext_resource path="res://resources/data/stats/player/Kenna.tres" type="Resource" id=3]
+[ext_resource path="res://resources/visual/shaders/dissolve_shader.shader" type="Shader" id=4]
+
+
+
 
 [sub_resource type="OpenSimplexNoise" id=1]
 seed = 1

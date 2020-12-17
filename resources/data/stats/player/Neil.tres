@@ -1,0 +1,14 @@
+[gd_resource type="Resource" load_steps=5 format=2]
+
+[ext_resource path="res://resources/data/skills/BowShot.tres" type="Resource" id=1]
+[ext_resource path="res://assets/graphics/actors/barbarian.png" type="Texture" id=2]
+[ext_resource path="res://resources/data/skills/MeleeAttack.tres" type="Resource" id=3]
+[ext_resource path="res://src/actors/Stats.gd" type="Script" id=4]
+
+[resource]
+script = ExtResource( 4 )
+texture = ExtResource( 2 )
+max_stamina = 8
+attack = 2
+move = 5
+skills = [ ExtResource( 3 ), ExtResource( 1 ) ]

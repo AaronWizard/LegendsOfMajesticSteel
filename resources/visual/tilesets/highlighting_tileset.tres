@@ -1,12 +1,12 @@
 [gd_resource type="TileSet" load_steps=4 format=2]
 
-[ext_resource path="res://resources/animatedtextures/walk_border_animation.tres" type="Texture" id=1]
-[ext_resource path="res://resources/animatedtextures/target_animation.tres" type="Texture" id=2]
-[ext_resource path="res://resources/animatedtextures/other_walk_border_animation.tres" type="Texture" id=3]
+[ext_resource path="res://resources/visual/animatedtextures/other_walk_border_animation.tres" type="Texture" id=1]
+[ext_resource path="res://resources/visual/animatedtextures/walk_border_animation.tres" type="Texture" id=2]
+[ext_resource path="res://resources/visual/animatedtextures/target_animation.tres" type="Texture" id=3]
 
 [resource]
 0/name = "walk"
-0/texture = ExtResource( 1 )
+0/texture = ExtResource( 2 )
 0/tex_offset = Vector2( 0, 0 )
 0/modulate = Color( 1, 1, 1, 1 )
 0/region = Rect2( 0, 0, 264, 120 )
@@ -29,7 +29,7 @@
 0/shapes = [  ]
 0/z_index = 0
 1/name = "target"
-1/texture = ExtResource( 2 )
+1/texture = ExtResource( 3 )
 1/tex_offset = Vector2( 0, 0 )
 1/modulate = Color( 1, 1, 1, 1 )
 1/region = Rect2( 0, 0, 264, 120 )
@@ -52,7 +52,7 @@
 1/shapes = [  ]
 1/z_index = 0
 2/name = "other_walk"
-2/texture = ExtResource( 3 )
+2/texture = ExtResource( 1 )
 2/tex_offset = Vector2( 0, 0 )
 2/modulate = Color( 1, 1, 1, 1 )
 2/region = Rect2( 0, 0, 264, 120 )

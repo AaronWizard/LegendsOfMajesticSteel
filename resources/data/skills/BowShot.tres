@@ -1,0 +1,23 @@
+[gd_resource type="Resource" load_steps=7 format=2]
+
+[ext_resource path="res://src/skills/effects/ProjectileAttackEffect.gd" type="Script" id=1]
+[ext_resource path="res://src/maps/effects/Projectile.tscn" type="PackedScene" id=2]
+[ext_resource path="res://src/skills/ranges/DiamondRange.gd" type="Script" id=3]
+[ext_resource path="res://src/skills/Skill.gd" type="Script" id=4]
+
+[sub_resource type="Resource" id=1]
+script = ExtResource( 3 )
+min_dist = 2
+max_dist = 2
+
+[sub_resource type="Resource" id=2]
+script = ExtResource( 1 )
+projectile_scene = ExtResource( 2 )
+rotate_projectile = true
+
+[resource]
+script = ExtResource( 4 )
+name = "Bow Shot"
+range_type = SubResource( 1 )
+target_type = 2
+skill_effect = SubResource( 2 )
