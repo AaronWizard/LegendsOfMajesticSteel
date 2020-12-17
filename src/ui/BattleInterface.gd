@@ -29,9 +29,7 @@ func clear_actor() -> void:
 
 
 func action_starting(action: Action) -> void:
-	gui.buttons_visible = false
 	mouse.dragging_enabled = false
-
 	camera.follow_actor(action.actor)
 	map_highlights.moves_visible = action.show_map_highlights()
 

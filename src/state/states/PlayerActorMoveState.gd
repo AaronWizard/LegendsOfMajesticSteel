@@ -10,6 +10,8 @@ var _other_actor: Actor
 var _doing_action := false
 var _chosen_action: Action
 
+var _action_menu_visible := false
+
 
 func _init(interface: BattleInterface, player: Player, actor: Actor) -> void:
 	_interface = interface
@@ -18,7 +20,6 @@ func _init(interface: BattleInterface, player: Player, actor: Actor) -> void:
 
 
 func start() -> void:
-	_interface.gui.buttons_visible = true
 	_interface.mouse.dragging_enabled = true
 
 	# warning-ignore:return_value_discarded
@@ -26,13 +27,15 @@ func start() -> void:
 	# warning-ignore:return_value_discarded
 	_interface.gui.connect("wait_started", self, "_wait_started")
 	# warning-ignore:return_value_discarded
-	_interface.gui.connect("skill_selected", self, "_skill_selected")
+	#_interface.gui.connect("skill_selected", self, "_skill_selected")
 
 
 func end() -> void:
 	_interface.mouse.disconnect("click", self, "_mouse_click")
 	_interface.gui.disconnect("wait_started", self, "_wait_started")
-	_interface.gui.disconnect("skill_selected", self, "_skill_selected")
+	#_interface.gui.disconnect("skill_selected", self, "_skill_selected")
+
+	_interface.gui.hide_action_menu()
 	_interface.map_highlights.clear_other_moves()
 
 	if _doing_action:
@@ -51,14 +54,29 @@ func _skill_selected(_skill_index: int) -> void:
 
 func _mouse_click(_position: Vector2) -> void:
 	var target_cell := _interface.current_map.get_mouse_cell()
-	var path := _actor.battle_stats.range_data.get_walk_path(
-			_actor.cell, target_cell)
-	if path.size() > 0:
-		var action := Move.new(_actor, _interface.current_map, path)
-		action.allow_cancel(_interface.mouse)
-		_choose_action(action)
+
+	if target_cell == _actor.cell:
+		_player_clicked()
+	elif not _action_menu_visible:
+		var path := _actor.battle_stats.range_data.get_walk_path(
+				_actor.cell, target_cell)
+		if path.size() > 0:
+			var action := Move.new(_actor, _interface.current_map, path)
+			action.allow_cancel(_interface.mouse)
+			_choose_action(action)
+		else:
+			_player_other_actor_clicked(target_cell)
+
+
+func _player_clicked() -> void:
+	_action_menu_visible = not _action_menu_visible
+	_interface.mouse.dragging_enabled = not _action_menu_visible
+
+	if _action_menu_visible:
+		var pos := _interface.current_map.get_screen_cell_pos(_actor.cell)
+		_interface.gui.show_action_menu(pos)
 	else:
-		_player_other_actor_clicked(target_cell)
+		_interface.gui.hide_action_menu()
 
 
 func _player_other_actor_clicked(target_cell: Vector2) -> void:
