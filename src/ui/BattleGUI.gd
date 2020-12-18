@@ -18,8 +18,9 @@ onready var turn_queue := $TurnQueuePanel as TurnQueuePanel
 onready var _current_actor_status := $HBoxContainer/CurrentActorStatus \
 		as ActorStatusPanel
 
-onready var _action_menu_pivot := $ActionMenuPivot as Control
+onready var _action_menu_region := $ActionMenuRegion as Control
 
+onready var _action_menu_pivot := $ActionMenuPivot as Node2D
 onready var _action_menu := $ActionMenuPivot/ActionMenu as RadialContainer
 onready var _attack_button := $ActionMenuPivot/ActionMenu/Attack as Control
 onready var _skills_button := $ActionMenuPivot/ActionMenu/Skill as Control
@@ -38,7 +39,7 @@ func set_current_actor(value: Actor) -> void:
 		_attack_button.visible = current_actor.stats.skills.size() > 0
 		_skills_button.visible = current_actor.stats.skills.size() > 1
 
-		match (current_actor.stats.skills.size()):
+		match current_actor.stats.skills.size():
 			0:
 				_action_menu.base_rotation = _ACTION_MENU_ROTATION_ONE_B
 			1:
@@ -55,9 +56,27 @@ func get_show_cancel() -> bool:
 	return _cancel_button.visible
 
 
-func show_action_menu(position: Vector2) -> void:
+func show_action_menu(screen_position: Vector2) -> void:
+	var rect := _action_menu_region.get_rect()
+	var pivot_position := Vector2(screen_position)
+
+	if not rect.has_point(pivot_position):
+		if pivot_position.x > rect.end.x:
+			pivot_position.x = rect.end.x
+		elif pivot_position.x < rect.position.x:
+			pivot_position.x = rect.position.x
+
+		if pivot_position.y < rect.position.y:
+			pivot_position.y = rect.position.y
+		elif pivot_position.y > rect.end.y:
+			pivot_position.y = rect.end.y
+
 	_action_menu_pivot.visible = true
-	_action_menu_pivot.rect_position = position
+	_action_menu_pivot.position = pivot_position
+
+
+func get_action_menu_pos() -> Vector2:
+	return _action_menu_pivot.position
 
 
 func hide_action_menu() -> void:

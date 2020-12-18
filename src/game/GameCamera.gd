@@ -35,15 +35,15 @@ func drag(relative: Vector2) -> void:
 func follow_actor(actor: Actor) -> void:
 	stop_following_actor()
 
-	_set_smoothing(true)
+	_set_smoothing(true, true)
 
 	_current_actor = actor
 	_current_actor.remote_transform.remote_path = get_path()
 
 
-func move_to_position(new_position: Vector2) -> void:
+func move_to_position(new_position: Vector2, drag_margin := true) -> void:
 	stop_following_actor()
-	_set_smoothing(true)
+	_set_smoothing(true, drag_margin)
 	position = new_position
 
 
@@ -52,13 +52,13 @@ func stop_following_actor() -> void:
 		_current_actor.remote_transform.remote_path = NodePath()
 		_current_actor = null
 
-	_set_smoothing(false)
+	_set_smoothing(false, false)
 	position = get_camera_position()
 
 
-func _set_smoothing(smoothing: bool) -> void:
-	drag_margin_h_enabled = smoothing
-	drag_margin_v_enabled = smoothing
+func _set_smoothing(smoothing: bool, drag_margin: bool) -> void:
+	drag_margin_h_enabled = drag_margin
+	drag_margin_v_enabled = drag_margin
 	smoothing_enabled = smoothing
 
 

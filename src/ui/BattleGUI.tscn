@@ -46,16 +46,22 @@ grow_vertical = 0
 size_flags_vertical = 0
 icon = ExtResource( 2 )
 
-[node name="ActionMenuPivot" type="Control" parent="."]
-visible = false
-margin_left = 112.0
-margin_top = 112.0
-margin_right = 112.0
-margin_bottom = 112.0
+[node name="ActionMenuRegion" type="ReferenceRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 45.0
+margin_top = 71.0
+margin_right = -45.0
+margin_bottom = -91.0
 mouse_filter = 2
 __meta__ = {
-"_edit_group_": true,
 "_edit_use_anchors_": false
+}
+
+[node name="ActionMenuPivot" type="Node2D" parent="."]
+visible = false
+__meta__ = {
+"_edit_group_": true
 }
 
 [node name="ActionMenu" parent="ActionMenuPivot" instance=ExtResource( 7 )]

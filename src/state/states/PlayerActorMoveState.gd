@@ -76,6 +76,11 @@ func _set_action_menu_visible(visible: bool) -> void:
 	if _action_menu_visible:
 		var pos := _interface.current_map.get_screen_cell_pos(_actor.cell)
 		_interface.gui.show_action_menu(pos)
+
+		var menu_pos := _interface.gui.get_action_menu_pos()
+		if menu_pos != pos:
+			var diff := menu_pos - pos
+			_interface.camera.move_to_position(_interface.camera.position - diff, false)
 	else:
 		_interface.gui.hide_action_menu()
 
