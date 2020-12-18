@@ -83,6 +83,8 @@ func _ready() -> void:
 	if stats:
 		_stamina_bar.max_stamina = stats.max_stamina
 
+	_randomize_idle_start()
+
 
 func _draw() -> void:
 	if Engine.editor_hint:
@@ -269,6 +271,13 @@ func get_target_visible() -> bool:
 func start_battle() -> void:
 	battle_stats.start_battle(stats.max_stamina)
 	_stamina_bar.reset()
+
+
+func _randomize_idle_start() -> void:
+	assert(_anim.current_animation == "actor_idle")
+	randomize()
+	var offset := rand_range(0, _anim.current_animation_length)
+	_anim.advance(offset)
 
 
 func _set_facing(direction: Vector2) -> void:
