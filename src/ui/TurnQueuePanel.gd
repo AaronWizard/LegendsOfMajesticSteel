@@ -88,3 +88,8 @@ func _animate_resize() -> void:
 			old_size, new_size, TurnQueue.ANIM_TIME)
 	# warning-ignore:return_value_discarded
 	_tween.start()
+
+
+func _on_TurnQueuePanel_resized() -> void:
+	if _panel:
+		_panel.rect_position.x = _panel_pos()

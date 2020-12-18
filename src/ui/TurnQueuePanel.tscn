@@ -5,7 +5,6 @@
 [ext_resource path="res://assets/graphics/ui/icons/current_turn_cursor.png" type="Texture" id=3]
 [ext_resource path="res://src/ui/TurnQueue.tscn" type="PackedScene" id=5]
 
-
 [node name="TurnQueuePanel" type="ReferenceRect"]
 margin_right = 18.0
 margin_bottom = 24.0
@@ -52,3 +51,4 @@ __meta__ = {
 }
 
 [node name="Tween" type="Tween" parent="."]
+[connection signal="resized" from="." to="." method="_on_TurnQueuePanel_resized"]
