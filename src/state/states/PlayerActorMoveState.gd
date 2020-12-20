@@ -84,7 +84,7 @@ func _set_action_menu_visible(visible: bool) -> void:
 			_interface.camera.move_to_position(
 					_interface.camera.position - diff, false)
 	else:
-		_interface.gui.hide_action_menu()
+		_interface.gui.hide_action_menus()
 
 
 func _player_other_actor_clicked(target_cell: Vector2) -> void:

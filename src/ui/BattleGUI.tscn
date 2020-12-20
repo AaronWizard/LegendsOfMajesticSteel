@@ -95,6 +95,23 @@ margin_top = 4.01923
 margin_right = 45.0001
 margin_bottom = 34.0193
 icon = ExtResource( 8 )
+
+[node name="SkillMenuPivot" type="Node2D" parent="."]
+visible = false
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="SkillMenu" parent="SkillMenuPivot" instance=ExtResource( 7 )]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -45.0
+margin_top = -45.0
+margin_right = 45.0
+margin_bottom = 45.0
+base_rotation = 0.0
 [connection signal="portrait_pressed" from="HBoxContainer/CurrentActorStatus" to="." method="_on_CurrentActorStatus_portrait_pressed"]
 [connection signal="pressed" from="HBoxContainer/CancelSkill" to="." method="_on_CancelSkill_pressed"]
 [connection signal="pressed" from="ActionMenuPivot/ActionMenu/Wait" to="." method="_on_Wait_pressed"]
