@@ -1,8 +1,9 @@
-[gd_resource type="Resource" load_steps=5 format=2]
+[gd_resource type="Resource" load_steps=6 format=2]
 
 [ext_resource path="res://src/skills/effects/MeleeAttackEffect.gd" type="Script" id=1]
 [ext_resource path="res://resources/data/skills/ranges/MeleeRange.tres" type="Resource" id=2]
 [ext_resource path="res://src/skills/Skill.gd" type="Script" id=3]
+[ext_resource path="res://assets/graphics/ui/icons/actions/attack.png" type="Texture" id=4]
 
 [sub_resource type="Resource" id=1]
 script = ExtResource( 1 )
@@ -10,6 +11,7 @@ script = ExtResource( 1 )
 [resource]
 script = ExtResource( 3 )
 name = "Attack"
+icon = ExtResource( 4 )
 range_type = ExtResource( 2 )
 target_type = 2
 skill_effect = SubResource( 1 )

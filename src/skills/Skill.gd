@@ -6,6 +6,7 @@ enum TargetType { ANY, ANY_ACTOR, ENEMY, ALLY }
 signal finished
 
 export var name := "Skill"
+export var icon: Texture
 
 export var range_type: Resource
 export(TargetType) var target_type := TargetType.ANY
