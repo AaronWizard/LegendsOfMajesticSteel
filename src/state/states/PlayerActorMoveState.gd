@@ -80,7 +80,9 @@ func _set_action_menu_visible(visible: bool) -> void:
 		var menu_pos := _interface.gui.get_action_menu_pos()
 		if menu_pos != pos:
 			var diff := menu_pos - pos
-			_interface.camera.move_to_position(_interface.camera.position - diff, false)
+			_interface.camera.position = _interface.camera.get_camera_position()
+			_interface.camera.move_to_position(
+					_interface.camera.position - diff, false)
 	else:
 		_interface.gui.hide_action_menu()
 
