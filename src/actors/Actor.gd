@@ -274,10 +274,11 @@ func start_battle() -> void:
 
 
 func _randomize_idle_start() -> void:
-	assert(_anim.current_animation == "actor_idle")
-	randomize()
-	var offset := rand_range(0, _anim.current_animation_length)
-	_anim.advance(offset)
+	if not Engine.editor_hint:
+		assert(_anim.current_animation == "actor_idle")
+		randomize()
+		var offset := rand_range(0, _anim.current_animation_length)
+		_anim.advance(offset)
 
 
 func _set_facing(direction: Vector2) -> void:
