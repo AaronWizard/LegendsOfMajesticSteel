@@ -6,4 +6,4 @@
 script = ExtResource( 1 )
 tile_names = [ "water", "mountain" ]
 move_cost = 0
-defence = 0.0
+is_defensive = false
