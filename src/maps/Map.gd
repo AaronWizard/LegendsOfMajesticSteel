@@ -58,9 +58,22 @@ func get_tile_name(cell: Vector2) -> String:
 	return name
 
 
+func get_tile_properties(cell: Vector2) -> TileProperties:
+	var result: TileProperties = null
+
+	if _tile_properties_set:
+		var tile_name := get_tile_name(cell)
+		if tile_name:
+			result = _tile_properties_set.get_properties(tile_name)
+
+	return result
+
+
 func get_cell_move_cost(cell: Vector2) -> int:
-	var tile_name := get_tile_name(cell)
-	var result := _tile_properties_set.move_cost(tile_name)
+	var result := 1
+	var properties := get_tile_properties(cell)
+	if properties:
+		result = properties.move_cost
 	return result
 
 
@@ -96,14 +109,10 @@ func actor_can_enter_cell(actor: Actor, cell: Vector2,
 			result = ignore_allied_actors \
 					and (other_actor.faction == actor.faction)
 
-	if result and _tile_properties_set:
-		var tile_name := get_tile_name(cell)
-		if tile_name:
-			var properties := _tile_properties_set.get_properties(tile_name)
-			if properties and properties.blocks_move:
-				result = false
-		else:
-			result = false
+	if result:
+		var properties := get_tile_properties(cell)
+		if properties:
+			result = !properties.blocks_move
 
 	return result
 
