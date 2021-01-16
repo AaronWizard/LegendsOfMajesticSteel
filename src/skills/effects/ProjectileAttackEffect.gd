@@ -8,32 +8,33 @@ var _waiter := SignalWaiter.new()
 
 
 func start(target: Vector2, source_actor: Actor, map: Map) -> void:
+	var dir := source_actor.cell.direction_to(target)
 	var target_actor := map.get_actor_on_cell(target)
 
-	_waiter.wait_for_signal(source_actor, "attack_finished")
+	var attack := AttackProcess.new(
+			target_actor, map, source_actor.stats.attack, dir)
 
-	var dir := source_actor.cell.direction_to(target_actor.cell)
+	_waiter.wait_for_signal(source_actor, "attack_finished")
 	source_actor.animate_attack(dir, true)
 	yield(source_actor, "attack_hit")
 
-	var projectile := projectile_scene.instance() as Projectile
-	projectile.start_cell = source_actor.cell
-	projectile.end_cell = target
-	projectile.rotate_sprite = rotate_projectile
+	var projectile := _create_projectile(source_actor.cell, target)
 	map.add_effect(projectile)
-
 	yield(projectile, "finished")
 
-	target_actor.battle_stats.modify_stamina(-source_actor.stats.attack)
-	if target_actor.battle_stats.is_alive:
-		_waiter.wait_for_signal(target_actor, "stamina_animation_finished")
-		_waiter.wait_for_signal(target_actor, "hit_reaction_finished")
-		target_actor.animate_hit(dir)
-	else:
-		target_actor.animate_death(dir)
-		yield(target_actor, "died")
+	attack.run()
+	yield(attack, "finished")
 
 	if _waiter.waiting:
 		yield(_waiter, "finished")
 
 	emit_signal("finished")
+
+
+func _create_projectile(start_cell: Vector2, end_cell: Vector2) -> Projectile:
+	var result := projectile_scene.instance() as Projectile
+	result.start_cell = start_cell
+	result.end_cell = end_cell
+	result.rotate_sprite = rotate_projectile
+
+	return result
