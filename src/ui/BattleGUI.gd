@@ -11,12 +11,11 @@ const _ACTION_MENU_ROTATION_TWO_B := 0
 const _ACTION_MENU_ROTATION_THREE_B := 90
 
 var current_actor: Actor = null setget set_current_actor
-var show_cancel: bool setget set_show_cancel, get_show_cancel
 
 onready var turn_queue := $TurnQueuePanel as TurnQueuePanel
 
-onready var _current_actor_status := $HBoxContainer/CurrentActorStatus \
-		as ActorStatusPanel
+onready var _current_actor_status := $CurrentActorStatus as ActorStatusPanel
+onready var _skill_panel := $SkillPanel as SkillPanel
 
 onready var _action_menu_region := $ActionMenuRegion as Control
 
@@ -28,8 +27,6 @@ onready var _attack_button := $ActionMenuPivot/ActionMenu/Attack as Control
 onready var _skills_button := $ActionMenuPivot/ActionMenu/Skill as Control
 
 onready var _skill_menu := $SkillMenuPivot/SkillMenu as RadialContainer
-
-onready var _cancel_button := $HBoxContainer/CancelSkill as Control
 
 func set_current_actor(value: Actor) -> void:
 	current_actor = value
@@ -55,20 +52,22 @@ func set_current_actor(value: Actor) -> void:
 		_set_skills()
 
 
-func set_show_cancel(new_value: bool) -> void:
-	_cancel_button.visible = new_value
-
-
-func get_show_cancel() -> bool:
-	return _cancel_button.visible
-
-
 func show_action_menu(screen_position: Vector2) -> void:
 	_show_action_menu(_action_menu_pivot, screen_position)
 
 
 func show_skill_menu(screen_position: Vector2) -> void:
 	_show_action_menu(_skill_menu_pivot, screen_position)
+
+
+func show_skill_panel(skill: Skill) -> void:
+	_skill_panel.set_skill(skill)
+	_skill_panel.visible = true
+
+
+func hide_skill_panel() -> void:
+	_skill_panel.clear()
+	_skill_panel.visible = false
 
 
 func get_action_menu_pos() -> Vector2:
@@ -135,5 +134,6 @@ func _on_Wait_pressed() -> void:
 	emit_signal("wait_started")
 
 
-func _on_CancelSkill_pressed() -> void:
+func _on_SkillPanel_cancelled() -> void:
+	_skill_panel.visible = false
 	emit_signal("skill_cleared")

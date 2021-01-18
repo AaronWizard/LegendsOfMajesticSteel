@@ -28,7 +28,7 @@ func start() -> void:
 	# warning-ignore:return_value_discarded
 	_interface.gui.connect("skill_cleared", self, "_skill_cleared")
 
-	_interface.gui.show_cancel = true
+	_interface.gui.show_skill_panel(_get_skill())
 
 	var targeting_data := _actor.battle_stats.range_data.get_targeting_data(
 			_actor.cell, _skill_index)
@@ -41,7 +41,7 @@ func end() -> void:
 	_interface.mouse.disconnect("click", self, "_mouse_click")
 	_interface.gui.disconnect("skill_cleared", self, "_skill_cleared")
 
-	_interface.gui.show_cancel = false
+	_interface.gui.hide_skill_panel()
 
 	_interface.map_highlights.target_cursor_visible = false
 	_interface.map_highlights.clear_targets()
@@ -78,9 +78,13 @@ func _set_target(target_cell: Vector2) -> void:
 
 func _confirm_target(target_cell: Vector2) -> void:
 	if _skill_target == target_cell:
-		var skill := _actor.stats.skills[_skill_index] as Skill
+		var skill := _get_skill()
 		_chosen_action = SkillAction.new( \
 				_actor, _interface.current_map, skill, target_cell)
 		emit_signal("pop_state")
 	else:
 		_set_target(target_cell)
+
+
+func _get_skill() -> Skill:
+	return _actor.stats.skills[_skill_index] as Skill

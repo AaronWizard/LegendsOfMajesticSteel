@@ -1,14 +1,13 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://src/ui/BattleGUI.gd" type="Script" id=1]
-[ext_resource path="res://assets/graphics/ui/icons/actions/cancel.png" type="Texture" id=2]
+[ext_resource path="res://src/ui/SkillPanel.tscn" type="PackedScene" id=2]
 [ext_resource path="res://src/ui/TurnQueuePanel.tscn" type="PackedScene" id=3]
 [ext_resource path="res://src/ui/ActorStatusPanel.tscn" type="PackedScene" id=4]
 [ext_resource path="res://assets/graphics/ui/icons/actions/wait.png" type="Texture" id=5]
 [ext_resource path="res://assets/graphics/ui/icons/actions/attack.png" type="Texture" id=6]
 [ext_resource path="res://src/ui/RadialContainer.tscn" type="PackedScene" id=7]
 [ext_resource path="res://assets/graphics/ui/icons/actions/skill.png" type="Texture" id=8]
-[ext_resource path="res://resources/visual/gui/theme_standard.tres" type="Theme" id=9]
 
 [node name="BattleGUI" type="CanvasLayer"]
 script = ExtResource( 1 )
@@ -21,29 +20,26 @@ margin_right = -2.0
 margin_bottom = 26.0
 size_flags_horizontal = 3
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
+[node name="CurrentActorStatus" parent="." instance=ExtResource( 4 )]
+visible = false
 anchor_top = 1.0
 anchor_bottom = 1.0
 margin_left = 2.0
 margin_top = -40.0
-margin_right = 112.0
+margin_right = 86.0
 margin_bottom = -2.0
-mouse_filter = 2
-theme = ExtResource( 9 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
+size_flags_horizontal = 1
 
-[node name="CurrentActorStatus" parent="HBoxContainer" instance=ExtResource( 4 )]
+[node name="SkillPanel" parent="." instance=ExtResource( 2 )]
 visible = false
-
-[node name="CancelSkill" type="Button" parent="HBoxContainer"]
-visible = false
-margin_right = 24.0
-margin_bottom = 24.0
-grow_vertical = 0
-size_flags_vertical = 0
-icon = ExtResource( 2 )
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -127.0
+margin_top = -40.0
+margin_right = -1.99998
+margin_bottom = -2.0
 
 [node name="ActionMenuRegion" type="ReferenceRect" parent="."]
 anchor_right = 1.0
@@ -112,8 +108,8 @@ margin_top = -45.0
 margin_right = 45.0
 margin_bottom = 45.0
 base_rotation = 0.0
-[connection signal="portrait_pressed" from="HBoxContainer/CurrentActorStatus" to="." method="_on_CurrentActorStatus_portrait_pressed"]
-[connection signal="pressed" from="HBoxContainer/CancelSkill" to="." method="_on_CancelSkill_pressed"]
+[connection signal="portrait_pressed" from="CurrentActorStatus" to="." method="_on_CurrentActorStatus_portrait_pressed"]
+[connection signal="cancelled" from="SkillPanel" to="." method="_on_SkillPanel_cancelled"]
 [connection signal="pressed" from="ActionMenuPivot/ActionMenu/Wait" to="." method="_on_Wait_pressed"]
 [connection signal="pressed" from="ActionMenuPivot/ActionMenu/Attack" to="." method="_on_Attack_pressed"]
 [connection signal="pressed" from="ActionMenuPivot/ActionMenu/Skill" to="." method="_on_Skill_pressed"]
