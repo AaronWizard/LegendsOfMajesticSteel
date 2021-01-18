@@ -18,8 +18,9 @@ rotate_projectile = true
 
 [resource]
 script = ExtResource( 4 )
-name = "Bow Shot"
 icon = ExtResource( 5 )
+name = "Attack"
+description = "Rain death from afar"
 range_type = SubResource( 1 )
 target_type = 2
 skill_effect = SubResource( 2 )

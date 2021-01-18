@@ -10,8 +10,9 @@ script = ExtResource( 1 )
 
 [resource]
 script = ExtResource( 3 )
-name = "Attack"
 icon = ExtResource( 4 )
+name = "Attack"
+description = "Strike the foe with power"
 range_type = ExtResource( 2 )
 target_type = 2
 skill_effect = SubResource( 1 )
