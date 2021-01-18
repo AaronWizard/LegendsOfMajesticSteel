@@ -35,7 +35,7 @@ __meta__ = {
 }
 
 [node name="CurrentActorStatus" parent="HBoxContainer" instance=ExtResource( 4 )]
-margin_right = 100.0
+visible = false
 
 [node name="CancelSkill" type="Button" parent="HBoxContainer"]
 visible = false
