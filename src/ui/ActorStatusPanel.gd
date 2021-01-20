@@ -6,12 +6,21 @@ signal portrait_pressed
 onready var _portrait := $HBoxContainer/PortraitButton as Button
 onready var _name := $HBoxContainer/VBoxContainer/Name as Label
 
-onready var _stamina_bar := $HBoxContainer/VBoxContainer/VBoxContainer/ \
-		StaminaBackground/CenterContainer/StaminaBar as Range
-onready var _current_stamina := $HBoxContainer/VBoxContainer/VBoxContainer/ \
-		HBoxContainer/CurrentStamina as Label
-onready var _max_stamina := $HBoxContainer/VBoxContainer/VBoxContainer/ \
-		HBoxContainer/MaxStamina as Label
+onready var _stats := $HBoxContainer/VBoxContainer/Stats as Container
+
+onready var _attack := _stats.get_node("Attack/Attack") as Label
+
+onready var _defence_stats := _stats.get_node("Defence/VBoxContainer") \
+		as Container
+
+onready var _stamina_bar := _defence_stats.get_node( \
+		"StaminaBackground/CenterContainer/StaminaBar") as Range
+
+onready var _stamina_values := _defence_stats.get_node("DefenceValues") \
+		as Container
+onready var _current_stamina := _stamina_values.get_node("CurrentStamina") \
+		as Label
+onready var _max_stamina := _stamina_values.get_node("MaxStamina") as Label
 
 
 func set_actor(actor: Actor) -> void:
@@ -19,6 +28,8 @@ func set_actor(actor: Actor) -> void:
 	_portrait.icon = actor.stats.portrait
 	_portrait.disabled = false
 	_name.text = actor.character_name
+
+	_attack.text = str(actor.stats.attack)
 
 	_stamina_bar.max_value = actor.stats.max_stamina
 	_stamina_bar.value = actor.battle_stats.stamina

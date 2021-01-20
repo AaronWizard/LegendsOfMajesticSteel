@@ -1,12 +1,14 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://resources/visual/gui/theme_standard.tres" type="Theme" id=1]
 [ext_resource path="res://src/ui/ActorStatusPanel.gd" type="Script" id=2]
-[ext_resource path="res://assets/graphics/ui/staminabar_big_fill.png" type="Texture" id=3]
-[ext_resource path="res://assets/graphics/ui/staminabar_big_background.png" type="Texture" id=4]
+[ext_resource path="res://assets/graphics/ui/staminabar_background.png" type="Texture" id=3]
+[ext_resource path="res://assets/graphics/ui/staminabar_fill_front.png" type="Texture" id=4]
+[ext_resource path="res://assets/graphics/ui/icons/stats/defence.png" type="Texture" id=5]
+[ext_resource path="res://assets/graphics/ui/icons/stats/attack.png" type="Texture" id=6]
 
 [node name="ActorStatusPanel" type="PanelContainer"]
-margin_right = 84.0
+margin_right = 90.0
 margin_bottom = 38.0
 mouse_filter = 2
 size_flags_horizontal = 0
@@ -19,7 +21,7 @@ __meta__ = {
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 margin_left = 3.0
 margin_top = 3.0
-margin_right = 81.0
+margin_right = 87.0
 margin_bottom = 35.0
 
 [node name="PortraitButton" type="Button" parent="HBoxContainer"]
@@ -27,6 +29,7 @@ margin_right = 32.0
 margin_bottom = 32.0
 rect_min_size = Vector2( 32, 32 )
 size_flags_horizontal = 4
+size_flags_vertical = 4
 theme = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -34,64 +37,96 @@ __meta__ = {
 
 [node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer"]
 margin_left = 34.0
-margin_right = 78.0
-margin_bottom = 32.0
+margin_top = 4.0
+margin_right = 84.0
+margin_bottom = 28.0
 size_flags_horizontal = 3
+size_flags_vertical = 4
 
 [node name="Name" type="Label" parent="HBoxContainer/VBoxContainer"]
-margin_right = 44.0
+margin_right = 50.0
 margin_bottom = 7.0
 size_flags_vertical = 0
 text = "Test"
 clip_text = true
 
-[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/VBoxContainer"]
+[node name="Stats" type="HBoxContainer" parent="HBoxContainer/VBoxContainer"]
 margin_top = 9.0
-margin_right = 44.0
-margin_bottom = 26.0
+margin_right = 50.0
+margin_bottom = 24.0
 
-[node name="StaminaBackground" type="TextureRect" parent="HBoxContainer/VBoxContainer/VBoxContainer"]
-margin_right = 44.0
+[node name="Attack" type="HBoxContainer" parent="HBoxContainer/VBoxContainer/Stats"]
+margin_right = 14.0
 margin_bottom = 8.0
-size_flags_horizontal = 0
-texture = ExtResource( 4 )
+size_flags_vertical = 0
 
-[node name="CenterContainer" type="CenterContainer" parent="HBoxContainer/VBoxContainer/VBoxContainer/StaminaBackground"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-size_flags_horizontal = 0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="StaminaBar" type="TextureProgress" parent="HBoxContainer/VBoxContainer/VBoxContainer/StaminaBackground/CenterContainer"]
-margin_left = 2.0
-margin_top = 2.0
-margin_right = 42.0
-margin_bottom = 6.0
+[node name="AttackIcon" type="TextureRect" parent="HBoxContainer/VBoxContainer/Stats/Attack"]
+margin_right = 8.0
+margin_bottom = 8.0
 size_flags_vertical = 4
-value = 100.0
-texture_progress = ExtResource( 3 )
+texture = ExtResource( 6 )
 
-[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/VBoxContainer/VBoxContainer"]
-margin_top = 10.0
-margin_right = 44.0
-margin_bottom = 17.0
+[node name="Attack" type="Label" parent="HBoxContainer/VBoxContainer/Stats/Attack"]
+margin_left = 10.0
+margin_right = 14.0
+margin_bottom = 7.0
+text = "5"
 
-[node name="CurrentStamina" type="Label" parent="HBoxContainer/VBoxContainer/VBoxContainer/HBoxContainer"]
+[node name="Defence" type="HBoxContainer" parent="HBoxContainer/VBoxContainer/Stats"]
+margin_left = 16.0
+margin_right = 50.0
+margin_bottom = 15.0
+
+[node name="DefenceIcon" type="TextureRect" parent="HBoxContainer/VBoxContainer/Stats/Defence"]
+margin_right = 8.0
+margin_bottom = 15.0
+texture = ExtResource( 5 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/VBoxContainer/Stats/Defence"]
+margin_left = 10.0
+margin_right = 34.0
+margin_bottom = 15.0
+
+[node name="DefenceValues" type="HBoxContainer" parent="HBoxContainer/VBoxContainer/Stats/Defence/VBoxContainer"]
+margin_right = 24.0
+margin_bottom = 7.0
+
+[node name="CurrentStamina" type="Label" parent="HBoxContainer/VBoxContainer/Stats/Defence/VBoxContainer/DefenceValues"]
 margin_right = 8.0
 margin_bottom = 7.0
 text = "20"
 
-[node name="Slash" type="Label" parent="HBoxContainer/VBoxContainer/VBoxContainer/HBoxContainer"]
+[node name="Slash" type="Label" parent="HBoxContainer/VBoxContainer/Stats/Defence/VBoxContainer/DefenceValues"]
 margin_left = 10.0
 margin_right = 14.0
 margin_bottom = 7.0
 text = "/"
 
-[node name="MaxStamina" type="Label" parent="HBoxContainer/VBoxContainer/VBoxContainer/HBoxContainer"]
+[node name="MaxStamina" type="Label" parent="HBoxContainer/VBoxContainer/Stats/Defence/VBoxContainer/DefenceValues"]
 margin_left = 16.0
 margin_right = 24.0
 margin_bottom = 7.0
 text = "20"
+
+[node name="StaminaBackground" type="TextureRect" parent="HBoxContainer/VBoxContainer/Stats/Defence/VBoxContainer"]
+margin_top = 9.0
+margin_right = 24.0
+margin_bottom = 15.0
+texture = ExtResource( 3 )
+
+[node name="CenterContainer" type="CenterContainer" parent="HBoxContainer/VBoxContainer/Stats/Defence/VBoxContainer/StaminaBackground"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="StaminaBar" type="TextureProgress" parent="HBoxContainer/VBoxContainer/Stats/Defence/VBoxContainer/StaminaBackground/CenterContainer"]
+margin_left = 2.0
+margin_top = 2.0
+margin_right = 22.0
+margin_bottom = 4.0
+size_flags_vertical = 4
+value = 100.0
+texture_progress = ExtResource( 4 )
 [connection signal="pressed" from="HBoxContainer/PortraitButton" to="." method="_on_PortraitButton_pressed"]

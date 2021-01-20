@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/staminabar_big_background.png-972e4718e3ac66483bdbb3515a9827d5.stex"
+path="res://.import/attack.png-80efaa5d1ba8b140fbc9091d45a4526a.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/graphics/ui/staminabar_big_background.png"
-dest_files=[ "res://.import/staminabar_big_background.png-972e4718e3ac66483bdbb3515a9827d5.stex" ]
+source_file="res://assets/graphics/ui/icons/stats/attack.png"
+dest_files=[ "res://.import/attack.png-80efaa5d1ba8b140fbc9091d45a4526a.stex" ]
 
 [params]
 
