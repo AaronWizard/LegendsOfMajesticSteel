@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/player_turn.png-153f42ccc0107ca1dab1f638669533af.stex"
+path="res://.import/player_turn.png-a18445d881e956c9472533e3b48a6732.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/graphics/ui/icons/player_turn.png"
-dest_files=[ "res://.import/player_turn.png-153f42ccc0107ca1dab1f638669533af.stex" ]
+source_file="res://assets/graphics/ui/icons/turnqueue/player_turn.png"
+dest_files=[ "res://.import/player_turn.png-a18445d881e956c9472533e3b48a6732.stex" ]
 
 [params]
 

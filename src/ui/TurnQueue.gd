@@ -3,11 +3,12 @@ extends ReferenceRect
 
 const ANIM_TIME := 0.4
 
-const _ICON_PLAYER := preload("res://assets/graphics/ui/icons/player_turn.png")
-const _ICON_ENEMY := preload("res://assets/graphics/ui/icons/enemy_turn.png")
+const _ICON_PLAYER := preload( \
+		"res://assets/graphics/ui/icons/turnqueue/player_turn.png")
+const _ICON_ENEMY := preload( \
+		"res://assets/graphics/ui/icons/turnqueue/enemy_turn.png")
 const _ICON_ROUND_MARKER := preload( \
-		"res://assets/graphics/ui/icons/round_marker.png" \
-)
+		"res://assets/graphics/ui/icons/turnqueue/round_marker.png")
 
 var _turn_index := 0
 
