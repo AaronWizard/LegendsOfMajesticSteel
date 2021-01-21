@@ -36,7 +36,7 @@ func end() -> void:
 	_interface.gui.disconnect("skill_selected", self, "_skill_selected")
 
 	_set_action_menu_visible(false)
-	_interface.map_highlights.clear_other_moves()
+	_interface.clear_other_actor()
 
 	if _doing_action:
 		_player.do_action(_chosen_action)
@@ -91,11 +91,10 @@ func _player_other_actor_clicked(target_cell: Vector2) -> void:
 	var actor := _interface.current_map.get_actor_on_cell(target_cell)
 	if (actor != null) and (actor != _actor) and (actor != _other_actor):
 		_other_actor = actor
-		_interface.map_highlights.set_other_moves(
-				_other_actor.battle_stats.range_data.get_visible_move_range())
+		_interface.set_other_actor(_other_actor)
 	else:
 		_other_actor = null
-		_interface.map_highlights.clear_other_moves()
+		_interface.clear_other_actor()
 
 
 func _choose_action(action: Action) -> void:

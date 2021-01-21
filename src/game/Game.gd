@@ -37,7 +37,7 @@ func _on_TurnManager_battle_started(turn_order: Array) -> void:
 
 
 func _on_TurnManager_turn_started(actor: Actor) -> void:
-	_interface.set_actor(actor)
+	_interface.set_current_actor(actor)
 
 
 func _on_TurnManager_action_starting(action: Action) -> void:
@@ -46,7 +46,7 @@ func _on_TurnManager_action_starting(action: Action) -> void:
 
 func _on_TurnManager_turn_ended() -> void:
 	_interface.gui.turn_queue.next_turn()
-	_interface.clear_actor()
+	_interface.clear_current_actor()
 
 
 func _on_TurnManager_actor_died(turn_index: int) -> void:

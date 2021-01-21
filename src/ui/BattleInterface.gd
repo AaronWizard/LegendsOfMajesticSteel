@@ -14,7 +14,7 @@ func set_current_map(value: Map) -> void:
 	camera.set_bounds(current_map.get_pixel_rect())
 
 
-func set_actor(actor: Actor) -> void:
+func set_current_actor(actor: Actor) -> void:
 	map_highlights.moves_visible = true
 	map_highlights.set_moves(
 			actor.battle_stats.range_data.get_visible_move_range())
@@ -22,10 +22,21 @@ func set_actor(actor: Actor) -> void:
 	gui.current_actor = actor
 
 
-func clear_actor() -> void:
+func clear_current_actor() -> void:
 	map_highlights.moves_visible = false
 	map_highlights.clear_moves()
 	gui.current_actor = null
+
+
+func set_other_actor(actor: Actor) -> void:
+	map_highlights.set_other_moves(
+			actor.battle_stats.range_data.get_visible_move_range())
+	gui.other_actor = actor
+
+
+func clear_other_actor() -> void:
+	map_highlights.clear_other_moves()
+	gui.other_actor = null
 
 
 func action_starting(action: Action) -> void:

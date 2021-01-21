@@ -11,10 +11,13 @@ const _ACTION_MENU_ROTATION_TWO_B := 0
 const _ACTION_MENU_ROTATION_THREE_B := 90
 
 var current_actor: Actor = null setget set_current_actor
+var other_actor: Actor = null setget set_other_actor
 
 onready var turn_queue := $TurnQueuePanel as TurnQueuePanel
 
 onready var _current_actor_status := $CurrentActorStatus as ActorStatusPanel
+onready var _other_actor_status := $OtherActorStatus as ActorStatusPanel
+
 onready var _skill_panel := $SkillPanel as SkillPanel
 
 onready var _action_menu_region := $ActionMenuRegion as Control
@@ -50,6 +53,16 @@ func set_current_actor(value: Actor) -> void:
 				_action_menu.base_rotation = _ACTION_MENU_ROTATION_THREE_B
 
 		_set_skills()
+
+
+func set_other_actor(value: Actor) -> void:
+	other_actor = value
+
+	_other_actor_status.clear()
+	_other_actor_status.visible = other_actor != null
+
+	if other_actor:
+		_other_actor_status.set_actor(other_actor)
 
 
 func show_action_menu(screen_position: Vector2) -> void:
