@@ -17,7 +17,7 @@ anchor_right = 1.0
 margin_left = 2.0
 margin_top = 2.0
 margin_right = -2.0
-margin_bottom = 26.0
+margin_bottom = 22.0
 size_flags_horizontal = 3
 
 [node name="CurrentActorStatus" parent="." instance=ExtResource( 4 )]
