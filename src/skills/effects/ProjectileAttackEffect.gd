@@ -7,9 +7,9 @@ export var rotate_projectile := false
 var _waiter := SignalWaiter.new()
 
 
-func start(target: Vector2, source_actor: Actor, map: Map) -> void:
-	var dir := source_actor.cell.direction_to(target)
-	var target_actor := map.get_actor_on_cell(target)
+func start(target_cell: Vector2, source_actor: Actor, map: Map) -> void:
+	var dir := source_actor.cell.direction_to(target_cell)
+	var target_actor := map.get_actor_on_cell(target_cell)
 
 	var attack := AttackProcess.new(
 			target_actor, map, source_actor.stats.attack, dir)
@@ -18,7 +18,7 @@ func start(target: Vector2, source_actor: Actor, map: Map) -> void:
 	source_actor.animate_attack(dir, true)
 	yield(source_actor, "attack_hit")
 
-	var projectile := _create_projectile(source_actor.cell, target)
+	var projectile := _create_projectile(source_actor.cell, target_cell)
 	map.add_effect(projectile)
 	yield(projectile, "finished")
 

@@ -65,15 +65,22 @@ func is_valid_target(target_cell: Vector2, source_actor: Actor, map: Map) \
 func get_aoe(target_cell: Vector2, source_cell: Vector2, source_actor: Actor,
 		map: Map) -> Array:
 	var result := [target_cell]
-	if _get_aoe_type():
-		result = _get_aoe_type().get_aoe(target_cell, source_cell, source_actor,
-				map)
+	if _get_aoe():
+		result = _get_aoe().get_aoe(
+				target_cell, source_cell, source_actor, map)
 	return result
 
 
+# Keys are actors. Values are damage amounts.
+func predict_damage(target_cell: Vector2, source_cell: Vector2,
+		source_actor: Actor, map: Map) -> Dictionary:
+	return _get_effect().predict_damage(
+			target_cell, source_cell, source_actor, map)
+
+
 func start(source_actor: Actor, map: Map, target: Vector2) -> void:
-	_get_effect_type().start(target, source_actor, map)
-	yield(_get_effect_type(), "finished")
+	_get_effect().start(target, source_actor, map)
+	yield(_get_effect(), "finished")
 	emit_signal("finished")
 
 
@@ -81,9 +88,9 @@ func _get_range_type() -> SkillRange:
 	return range_type as SkillRange
 
 
-func _get_aoe_type() -> SkillAOE:
+func _get_aoe() -> SkillAOE:
 	return aoe_type as SkillAOE
 
 
-func _get_effect_type() -> SkillEffect:
+func _get_effect() -> SkillEffect:
 	return skill_effect as SkillEffect
