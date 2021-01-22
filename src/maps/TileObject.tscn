@@ -12,7 +12,7 @@ __meta__ = {
 "_gizmo_extents_": 4.0
 }
 
-[node name="OffSet" type="Position2D" parent="Center"]
+[node name="Offset" type="Position2D" parent="Center"]
 __meta__ = {
 "_gizmo_extents_": 8.0
 }

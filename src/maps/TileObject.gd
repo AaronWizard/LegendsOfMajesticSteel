@@ -13,7 +13,7 @@ export var cell_offset := Vector2.ZERO setget set_cell_offset, get_cell_offset
 export var rect_size := Vector2.ONE setget set_rect_size
 
 onready var _center := $Center as Position2D
-onready var _offset := $Center/OffSet as Position2D
+onready var _offset := $Center/Offset as Position2D
 
 var _covered_cells := {}
 
