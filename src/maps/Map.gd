@@ -100,19 +100,22 @@ func actor_can_enter_cell(actor: Actor, cell: Vector2,
 		ignore_allied_actors: bool = false) -> bool:
 	var result := true
 
-	if not get_rect().has_point(cell):
-		result = false
+	var cells := actor.get_covered_cells_at_cell(cell)
+	for c in cells:
+		var covered := c as Vector2
+		if not get_rect().has_point(covered):
+			result = false
 
-	if result:
-		var other_actor := get_actor_on_cell(cell)
-		if other_actor and (other_actor != actor):
-			result = ignore_allied_actors \
-					and (other_actor.faction == actor.faction)
+		if result:
+			var other_actor := get_actor_on_cell(covered)
+			if other_actor and (other_actor != actor):
+				result = ignore_allied_actors \
+						and (other_actor.faction == actor.faction)
 
-	if result:
-		var properties := get_tile_properties(cell)
-		if properties:
-			result = !properties.blocks_move
+		if result:
+			var properties := get_tile_properties(covered)
+			if properties:
+				result = !properties.blocks_move
 
 	return result
 
