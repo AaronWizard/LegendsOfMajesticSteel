@@ -14,5 +14,6 @@ __meta__ = {
 
 [node name="Offset" type="Position2D" parent="Center"]
 __meta__ = {
+"_edit_group_": true,
 "_gizmo_extents_": 8.0
 }

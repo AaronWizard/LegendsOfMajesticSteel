@@ -1,6 +1,6 @@
 tool
 class_name Actor
-extends Node2D
+extends TileObject
 
 signal move_finished
 signal attack_hit
@@ -33,11 +33,11 @@ const _HIT_RECOVER_TIME := 0.2
 const _DEATH_DIST := 0.5
 const _DEATH_TIME := 0.3
 
+const _BLOOD_TIME := 0.3
+
 const _WALK_FRAME := 0
 const _REACT_FRAME := 2
 const _ACTION_FRAME := 3
-
-export var cell_offset: Vector2 setget set_cell_offset, get_cell_offset
 
 export var character_name := "Actor"
 
@@ -49,15 +49,10 @@ export(Faction) var faction := Faction.ENEMY
 var stats: Stats
 var target_visible: bool setget set_target_visible, get_target_visible
 
-onready var cell: Vector2 setget set_cell, get_cell
-
 onready var remote_transform := $Center/Offset/RemoteTransform2D \
 		as RemoteTransform2D
 
 onready var battle_stats := $BattleStats as BattleStats
-
-onready var _center := $Center as Position2D
-onready var _offset := $Center/Offset as Position2D
 
 onready var _anim := $AnimationPlayer as AnimationPlayer
 onready var _tween := $Tween as Tween
@@ -68,52 +63,34 @@ onready var _blood_splatter := $Center/BloodSplatter \
 
 onready var _stamina_bar := $Center/Offset/Sprite/StaminaBar as StaminaBar
 
-onready var _wait_icon := $Center/Offset/WaitIcon as CanvasItem
+onready var _wait_icon := $WaitIcon as AnimatedSprite
 
-onready var _target_cursor := $Center/Offset/TargetCursor as TargetCursor
+onready var _target_cursor := $TargetCursor as TargetCursor
 
 
 func _ready() -> void:
-	_center.position = Constants.TILE_SIZE_V / 2
-
-	var new_cell := \
-			position.snapped(Constants.TILE_SIZE_V) / Constants.TILE_SIZE_V
-	set_cell(new_cell)
-
-	if stats:
-		_stamina_bar.max_stamina = stats.max_stamina
-
-	_randomize_idle_start()
+	._ready()
+	if not Engine.editor_hint:
+		if stats:
+			_stamina_bar.max_stamina = stats.max_stamina
+		_wait_icon.play()
+		_randomize_idle_start()
 
 
-func _draw() -> void:
-	if Engine.editor_hint:
-		var rect := Rect2(Vector2.ZERO, Constants.TILE_SIZE_V)
-		draw_rect(rect, Color.magenta, false)
+func set_rect_size(value: Vector2) -> void:
+	.set_rect_size(value)
 
-
-func set_cell(new_value: Vector2) -> void:
-	position = new_value * Constants.TILE_SIZE_V
-
-
-func get_cell() -> Vector2:
-	return position / Constants.TILE_SIZE_V
-
-
-func set_cell_offset(new_value: Vector2) -> void:
-	if _offset:
-		_offset.position = new_value * Constants.TILE_SIZE_V
-
-
-func get_cell_offset() -> Vector2:
-	var result := Vector2.ZERO
-	if _offset:
-		result = _offset.position / Constants.TILE_SIZE_V
-	return result
-
-
-func on_cell(c: Vector2) -> bool:
-	return get_cell() == c
+	if _target_cursor:
+		_target_cursor.rect_size = rect_size
+	if _wait_icon:
+		_wait_icon.position = rect_size * Constants.TILE_SIZE_V
+	if _blood_splatter:
+		var pixel_rect_size := \
+				(rect_size * Constants.TILE_SIZE_V) + Vector2(8, 8)
+		_blood_splatter.amount = int(max(pixel_rect_size.x, pixel_rect_size.y))
+		_blood_splatter.lifetime = _BLOOD_TIME * max(rect_size.x, rect_size.y)
+		_blood_splatter.visibility_rect = Rect2(
+				-pixel_rect_size / 2, pixel_rect_size)
 
 
 func move_step(target_cell: Vector2) -> void:
@@ -299,10 +276,6 @@ func _on_BattleStats_stamina_changed(_old_stamina: int, new_stamina: int) \
 func _on_StaminaBar_animation_finished() -> void:
 	_stamina_bar.visible = false
 	emit_signal("stamina_animation_finished")
-
-
-func _on_WaitIconTimer_timeout() -> void:
-	_wait_icon.visible = not _wait_icon.visible
 
 
 func _on_BattleStats_round_started() -> void:
