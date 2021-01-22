@@ -16,3 +16,7 @@ const _VALUES := {
 
 static func get_all_directions() -> Array:
 	return _VALUES.values()
+
+
+static func get_direction(direction: int) -> Vector2:
+	return _VALUES[direction]
