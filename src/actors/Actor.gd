@@ -229,8 +229,10 @@ func animate_death(direction: Vector2) -> void:
 
 func set_stat_resource(new_value: Resource) -> void:
 	stats = new_value as Stats
-	if stats and _sprite:
-		_sprite.texture = stats.texture
+	if stats:
+		set_rect_size(stats.rect_size)
+		if _sprite:
+			_sprite.texture = stats.texture
 
 
 func get_stat_resource() -> Resource:

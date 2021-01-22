@@ -4,6 +4,7 @@ extends Resource
 const SPRITE_FRAME_COUNT := 4
 
 export var texture: Texture setget set_texture
+export var rect_size := Vector2.ONE
 
 export var max_stamina := 1
 export var attack := 1

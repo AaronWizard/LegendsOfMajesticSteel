@@ -7,6 +7,7 @@
 [resource]
 script = ExtResource( 4 )
 texture = ExtResource( 2 )
+rect_size = Vector2( 1, 1 )
 max_stamina = 8
 attack = 2
 move = 5
