@@ -26,7 +26,7 @@ static func find_move_range(actor: Actor, map: Map) -> Array:
 static func _adjacent_cells(cell: Vector2, actor: Actor, map: Map) -> Array:
 	var result := []
 
-	for d in Directions.ALL_DIRECTIONS:
+	for d in Directions.get_all_directions():
 		var dir: Vector2 = d
 		var next_cell := cell + dir
 		if map.actor_can_enter_cell(actor, next_cell, true):

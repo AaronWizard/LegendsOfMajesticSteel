@@ -1,8 +1,18 @@
 class_name Directions
 
-const NORTH := Vector2(0, -1)
-const EAST := Vector2(1, 0)
-const SOUTH := Vector2(0, 1)
-const WEST := Vector2(-1, 0)
+enum {
+	NORTH,
+	SOUTH,
+	EAST,
+	WEST,
+}
 
-const ALL_DIRECTIONS := [NORTH, EAST, SOUTH, WEST]
+const _VALUES := {
+	NORTH: Vector2(0, -1),
+	EAST: Vector2(1, 0),
+	SOUTH: Vector2(0, 1),
+	WEST: Vector2(-1, 0),
+}
+
+static func get_all_directions() -> Array:
+	return _VALUES.values()
