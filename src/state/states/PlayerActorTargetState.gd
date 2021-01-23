@@ -30,7 +30,7 @@ func start() -> void:
 
 	_interface.gui.show_skill_panel(_get_skill())
 
-	var targeting_data := _actor.battle_stats.range_data.get_targeting_data(
+	var targeting_data := _actor.range_data.get_targeting_data(
 			_actor.origin_cell, _skill_index)
 	_interface.map_highlights.set_targets(targeting_data.target_range)
 	_interface.map_highlights.moves_visible = false
@@ -65,7 +65,7 @@ func _mouse_click(_position: Vector2) -> void:
 
 
 func _set_target(target_cell: Vector2) -> void:
-	var targeting_data := _actor.battle_stats.range_data.get_targeting_data(
+	var targeting_data := _actor.range_data.get_targeting_data(
 			_actor.origin_cell, _skill_index)
 
 	if target_cell in targeting_data.valid_targets:

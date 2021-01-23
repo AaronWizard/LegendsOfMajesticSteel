@@ -59,7 +59,7 @@ func _mouse_click(_position: Vector2) -> void:
 	if _actor.on_cell(target_cell):
 		_set_action_menu_visible(not _action_menu_visible)
 	elif not _action_menu_visible:
-		var path := _actor.battle_stats.range_data.get_walk_path(
+		var path := _actor.range_data.get_walk_path(
 				_actor.origin_cell, target_cell)
 		if path.size() > 0:
 			var action := Move.new(_actor, _interface.current_map, path)

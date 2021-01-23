@@ -72,7 +72,7 @@ func _refresh_range_data(actor_to_exclude: Actor = null) -> void:
 	for a in _map.get_actors():
 		var actor := a as Actor
 		if actor != actor_to_exclude:
-			actor.battle_stats.range_data = RangeDataFactory.create_range_data(
+			actor.range_data = RangeDataFactory.create_range_data(
 					actor, _map)
 
 

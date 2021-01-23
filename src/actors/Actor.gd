@@ -52,6 +52,8 @@ export(Faction) var faction := Faction.ENEMY
 var stats: ActorDefinition
 var target_visible: bool setget set_target_visible, get_target_visible
 
+var range_data: RangeData
+
 onready var remote_transform := $Center/Offset/RemoteTransform2D \
 		as RemoteTransform2D
 
