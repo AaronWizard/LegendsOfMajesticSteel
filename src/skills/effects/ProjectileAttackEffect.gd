@@ -19,7 +19,8 @@ func start(target_cell: Vector2, source_actor: Actor, map: Map) -> void:
 	yield(source_actor, "attack_hit")
 
 	var projectile := _create_projectile(
-			source_actor.center_cell, target_actor.center_cell)
+			source_actor.center_cell + source_actor.cell_offset,
+			target_actor.center_cell)
 	map.add_effect(projectile)
 	yield(projectile, "finished")
 
