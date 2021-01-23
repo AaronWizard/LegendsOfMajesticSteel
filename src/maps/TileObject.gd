@@ -78,11 +78,15 @@ func get_center_cell() -> Vector2:
 
 
 func get_cell_rect() -> Rect2:
-	return Rect2(get_origin_cell(), rect_size)
+	return get_cell_rect_at_cell(get_origin_cell())
 
 
-func on_cell(other_cell: Vector2) -> bool:
-	var local_cell := other_cell - get_origin_cell()
+func get_cell_rect_at_cell(cell: Vector2) -> Rect2:
+	return Rect2(cell, rect_size)
+
+
+func on_cell(cell: Vector2) -> bool:
+	var local_cell := cell - get_origin_cell()
 	return _covered_cells.has(local_cell)
 
 
@@ -90,10 +94,10 @@ func get_covered_cells() -> Array:
 	return get_covered_cells_at_cell(get_origin_cell())
 
 
-func get_covered_cells_at_cell(other_cell: Vector2) -> Array:
+func get_covered_cells_at_cell(cell: Vector2) -> Array:
 	var result := []
 	for c in _covered_cells.keys():
 		var covered := c as Vector2
-		var real_cell := covered + other_cell
+		var real_cell := covered + cell
 		result.append(real_cell)
 	return result
