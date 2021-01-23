@@ -15,6 +15,6 @@ func start() -> void:
 	skill.call_deferred("start", actor, map, target)
 	yield(skill, "finished")
 
-	actor.battle_stats.take_turn()
+	actor.take_turn()
 
 	emit_signal("finished")

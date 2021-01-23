@@ -79,7 +79,7 @@ func _refresh_range_data(actor_to_exclude: Actor = null) -> void:
 func _start_round() -> void:
 	for a in _map.get_actors():
 		var actor := a as Actor
-		actor.battle_stats.start_round()
+		actor.start_round()
 
 
 func _end() -> void:
@@ -107,7 +107,7 @@ func _get_active_actors(faction: int) -> Array:
 
 	for a in _map.get_actors():
 		var actor := a as Actor
-		if (actor.faction == faction) and not actor.battle_stats.round_finished:
+		if (actor.faction == faction) and not actor.round_finished:
 			result.append(actor)
 
 	return result
@@ -117,14 +117,14 @@ func _on_actor_picked(actor: Actor) -> void:
 	var controller := _get_actor_controller(actor)
 
 	if controller:
-		actor.battle_stats.start_turn()
+		actor.start_turn()
 		emit_signal("turn_started", actor)
 
 		if controller.pauses:
 			yield(get_tree().create_timer(_PRE_TURN_WAIT_TIME), "timeout")
 
 		while actor.battle_stats.is_alive \
-				and not actor.battle_stats.turn_finished:
+				and not actor.turn_finished:
 			controller.call_deferred("determine_action", actor, _map)
 			var action := yield(controller, "determined_action") as Action
 
@@ -134,10 +134,9 @@ func _on_actor_picked(actor: Actor) -> void:
 				yield(action, "finished")
 			else:
 				# Action is a wait
-				actor.battle_stats.take_turn()
+				actor.take_turn()
 
-			if actor.battle_stats.is_alive \
-					and not actor.battle_stats.turn_finished:
+			if actor.battle_stats.is_alive and not actor.turn_finished:
 				_refresh_range_data(actor)
 
 		yield(get_tree().create_timer(_POST_TURN_WAIT_TIME), "timeout")
@@ -178,7 +177,7 @@ func _get_actor_controller(actor: Actor) -> ActorController:
 
 func _on_actor_dying(actor: Actor) -> void:
 	var index: int
-	if actor.battle_stats.round_finished:
+	if actor.round_finished:
 		index = _turn_order.rfind(actor.faction, _turn_index)
 	else:
 		index = _turn_order.rfind(actor.faction)

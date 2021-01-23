@@ -54,6 +54,12 @@ var target_visible: bool setget set_target_visible, get_target_visible
 
 var range_data: RangeData
 
+var turn_finished: bool setget , get_turn_finished
+var round_finished: bool setget , get_round_finished
+
+var _did_skill: bool = false
+var _turns_left: int = false
+
 onready var remote_transform := $Center/Offset/RemoteTransform2D \
 		as RemoteTransform2D
 
@@ -97,6 +103,30 @@ func set_rect_size(value: Vector2) -> void:
 				= _AnimationTimes.BLOOD * max(rect_size.x, rect_size.y)
 		_blood_splatter.visibility_rect = Rect2(
 				-pixel_rect_size / 2, pixel_rect_size)
+
+
+func get_turn_finished() -> bool:
+	return _did_skill
+
+
+func get_round_finished() -> bool:
+	return _turns_left == 0
+
+
+func start_round() -> void:
+	_wait_icon.visible = false
+	_turns_left = 1
+
+
+func start_turn() -> void:
+	_did_skill = false
+
+
+func take_turn() -> void:
+	_did_skill = true
+	_turns_left -= 1
+	if get_round_finished():
+		_wait_icon.visible = true
 
 
 func move_step(target_cell: Vector2) -> void:
@@ -284,12 +314,3 @@ func _on_BattleStats_stamina_changed(_old_stamina: int, new_stamina: int) \
 func _on_StaminaBar_animation_finished() -> void:
 	_stamina_bar.visible = false
 	emit_signal("stamina_animation_finished")
-
-
-func _on_BattleStats_round_started() -> void:
-	_wait_icon.visible = false
-
-
-func _on_BattleStats_turn_taken() -> void:
-	if battle_stats.round_finished:
-		_wait_icon.visible = true
