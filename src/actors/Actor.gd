@@ -2,6 +2,34 @@ tool
 class_name Actor
 extends TileObject
 
+class _AnimationTimes:
+	const MOVE := 0.15
+
+	const ATTACK_PREP := 0.15
+	const ATTACK_HIT := 0.1
+	const ATTACK_PAUSE := 0.05
+	const ATTACK_RECOVER := 0.1
+
+	const HIT_REACT := 0.1
+	const HIT_RECOVER := 0.2
+
+	const DEATH:= 0.3
+	const BLOOD := 0.3
+
+
+class _AnimationDistances:
+	const ATTACK_PREP := 0.5
+	const ATTACK_HIT_REDUCED := 0.5
+	const ATTACK_HIT := 0.75
+
+	const HIT_REACT := 0.25
+	const DEATH := 0.5
+
+
+const _WALK_FRAME := 0
+const _REACT_FRAME := 2
+const _ACTION_FRAME := 3
+
 signal move_finished
 signal attack_hit
 signal attack_finished
@@ -13,31 +41,6 @@ signal dying
 signal died
 
 enum Faction { PLAYER, ENEMY }
-
-const _MOVE_TIME := 0.15
-
-const _ATTACK_PREP_DIST := 0.5
-const _ATTACK_HIT_DIST_REDUCED := 0.5
-const _ATTACK_HIT_DIST := 0.75
-
-const _ATTACK_PREP_TIME := 0.15
-const _ATTACK_HIT_TIME := 0.1
-const _ATTACK_PAUSE_TIME := 0.05
-const _ATTACK_RECOVER_TIME := 0.1
-
-const _HIT_REACT_DIST := 0.25
-
-const _HIT_REACT_TIME := 0.1
-const _HIT_RECOVER_TIME := 0.2
-
-const _DEATH_DIST := 0.5
-const _DEATH_TIME := 0.3
-
-const _BLOOD_TIME := 0.3
-
-const _WALK_FRAME := 0
-const _REACT_FRAME := 2
-const _ACTION_FRAME := 3
 
 export var character_name := "Actor"
 
@@ -88,7 +91,8 @@ func set_rect_size(value: Vector2) -> void:
 		var pixel_rect_size := \
 				(rect_size * Constants.TILE_SIZE_V) + Vector2(8, 8)
 		_blood_splatter.amount = int(max(pixel_rect_size.x, pixel_rect_size.y))
-		_blood_splatter.lifetime = _BLOOD_TIME * max(rect_size.x, rect_size.y)
+		_blood_splatter.lifetime \
+				= _AnimationTimes.BLOOD * max(rect_size.x, rect_size.y)
 		_blood_splatter.visibility_rect = Rect2(
 				-pixel_rect_size / 2, pixel_rect_size)
 
@@ -110,7 +114,7 @@ func move_step(target_cell: Vector2) -> void:
 	# warning-ignore:return_value_discarded
 	_tween.interpolate_property(
 			self, "cell_offset",
-			-diff, Vector2.ZERO, _MOVE_TIME,
+			-diff, Vector2.ZERO, _AnimationTimes.MOVE,
 			Tween.TRANS_QUAD, Tween.EASE_OUT
 	)
 	# warning-ignore:return_value_discarded
@@ -129,25 +133,25 @@ func animate_attack(direction: Vector2, reduced_lunge := false) -> void:
 
 	_set_facing(real_direction)
 
-	var prep_pos := -real_direction * _ATTACK_PREP_DIST
+	var prep_pos := -real_direction * _AnimationTimes.ATTACK_PREP
 	var attack_pos: Vector2
 	if reduced_lunge:
-		attack_pos = real_direction * _ATTACK_HIT_DIST_REDUCED
+		attack_pos = real_direction * _AnimationDistances.ATTACK_HIT_REDUCED
 	else:
-		attack_pos = real_direction * _ATTACK_HIT_DIST
+		attack_pos = real_direction * _AnimationDistances.ATTACK_HIT
 
 	# warning-ignore:return_value_discarded
 	_tween.interpolate_property(
 			self, "cell_offset",
-			Vector2.ZERO, prep_pos, _ATTACK_PREP_TIME,
+			Vector2.ZERO, prep_pos, _AnimationTimes.ATTACK_PREP,
 			Tween.TRANS_QUAD, Tween.EASE_OUT
 	)
 	# warning-ignore:return_value_discarded
 	_tween.interpolate_property(
 			self, "cell_offset",
-			prep_pos, attack_pos, _ATTACK_HIT_TIME,
+			prep_pos, attack_pos, _AnimationTimes.ATTACK_HIT,
 			Tween.TRANS_QUAD, Tween.EASE_IN,
-			_ATTACK_PREP_TIME
+			_AnimationTimes.ATTACK_PREP
 	)
 	# warning-ignore:return_value_discarded
 	_tween.start()
@@ -157,9 +161,9 @@ func animate_attack(direction: Vector2, reduced_lunge := false) -> void:
 	# warning-ignore:return_value_discarded
 	_tween.interpolate_property(
 			self, "cell_offset",
-			attack_pos, Vector2.ZERO, _ATTACK_RECOVER_TIME,
+			attack_pos, Vector2.ZERO, _AnimationTimes.ATTACK_RECOVER,
 			Tween.TRANS_QUAD, Tween.EASE_OUT,
-			_ATTACK_PAUSE_TIME
+			_AnimationTimes.ATTACK_PAUSE
 	)
 	# warning-ignore:return_value_discarded
 	_tween.start()
@@ -175,20 +179,20 @@ func animate_hit(direction: Vector2) -> void:
 	_anim.stop(true)
 	_sprite.frame = _REACT_FRAME
 
-	var end := real_direction * _HIT_REACT_DIST
+	var end := real_direction * _AnimationDistances.HIT_REACT
 
 	# warning-ignore:return_value_discarded
 	_tween.interpolate_property(
 			self, "cell_offset",
-			Vector2.ZERO, end, _HIT_REACT_TIME,
+			Vector2.ZERO, end, _AnimationTimes.HIT_REACT,
 			Tween.TRANS_QUAD, Tween.EASE_IN_OUT
 	)
 	# warning-ignore:return_value_discarded
 	_tween.interpolate_property(
 			self, "cell_offset",
-			end, Vector2.ZERO, _HIT_RECOVER_TIME,
+			end, Vector2.ZERO, _AnimationTimes.HIT_RECOVER,
 			Tween.TRANS_BACK, Tween.EASE_OUT,
-			_HIT_REACT_TIME
+			_AnimationTimes.HIT_REACT
 	)
 	# warning-ignore:return_value_discarded
 	_tween.start()
@@ -207,18 +211,18 @@ func animate_death(direction: Vector2) -> void:
 	_anim.stop(true)
 	_sprite.frame = _REACT_FRAME
 
-	var end := real_direction * _DEATH_DIST
+	var end := real_direction * _AnimationDistances.DEATH
 
 	# warning-ignore:return_value_discarded
 	_tween.interpolate_property(
 			self, "cell_offset",
-			Vector2.ZERO, end, _DEATH_TIME,
+			Vector2.ZERO, end, _AnimationTimes.DEATH,
 			Tween.TRANS_EXPO, Tween.EASE_OUT
 	)
 	# warning-ignore:return_value_discarded
 	_tween.interpolate_property(
 			_sprite.material, "shader_param/dissolve",
-			0, 1, _DEATH_TIME
+			0, 1, _AnimationTimes.DEATH
 	)
 	# warning-ignore:return_value_discarded
 	_tween.start()
