@@ -18,7 +18,8 @@ func start(target_cell: Vector2, source_actor: Actor, map: Map) -> void:
 	source_actor.animate_attack(dir, true)
 	yield(source_actor, "attack_hit")
 
-	var projectile := _create_projectile(source_actor.center_cell, target_cell)
+	var projectile := _create_projectile(
+			source_actor.center_cell, target_actor.center_cell)
 	map.add_effect(projectile)
 	yield(projectile, "finished")
 
@@ -35,6 +36,7 @@ func _create_projectile(start_cell: Vector2, end_cell: Vector2) -> Projectile:
 	var result := projectile_scene.instance() as Projectile
 	result.start_cell = start_cell
 	result.end_cell = end_cell
+	result.use_cell_offsets = false
 	result.rotate_sprite = rotate_projectile
 
 	return result
