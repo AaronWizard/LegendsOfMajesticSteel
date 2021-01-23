@@ -232,7 +232,7 @@ func set_stat_resource(new_value: Resource) -> void:
 	if stats:
 		set_rect_size(stats.rect_size)
 		if _sprite:
-			_sprite.texture = stats.texture
+			_sprite.texture = stats.sprite
 
 
 func get_stat_resource() -> Resource:

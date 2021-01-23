@@ -6,7 +6,7 @@
 
 [resource]
 script = ExtResource( 1 )
-texture = ExtResource( 2 )
+sprite = ExtResource( 2 )
 rect_size = Vector2( 2, 2 )
 max_stamina = 10
 attack = 3
