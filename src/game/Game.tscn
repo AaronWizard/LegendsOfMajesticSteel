@@ -2,7 +2,7 @@
 
 [ext_resource path="res://src/game/Game.gd" type="Script" id=1]
 [ext_resource path="res://src/ui/BattleInterface.tscn" type="PackedScene" id=2]
-[ext_resource path="res://src/maps/maps/Map00.tscn" type="PackedScene" id=3]
+[ext_resource path="res://src/data/maps/Map00.tscn" type="PackedScene" id=3]
 [ext_resource path="res://src/game/TurnManager.tscn" type="PackedScene" id=4]
 
 [node name="Game" type="Node"]
