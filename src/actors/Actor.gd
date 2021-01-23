@@ -122,19 +122,19 @@ func move_step(target_cell: Vector2) -> void:
 
 
 func animate_attack(direction: Vector2, reduced_lunge := false) -> void:
-	assert(direction.is_normalized())
+	var real_direction := direction.normalized()
 
 	_anim.stop(true)
 	_sprite.frame = _ACTION_FRAME
 
-	_set_facing(direction)
+	_set_facing(real_direction)
 
-	var prep_pos := -direction * _ATTACK_PREP_DIST
+	var prep_pos := -real_direction * _ATTACK_PREP_DIST
 	var attack_pos: Vector2
 	if reduced_lunge:
-		attack_pos = direction * _ATTACK_HIT_DIST_REDUCED
+		attack_pos = real_direction * _ATTACK_HIT_DIST_REDUCED
 	else:
-		attack_pos = direction * _ATTACK_HIT_DIST
+		attack_pos = real_direction * _ATTACK_HIT_DIST
 
 	# warning-ignore:return_value_discarded
 	_tween.interpolate_property(
@@ -170,12 +170,12 @@ func animate_attack(direction: Vector2, reduced_lunge := false) -> void:
 
 
 func animate_hit(direction: Vector2) -> void:
-	assert(direction.is_normalized())
+	var real_direction := direction.normalized()
 
 	_anim.stop(true)
 	_sprite.frame = _REACT_FRAME
 
-	var end := direction * _HIT_REACT_DIST
+	var end := real_direction * _HIT_REACT_DIST
 
 	# warning-ignore:return_value_discarded
 	_tween.interpolate_property(
@@ -199,7 +199,7 @@ func animate_hit(direction: Vector2) -> void:
 
 
 func animate_death(direction: Vector2) -> void:
-	assert(direction.is_normalized())
+	var real_direction := direction.normalized()
 
 	emit_signal("dying")
 
@@ -207,7 +207,7 @@ func animate_death(direction: Vector2) -> void:
 	_anim.stop(true)
 	_sprite.frame = _REACT_FRAME
 
-	var end := direction * _DEATH_DIST
+	var end := real_direction * _DEATH_DIST
 
 	# warning-ignore:return_value_discarded
 	_tween.interpolate_property(

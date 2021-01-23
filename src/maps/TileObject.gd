@@ -12,6 +12,9 @@ export var cell_offset := Vector2.ZERO setget set_cell_offset, get_cell_offset
 # Rect size is in cells
 export var rect_size := Vector2.ONE setget set_rect_size
 
+var center_cell: Vector2 setget , get_center_cell
+var cell_rect: Rect2 setget , get_cell_rect
+
 onready var _center := $Center as Position2D
 onready var _offset := $Center/Offset as Position2D
 
@@ -65,6 +68,17 @@ func set_rect_size(value: Vector2) -> void:
 		_center.position = rect_size * (Constants.TILE_SIZE_V / 2)
 
 	update()
+
+
+func get_center_cell() -> Vector2:
+	var result := get_origin_cell()
+	if _center:
+		result += _center.position / Constants.TILE_SIZE_V
+	return result
+
+
+func get_cell_rect() -> Rect2:
+	return Rect2(get_origin_cell(), rect_size)
 
 
 func on_cell(other_cell: Vector2) -> bool:

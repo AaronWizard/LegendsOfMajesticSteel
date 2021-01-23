@@ -5,8 +5,8 @@ var _waiter := SignalWaiter.new()
 
 
 func start(target_cell: Vector2, source_actor: Actor, map: Map) -> void:
-	var dir := target_cell - source_actor.origin_cell
 	var target_actor := map.get_actor_on_cell(target_cell)
+	var dir := target_actor.center_cell - source_actor.center_cell
 
 	var attack := AttackProcess.new(
 			target_actor, map, source_actor.stats.attack, dir)

@@ -47,9 +47,8 @@ func get_mouse_cell() -> Vector2:
 
 
 func get_screen_cell_pos(cell: Vector2) -> Vector2:
-	return _ground.map_to_world(cell) \
-			+ _ground.get_global_transform_with_canvas().origin \
-			+ (_ground.cell_size / 2)
+	return (cell * _ground.cell_size) \
+			+ _ground.get_global_transform_with_canvas().origin
 
 
 func get_tile_name(cell: Vector2) -> String:
