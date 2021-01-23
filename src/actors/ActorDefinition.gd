@@ -1,4 +1,4 @@
-class_name Stats
+class_name ActorDefinition
 extends Resource
 
 const SPRITE_FRAME_COUNT := 4

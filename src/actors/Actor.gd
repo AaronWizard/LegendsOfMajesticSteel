@@ -46,7 +46,7 @@ export(Resource) var stat_resource: Resource \
 
 export(Faction) var faction := Faction.ENEMY
 
-var stats: Stats
+var stats: ActorDefinition
 var target_visible: bool setget set_target_visible, get_target_visible
 
 onready var remote_transform := $Center/Offset/RemoteTransform2D \
@@ -228,7 +228,7 @@ func animate_death(direction: Vector2) -> void:
 
 
 func set_stat_resource(new_value: Resource) -> void:
-	stats = new_value as Stats
+	stats = new_value as ActorDefinition
 	if stats:
 		set_rect_size(stats.rect_size)
 		if _sprite:

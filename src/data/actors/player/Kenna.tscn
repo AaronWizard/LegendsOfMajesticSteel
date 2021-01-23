@@ -25,7 +25,3 @@ faction = 0
 [node name="Sprite" parent="Center/Offset" index="0"]
 material = SubResource( 3 )
 texture = ExtResource( 3 )
-
-[node name="TargetCursor" parent="." index="2"]
-rect_size = Vector2( 1, 1 )
-centered = false

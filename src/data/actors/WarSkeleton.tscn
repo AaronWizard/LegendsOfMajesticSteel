@@ -39,4 +39,3 @@ position = Vector2( 48, 48 )
 
 [node name="TargetCursor" parent="." index="2"]
 rect_size = Vector2( 2, 2 )
-centered = false

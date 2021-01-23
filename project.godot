@@ -34,6 +34,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/control/ActorController.gd"
 }, {
+"base": "Resource",
+"class": "ActorDefinition",
+"language": "GDScript",
+"path": "res://src/actors/ActorDefinition.gd"
+}, {
 "base": "PanelContainer",
 "class": "ActorStatusPanel",
 "language": "GDScript",
@@ -219,11 +224,6 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/state/StateMachine.gd"
 }, {
-"base": "Resource",
-"class": "Stats",
-"language": "GDScript",
-"path": "res://src/actors/Stats.gd"
-}, {
 "base": "Node2D",
 "class": "TargetCursor",
 "language": "GDScript",
@@ -280,6 +280,7 @@ _global_script_class_icons={
 "Action": "",
 "Actor": "",
 "ActorController": "",
+"ActorDefinition": "",
 "ActorStatusPanel": "",
 "AttackProcess": "",
 "BattleGUI": "",
@@ -317,7 +318,6 @@ _global_script_class_icons={
 "StaminaBar": "",
 "State": "",
 "StateMachine": "",
-"Stats": "",
 "TargetCursor": "",
 "TargetingData": "",
 "TileGeometry": "",
