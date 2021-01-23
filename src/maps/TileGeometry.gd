@@ -1,19 +1,100 @@
 class_name TileGeometry
 
-static func cells_in_range(source: Vector2, min_dist: int, max_dist: int) \
+static func cells_in_range(source_rect: Rect2, min_dist: int, max_dist: int) \
+		-> Array:
+	assert(min_dist >= 1)
+	assert(max_dist >= min_dist)
+
+	var result := []
+
+	var nw_corner := source_rect.position
+	var ne_corner := Vector2(source_rect.end.x - 1, source_rect.position.y)
+	var se_corner := source_rect.end - Vector2.ONE
+	var sw_corner := Vector2(source_rect.position.x, source_rect.end.y - 1)
+
+	var change: Vector2
+
+	for r in range(min_dist, max_dist + 1):
+		var range_index := r as int
+
+		var start: Vector2
+		var end: Vector2
+
+		change = Directions.get_direction(Directions.NORTH) * range_index
+
+		# North
+
+		start = nw_corner + change
+		end = ne_corner + change
+		result += _cells_on_line(start, end, true)
+
+		change = Directions.get_direction(Directions.EAST) * range_index
+		# NE quadrant
+
+		start = end
+		end = ne_corner + change
+		result += _cells_on_line(start, end, false)
+
+		# East
+
+		start = ne_corner + change
+		end = se_corner + change
+		result += _cells_on_line(start, end, true)
+
+		change = Directions.get_direction(Directions.SOUTH) * range_index
+		# SE quadrant
+
+		start = end
+		end = se_corner + change
+		result += _cells_on_line(start, end, false)
+
+		# South
+
+		start = se_corner + change
+		end = sw_corner + change
+		result += _cells_on_line(start, end, true)
+
+		change = Directions.get_direction(Directions.WEST) * range_index
+		# SW quadrant
+
+		start = end
+		end = sw_corner + change
+		result += _cells_on_line(start, end, false)
+
+		# West
+
+		start = sw_corner + change
+		end = nw_corner + change
+		result += _cells_on_line(start, end, true)
+
+		change = Directions.get_direction(Directions.NORTH) * range_index
+		# NW quadrant
+
+		start = end
+		end = nw_corner + change
+		result += _cells_on_line(start, end, false)
+
+	return result
+
+
+static func _cells_on_line(start: Vector2, end: Vector2, include_ends: bool) \
 		-> Array:
 	var result := []
 
-	for i in range(min_dist, max_dist + 1):
-		result.append(Vector2(0, -i) + source) # North
-		result.append(Vector2(i, 0) + source) # East
-		result.append(Vector2(0, i) + source) # South
-		result.append(Vector2(-i, 0) + source) # West
+	if include_ends:
+		result.append(start)
 
-		for j in range(1, i):
-			result.append(Vector2(j, j - i) + source) # NE quadrant
-			result.append(Vector2(j, i - j) + source) # SE quadrant
-			result.append(Vector2(-j, i - j) + source) # SW quadrant
-			result.append(Vector2(-j, j - i) + source) # NW quadrant
+	if end != start:
+		var diff := end - start
+		diff.x = sign(diff.x)
+		diff.y = sign(diff.y)
+
+		var v := Vector2(start + diff)
+		while v != end:
+			result.append(v)
+			v += diff
+
+		if include_ends:
+			result.append(end)
 
 	return result
