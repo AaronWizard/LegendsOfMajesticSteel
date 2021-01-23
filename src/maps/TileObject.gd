@@ -4,7 +4,7 @@ extends Node2D
 
 
 # The top-left corner of the tile object
-export var cell := Vector2.ZERO setget set_cell, get_cell
+export var origin_cell := Vector2.ZERO setget set_origin_cell, get_origin_cell
 
 # Offset is in cells
 export var cell_offset := Vector2.ZERO setget set_cell_offset, get_cell_offset
@@ -23,7 +23,7 @@ func _ready() -> void:
 
 	var new_cell := \
 			position.snapped(Constants.TILE_SIZE_V) / Constants.TILE_SIZE_V
-	set_cell(new_cell)
+	set_origin_cell(new_cell)
 
 
 func _draw() -> void:
@@ -32,11 +32,11 @@ func _draw() -> void:
 		draw_rect(rect, Color.magenta, false)
 
 
-func set_cell(value: Vector2) -> void:
+func set_origin_cell(value: Vector2) -> void:
 	position = value * Constants.TILE_SIZE_V
 
 
-func get_cell() -> Vector2:
+func get_origin_cell() -> Vector2:
 	return position / Constants.TILE_SIZE_V
 
 
@@ -68,12 +68,12 @@ func set_rect_size(value: Vector2) -> void:
 
 
 func on_cell(other_cell: Vector2) -> bool:
-	var local_cell := other_cell - get_cell()
+	var local_cell := other_cell - get_origin_cell()
 	return _covered_cells.has(local_cell)
 
 
 func get_covered_cells() -> Array:
-	return get_covered_cells_at_cell(get_cell())
+	return get_covered_cells_at_cell(get_origin_cell())
 
 
 func get_covered_cells_at_cell(other_cell: Vector2) -> Array:

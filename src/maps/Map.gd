@@ -131,5 +131,7 @@ func add_effect(effect: Node2D) -> void:
 
 
 func _actor_dying(actor: Actor) -> void:
-	add_decal(Decal.BLOOD_SPLATTER, actor.cell)
+	for c in actor.get_covered_cells():
+		var cell := c as Vector2
+		add_decal(Decal.BLOOD_SPLATTER, cell)
 	emit_signal("actor_dying", actor)

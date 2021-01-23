@@ -20,8 +20,18 @@ func _init(new_actor: Actor, new_map: Map, new_attack: int,
 func run() -> void:
 	var real_attack := attack
 
-	var tile_properties := map.get_tile_properties(target_actor.cell)
-	if tile_properties and tile_properties.is_defensive:
+	var cover_count := 0
+	var exposure_count := 0
+	for c in target_actor.get_covered_cells():
+		var cell := c as Vector2
+
+		var tile_properties := map.get_tile_properties(cell)
+		if tile_properties and tile_properties.is_defensive:
+			cover_count += 1
+		else:
+			exposure_count += 1
+
+	if cover_count > exposure_count:
 		# warning-ignore:integer_division
 		real_attack = int(real_attack / 2)
 		real_attack = int(max(real_attack, 1))

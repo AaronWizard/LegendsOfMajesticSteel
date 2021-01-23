@@ -56,11 +56,11 @@ func _skill_selected(_skill_index: int) -> void:
 func _mouse_click(_position: Vector2) -> void:
 	var target_cell := _interface.current_map.get_mouse_cell()
 
-	if target_cell == _actor.cell:
+	if _actor.on_cell(target_cell):
 		_set_action_menu_visible(not _action_menu_visible)
 	elif not _action_menu_visible:
 		var path := _actor.battle_stats.range_data.get_walk_path(
-				_actor.cell, target_cell)
+				_actor.origin_cell, target_cell)
 		if path.size() > 0:
 			var action := Move.new(_actor, _interface.current_map, path)
 			action.allow_cancel(_interface.mouse)
@@ -74,7 +74,8 @@ func _set_action_menu_visible(visible: bool) -> void:
 	_interface.mouse.dragging_enabled = not _action_menu_visible
 
 	if _action_menu_visible:
-		var pos := _interface.current_map.get_screen_cell_pos(_actor.cell)
+		var pos := _interface.current_map.get_screen_cell_pos(
+				_actor.origin_cell)
 		_interface.gui.show_action_menu(pos)
 
 		var menu_pos := _interface.gui.get_action_menu_pos()

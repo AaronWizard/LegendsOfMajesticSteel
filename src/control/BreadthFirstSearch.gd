@@ -2,11 +2,11 @@ class_name BreadthFirstSearch
 
 # Ignores allied actors
 static func find_move_range(actor: Actor, map: Map) -> Array:
-	var result := [actor.cell]
+	var result := [actor.origin_cell]
 
-	var costs := { actor.cell: 0 }
+	var costs := { actor.origin_cell: 0 }
 
-	var queue := [actor.cell]
+	var queue := [actor.origin_cell]
 	while not queue.empty():
 		var c = queue.pop_front()
 		var current_cell: Vector2 = c

@@ -94,12 +94,12 @@ func set_rect_size(value: Vector2) -> void:
 
 
 func move_step(target_cell: Vector2) -> void:
-	assert(get_cell().distance_squared_to(target_cell) == 1)
+	assert(get_origin_cell().distance_squared_to(target_cell) == 1)
 
-	var origin_cell := get_cell()
+	var origin_cell := get_origin_cell()
 	var diff := target_cell - origin_cell
 
-	set_cell(target_cell)
+	set_origin_cell(target_cell)
 	set_cell_offset(-diff)
 
 	_set_facing(diff)
