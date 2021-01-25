@@ -19,7 +19,7 @@ shader_param/dissolve_texture = SubResource( 2 )
 
 [node name="Archer" instance=ExtResource( 2 )]
 character_name = "Archer"
-stat_resource = ExtResource( 4 )
+actor_definition = ExtResource( 4 )
 
 [node name="Sprite" parent="Center/Offset" index="0"]
 material = SubResource( 3 )

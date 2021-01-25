@@ -44,26 +44,29 @@ enum Faction { PLAYER, ENEMY }
 
 export var character_name := "Actor"
 
-export(Resource) var stat_resource: Resource \
-		setget set_stat_resource, get_stat_resource
+export var actor_definition: Resource setget set_actor_definition
 
 export(Faction) var faction := Faction.ENEMY
 
-var stats: ActorDefinition
-var target_visible: bool setget set_target_visible, get_target_visible
+var portrait: Texture setget , get_portrait
+
+var stats: Stats
+var skills := []
 
 var range_data: RangeData
 
+var is_alive: bool setget , get_is_alive
+
 var turn_finished: bool setget , get_turn_finished
 var round_finished: bool setget , get_round_finished
+
+var target_visible: bool setget set_target_visible, get_target_visible
 
 var _did_skill: bool = false
 var _turns_left: int = false
 
 onready var remote_transform := $Center/Offset/RemoteTransform2D \
 		as RemoteTransform2D
-
-onready var battle_stats := $BattleStats as BattleStats
 
 onready var _anim := $AnimationPlayer as AnimationPlayer
 onready var _tween := $Tween as Tween
@@ -82,8 +85,10 @@ onready var _target_cursor := $TargetCursor as TargetCursor
 func _ready() -> void:
 	._ready()
 	if not Engine.editor_hint:
-		if stats:
-			_stamina_bar.max_stamina = stats.max_stamina
+		assert(actor_definition)
+		# warning-ignore:return_value_discarded
+		stats.connect("stamina_changed", self, "_on_stats_stamina_changed")
+		_stamina_bar.max_stamina = stats.max_stamina
 		_wait_icon.play()
 		_randomize_idle_start()
 
@@ -105,12 +110,53 @@ func set_rect_size(value: Vector2) -> void:
 				-pixel_rect_size / 2, pixel_rect_size)
 
 
+func set_actor_definition(value: Resource) -> void:
+	actor_definition = value
+
+	if actor_definition:
+		var ad := actor_definition as ActorDefinition
+		set_rect_size(ad.rect_size)
+		if _sprite:
+			_sprite.texture = ad.sprite
+
+		stats = ad.create_stats()
+		skills = ad.skills
+	else:
+		set_rect_size(Vector2.ONE)
+		if _sprite:
+			_sprite.texture \
+					= preload("res://assets/graphics/actors/fighter.png")
+		stats = null
+		skills.clear()
+
+
+func get_is_alive() -> bool:
+	return stats.is_alive
+
+
 func get_turn_finished() -> bool:
 	return _did_skill
 
 
 func get_round_finished() -> bool:
 	return _turns_left == 0
+
+
+func set_target_visible(new_value: bool) -> void:
+	_target_cursor.visible = new_value
+
+
+func get_portrait() -> Texture:
+	return (actor_definition as ActorDefinition).portrait
+
+
+func get_target_visible() -> bool:
+	return _target_cursor.visible
+
+
+func start_battle() -> void:
+	stats.start_battle()
+	_stamina_bar.reset()
 
 
 func start_round() -> void:
@@ -263,31 +309,6 @@ func animate_death(direction: Vector2) -> void:
 	emit_signal("died")
 
 
-func set_stat_resource(new_value: Resource) -> void:
-	stats = new_value as ActorDefinition
-	if stats:
-		set_rect_size(stats.rect_size)
-		if _sprite:
-			_sprite.texture = stats.sprite
-
-
-func get_stat_resource() -> Resource:
-	return stats
-
-
-func set_target_visible(new_value: bool) -> void:
-	_target_cursor.visible = new_value
-
-
-func get_target_visible() -> bool:
-	return _target_cursor.visible
-
-
-func start_battle() -> void:
-	battle_stats.start_battle(stats.max_stamina)
-	_stamina_bar.reset()
-
-
 func _randomize_idle_start() -> void:
 	if not Engine.editor_hint:
 		assert(_anim.current_animation == "actor_idle")
@@ -304,9 +325,8 @@ func _set_facing(direction: Vector2) -> void:
 	# else change nothing
 
 
-func _on_BattleStats_stamina_changed(_old_stamina: int, new_stamina: int) \
-		-> void:
-	if battle_stats.is_alive:
+func _on_stats_stamina_changed(_old_stamina: int, new_stamina: int) -> void:
+	if get_is_alive():
 		_stamina_bar.visible = true
 		_stamina_bar.animate_change(new_stamina - _old_stamina)
 

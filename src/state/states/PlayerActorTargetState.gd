@@ -87,4 +87,4 @@ func _confirm_target(target_cell: Vector2) -> void:
 
 
 func _get_skill() -> Skill:
-	return _actor.stats.skills[_skill_index] as Skill
+	return _actor.skills[_skill_index] as Skill

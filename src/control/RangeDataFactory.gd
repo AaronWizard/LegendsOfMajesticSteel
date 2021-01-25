@@ -102,9 +102,9 @@ static func _create_targeting_data_set(move_range: Dictionary,
 
 	for sc in move_range.keys():
 		var source_cell := sc as Vector2
-		for i in range(actor.stats.skills.size()):
+		for i in range(actor.skills.size()):
 			var skill_index := i as int
-			var skill := actor.stats.skills[skill_index] as Skill
+			var skill := actor.skills[skill_index] as Skill
 			var targeting_data := skill.get_targeting_data(
 					source_cell, actor, map)
 

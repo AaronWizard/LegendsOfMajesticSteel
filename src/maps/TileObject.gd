@@ -56,6 +56,9 @@ func get_cell_offset() -> Vector2:
 
 
 func set_rect_size(value: Vector2) -> void:
+	assert(value.x > 0)
+	assert(value.y > 0)
+
 	rect_size = value
 
 	_covered_cells.clear()

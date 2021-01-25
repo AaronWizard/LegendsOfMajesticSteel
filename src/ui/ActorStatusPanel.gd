@@ -25,17 +25,17 @@ onready var _max_stamina := _stamina_values.get_node("MaxStamina") as Label
 
 func set_actor(actor: Actor) -> void:
 	clear()
-	_portrait.icon = actor.stats.portrait
+	_portrait.icon = actor.portrait
 	_portrait.disabled = false
 	_name.text = actor.character_name
 
 	_attack.text = str(actor.stats.attack)
 
 	_stamina_bar.max_value = actor.stats.max_stamina
-	_stamina_bar.value = actor.battle_stats.stamina
+	_stamina_bar.value = actor.stats.stamina
 
 	_max_stamina.text = str(actor.stats.max_stamina)
-	_current_stamina.text = str(actor.battle_stats.stamina)
+	_current_stamina.text = str(actor.stats.stamina)
 
 
 func clear() -> void:

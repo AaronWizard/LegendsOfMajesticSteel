@@ -18,7 +18,7 @@ shader_param/dissolve_texture = SubResource( 2 )
 
 [node name="Fighter" instance=ExtResource( 2 )]
 character_name = "Fighter"
-stat_resource = ExtResource( 3 )
+actor_definition = ExtResource( 3 )
 
 [node name="Sprite" parent="Center/Offset" index="0"]
 material = SubResource( 3 )

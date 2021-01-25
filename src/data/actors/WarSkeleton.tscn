@@ -20,7 +20,7 @@ shader_param/dissolve_texture = SubResource( 2 )
 [node name="WarSkeleton" instance=ExtResource( 2 )]
 rect_size = Vector2( 2, 2 )
 character_name = "War Skeleton"
-stat_resource = ExtResource( 4 )
+actor_definition = ExtResource( 4 )
 
 [node name="Center" parent="." index="0"]
 position = Vector2( 24, 24 )

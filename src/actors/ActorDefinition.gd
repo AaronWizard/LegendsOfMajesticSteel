@@ -1,3 +1,4 @@
+tool
 class_name ActorDefinition
 extends Resource
 
@@ -20,9 +21,17 @@ func get_portrait() -> Texture:
 	var result: Texture = null
 	if portrait:
 		result = portrait
-	else:
+	elif not Engine.editor_hint:
 		result = _get_portrait_from_sprite()
 
+	return result
+
+
+func create_stats() -> Stats:
+	var result := Stats.new()
+	result.set_stat(Stats.StatType.MAX_STAMINA, max_stamina)
+	result.set_stat(Stats.StatType.ATTACK, attack)
+	result.set_stat(Stats.StatType.MOVE, move)
 	return result
 
 

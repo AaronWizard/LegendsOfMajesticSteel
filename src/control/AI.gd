@@ -70,7 +70,7 @@ func _pick_random_skill(actor: Actor, map: Map, range_data: RangeData) \
 			actor.origin_cell)
 	var skill_index = _random.rand_array_element(skill_indicies) as int
 
-	var skill := actor.stats.skills[skill_index] as Skill
+	var skill := actor.skills[skill_index] as Skill
 	var targeting_data := \
 			range_data.get_targeting_data(actor.origin_cell, skill_index)
 

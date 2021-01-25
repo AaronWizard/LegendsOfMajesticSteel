@@ -41,10 +41,10 @@ func set_current_actor(value: Actor) -> void:
 	if current_actor:
 		_current_actor_status.set_actor(current_actor)
 
-		_attack_button.visible = current_actor.stats.skills.size() > 0
-		_skills_button.visible = current_actor.stats.skills.size() > 1
+		_attack_button.visible = current_actor.skills.size() > 0
+		_skills_button.visible = current_actor.skills.size() > 1
 
-		match current_actor.stats.skills.size():
+		match current_actor.skills.size():
 			0:
 				_action_menu.base_rotation = _ACTION_MENU_ROTATION_ONE_B
 			1:
@@ -93,9 +93,9 @@ func hide_action_menus() -> void:
 
 
 func _set_skills() -> void:
-	for i in range(1, current_actor.stats.skills.size()):
+	for i in range(1, current_actor.skills.size()):
 		var index := i as int
-		var skill := current_actor.stats.skills[index] as Skill
+		var skill := current_actor.skills[index] as Skill
 		var button := Button.new()
 		button.icon = skill.icon
 		# warning-ignore:return_value_discarded
