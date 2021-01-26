@@ -56,8 +56,8 @@ func get_cell_offset() -> Vector2:
 
 
 func set_rect_size(value: Vector2) -> void:
-	assert(value.x > 0)
-	assert(value.y > 0)
+	assert(value.x >= 1)
+	assert(value.y >= 1)
 
 	rect_size = value
 
