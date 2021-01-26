@@ -29,9 +29,9 @@ func get_portrait() -> Texture:
 
 func create_stats() -> Stats:
 	var result := Stats.new()
-	result.set_stat(Stats.StatType.MAX_STAMINA, max_stamina)
-	result.set_stat(Stats.StatType.ATTACK, attack)
-	result.set_stat(Stats.StatType.MOVE, move)
+	result.set_stat(StatType.Type.MAX_STAMINA, max_stamina)
+	result.set_stat(StatType.Type.ATTACK, attack)
+	result.set_stat(StatType.Type.MOVE, move)
 	return result
 
 

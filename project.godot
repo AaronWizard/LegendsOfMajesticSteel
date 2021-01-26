@@ -209,6 +209,16 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/ui/StaminaBar.gd"
 }, {
+"base": "Resource",
+"class": "StatModifier",
+"language": "GDScript",
+"path": "res://src/actors/StatModifier.gd"
+}, {
+"base": "Reference",
+"class": "StatType",
+"language": "GDScript",
+"path": "res://src/actors/StatType.gd"
+}, {
 "base": "Reference",
 "class": "State",
 "language": "GDScript",
@@ -315,6 +325,8 @@ _global_script_class_icons={
 "SkillPanel": "",
 "SkillRange": "",
 "StaminaBar": "",
+"StatModifier": "",
+"StatType": "",
 "State": "",
 "StateMachine": "",
 "Stats": "",

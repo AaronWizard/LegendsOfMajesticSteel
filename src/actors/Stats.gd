@@ -1,18 +1,7 @@
 class_name Stats
 
-class Modifier:
-	var stat: int
-	var value: int
-
-	func _init(new_stat: int, new_value: int) -> void:
-		stat = new_stat
-		value = new_value
-
-
 signal stat_changed(stat)
 signal stamina_changed(old_stamina, new_stamina)
-
-enum StatType { MAX_STAMINA, ATTACK, MOVE, DAMAGE_REDUCTION }
 
 # Damage reduction turned into percentage based on this value
 const DAMAGE_REDUCTION_RANGE := 100.0
@@ -30,33 +19,33 @@ var move: int setget , get_move
 
 
 func _init() -> void:
-	_base_stats[StatType.DAMAGE_REDUCTION] = 0.0
+	_base_stats[StatType.Type.DAMAGE_REDUCTION] = 0.0
 
 
 func set_stat(stat_type: int, value: int) -> void:
 	_base_stats[stat_type] = value
 
 
-func add_modifier(mod: Modifier) -> void:
+func add_modifier(mod: StatModifier) -> void:
 	_modifiers.append(mod)
 	emit_signal("stat_changed", mod.stat)
 
 
-func remove_modifier(mod: Modifier) -> void:
+func remove_modifier(mod: StatModifier) -> void:
 	_modifiers.erase(mod)
 	emit_signal("stat_changed", mod.stat)
 
 
 func get_max_stamina() -> int:
-	return _get_stat(StatType.MAX_STAMINA)
+	return _get_stat(StatType.Type.MAX_STAMINA)
 
 
 func get_attack() -> int:
-	return _get_stat(StatType.ATTACK)
+	return _get_stat(StatType.Type.ATTACK)
 
 
 func get_move() -> int:
-	return _get_stat(StatType.MOVE)
+	return _get_stat(StatType.Type.MOVE)
 
 
 func start_battle() -> void:
@@ -69,7 +58,7 @@ func get_is_alive() -> bool:
 
 # Get how much damage will be done with a given base damage
 func damage_from_attack(base_damage: int) -> int:
-	var dr := _get_stat(StatType.DAMAGE_REDUCTION)
+	var dr := _get_stat(StatType.Type.DAMAGE_REDUCTION)
 	var attack_mod := (DAMAGE_REDUCTION_RANGE - dr) / DAMAGE_REDUCTION_RANGE
 	var reduced_damage := base_damage * attack_mod
 	var final_damage := max(1, reduced_damage)
@@ -92,7 +81,7 @@ func _get_stat(stat_type: int) -> int:
 	var add := 0
 
 	for m in _modifiers:
-		var modifier := m as Modifier
+		var modifier := m as StatModifier
 		if modifier.stat == stat_type:
 			add += modifier.value
 
