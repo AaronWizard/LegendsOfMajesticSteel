@@ -17,7 +17,7 @@ static func find_move_range(actor: Actor, map: Map) -> Array:
 				if not (adj_cell in result):
 					result.append(adj_cell)
 					queue.push_back(adj_cell)
-					var adj_cost := map.get_cell_move_cost(adj_cell)
+					var adj_cost := map.get_cell_move_cost(adj_cell, actor)
 					costs[adj_cell] = costs[current_cell] + adj_cost
 
 	return result

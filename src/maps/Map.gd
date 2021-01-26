@@ -68,11 +68,15 @@ func get_tile_properties(cell: Vector2) -> TileProperties:
 	return result
 
 
-func get_cell_move_cost(cell: Vector2) -> int:
+func get_cell_move_cost(cell: Vector2, actor: Actor) -> int:
 	var result := 1
-	var properties := get_tile_properties(cell)
-	if properties:
-		result = properties.move_cost
+
+	for c in actor.get_covered_cells_at_cell(cell):
+		var covered := c as Vector2
+		var properties := get_tile_properties(covered)
+		if properties and (properties.move_cost > result):
+			result = properties.move_cost
+
 	return result
 
 
