@@ -1,9 +1,7 @@
 class_name ActorController
 extends Node
 
-signal determined_action(action)
-
-var pauses := false setget , get_pauses
+var pauses: bool setget , get_pauses
 
 
 func get_pauses() -> bool:
@@ -12,6 +10,6 @@ func get_pauses() -> bool:
 
 # warning-ignore:unused_argument
 # warning-ignore:unused_argument
-func determine_action(actor: Actor, map: Map) -> void:
+func determine_action(actor: Actor, map: Map) -> Action:
 	print("ActorController: Must implement determine_action()")
-	emit_signal("determined_action", null)
+	return null

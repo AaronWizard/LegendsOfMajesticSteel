@@ -15,7 +15,6 @@ func change_state(new_state: State) -> void:
 
 func pop_state() -> void:
 	_end_state()
-	_current_state = null
 
 
 func _start_state() -> void:
@@ -28,6 +27,9 @@ func _start_state() -> void:
 
 
 func _end_state() -> void:
-	_current_state.disconnect("change_state", self, "change_state")
-	_current_state.disconnect("pop_state", self, "pop_state")
-	_current_state.end()
+	var old_state := _current_state
+	_current_state = null
+
+	old_state.disconnect("change_state", self, "change_state")
+	old_state.disconnect("pop_state", self, "pop_state")
+	old_state.end()

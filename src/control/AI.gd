@@ -15,29 +15,28 @@ func get_pauses() -> bool:
 	return true
 
 
-func determine_action(actor: Actor, map: Map) -> void:
+func determine_action(actor: Actor, map: Map) -> Action:
+	var result: Action = null
+
 	var range_data := actor.range_data
 	if not range_data.get_valid_skill_source_cells().empty():
 		_moved = false
 
 		if not range_data.get_valid_skill_indices_at_cell(
 				actor.origin_cell).empty():
-			var action := _pick_random_skill(actor, map, range_data)
-			emit_signal("determined_action", action)
+			result = _pick_random_skill(actor, map, range_data)
 		else:
 			var path := _pick_random_action_path(actor.origin_cell, range_data)
-			var action := Move.new(actor, map, path)
-			emit_signal("determined_action", action)
+			result = Move.new(actor, map, path)
 	else:
 		var want_move := not _moved
 		_moved = want_move
 
 		if want_move:
 			var path := _pick_random_path(actor.origin_cell, range_data)
-			var action := Move.new(actor, map, path)
-			emit_signal("determined_action", action)
-		else:
-			emit_signal("determined_action", null)
+			result = Move.new(actor, map, path)
+
+	return result
 
 
 func _pick_random_path(start_cell: Vector2, range_data: RangeData) -> Array:

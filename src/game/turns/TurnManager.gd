@@ -94,16 +94,18 @@ func _get_next_actor() -> void:
 	var faction := _turn_order[_turn_index] as int
 
 	var actors := _get_active_actors(faction)
+	var actor: Actor
 	if actors.size() > 1:
 		var controller := _get_actor_turn_controller(faction)
 
-		var actor = controller.pick_actor(actors)
-		if actor is GDScriptFunctionState:
-			actor = yield(controller.pick_actor(actors), "completed")
-		_start_turn(actor as Actor)
+		var a = controller.pick_actor(actors)
+		if a is GDScriptFunctionState:
+			a = yield(a, "completed")
+		actor = a as Actor
 	else:
-		var actor := actors[0] as Actor
-		_start_turn(actor)
+		actor = actors[0] as Actor
+
+	_start_turn(actor)
 
 
 func _get_active_actors(faction: int) -> Array:
@@ -128,8 +130,10 @@ func _start_turn(actor: Actor) -> void:
 			yield(get_tree().create_timer(_PRE_TURN_WAIT_TIME), "timeout")
 
 		while actor.is_alive and not actor.turn_finished:
-			controller.call_deferred("determine_action", actor, _map)
-			var action := yield(controller, "determined_action") as Action
+			var a = controller.determine_action(actor, _map)
+			if a is GDScriptFunctionState:
+				a = yield(a, "completed")
+			var action := a as Action
 
 			if action:
 				emit_signal("action_starting", action)
