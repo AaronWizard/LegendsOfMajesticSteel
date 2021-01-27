@@ -3,8 +3,6 @@ extends Resource
 
 enum TargetType { ANY, ANY_ACTOR, ENEMY, ALLY }
 
-signal finished
-
 export var icon: Texture
 export var name := "Skill"
 export var description := "Skill description"
@@ -78,10 +76,9 @@ func predict_damage(target_cell: Vector2, source_cell: Vector2,
 			target_cell, source_cell, source_actor, map)
 
 
-func start(source_actor: Actor, map: Map, target: Vector2) -> void:
+func run(source_actor: Actor, map: Map, target: Vector2) -> void:
 	_get_effect().start(target, source_actor, map)
 	yield(_get_effect(), "finished")
-	emit_signal("finished")
 
 
 func _get_range_type() -> SkillRange:

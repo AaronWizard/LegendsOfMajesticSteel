@@ -12,7 +12,5 @@ func _init(new_actor: Actor, new_map: Map, new_skill: Skill, \
 
 
 func run() -> void:
-	skill.call_deferred("start", actor, map, target)
-	yield(skill, "finished")
-
+	yield(skill.run(actor, map, target), "completed")
 	actor.take_turn()
