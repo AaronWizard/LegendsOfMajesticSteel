@@ -1,7 +1,8 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://src/maps/tiles/TileObject.tscn" type="PackedScene" id=1]
 [ext_resource path="res://resources/visual/shaders/dissolve_shader.shader" type="Shader" id=2]
+[ext_resource path="res://resources/visual/animations/actor_death.tres" type="Animation" id=3]
 [ext_resource path="res://src/actors/Actor.gd" type="Script" id=4]
 [ext_resource path="res://resources/visual/animations/actor_idle.tres" type="Animation" id=10]
 [ext_resource path="res://src/ui/StaminaBar.tscn" type="PackedScene" id=14]
@@ -82,6 +83,7 @@ centered = false
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." index="3"]
 autoplay = "actor_idle"
+anims/actor_death = ExtResource( 3 )
 anims/actor_idle = ExtResource( 10 )
 
 [node name="Tween" type="Tween" parent="." index="4"]
