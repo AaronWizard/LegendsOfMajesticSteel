@@ -137,8 +137,7 @@ func _start_turn(actor: Actor) -> void:
 
 			if action:
 				emit_signal("action_starting", action)
-				action.start()
-				yield(action, "finished")
+				yield(action.run(), "completed")
 			else:
 				# Action is a wait
 				actor.take_turn()

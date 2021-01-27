@@ -11,10 +11,8 @@ func _init(new_actor: Actor, new_map: Map, new_skill: Skill, \
 	target = new_target
 
 
-func start() -> void:
+func run() -> void:
 	skill.call_deferred("start", actor, map, target)
 	yield(skill, "finished")
 
 	actor.take_turn()
-
-	emit_signal("finished")

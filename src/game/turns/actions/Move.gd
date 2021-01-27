@@ -3,6 +3,8 @@ extends Action
 
 var path: Array
 
+var _mouse: MouseControl = null
+
 
 func _init(new_actor: Actor, new_map: Map, new_path: Array) \
 		.(new_actor, new_map) -> void:
@@ -13,33 +15,23 @@ func show_map_highlights() -> bool:
 	return true
 
 
-func start() -> void:
-	call_deferred("_move_step")
-
-
-func _move_step() -> void:
-	if path.size() > 0:
-		var cell: Vector2 = path.pop_front()
+func run() -> void:
+	while path.size() > 0:
+		var cell := path.pop_front() as Vector2
 		actor.move_step(cell)
 		yield(actor, "move_finished")
-		call_deferred("_move_step")
-	else:
-		emit_signal("finished")
+
+	if _mouse:
+		_mouse.disconnect("click", self, "_click_to_cancel")
+		_mouse = null
 
 
 func allow_cancel(mouse: MouseControl) -> void:
+	_mouse = mouse
 	# warning-ignore:return_value_discarded
-	mouse.connect("click", self, "_click_to_cancel", [], CONNECT_ONESHOT)
-	# In case move not cancelled
-	# warning-ignore:return_value_discarded
-	connect("finished", self, "_disconnect_from_mouse",
-			[mouse], CONNECT_ONESHOT)
-
-
-func _disconnect_from_mouse(mouse: MouseControl) -> void:
-	if mouse.is_connected("click", self, "_click_to_cancel"):
-		mouse.disconnect("click", self, "_click_to_cancel")
+	mouse.connect("click", self, "_click_to_cancel")
 
 
 func _click_to_cancel(_position) -> void:
-	path.clear()
+	if map.actor_can_enter_cell(actor, actor.origin_cell):
+		path.clear()

@@ -1,7 +1,5 @@
 class_name Action
 
-signal finished
-
 var actor: Actor
 var map: Map
 
@@ -15,6 +13,5 @@ func show_map_highlights() -> bool:
 	return false
 
 
-func start() -> void:
+func run() -> void:
 	print("Action must implement start()")
-	emit_signal("finished")
