@@ -30,8 +30,7 @@ const _WALK_FRAME := 0
 const _REACT_FRAME := 2
 const _ACTION_FRAME := 3
 
-signal condition_added(condition)
-signal condition_removed(condition)
+signal conditions_changed
 
 signal move_finished
 signal attack_hit
@@ -190,7 +189,7 @@ func add_condition(condition: Condition) -> void:
 		# warning-ignore:return_value_discarded
 		condition.connect("finished", self, "remove_condition", [condition])
 		conditions.append(condition)
-		emit_signal("condition_added", condition)
+		emit_signal("conditions_changed")
 
 
 func remove_condition(condition: Condition) -> void:
@@ -198,7 +197,7 @@ func remove_condition(condition: Condition) -> void:
 		stats.remove_condition_effect(condition.effect)
 		condition.disconnect("finished", self, "remove_condition")
 		conditions.erase(condition)
-		emit_signal("condition_removed", condition)
+		emit_signal("conditions_changed")
 
 
 func move_step(target_cell: Vector2) -> void:
