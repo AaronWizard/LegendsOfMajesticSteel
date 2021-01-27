@@ -30,6 +30,9 @@ const _WALK_FRAME := 0
 const _REACT_FRAME := 2
 const _ACTION_FRAME := 3
 
+signal condition_added(condition)
+signal condition_removed(condition)
+
 signal move_finished
 signal attack_hit
 signal attack_finished
@@ -51,7 +54,9 @@ export(Faction) var faction := Faction.ENEMY
 var portrait: Texture setget , get_portrait
 
 var stats: Stats
+
 var skills := []
+var conditions := []
 
 var range_data: RangeData
 
@@ -163,6 +168,10 @@ func start_round() -> void:
 	_wait_icon.visible = false
 	_turns_left = 1
 
+	for c in conditions:
+		var condition := c as Condition
+		condition.start_round()
+
 
 func start_turn() -> void:
 	_did_skill = false
@@ -173,6 +182,23 @@ func take_turn() -> void:
 	_turns_left -= 1
 	if get_round_finished():
 		_wait_icon.visible = true
+
+
+func add_condition(condition: Condition) -> void:
+	if conditions.find(condition) == -1:
+		stats.add_condition_effect(condition.effect)
+		# warning-ignore:return_value_discarded
+		condition.connect("finished", self, "remove_condition", [condition])
+		conditions.append(condition)
+		emit_signal("condition_added", condition)
+
+
+func remove_condition(condition: Condition) -> void:
+	if conditions.find(condition) > -1:
+		stats.remove_condition_effect(condition.effect)
+		condition.disconnect("finished", self, "remove_condition")
+		conditions.erase(condition)
+		emit_signal("condition_removed", condition)
 
 
 func move_step(target_cell: Vector2) -> void:

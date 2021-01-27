@@ -6,27 +6,29 @@ signal actor_removed(actor)
 
 enum Decal { BLOOD_SPLATTER = 0 }
 
+const _COVER_EFFECT := preload("res://resources/data/conditions/Cover.tres")
+
 export var tile_properties_set: Resource
+
+
+var _cover_condition := Condition.new(
+		_COVER_EFFECT, Condition.EffectTimeType.INDEFINITE, 0)
 
 onready var _ground := $Ground as TileMap
 onready var _decals := $Decals as TileMap
 onready var _actors := $Actors as Node
 onready var _effects := $Effects as Node
 
-# Because I can't use TilePropertiesSet as an export hint
-var _tile_properties_set: TilePropertiesSet = null
-
 
 func _ready() -> void:
-	if tile_properties_set:
-		_tile_properties_set = tile_properties_set as TilePropertiesSet
-
 	for a in get_actors():
 		var actor := a as Actor
 		# warning-ignore:return_value_discarded
 		actor.connect("dying", self, "_actor_dying", [actor], CONNECT_ONESHOT)
 		# warning-ignore:return_value_discarded
 		actor.connect("died", self, "remove_actor", [actor], CONNECT_ONESHOT)
+
+	update_terrain_effects()
 
 
 func get_rect() -> Rect2:
@@ -60,10 +62,12 @@ func get_tile_name(cell: Vector2) -> String:
 func get_tile_properties(cell: Vector2) -> TileProperties:
 	var result: TileProperties = null
 
-	if _tile_properties_set:
+	var tps := tile_properties_set as TilePropertiesSet
+
+	if tps:
 		var tile_name := get_tile_name(cell)
 		if tile_name:
-			result = _tile_properties_set.get_properties(tile_name)
+			result = tps.get_properties(tile_name)
 
 	return result
 
@@ -78,6 +82,21 @@ func get_cell_move_cost(cell: Vector2, actor: Actor) -> int:
 			result = properties.move_cost
 
 	return result
+
+
+func on_defensive_terrain(actor: Actor) -> bool:
+	var defensive_tiles := 0
+	var clear_tiles := 0
+
+	for c in actor.get_covered_cells():
+		var covered := c as Vector2
+		var properties := get_tile_properties(covered)
+		if properties and properties.is_defensive:
+			defensive_tiles += 1
+		else:
+			clear_tiles += 1
+
+	return defensive_tiles > clear_tiles
 
 
 func add_decal(decal: int, cell: Vector2) -> void:
@@ -127,6 +146,15 @@ func remove_actor(actor: Actor) -> void:
 	assert(actor in _actors.get_children())
 	_actors.remove_child(actor)
 	emit_signal("actor_removed", actor)
+
+
+func update_terrain_effects() -> void:
+	for a in get_actors():
+		var actor := a as Actor
+		if on_defensive_terrain(actor):
+			actor.add_condition(_cover_condition)
+		else:
+			actor.remove_condition(_cover_condition)
 
 
 func add_effect(effect: Node2D) -> void:

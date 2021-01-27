@@ -7,7 +7,7 @@ signal stamina_changed(old_stamina, new_stamina)
 const DAMAGE_REDUCTION_RANGE := 100.0
 
 var _base_stats := {}
-var _modifiers := []
+var _conditions := []
 
 var stamina: int
 
@@ -22,18 +22,18 @@ func _init() -> void:
 	_base_stats[StatType.Type.DAMAGE_REDUCTION] = 0.0
 
 
-func set_stat(stat_type: int, value: int) -> void:
+func set_base_stat(stat_type: int, value: int) -> void:
 	_base_stats[stat_type] = value
 
 
-func add_modifier(mod: StatModifier) -> void:
-	_modifiers.append(mod)
-	emit_signal("stat_changed", mod.stat)
+func add_condition_effect(condition: ConditionEffect) -> void:
+	_conditions.append(condition)
+	_condition_notify(condition)
 
 
-func remove_modifier(mod: StatModifier) -> void:
-	_modifiers.erase(mod)
-	emit_signal("stat_changed", mod.stat)
+func remove_condition_effect(condition: ConditionEffect) -> void:
+	_conditions.erase(condition)
+	_condition_notify(condition)
 
 
 func get_max_stamina() -> int:
@@ -76,14 +76,29 @@ func heal(heal_power: float, overflow: bool) -> void:
 	_modify_stamina(regained_stamina, overflow)
 
 
+func _condition_notify(condition: ConditionEffect) -> void:
+	var changed_stats := {}
+
+	for m in condition.stat_modifiers:
+		var modifier := m as StatModifier
+		changed_stats[modifier.type] = true
+
+	for s in changed_stats:
+		emit_signal("stat_changed", s)
+
+
 func _get_stat(stat_type: int) -> int:
 	var base := _base_stats[stat_type] as int
 	var add := 0
 
-	for m in _modifiers:
-		var modifier := m as StatModifier
-		if modifier.stat == stat_type:
-			add += modifier.value
+	for c in _conditions:
+		var condition := c as ConditionEffect
+		var modifiers := condition.get_modifiers_by_type(stat_type)
+
+		for m in modifiers:
+			var modifier := m as StatModifier
+			if modifier.type == stat_type:
+				add += modifier.value
 
 	return base + add
 

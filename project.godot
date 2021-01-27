@@ -65,6 +65,16 @@ _global_script_classes=[ {
 "path": "res://src/control/BreadthFirstSearch.gd"
 }, {
 "base": "Reference",
+"class": "Condition",
+"language": "GDScript",
+"path": "res://src/conditions/Condition.gd"
+}, {
+"base": "Resource",
+"class": "ConditionEffect",
+"language": "GDScript",
+"path": "res://src/conditions/ConditionEffect.gd"
+}, {
+"base": "Reference",
 "class": "Constants",
 "language": "GDScript",
 "path": "res://src/game/Constants.gd"
@@ -296,6 +306,8 @@ _global_script_class_icons={
 "BattleGUI": "",
 "BattleInterface": "",
 "BreadthFirstSearch": "",
+"Condition": "",
+"ConditionEffect": "",
 "Constants": "",
 "DiamondRange": "",
 "Directions": "",

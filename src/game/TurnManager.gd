@@ -138,6 +138,8 @@ func _on_actor_picked(actor: Actor) -> void:
 			if actor.is_alive and not actor.turn_finished:
 				_refresh_range_data(actor)
 
+			_map.update_terrain_effects()
+
 		yield(get_tree().create_timer(_POST_TURN_WAIT_TIME), "timeout")
 
 		_turn_index = (_turn_index + 1) % _turn_order.size()
