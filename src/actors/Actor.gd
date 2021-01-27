@@ -26,6 +26,8 @@ class _AnimationDistances:
 	const DEATH := 0.5
 
 
+enum Pose { IDLE, WALK, ACTION, REACT }
+
 const _WALK_FRAME := 0
 const _REACT_FRAME := 2
 const _ACTION_FRAME := 3
@@ -65,6 +67,8 @@ var turn_finished: bool setget , get_turn_finished
 var round_finished: bool setget , get_round_finished
 
 var target_visible: bool setget set_target_visible, get_target_visible
+
+var pose: int = Pose.IDLE setget set_pose
 
 var _did_skill: bool = false
 var _turns_left: int = false
@@ -200,6 +204,23 @@ func remove_condition(condition: Condition) -> void:
 		emit_signal("conditions_changed")
 
 
+func set_pose(value: int) -> void:
+	var old_pose := pose
+	pose = value
+
+	if _anim and _sprite and (old_pose != pose):
+		_anim.stop(true)
+		match pose:
+			Pose.WALK:
+				_sprite.frame = _WALK_FRAME
+			Pose.REACT:
+				_sprite.frame = _REACT_FRAME
+			Pose.ACTION:
+				_sprite.frame = _ACTION_FRAME
+			_:
+				_anim.play()
+
+
 func move_step(target_cell: Vector2) -> void:
 	assert(get_origin_cell().distance_squared_to(target_cell) == 1)
 
@@ -211,8 +232,7 @@ func move_step(target_cell: Vector2) -> void:
 
 	_set_facing(diff)
 
-	_anim.stop(true)
-	_sprite.frame = _WALK_FRAME
+	set_pose(Pose.WALK)
 
 	# warning-ignore:return_value_discarded
 	_tween.interpolate_property(
@@ -224,15 +244,14 @@ func move_step(target_cell: Vector2) -> void:
 	_tween.start()
 	yield(_tween, "tween_all_completed")
 
-	_anim.play() # Play idle animation again
+	set_pose(Pose.IDLE)
 	emit_signal("move_finished")
 
 
 func animate_attack(direction: Vector2, reduced_lunge := false) -> void:
 	var real_direction := direction.normalized()
 
-	_anim.stop(true)
-	_sprite.frame = _ACTION_FRAME
+	set_pose(Pose.ACTION)
 
 	_set_facing(real_direction)
 
@@ -272,15 +291,14 @@ func animate_attack(direction: Vector2, reduced_lunge := false) -> void:
 	_tween.start()
 	yield(_tween, "tween_all_completed")
 
-	_anim.play() # Play idle animation again
+	set_pose(Pose.IDLE)
 	emit_signal("attack_finished")
 
 
 func animate_hit(direction: Vector2) -> void:
 	var real_direction := direction.normalized()
 
-	_anim.stop(true)
-	_sprite.frame = _REACT_FRAME
+	set_pose(Pose.REACT)
 
 	var end := real_direction * _AnimationDistances.HIT_REACT
 
@@ -301,7 +319,7 @@ func animate_hit(direction: Vector2) -> void:
 	_tween.start()
 	yield(_tween, "tween_all_completed")
 
-	_anim.play() # Play idle animation again
+	set_pose(Pose.IDLE)
 	emit_signal("hit_reaction_finished")
 
 
@@ -311,8 +329,7 @@ func animate_death(direction: Vector2) -> void:
 	emit_signal("dying")
 
 	_blood_splatter.emitting = true
-	_anim.stop(true)
-	_sprite.frame = _REACT_FRAME
+	set_pose(Pose.REACT)
 
 	var end := real_direction * _AnimationDistances.DEATH
 
