@@ -15,8 +15,7 @@ func run(target_cell: Vector2, source_actor: Actor, map: Map) -> void:
 	source_actor.animate_attack(dir)
 	yield(source_actor, "attack_hit")
 
-	attack.run()
-	yield(attack, "finished")
+	yield(attack.run(), "completed")
 
 	if _waiter.waiting:
 		yield(_waiter, "finished")

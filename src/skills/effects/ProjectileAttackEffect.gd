@@ -24,8 +24,7 @@ func run(target_cell: Vector2, source_actor: Actor, map: Map) -> void:
 	map.add_effect(projectile)
 	yield(projectile, "finished")
 
-	attack.run()
-	yield(attack, "finished")
+	yield(attack.run(), "completed")
 
 	if _waiter.waiting:
 		yield(_waiter, "finished")

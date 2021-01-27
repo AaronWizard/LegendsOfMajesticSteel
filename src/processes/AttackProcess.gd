@@ -30,5 +30,3 @@ func run() -> void:
 
 	if _waiter.waiting:
 		yield(_waiter, "finished")
-
-	emit_signal("finished")
