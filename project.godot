@@ -22,7 +22,7 @@ _global_script_classes=[ {
 "base": "Reference",
 "class": "Action",
 "language": "GDScript",
-"path": "res://src/actions/Action.gd"
+"path": "res://src/game/turns/actions/Action.gd"
 }, {
 "base": "TileObject",
 "class": "Actor",
@@ -122,7 +122,7 @@ _global_script_classes=[ {
 "base": "Action",
 "class": "Move",
 "language": "GDScript",
-"path": "res://src/actions/Move.gd"
+"path": "res://src/game/turns/actions/Move.gd"
 }, {
 "base": "ActorController",
 "class": "Player",
@@ -197,7 +197,7 @@ _global_script_classes=[ {
 "base": "Action",
 "class": "SkillAction",
 "language": "GDScript",
-"path": "res://src/actions/SkillAction.gd"
+"path": "res://src/game/turns/actions/SkillAction.gd"
 }, {
 "base": "Resource",
 "class": "SkillEffect",
@@ -282,7 +282,7 @@ _global_script_classes=[ {
 "base": "Node",
 "class": "TurnManager",
 "language": "GDScript",
-"path": "res://src/game/TurnManager.gd"
+"path": "res://src/game/turns/TurnManager.gd"
 }, {
 "base": "ReferenceRect",
 "class": "TurnQueue",

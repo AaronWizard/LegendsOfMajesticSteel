@@ -1,10 +1,11 @@
 [gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://src/game/TurnManager.gd" type="Script" id=1]
+[ext_resource path="res://src/game/turns/TurnManager.gd" type="Script" id=1]
 [ext_resource path="res://src/control/PlayerTurn.gd" type="Script" id=2]
 [ext_resource path="res://src/control/AITurn.gd" type="Script" id=3]
 [ext_resource path="res://src/control/Player.gd" type="Script" id=4]
 [ext_resource path="res://src/control/AI.gd" type="Script" id=5]
+
 
 [node name="TurnManager" type="Node"]
 script = ExtResource( 1 )
