@@ -96,10 +96,14 @@ func _get_next_actor() -> void:
 	var actors := _get_active_actors(faction)
 	if actors.size() > 1:
 		var controller := _get_actor_turn_controller(faction)
-		controller.pick_actor(_get_active_actors(faction))
+
+		var actor = controller.pick_actor(actors)
+		if actor is GDScriptFunctionState:
+			actor = yield(controller.pick_actor(actors), "completed")
+		_start_turn(actor as Actor)
 	else:
 		var actor := actors[0] as Actor
-		_on_actor_picked(actor)
+		_start_turn(actor)
 
 
 func _get_active_actors(faction: int) -> Array:
@@ -113,7 +117,7 @@ func _get_active_actors(faction: int) -> Array:
 	return result
 
 
-func _on_actor_picked(actor: Actor) -> void:
+func _start_turn(actor: Actor) -> void:
 	var controller := _get_actor_controller(actor)
 
 	if controller:
