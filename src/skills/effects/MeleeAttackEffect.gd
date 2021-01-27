@@ -4,7 +4,7 @@ extends SkillEffect
 var _waiter := SignalWaiter.new()
 
 
-func start(target_cell: Vector2, source_actor: Actor, map: Map) -> void:
+func run(target_cell: Vector2, source_actor: Actor, map: Map) -> void:
 	var target_actor := map.get_actor_on_cell(target_cell)
 	var dir := target_actor.center_cell - source_actor.center_cell
 
@@ -20,5 +20,3 @@ func start(target_cell: Vector2, source_actor: Actor, map: Map) -> void:
 
 	if _waiter.waiting:
 		yield(_waiter, "finished")
-
-	emit_signal("finished")

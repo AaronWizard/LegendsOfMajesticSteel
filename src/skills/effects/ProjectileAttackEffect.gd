@@ -7,7 +7,7 @@ export var rotate_projectile := false
 var _waiter := SignalWaiter.new()
 
 
-func start(target_cell: Vector2, source_actor: Actor, map: Map) -> void:
+func run(target_cell: Vector2, source_actor: Actor, map: Map) -> void:
 	var target_actor := map.get_actor_on_cell(target_cell)
 	var dir := source_actor.center_cell.direction_to(target_actor.center_cell)
 
@@ -29,8 +29,6 @@ func start(target_cell: Vector2, source_actor: Actor, map: Map) -> void:
 
 	if _waiter.waiting:
 		yield(_waiter, "finished")
-
-	emit_signal("finished")
 
 
 func _create_projectile(start_cell: Vector2, end_cell: Vector2) -> Projectile:
