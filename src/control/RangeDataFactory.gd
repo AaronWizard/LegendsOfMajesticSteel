@@ -3,8 +3,9 @@ class_name RangeDataFactory
 
 static func create_range_data(actor: Actor, map: Map) -> RangeData:
 	var base_move_range := _create_base_move_range(actor, map)
-	var visible_move_range := _create_visible_move_range(base_move_range, actor)
 	var true_move_range := _create_true_move_range(base_move_range, actor, map)
+	var visible_move_range := _create_visible_move_range(true_move_range,
+			base_move_range, actor)
 
 	var walk_grid := _create_walk_grid(base_move_range)
 
@@ -35,26 +36,6 @@ static func _create_base_move_range(actor: Actor, map: Map) -> Dictionary:
 	return result
 
 
-# Includes cells outside the actor's true move range but would be covered by
-# the actor if it's a multi-tile actor. Visible cells are keys and their
-# corresponding origin cells are the values.
-static func _create_visible_move_range(base_move_range: Dictionary,
-		actor: Actor) -> Dictionary:
-	var result := {}
-
-	for oc in base_move_range:
-		var origin_cell := oc as Vector2
-		result[origin_cell] = origin_cell
-
-		var covered := actor.get_covered_cells_at_cell(origin_cell)
-		for cc in covered:
-			var covered_cell := cc as Vector2
-			if not result.has(covered_cell):
-				result[covered_cell] = origin_cell
-
-	return result
-
-
 # Cells the actor can actually occupy
 static func _create_true_move_range(base_move_range: Dictionary,
 		actor: Actor, map: Map) -> Dictionary:
@@ -66,6 +47,33 @@ static func _create_true_move_range(base_move_range: Dictionary,
 			result[cell] = true
 
 	return result
+
+
+# Includes cells outside the actor's true move range but would be covered by
+# the actor if it's a multi-tile actor. Visible cells are keys and their
+# corresponding origin cells are the values.
+static func _create_visible_move_range(true_move_range: Dictionary,
+		base_move_range: Dictionary, actor: Actor) -> Dictionary:
+	var result := {}
+
+	for oc in base_move_range:
+		var origin_cell := oc as Vector2
+		_add_visible_cells_to_move_range(result, origin_cell, actor)
+	# Override assignments from base_move_range
+	for oc in true_move_range:
+		var origin_cell := oc as Vector2
+		_add_visible_cells_to_move_range(result, origin_cell, actor)
+
+	return result
+
+
+static func _add_visible_cells_to_move_range(visible_move_range: Dictionary,
+		origin_cell: Vector2,  actor: Actor) -> void:
+	var covered := actor.get_covered_cells_at_cell(origin_cell)
+	for cc in covered:
+		var covered_cell := cc as Vector2
+		if not visible_move_range.has(covered_cell):
+			visible_move_range[covered_cell] = origin_cell
 
 
 static func _create_walk_grid(move_range: Dictionary) -> AStar2D:
