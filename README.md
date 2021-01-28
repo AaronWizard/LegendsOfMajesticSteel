@@ -6,5 +6,5 @@ Power metal strategy RPG
 
 ## Credits
 
-Built in Godot 3.2: https://godotengine.org/  
+Built in Godot 3.2.4: https://godotengine.org/  
 Font is "MinimalPixel Font" by Mounir Tohami: https://mounirtohami.itch.io/minimalpixel-font
