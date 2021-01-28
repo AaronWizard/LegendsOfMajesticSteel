@@ -72,8 +72,7 @@ static func _add_visible_cells_to_move_range(visible_move_range: Dictionary,
 	var covered := actor.get_covered_cells_at_cell(origin_cell)
 	for cc in covered:
 		var covered_cell := cc as Vector2
-		if not visible_move_range.has(covered_cell):
-			visible_move_range[covered_cell] = origin_cell
+		visible_move_range[covered_cell] = origin_cell
 
 
 static func _create_walk_grid(move_range: Dictionary) -> AStar2D:
