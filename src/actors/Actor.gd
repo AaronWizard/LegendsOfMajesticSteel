@@ -38,8 +38,6 @@ signal attack_hit
 signal attack_finished
 signal hit_reaction_finished
 
-signal stamina_animation_finished
-
 signal dying
 signal died
 
@@ -71,6 +69,8 @@ var pose: int = Pose.IDLE setget set_pose
 
 var _did_skill: bool = false
 var _turns_left: int = false
+
+var _stamina_bar_animating := false
 
 onready var remote_transform := $Center/Offset/RemoteTransform2D \
 		as RemoteTransform2D
@@ -308,6 +308,10 @@ func animate_hit(direction: Vector2) -> void:
 	)
 
 	set_pose(Pose.IDLE)
+
+	if not _stamina_bar_animating:
+		yield(_stamina_bar, "animation_finished")
+
 	emit_signal("hit_reaction_finished")
 
 
@@ -344,10 +348,11 @@ func _set_facing(direction: Vector2) -> void:
 
 func _on_stats_stamina_changed(_old_stamina: int, new_stamina: int) -> void:
 	if get_is_alive():
+		_stamina_bar_animating = true
 		_stamina_bar.visible = true
 		_stamina_bar.animate_change(new_stamina - _old_stamina)
 
 
 func _on_StaminaBar_animation_finished() -> void:
+	_stamina_bar_animating = false
 	_stamina_bar.visible = false
-	emit_signal("stamina_animation_finished")
