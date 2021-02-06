@@ -1,7 +1,7 @@
 class_name Skill
 extends Resource
 
-enum TargetType { ANY, ANY_ACTOR, ENEMY, ALLY }
+enum TargetType { ANY, ANY_ACTOR, ENEMY, ALLY, EMPTY }
 
 export var icon: Texture
 export var name := "Skill"
@@ -38,18 +38,23 @@ func is_valid_target(target_cell: Vector2, source_actor: Actor, map: Map) \
 		-> bool:
 	var result := false
 
+	var actor_on_target := map.get_actor_on_cell(target_cell)
+
 	match target_type:
 		TargetType.ANY_ACTOR:
-			result = map.get_actor_on_cell(target_cell) != null
+			result = actor_on_target != null
+		TargetType.EMPTY:
+			result = actor_on_target == null
 		TargetType.ENEMY, TargetType.ALLY:
-			var other_actor := map.get_actor_on_cell(target_cell)
-			if other_actor:
+			if actor_on_target:
 				match target_type:
 					TargetType.ENEMY:
-						result = other_actor.faction != source_actor.faction
+						result = actor_on_target.faction \
+								!= source_actor.faction
 					_:
 						assert(target_type == TargetType.ALLY)
-						result = other_actor.faction == source_actor.faction
+						result = actor_on_target.faction \
+								== source_actor.faction
 			else:
 				result = false
 		_:
