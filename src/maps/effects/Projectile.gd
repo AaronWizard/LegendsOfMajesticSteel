@@ -1,5 +1,5 @@
 class_name Projectile
-extends Node2D
+extends Sprite
 
 signal finished
 
@@ -11,7 +11,6 @@ export var speed := 8 # In cells per second
 
 export var rotate_sprite := false
 
-onready var _sprite := $Sprite as Sprite
 onready var _tween := $Tween as Tween
 
 
@@ -26,7 +25,7 @@ func _ready() -> void:
 	var total_time := float(dist) / float(speed)
 
 	if rotate_sprite:
-		_sprite.rotation = end_pos.angle_to_point(start_pos)
+		rotation = end_pos.angle_to_point(start_pos)
 
 	# warning-ignore:return_value_discarded
 	_tween.interpolate_property(
