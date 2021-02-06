@@ -48,7 +48,7 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -72.0
+margin_left = -120.0
 margin_top = -40.0
 margin_right = -2.0
 margin_bottom = -2.0
@@ -120,6 +120,7 @@ margin_top = -45.0
 margin_right = 45.0
 margin_bottom = 45.0
 base_rotation = 0.0
+
 [connection signal="portrait_pressed" from="CurrentActorStatus" to="." method="_on_CurrentActorStatus_portrait_pressed"]
 [connection signal="portrait_pressed" from="OtherActorStatus" to="." method="_on_CurrentActorStatus_portrait_pressed"]
 [connection signal="cancelled" from="SkillPanel" to="." method="_on_SkillPanel_cancelled"]
