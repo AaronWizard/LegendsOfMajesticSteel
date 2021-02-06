@@ -17,4 +17,5 @@ script = ExtResource( 5 )
 script = ExtResource( 4 )
 
 [node name="BattleGUI" parent="." instance=ExtResource( 3 )]
+
 [connection signal="drag" from="MouseControl" to="." method="_on_MouseControl_drag"]
