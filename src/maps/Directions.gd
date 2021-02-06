@@ -1,6 +1,6 @@
 class_name Directions
 
-enum {
+enum Type {
 	NORTH,
 	SOUTH,
 	EAST,
@@ -8,10 +8,10 @@ enum {
 }
 
 const _VALUES := {
-	NORTH: Vector2(0, -1),
-	EAST: Vector2(1, 0),
-	SOUTH: Vector2(0, 1),
-	WEST: Vector2(-1, 0),
+	Type.NORTH: Vector2(0, -1),
+	Type.EAST: Vector2(1, 0),
+	Type.SOUTH: Vector2(0, 1),
+	Type.WEST: Vector2(-1, 0),
 }
 
 static func get_all_directions() -> Array:

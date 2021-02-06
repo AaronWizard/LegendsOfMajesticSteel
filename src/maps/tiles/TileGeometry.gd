@@ -20,7 +20,7 @@ static func cells_in_range(source_rect: Rect2, min_dist: int, max_dist: int) \
 		var start: Vector2
 		var end: Vector2
 
-		change = Directions.get_direction(Directions.NORTH) * range_index
+		change = Directions.get_direction(Directions.Type.NORTH) * range_index
 
 		# North
 
@@ -28,7 +28,7 @@ static func cells_in_range(source_rect: Rect2, min_dist: int, max_dist: int) \
 		end = ne_corner + change
 		result += _cells_on_line(start, end, true)
 
-		change = Directions.get_direction(Directions.EAST) * range_index
+		change = Directions.get_direction(Directions.Type.EAST) * range_index
 		# NE quadrant
 
 		start = end
@@ -41,7 +41,7 @@ static func cells_in_range(source_rect: Rect2, min_dist: int, max_dist: int) \
 		end = se_corner + change
 		result += _cells_on_line(start, end, true)
 
-		change = Directions.get_direction(Directions.SOUTH) * range_index
+		change = Directions.get_direction(Directions.Type.SOUTH) * range_index
 		# SE quadrant
 
 		start = end
@@ -54,7 +54,7 @@ static func cells_in_range(source_rect: Rect2, min_dist: int, max_dist: int) \
 		end = sw_corner + change
 		result += _cells_on_line(start, end, true)
 
-		change = Directions.get_direction(Directions.WEST) * range_index
+		change = Directions.get_direction(Directions.Type.WEST) * range_index
 		# SW quadrant
 
 		start = end
@@ -67,7 +67,7 @@ static func cells_in_range(source_rect: Rect2, min_dist: int, max_dist: int) \
 		end = nw_corner + change
 		result += _cells_on_line(start, end, true)
 
-		change = Directions.get_direction(Directions.NORTH) * range_index
+		change = Directions.get_direction(Directions.Type.NORTH) * range_index
 		# NW quadrant
 
 		start = end
