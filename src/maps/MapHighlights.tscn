@@ -4,7 +4,6 @@
 [ext_resource path="res://src/maps/MapHighlights.gd" type="Script" id=2]
 [ext_resource path="res://src/maps/TargetCursor.tscn" type="PackedScene" id=3]
 
-
 [node name="MapHighlights" type="Node"]
 script = ExtResource( 2 )
 
@@ -30,5 +29,6 @@ format = 1
 
 [node name="TargetCursor" parent="." instance=ExtResource( 3 )]
 visible = false
-tile_size = Vector2( 1, 1 )
+z_index = 1
+rect_size = Vector2( 1, 1 )
 centered = false
