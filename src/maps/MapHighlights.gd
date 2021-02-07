@@ -4,7 +4,8 @@ extends Node
 enum Tiles {
 	WALK,
 	TARGET,
-	OTHER_WALK
+	OTHER_WALK,
+	AOE
 }
 
 var moves_visible: bool setget set_moves_visible, get_moves_visible
@@ -21,7 +22,7 @@ onready var _moves := $Moves as TileMap
 onready var _other_moves := $OtherMoves as TileMap
 
 onready var _targets := $Targets as TileMap
-#onready var _aoe := $AOE as TileMap
+onready var _aoe := $AOE as TileMap
 onready var _target_cursor := $TargetCursor as TargetCursor
 
 
@@ -83,8 +84,8 @@ func clear_targets() -> void:
 	_targets.clear()
 
 
-#func set_aoe(cells: Array) -> void:
-#	_set_cells(_aoe, Tiles.AOE, cells)
+func set_aoe(cells: Array) -> void:
+	_set_cells(_aoe, Tiles.AOE, cells)
 
 
 func _set_cells(tilemap: TileMap, tile: int, cells: Array) -> void:
