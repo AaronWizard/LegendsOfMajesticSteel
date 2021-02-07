@@ -19,11 +19,15 @@ func get_targeting_data(source_cell: Vector2, source_actor: Actor, map: Map) \
 		-> TargetingData:
 	var target_range := get_range(source_cell, source_actor, map)
 	var valid_targets := []
+	var aoe_by_target := {}
 	for c in target_range:
-		var cell := c as Vector2
-		if is_valid_target(cell, source_actor, map):
-			valid_targets.append(cell)
-	return TargetingData.new(source_cell, target_range, valid_targets)
+		var target_cell := c as Vector2
+		if is_valid_target(target_cell, source_actor, map):
+			valid_targets.append(target_cell)
+			var aoe := get_aoe(target_cell, source_cell, source_actor, map)
+			aoe_by_target[target_cell] = aoe
+	return TargetingData.new(
+			source_cell, target_range, valid_targets, aoe_by_target)
 
 
 func get_range(source_cell: Vector2, source_actor: Actor, map: Map) -> Array:

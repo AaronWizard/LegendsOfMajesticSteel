@@ -45,6 +45,7 @@ func end() -> void:
 
 	_interface.map_highlights.target_cursor_visible = false
 	_interface.map_highlights.clear_targets()
+	_interface.map_highlights.clear_aoe()
 	_interface.map_highlights.moves_visible = true
 
 	if _chosen_action:
@@ -71,6 +72,11 @@ func _set_target(target_cell: Vector2) -> void:
 	if target_cell in targeting_data.valid_targets:
 		_interface.map_highlights.target_cursor_visible = true
 		_interface.map_highlights.target_cursor_cell = target_cell
+
+		var aoe := targeting_data.get_aoe(target_cell)
+		if (aoe.size() > 1) or ((aoe[0] as Vector2) != target_cell):
+			_interface.map_highlights.set_aoe( \
+					targeting_data.get_aoe(target_cell))
 
 		_have_target = true
 		_skill_target = target_cell

@@ -88,6 +88,10 @@ func set_aoe(cells: Array) -> void:
 	_set_cells(_aoe, Tiles.AOE, cells)
 
 
+func clear_aoe() -> void:
+	_aoe.clear()
+
+
 func _set_cells(tilemap: TileMap, tile: int, cells: Array) -> void:
 	var region_set := false
 	var start := Vector2()
