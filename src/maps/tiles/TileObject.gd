@@ -62,10 +62,11 @@ func set_rect_size(value: Vector2) -> void:
 	rect_size = value
 
 	_covered_cells.clear()
-	for x in range(rect_size.x):
-		for y in range(rect_size.y):
-			var covered := Vector2(x, y)
-			_covered_cells[covered] = true
+	var covered_cells := TileGeometry.get_rect_cells( \
+			Rect2(Vector2.ZERO, rect_size))
+	for c in covered_cells:
+		var covered := c as Vector2
+		_covered_cells[covered] = true
 
 	if _center:
 		_center.position = rect_size * (Constants.TILE_SIZE_V / 2)
