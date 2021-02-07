@@ -1,5 +1,10 @@
 class_name TileGeometry
 
+static func cells_in_range(cell: Vector2, min_dist: int, max_dist: int) \
+		-> Array:
+	return cells_in_range_rect(Rect2(cell, Vector2.ONE), min_dist, max_dist)
+
+
 static func cells_in_range_rect(source_rect: Rect2,
 		min_dist: int, max_dist: int) -> Array:
 	assert(max_dist >= min_dist)
