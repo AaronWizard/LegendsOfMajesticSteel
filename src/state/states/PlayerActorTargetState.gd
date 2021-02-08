@@ -69,6 +69,8 @@ func _set_target(target_cell: Vector2) -> void:
 	var targeting_data := _actor.range_data.get_targeting_data(
 			_actor.origin_cell, _skill_index)
 
+	_interface.map_highlights.clear_aoe()
+
 	if target_cell in targeting_data.valid_targets:
 		_interface.map_highlights.target_cursor_visible = true
 		_interface.map_highlights.target_cursor_cell = target_cell
