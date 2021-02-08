@@ -24,7 +24,6 @@ static func get_direction(direction_type: int) -> Vector2:
 
 static func get_closest_direction_type(vector: Vector2) -> int:
 	assert(vector != Vector2.ZERO)
-	print(vector)
 
 	var result: int
 	var angle := -1.0
