@@ -20,13 +20,13 @@ static func cells_in_range_rect(source_rect: Rect2,
 	for r in range(min_dist, max_dist + 1):
 		var range_index := r as int
 
-		var north_side := _rect_side(
+		var north_side := get_rect_side_cells(
 				source_rect, Directions.Type.NORTH, range_index)
-		var east_side := _rect_side(
+		var east_side := get_rect_side_cells(
 				source_rect, Directions.Type.EAST, range_index)
-		var south_side := _rect_side(
+		var south_side := get_rect_side_cells(
 				source_rect, Directions.Type.SOUTH, range_index)
-		var west_side := _rect_side(
+		var west_side := get_rect_side_cells(
 				source_rect, Directions.Type.WEST, range_index)
 
 		var ne_side := get_line(north_side.back() as Vector2, \
@@ -85,12 +85,12 @@ static func get_rect_cells(rect: Rect2) -> Array:
 	var result := []
 	for x in range(rect.size.x):
 		for y in range(rect.size.y):
-			var covered := Vector2(x, y)
+			var covered := rect.position + Vector2(x, y)
 			result.append(covered)
 	return result
 
 
-static func _rect_side(rect: Rect2, direction: int, distance: int) \
+static func get_rect_side_cells(rect: Rect2, direction: int, distance: int) \
 		-> Array:
 	var nw_corner := rect.position
 	var ne_corner := Vector2(rect.end.x - 1, rect.position.y)
@@ -120,3 +120,25 @@ static func _rect_side(rect: Rect2, direction: int, distance: int) \
 	end += Directions.get_direction(direction) * distance
 
 	return get_line(start, end)
+
+
+static func get_closest_rect_cell(cell: Vector2, rect: Rect2) -> Vector2:
+	var result: Vector2
+	var dist_sqr := -1.0
+
+	for rc in get_rect_cells(rect):
+		var rect_cell := rc as Vector2
+		var new_dist_sqr := cell.distance_squared_to(rect_cell)
+		if (dist_sqr < 0) or (new_dist_sqr < dist_sqr):
+			result = rect_cell
+			dist_sqr = new_dist_sqr
+
+			if dist_sqr == 0:
+				break
+
+	return result
+
+
+static func direction_from_rect_to_cell(cell: Vector2, rect: Rect2) -> int:
+	var rect_cell := get_closest_rect_cell(cell, rect)
+	return Directions.get_closest_direction_type(cell - rect_cell)
