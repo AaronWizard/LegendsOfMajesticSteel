@@ -1,39 +1,36 @@
 class_name ShiningStrike
 extends SkillEffect
 
-
 export var effect_scene: PackedScene
-
-var _waiter := SignalWaiter.new()
 
 
 func run(target_cell: Vector2, aoe: Array, source_actor: Actor, map: Map) \
 		-> void:
+	var on_hit := Process.new()
+	on_hit.concurrent_children = true
+
 	var dir_type := TileGeometry.direction_from_rect_to_cell( \
 			target_cell, source_actor.cell_rect)
 	var direction := Directions.get_direction(dir_type)
 
+	var effect := _create_spell_effect(target_cell, dir_type)
+	var effect_process := MapEffectProcess.new(
+			effect, "animation_finished", map)
+	on_hit.children.append(effect_process)
+
 	var other_actors := map.get_actors_on_cells(aoe)
-	var attacks := []
 	for a in other_actors:
 		var other_actor := a as Actor
 		if other_actor.faction != source_actor.faction:
-			var attack := TakeDamageProcess.new(
+			var hit := TakeDamageProcess.new(
 					other_actor, map, source_actor.stats.attack,
 					other_actor.center_cell - source_actor.center_cell)
-			#_waiter.wait_for_signal(attack, "completed")
+			on_hit.children.append(hit)
 
-	var effect := _create_spell_effect(target_cell, dir_type)
+	var attack := AttackProcess.new(source_actor, direction, true, on_hit)
 
-	_waiter.wait_for_signal(source_actor, "attack_finished")
-	source_actor.animate_attack(direction, true)
-	yield(source_actor, "attack_hit")
-
-	map.add_effect(effect)
-	yield(effect, "animation_finished")
-
-	if _waiter.waiting:
-		yield(_waiter, "finished")
+	attack.run()
+	yield(attack, "finished")
 
 
 func _create_spell_effect(cell: Vector2, direction: int) -> SpellAnimation:
