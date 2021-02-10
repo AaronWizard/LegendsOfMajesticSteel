@@ -1,4 +1,4 @@
-class_name AttackProcess
+class_name TakeDamageProcess
 extends Process
 
 var target_actor: Actor
@@ -15,7 +15,7 @@ func _init(new_actor: Actor, new_map: Map, new_attack: int,
 	attack_direction = new_attack_direction
 
 
-func run() -> void:
+func _run_self() -> void:
 	target_actor.stats.take_damage(attack)
 
 	if target_actor.is_alive:

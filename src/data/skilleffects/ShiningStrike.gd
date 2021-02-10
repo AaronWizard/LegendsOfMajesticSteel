@@ -18,7 +18,7 @@ func run(target_cell: Vector2, aoe: Array, source_actor: Actor, map: Map) \
 	for a in other_actors:
 		var other_actor := a as Actor
 		if other_actor.faction != source_actor.faction:
-			var attack := AttackProcess.new(
+			var attack := TakeDamageProcess.new(
 					other_actor, map, source_actor.stats.attack,
 					other_actor.center_cell - source_actor.center_cell)
 			#_waiter.wait_for_signal(attack, "completed")

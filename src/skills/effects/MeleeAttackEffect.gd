@@ -9,14 +9,15 @@ func run(target_cell: Vector2, _aoe: Array, source_actor: Actor, map: Map) \
 	var target_actor := map.get_actor_on_cell(target_cell)
 	var dir := target_actor.center_cell - source_actor.center_cell
 
-	var attack := AttackProcess.new(
+	var attack := TakeDamageProcess.new(
 			target_actor, map, source_actor.stats.attack, dir)
 
 	_waiter.wait_for_signal(source_actor, "attack_finished")
 	source_actor.animate_attack(dir)
 	yield(source_actor, "attack_hit")
 
-	yield(attack.run(), "completed")
+	attack.run()
+	yield(attack, "finished")
 
 	if _waiter.waiting:
 		yield(_waiter, "finished")
