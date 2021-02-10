@@ -40,5 +40,6 @@ func _run_children() -> void:
 		yield(_waiter, "finished")
 
 
+# Overridden in subclasses
 func _run_self() -> void:
-	print("Process: Must implement _run_self()")
+	pass
