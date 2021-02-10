@@ -118,6 +118,18 @@ func get_actor_on_cell(cell: Vector2) -> Actor:
 	return result
 
 
+func get_actors_on_cells(cells: Array) -> Array:
+	var result := {}
+
+	for c in cells:
+		var cell := c as Vector2
+		var actor := get_actor_on_cell(cell)
+		if actor:
+			result[actor] = true
+
+	return result.keys()
+
+
 func actor_can_enter_cell(actor: Actor, cell: Vector2,
 		ignore_allied_actors: bool = false) -> bool:
 	var result := true

@@ -189,6 +189,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/control/RangeDataFactory.gd"
 }, {
+"base": "SkillEffect",
+"class": "ShiningStrike",
+"language": "GDScript",
+"path": "res://src/data/skilleffects/ShiningStrike.gd"
+}, {
 "base": "Reference",
 "class": "SignalWaiter",
 "language": "GDScript",
@@ -346,6 +351,7 @@ _global_script_class_icons={
 "RadialContainer": "",
 "RangeData": "",
 "RangeDataFactory": "",
+"ShiningStrike": "",
 "SignalWaiter": "",
 "Skill": "",
 "SkillAOE": "",
