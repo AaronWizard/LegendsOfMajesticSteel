@@ -114,6 +114,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/maps/Map.gd"
 }, {
+"base": "Process",
+"class": "MapEffectProcess",
+"language": "GDScript",
+"path": "res://src/processes/MapEffectProcess.gd"
+}, {
 "base": "Node",
 "class": "MapHighlights",
 "language": "GDScript",
@@ -173,11 +178,6 @@ _global_script_classes=[ {
 "class": "ProjectileAttackEffect",
 "language": "GDScript",
 "path": "res://src/skills/effects/ProjectileAttackEffect.gd"
-}, {
-"base": "Process",
-"class": "ProjectileProcess",
-"language": "GDScript",
-"path": "res://src/processes/ProjectileProcess.gd"
 }, {
 "base": "Container",
 "class": "RadialContainer",
@@ -346,6 +346,7 @@ _global_script_class_icons={
 "ExtRandomNumberGenerator": "",
 "GameCamera": "",
 "Map": "",
+"MapEffectProcess": "",
 "MapHighlights": "",
 "MeleeAttackEffect": "",
 "MouseControl": "",
@@ -358,7 +359,6 @@ _global_script_class_icons={
 "Process": "",
 "Projectile": "",
 "ProjectileAttackEffect": "",
-"ProjectileProcess": "",
 "RadialContainer": "",
 "RangeData": "",
 "RangeDataFactory": "",

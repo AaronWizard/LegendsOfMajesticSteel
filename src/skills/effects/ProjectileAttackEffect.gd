@@ -14,7 +14,7 @@ func run(target_cell: Vector2, _aoe: Array, source_actor: Actor, map: Map) \
 			source_actor.center_cell + source_actor.cell_offset,
 			target_actor.center_cell)
 
-	var projectile_effect = ProjectileProcess.new(projectile, map)
+	var projectile_effect = MapEffectProcess.new(projectile, "finished", map)
 	projectile_effect.children.append(
 		TakeDamageProcess.new(
 			target_actor, map, source_actor.stats.attack, dir
