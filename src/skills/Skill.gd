@@ -86,7 +86,8 @@ func predict_damage(target_cell: Vector2, source_cell: Vector2,
 
 
 func run(source_actor: Actor, map: Map, target: Vector2) -> void:
-	yield(_get_effect().run(target, source_actor, map), "completed")
+	var aoe := get_aoe(target, source_actor.origin_cell, source_actor, map)
+	yield(_get_effect().run(target, aoe, source_actor, map), "completed")
 
 
 func _get_range_type() -> SkillRange:

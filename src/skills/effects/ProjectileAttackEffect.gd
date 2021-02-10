@@ -7,7 +7,8 @@ export var rotate_projectile := false
 var _waiter := SignalWaiter.new()
 
 
-func run(target_cell: Vector2, source_actor: Actor, map: Map) -> void:
+func run(target_cell: Vector2, _aoe: Array, source_actor: Actor, map: Map) \
+		-> void:
 	var target_actor := map.get_actor_on_cell(target_cell)
 	var dir := source_actor.center_cell.direction_to(target_actor.center_cell)
 
