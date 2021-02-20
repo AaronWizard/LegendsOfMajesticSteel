@@ -1,6 +1,13 @@
 class_name ConditionEffect
 extends Resource
 
+enum TimeType {
+	ROUNDS,
+	INDEFINITE
+}
+
+export(TimeType) var time_type: int = TimeType.ROUNDS
+export var max_rounds := 1
 
 export(Array, Resource) var stat_modifiers := []
 

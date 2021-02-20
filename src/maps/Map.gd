@@ -10,9 +10,7 @@ const _COVER_EFFECT := preload("res://resources/data/conditions/Cover.tres")
 
 export var tile_properties_set: Resource
 
-
-var _cover_condition := Condition.new(
-		_COVER_EFFECT, Condition.EffectTimeType.INDEFINITE, 0)
+var _cover_condition := Condition.new(_COVER_EFFECT)
 
 onready var _ground := $Ground as TileMap
 onready var _decals := $Decals as TileMap

@@ -4,8 +4,8 @@ extends HBoxContainer
 
 enum StatMod { SAME, UP, DOWN }
 
-export(StatMod) var attack_mod := 0 setget set_attack_mod
-export(StatMod) var defence_mod := 0 setget set_defence_mod
+export(StatMod) var attack_mod: int = StatMod.SAME setget set_attack_mod
+export(StatMod) var defence_mod: int = StatMod.SAME setget set_defence_mod
 
 onready var _attack_up := $AttackUp as Control
 onready var _attack_down := $AttackDown as Control
