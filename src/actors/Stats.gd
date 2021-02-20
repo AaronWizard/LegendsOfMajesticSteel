@@ -26,6 +26,30 @@ func set_base_stat(stat_type: int, value: int) -> void:
 	_base_stats[stat_type] = value
 
 
+func get_base_stat(stat_type: int) -> int:
+	return _base_stats[stat_type] as int
+
+
+func get_stat(stat_type: int) -> int:
+	var base := _base_stats[stat_type] as int
+	var add := 0
+
+	for c in _conditions:
+		var condition := c as ConditionEffect
+		var modifiers := condition.get_modifiers_by_type(stat_type)
+
+		for m in modifiers:
+			var modifier := m as StatModifier
+			if modifier.type == stat_type:
+				add += modifier.value
+
+	return base + add
+
+
+func get_stat_mod(stat_type: int) -> int:
+	return get_stat(stat_type) - get_base_stat(stat_type)
+
+
 func add_condition_effect(condition: ConditionEffect) -> void:
 	_conditions.append(condition)
 	_condition_notify(condition)
@@ -37,15 +61,15 @@ func remove_condition_effect(condition: ConditionEffect) -> void:
 
 
 func get_max_stamina() -> int:
-	return _get_stat(StatType.Type.MAX_STAMINA)
+	return get_stat(StatType.Type.MAX_STAMINA)
 
 
 func get_attack() -> int:
-	return _get_stat(StatType.Type.ATTACK)
+	return get_stat(StatType.Type.ATTACK)
 
 
 func get_move() -> int:
-	return _get_stat(StatType.Type.MOVE)
+	return get_stat(StatType.Type.MOVE)
 
 
 func start_battle() -> void:
@@ -58,7 +82,7 @@ func get_is_alive() -> bool:
 
 # Get how much damage will be done with a given base damage
 func damage_from_attack(base_damage: int) -> int:
-	var dr := _get_stat(StatType.Type.DAMAGE_REDUCTION)
+	var dr := get_stat(StatType.Type.DAMAGE_REDUCTION)
 	var attack_mod := (DAMAGE_REDUCTION_RANGE - dr) / DAMAGE_REDUCTION_RANGE
 	var reduced_damage := base_damage * attack_mod
 	var final_damage := max(1, reduced_damage)
@@ -85,22 +109,6 @@ func _condition_notify(condition: ConditionEffect) -> void:
 
 	for s in changed_stats:
 		emit_signal("stat_changed", s)
-
-
-func _get_stat(stat_type: int) -> int:
-	var base := _base_stats[stat_type] as int
-	var add := 0
-
-	for c in _conditions:
-		var condition := c as ConditionEffect
-		var modifiers := condition.get_modifiers_by_type(stat_type)
-
-		for m in modifiers:
-			var modifier := m as StatModifier
-			if modifier.type == stat_type:
-				add += modifier.value
-
-	return base + add
 
 
 func _modify_stamina(mod: int, overflow: bool) -> void:

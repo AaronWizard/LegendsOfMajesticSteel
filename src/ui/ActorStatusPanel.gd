@@ -20,7 +20,8 @@ onready var _stamina_bar := _defence_stats.get_node(
 onready var _current_stamina := _defence_stats.get_node("CurrentStamina") \
 		as Label
 
-onready var _conditions := $HBoxContainer/VBoxContainer/Conditions as Container
+onready var _conditions := $HBoxContainer/VBoxContainer/ConditionsPanel \
+		as ConditionsPanel
 
 
 func set_actor(actor: Actor) -> void:
@@ -55,16 +56,21 @@ func clear() -> void:
 
 
 func _set_conditions(actor: Actor) -> void:
-	for c in _conditions.get_children():
-		var condition_icon := c as Node
-		condition_icon.queue_free()
-
-	for c in actor.conditions:
-		var condition := c as Condition
-		var icon := TextureRect.new()
-		icon.texture = condition.effect.icon
-		_conditions.add_child(icon)
+	_conditions.attack_mod = _stat_mod_type(
+			actor.stats.get_stat_mod(StatType.Type.ATTACK))
+	_conditions.defence_mod = _stat_mod_type(
+			actor.stats.get_stat_mod(StatType.Type.DAMAGE_REDUCTION))
 
 
 func _on_PortraitButton_pressed() -> void:
 	emit_signal("portrait_pressed")
+
+
+static func _stat_mod_type(mod: int) -> int:
+	var result = ConditionsPanel.StatMod.SAME
+	if mod != 0:
+		if mod > 0:
+			result = ConditionsPanel.StatMod.UP
+		else:
+			result = ConditionsPanel.StatMod.DOWN
+	return result

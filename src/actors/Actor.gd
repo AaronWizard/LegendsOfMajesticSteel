@@ -34,8 +34,10 @@ const _ACTION_FRAME := 3
 signal conditions_changed
 
 signal move_finished
+
 signal attack_hit
 signal attack_finished
+
 signal hit_reaction_finished
 
 signal dying

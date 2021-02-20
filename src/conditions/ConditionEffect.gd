@@ -1,8 +1,6 @@
 class_name ConditionEffect
 extends Resource
 
-export var name := "Condition"
-export var icon: Texture
 
 export(Array, Resource) var stat_modifiers := []
 
