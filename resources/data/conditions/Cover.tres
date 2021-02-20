@@ -6,8 +6,10 @@
 [sub_resource type="Resource" id=1]
 script = ExtResource( 3 )
 type = 3
-value = 25
+value = 50
 
 [resource]
 script = ExtResource( 1 )
+time_type = 1
+max_rounds = 1
 stat_modifiers = [ SubResource( 1 ) ]
