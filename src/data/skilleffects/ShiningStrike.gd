@@ -2,6 +2,7 @@ class_name ShiningStrike
 extends SkillEffect
 
 export var effect_scene: PackedScene
+export var condition_effect: Resource
 
 
 func run(target_cell: Vector2, aoe: Array, source_actor: Actor, map: Map) \
@@ -25,7 +26,11 @@ func run(target_cell: Vector2, aoe: Array, source_actor: Actor, map: Map) \
 			var hit := TakeDamageProcess.new(
 					other_actor, map, source_actor.stats.attack,
 					other_actor.center_cell - source_actor.center_cell)
+			var penalty := ApplyConditionProcess.new(
+					other_actor, condition_effect as ConditionEffect)
+
 			on_hit.children.append(hit)
+			on_hit.children.append(penalty)
 
 	var attack := AttackProcess.new(source_actor, direction, true, on_hit)
 

@@ -8,6 +8,7 @@ var on_hit_process: Process
 
 var _attack_waiter := SignalWaiter.new()
 
+
 func _init(new_actor: Actor, new_direction: Vector2, new_ranged: bool,
 		new_on_hit: Process) -> void:
 	actor = new_actor
