@@ -42,11 +42,11 @@ animations = [ {
 } ]
 
 [node name="Actor" instance=ExtResource( 1 )]
+z_index = 1
 script = ExtResource( 4 )
 
 [node name="Sprite" type="Sprite" parent="Center/Offset" index="0"]
 material = SubResource( 3 )
-z_index = 1
 texture = ExtResource( 25 )
 hframes = 4
 
@@ -79,7 +79,6 @@ __meta__ = {
 
 [node name="TargetCursor" parent="." index="2" instance=ExtResource( 19 )]
 visible = false
-z_index = 1
 rect_size = Vector2( 1, 1 )
 centered = false
 
