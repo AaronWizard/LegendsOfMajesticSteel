@@ -5,18 +5,19 @@ extends Node2D
 var _enabled_icons := []
 var _visible_icon_index := 0
 
-onready var _attack_up := $AttackUp as CanvasItem
-onready var _attack_down := $AttackDown as CanvasItem
-onready var _defence_up := $DefenceUp as CanvasItem
-onready var _defence_down := $DefenceDown as CanvasItem
+onready var _stat_mod_icons := $StatModIcons as Node2D
+
+onready var _attack_up := _stat_mod_icons.get_node("AttackUp") as CanvasItem
+onready var _attack_down := _stat_mod_icons.get_node("AttackDown") as CanvasItem
+onready var _defence_up := _stat_mod_icons.get_node("DefenceUp") as CanvasItem
+onready var _defence_down := _stat_mod_icons.get_node("DefenceDown") \
+		as CanvasItem
 
 onready var _timer := $Timer as Timer
 
 
 func update_icons(stats: Stats) -> void:
-	_timer.stop()
-	_enabled_icons.clear()
-	_visible_icon_index = 0
+	_clear()
 
 	var attack_mod := stats.get_stat_mod(StatType.Type.ATTACK)
 	_add_stat_mod_icon(_attack_up, _attack_down, attack_mod)
@@ -28,6 +29,16 @@ func update_icons(stats: Stats) -> void:
 		var first_icon := _enabled_icons.front() as CanvasItem
 		first_icon.visible = true
 		_timer.start()
+
+
+func _clear() -> void:
+	_timer.stop()
+	_enabled_icons.clear()
+	_visible_icon_index = 0
+
+	for i in _stat_mod_icons.get_children():
+		var icon := i as CanvasItem
+		icon.visible = false
 
 
 func _add_stat_mod_icon(stat_up: CanvasItem, stat_down: CanvasItem,
