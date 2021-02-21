@@ -140,7 +140,10 @@ func set_actor_definition(value: Resource) -> void:
 
 
 func get_is_alive() -> bool:
-	return stats.is_alive
+	var result := true
+	if stats:
+		result = stats.is_alive
+	return result
 
 
 func get_turn_finished() -> bool:
