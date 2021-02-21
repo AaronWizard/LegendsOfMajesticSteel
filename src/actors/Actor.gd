@@ -53,8 +53,6 @@ export(Faction) var faction := Faction.ENEMY
 
 var portrait: Texture setget , get_portrait
 
-var stats: Stats
-
 var skills := []
 var conditions := []
 
@@ -85,19 +83,25 @@ onready var _blood_splatter := $Center/BloodSplatter \
 		as Particles2D
 
 onready var _stamina_bar := $Center/Offset/Sprite/StaminaBar as StaminaBar
-
+onready var _condition_icons := $ConditionIcons as ConditionIcons
 onready var _wait_icon := $WaitIcon as AnimatedSprite
 
 onready var _target_cursor := $TargetCursor as TargetCursor
+
+onready var stats := $Stats as Stats
 
 
 func _ready() -> void:
 	._ready()
 	if not Engine.editor_hint:
 		assert(actor_definition)
-		# warning-ignore:return_value_discarded
-		stats.connect("stamina_changed", self, "_on_stats_stamina_changed")
+		var ad := actor_definition as ActorDefinition
+
+		ad.init_stats(stats)
+		skills = ad.skills
+
 		_stamina_bar.max_stamina = stats.max_stamina
+		_condition_icons.update_icons(stats)
 		_wait_icon.play()
 		_randomize_idle_start()
 
@@ -127,15 +131,11 @@ func set_actor_definition(value: Resource) -> void:
 		set_rect_size(ad.rect_size)
 		if _sprite:
 			_sprite.texture = ad.sprite
-
-		stats = ad.create_stats()
-		skills = ad.skills
 	else:
 		set_rect_size(Vector2.ONE)
 		if _sprite:
 			_sprite.texture \
 					= preload("res://assets/graphics/actors/fighter.png")
-		stats = null
 		skills.clear()
 
 
@@ -348,13 +348,17 @@ func _set_facing(direction: Vector2) -> void:
 	# else change nothing
 
 
-func _on_stats_stamina_changed(_old_stamina: int, new_stamina: int) -> void:
+func _on_Stats_stamina_changed(old_stamina: int, new_stamina: int) -> void:
 	if get_is_alive():
 		_stamina_bar_animating = true
 		_stamina_bar.visible = true
-		_stamina_bar.animate_change(new_stamina - _old_stamina)
+		_stamina_bar.animate_change(new_stamina - old_stamina)
 
 
 func _on_StaminaBar_animation_finished() -> void:
 	_stamina_bar_animating = false
 	_stamina_bar.visible = false
+
+
+func _on_Stats_stat_changed(_stat) -> void:
+	_condition_icons.update_icons(stats)

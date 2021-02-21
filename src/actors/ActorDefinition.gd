@@ -27,12 +27,10 @@ func get_portrait() -> Texture:
 	return result
 
 
-func create_stats() -> Stats:
-	var result := Stats.new()
-	result.set_base_stat(StatType.Type.MAX_STAMINA, max_stamina)
-	result.set_base_stat(StatType.Type.ATTACK, attack)
-	result.set_base_stat(StatType.Type.MOVE, move)
-	return result
+func init_stats(stats: Stats) -> void:
+	stats.set_base_stat(StatType.Type.MAX_STAMINA, max_stamina)
+	stats.set_base_stat(StatType.Type.ATTACK, attack)
+	stats.set_base_stat(StatType.Type.MOVE, move)
 
 
 func _get_portrait_from_sprite() -> Texture:

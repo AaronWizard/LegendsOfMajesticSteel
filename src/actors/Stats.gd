@@ -1,4 +1,5 @@
 class_name Stats
+extends Node
 
 signal stat_changed(stat)
 signal stamina_changed(old_stamina, new_stamina)
