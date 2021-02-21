@@ -83,7 +83,8 @@ onready var _blood_splatter := $Center/BloodSplatter \
 		as Particles2D
 
 onready var _stamina_bar := $Center/Offset/Sprite/StaminaBar as StaminaBar
-onready var _condition_icons := $ConditionIcons as ConditionIcons
+onready var _condition_icons := $Center/Offset/Sprite/ConditionIcons \
+		as ConditionIcons
 onready var _wait_icon := $WaitIcon as AnimatedSprite
 
 onready var _target_cursor := $TargetCursor as TargetCursor
