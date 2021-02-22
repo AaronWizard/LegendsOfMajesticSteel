@@ -62,8 +62,8 @@ func _start_battle() -> void:
 		actor.start_battle()
 		_turn_order.append(actor.faction)
 
-	randomize()
-	_turn_order.shuffle()
+	#randomize()
+	#_turn_order.shuffle()
 
 	emit_signal("battle_started", _turn_order)
 

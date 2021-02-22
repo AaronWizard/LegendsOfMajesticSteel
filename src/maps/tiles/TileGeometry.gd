@@ -116,8 +116,8 @@ static func get_rect_side_cells(rect: Rect2, direction: int, distance: int) \
 		_:
 			assert(false, "Invalid direction %d" % direction)
 
-	start += Directions.get_direction(direction) * distance
-	end += Directions.get_direction(direction) * distance
+	start += Directions.get_vector(direction) * distance
+	end += Directions.get_vector(direction) * distance
 
 	return get_line(start, end)
 

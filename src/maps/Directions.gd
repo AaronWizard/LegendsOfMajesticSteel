@@ -8,17 +8,17 @@ enum Type {
 }
 
 const _VALUES := {
-	Type.NORTH: Vector2(0, -1),
-	Type.EAST: Vector2(1, 0),
-	Type.SOUTH: Vector2(0, 1),
-	Type.WEST: Vector2(-1, 0),
+	Type.NORTH: Vector2.UP,
+	Type.EAST: Vector2.RIGHT,
+	Type.SOUTH: Vector2.DOWN,
+	Type.WEST: Vector2.LEFT,
 }
 
 static func get_all_directions() -> Array:
 	return _VALUES.values()
 
 
-static func get_direction(direction_type: int) -> Vector2:
+static func get_vector(direction_type: int) -> Vector2:
 	return _VALUES[direction_type]
 
 
@@ -56,6 +56,6 @@ static func right_direction_type(direction_type: int) -> int:
 
 
 static func _rotated_direction_type(direction_type: int, radians: float) -> int:
-	var direction_vector := get_direction(direction_type)
+	var direction_vector := get_vector(direction_type)
 	var rotated_vector := direction_vector.rotated(radians)
 	return get_closest_direction_type(rotated_vector)

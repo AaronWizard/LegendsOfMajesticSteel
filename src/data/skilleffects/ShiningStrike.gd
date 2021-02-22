@@ -12,7 +12,7 @@ func run(target_cell: Vector2, aoe: Array, source_actor: Actor, map: Map) \
 
 	var dir_type := TileGeometry.direction_from_rect_to_cell( \
 			target_cell, source_actor.cell_rect)
-	var direction := Directions.get_direction(dir_type)
+	var direction := Directions.get_vector(dir_type)
 
 	var effect := _create_spell_effect(target_cell, dir_type)
 	var effect_process := MapEffectProcess.new(
