@@ -90,7 +90,7 @@ static func _init_walk_grid_paths(walk_grid: AStar2D) -> void:
 	for p in walk_grid.get_points():
 		var point := p as int
 		var cell := walk_grid.get_point_position(point)
-		for d in Directions.get_all_directions():
+		for d in Directions.get_all_vectors():
 			var dir := d as Vector2
 			var adj_cell := dir + cell
 

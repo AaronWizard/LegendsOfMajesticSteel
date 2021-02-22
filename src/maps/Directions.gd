@@ -14,7 +14,7 @@ const _VALUES := {
 	Type.WEST: Vector2.LEFT,
 }
 
-static func get_all_directions() -> Array:
+static func get_all_vectors() -> Array:
 	return _VALUES.values()
 
 
