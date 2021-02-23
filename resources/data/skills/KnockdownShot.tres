@@ -1,0 +1,27 @@
+[gd_resource type="Resource" load_steps=8 format=2]
+
+[ext_resource path="res://src/skills/Skill.gd" type="Script" id=1]
+[ext_resource path="res://assets/graphics/ui/icons/actions/skills/knockdown_shot.png" type="Texture" id=2]
+[ext_resource path="res://src/data/skilleffects/KnockdownShot.gd" type="Script" id=3]
+[ext_resource path="res://src/maps/effects/Projectile.tscn" type="PackedScene" id=4]
+[ext_resource path="res://src/skills/ranges/DiamondRange.gd" type="Script" id=5]
+
+[sub_resource type="Resource" id=3]
+script = ExtResource( 5 )
+min_dist = 1
+max_dist = 2
+include_diagonals = false
+
+[sub_resource type="Resource" id=2]
+script = ExtResource( 3 )
+projectile_scene = ExtResource( 4 )
+rotate_projectile = true
+
+[resource]
+script = ExtResource( 1 )
+icon = ExtResource( 2 )
+name = "Knockdown Shot"
+description = "Skill description"
+range_type = SubResource( 3 )
+target_type = 2
+skill_effect = SubResource( 2 )

@@ -124,6 +124,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/game/GameCamera.gd"
 }, {
+"base": "SkillEffect",
+"class": "KnockdownShot",
+"language": "GDScript",
+"path": "res://src/data/skilleffects/KnockdownShot.gd"
+}, {
 "base": "Node",
 "class": "Map",
 "language": "GDScript",
@@ -193,6 +198,11 @@ _global_script_classes=[ {
 "class": "ProjectileAttackEffect",
 "language": "GDScript",
 "path": "res://src/skills/effects/ProjectileAttackEffect.gd"
+}, {
+"base": "Process",
+"class": "PushActorProcess",
+"language": "GDScript",
+"path": "res://src/processes/PushActorProcess.gd"
 }, {
 "base": "Container",
 "class": "RadialContainer",
@@ -363,6 +373,7 @@ _global_script_class_icons={
 "Directions": "",
 "ExtRandomNumberGenerator": "",
 "GameCamera": "",
+"KnockdownShot": "",
 "Map": "",
 "MapEffectProcess": "",
 "MapHighlights": "",
@@ -377,6 +388,7 @@ _global_script_class_icons={
 "Process": "",
 "Projectile": "",
 "ProjectileAttackEffect": "",
+"PushActorProcess": "",
 "RadialContainer": "",
 "RangeData": "",
 "RangeDataFactory": "",

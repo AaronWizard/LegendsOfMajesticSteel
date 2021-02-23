@@ -298,20 +298,20 @@ func animate_attack(direction: Vector2, reduced_lunge := false) -> void:
 
 
 func animate_hit(direction: Vector2) -> void:
-	var real_direction := direction.normalized()
-
 	set_pose(Pose.REACT)
 
-	yield(
-		animate_offset(real_direction * _AnimationDistances.HIT_REACT,
-			_AnimationTimes.HIT_REACT, Tween.TRANS_QUART, Tween.EASE_OUT),
-		"completed"
-	)
-	yield(
-		animate_offset(Vector2.ZERO, _AnimationTimes.HIT_RECOVER,
-				Tween.TRANS_QUAD, Tween.EASE_OUT),
-		"completed"
-	)
+	if direction != Vector2.ZERO:
+		var real_direction := direction.normalized()
+		yield(
+			animate_offset(real_direction * _AnimationDistances.HIT_REACT,
+				_AnimationTimes.HIT_REACT, Tween.TRANS_QUART, Tween.EASE_OUT),
+			"completed"
+		)
+		yield(
+			animate_offset(Vector2.ZERO, _AnimationTimes.HIT_RECOVER,
+					Tween.TRANS_QUAD, Tween.EASE_OUT),
+			"completed"
+		)
 
 	set_pose(Pose.IDLE)
 
@@ -327,11 +327,15 @@ func animate_death(direction: Vector2) -> void:
 	emit_signal("dying")
 
 	set_pose(Pose.DEATH)
-	yield(
-		animate_offset(real_direction * _AnimationDistances.DEATH,
-			_anim.current_animation_length, Tween.TRANS_QUAD, Tween.EASE_OUT),
-		"completed"
-	)
+	if direction != Vector2.ZERO:
+		yield(
+			animate_offset(real_direction * _AnimationDistances.DEATH,
+				_anim.current_animation_length,
+				Tween.TRANS_QUAD, Tween.EASE_OUT),
+			"completed"
+		)
+	if _anim.is_playing():
+		yield(_anim, "animation_finished")
 
 	emit_signal("died")
 
