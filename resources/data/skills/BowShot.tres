@@ -10,6 +10,7 @@
 script = ExtResource( 3 )
 min_dist = 2
 max_dist = 2
+include_diagonals = true
 
 [sub_resource type="Resource" id=2]
 script = ExtResource( 1 )

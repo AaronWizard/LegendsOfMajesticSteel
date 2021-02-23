@@ -6,7 +6,7 @@ static func cells_in_range(cell: Vector2, min_dist: int, max_dist: int) \
 
 
 static func cells_in_range_rect(source_rect: Rect2,
-		min_dist: int, max_dist: int) -> Array:
+		min_dist: int, max_dist: int, include_diagonals := true) -> Array:
 	assert(max_dist >= min_dist)
 
 	var result := []
@@ -29,14 +29,20 @@ static func cells_in_range_rect(source_rect: Rect2,
 		var west_side := get_rect_side_cells(
 				source_rect, Directions.Type.WEST, range_index)
 
-		var ne_side := get_line(north_side.back() as Vector2, \
-				east_side.front() as Vector2, false)
-		var se_side := get_line(east_side.back() as Vector2, \
-				south_side.front() as Vector2, false)
-		var sw_side := get_line(south_side.back() as Vector2, \
-				west_side.front() as Vector2, false)
-		var nw_side := get_line(west_side.back() as Vector2, \
-				north_side.front() as Vector2, false)
+		var ne_side := []
+		var se_side := []
+		var sw_side := []
+		var nw_side := []
+
+		if include_diagonals:
+			ne_side = get_line(north_side.back() as Vector2, \
+					east_side.front() as Vector2, false)
+			se_side = get_line(east_side.back() as Vector2, \
+					south_side.front() as Vector2, false)
+			sw_side = get_line(south_side.back() as Vector2, \
+					west_side.front() as Vector2, false)
+			nw_side = get_line(west_side.back() as Vector2, \
+					north_side.front() as Vector2, false)
 
 		result.append_array(north_side)
 		result.append_array(ne_side)

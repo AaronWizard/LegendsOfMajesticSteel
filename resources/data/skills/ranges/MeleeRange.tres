@@ -6,3 +6,4 @@
 script = ExtResource( 1 )
 min_dist = 1
 max_dist = 1
+include_diagonals = true
