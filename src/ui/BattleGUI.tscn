@@ -81,7 +81,6 @@ margin_top = -36.0
 margin_right = 36.0
 margin_bottom = 36.0
 rect_min_size = Vector2( 72, 72 )
-base_rotation = 0.0
 
 [node name="Wait" type="Button" parent="ActionMenuPivot/ActionMenu"]
 margin_left = 48.0
@@ -119,7 +118,6 @@ margin_left = -45.0
 margin_top = -45.0
 margin_right = 45.0
 margin_bottom = 45.0
-base_rotation = 0.0
 
 [connection signal="portrait_pressed" from="CurrentActorStatus" to="." method="_on_CurrentActorStatus_portrait_pressed"]
 [connection signal="portrait_pressed" from="OtherActorStatus" to="." method="_on_CurrentActorStatus_portrait_pressed"]

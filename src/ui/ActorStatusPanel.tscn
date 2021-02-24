@@ -117,7 +117,5 @@ texture_progress = ExtResource( 4 )
 margin_top = 19.0
 margin_right = 60.0
 margin_bottom = 27.0
-attack_mod = 0
-defence_mod = 0
 
 [connection signal="pressed" from="HBoxContainer/PortraitButton" to="." method="_on_PortraitButton_pressed"]

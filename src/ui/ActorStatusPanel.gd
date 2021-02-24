@@ -56,10 +56,7 @@ func clear() -> void:
 
 
 func _set_conditions(actor: Actor) -> void:
-	_conditions.attack_mod = _stat_mod_type(
-			actor.stats.get_stat_mod(StatType.Type.ATTACK))
-	_conditions.defence_mod = _stat_mod_type(
-			actor.stats.get_stat_mod(StatType.Type.DAMAGE_REDUCTION))
+	_conditions.update_icons(actor.stats)
 
 
 func _on_PortraitButton_pressed() -> void:
