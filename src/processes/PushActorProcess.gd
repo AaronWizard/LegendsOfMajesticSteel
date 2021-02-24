@@ -1,7 +1,7 @@
 class_name PushActorProcess
 extends Process
 
-const _SPEED := 10 # Tiles per second
+const _SPEED := 8 # Tiles per second
 const _HIT_DIST := 0.25
 
 var actor: Actor
