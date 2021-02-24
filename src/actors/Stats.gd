@@ -19,7 +19,7 @@ var attack: int setget , get_attack
 var move: int setget , get_move
 
 
-func _init() -> void:
+func _ready() -> void:
 	_base_stats[StatType.Type.DAMAGE_REDUCTION] = 0.0
 
 

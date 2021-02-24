@@ -72,6 +72,8 @@ var _turns_left: int = false
 
 var _stamina_bar_animating := false
 
+onready var stats := $Stats as Stats
+
 onready var remote_transform := $Center/Offset/RemoteTransform2D \
 		as RemoteTransform2D
 
@@ -89,8 +91,6 @@ onready var _wait_icon := $WaitIcon as AnimatedSprite
 
 onready var _target_cursor := $TargetCursor as TargetCursor
 
-onready var stats := $Stats as Stats
-
 
 func _ready() -> void:
 	._ready()
@@ -103,6 +103,7 @@ func _ready() -> void:
 
 		_stamina_bar.max_stamina = stats.max_stamina
 		_condition_icons.update_icons(stats)
+
 		_wait_icon.play()
 		_randomize_idle_start()
 
@@ -142,8 +143,8 @@ func set_actor_definition(value: Resource) -> void:
 
 func get_is_alive() -> bool:
 	var result := true
-	if stats:
-		result = stats.is_alive
+	if stats and not Engine.editor_hint:
+		result = stats.get_is_alive()
 	return result
 
 
@@ -160,11 +161,17 @@ func set_target_visible(new_value: bool) -> void:
 
 
 func get_portrait() -> Texture:
-	return (actor_definition as ActorDefinition).portrait
+	var result: Texture = null
+	if actor_definition:
+		result = (actor_definition as ActorDefinition).portrait
+	return result
 
 
 func get_target_visible() -> bool:
-	return _target_cursor.visible
+	var result := false
+	if _target_cursor:
+		result = _target_cursor.visible
+	return result
 
 
 func start_battle() -> void:
