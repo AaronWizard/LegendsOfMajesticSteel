@@ -12,6 +12,9 @@ onready var _attack_down := _stat_mod_icons.get_node("AttackDown") as CanvasItem
 onready var _defence_up := _stat_mod_icons.get_node("DefenceUp") as CanvasItem
 onready var _defence_down := _stat_mod_icons.get_node("DefenceDown") \
 		as CanvasItem
+onready var _move_up := _stat_mod_icons.get_node("MoveUp") as CanvasItem
+onready var _move_down := _stat_mod_icons.get_node("MoveDown") as CanvasItem
+
 
 onready var _timer := $Timer as Timer
 
@@ -19,11 +22,10 @@ onready var _timer := $Timer as Timer
 func update_icons(stats: Stats) -> void:
 	_clear()
 
-	var attack_mod := stats.get_stat_mod(StatType.Type.ATTACK)
-	_add_stat_mod_icon(_attack_up, _attack_down, attack_mod)
-
-	var defence_mod := stats.get_stat_mod(StatType.Type.DAMAGE_REDUCTION)
-	_add_stat_mod_icon(_defence_up, _defence_down, defence_mod)
+	_add_stat_mod_icon(stats, StatType.Type.ATTACK, _attack_up, _attack_down)
+	_add_stat_mod_icon(stats, StatType.Type.DAMAGE_REDUCTION,
+			_defence_up, _defence_down)
+	_add_stat_mod_icon(stats, StatType.Type.MOVE, _move_up, _move_down)
 
 	if _enabled_icons.size() > 0:
 		var first_icon := _enabled_icons.front() as CanvasItem
@@ -41,10 +43,11 @@ func _clear() -> void:
 		icon.visible = false
 
 
-func _add_stat_mod_icon(stat_up: CanvasItem, stat_down: CanvasItem,
-		stat_mod: int) -> void:
-	if stat_mod != 0:
-		if stat_mod > 0:
+func _add_stat_mod_icon(stats: Stats, stat_type: int,
+		stat_up: CanvasItem, stat_down: CanvasItem) -> void:
+	var mod := stats.get_stat_mod(stat_type)
+	if mod != 0:
+		if mod > 0:
 			_enabled_icons.append(stat_up)
 		else:
 			_enabled_icons.append(stat_down)
