@@ -6,7 +6,7 @@
 [ext_resource path="res://src/maps/effects/Projectile.tscn" type="PackedScene" id=4]
 [ext_resource path="res://src/skills/ranges/DiamondRange.gd" type="Script" id=5]
 
-[sub_resource type="Resource" id=3]
+[sub_resource type="Resource" id=1]
 script = ExtResource( 5 )
 min_dist = 1
 max_dist = 2
@@ -22,6 +22,6 @@ script = ExtResource( 1 )
 icon = ExtResource( 2 )
 name = "Knockdown Shot"
 description = "Skill description"
-range_type = SubResource( 3 )
+range_type = SubResource( 1 )
 target_type = 2
 skill_effect = SubResource( 2 )

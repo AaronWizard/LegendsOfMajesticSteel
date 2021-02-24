@@ -87,8 +87,6 @@ __meta__ = {
 
 [node name="TargetCursor" parent="." index="3" instance=ExtResource( 19 )]
 visible = false
-rect_size = Vector2( 1, 1 )
-centered = false
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." index="4"]
 autoplay = "actor_idle"

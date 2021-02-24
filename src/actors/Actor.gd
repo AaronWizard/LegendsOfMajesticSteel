@@ -228,6 +228,10 @@ func set_pose(value: int) -> void:
 				_anim.play("actor_idle")
 
 
+func reset_pose() -> void:
+	set_pose(Pose.IDLE)
+
+
 func animate_offset(new_offset: Vector2, duration: float,
 		trans_type: int, ease_type: int) -> void:
 	# warning-ignore:return_value_discarded
@@ -257,7 +261,7 @@ func move_step(target_cell: Vector2) -> void:
 		"completed"
 	)
 
-	set_pose(Pose.IDLE)
+	reset_pose()
 	emit_signal("move_finished")
 
 
@@ -293,7 +297,7 @@ func animate_attack(direction: Vector2, reduced_lunge := false) -> void:
 		"completed"
 	)
 
-	set_pose(Pose.IDLE)
+	reset_pose()
 	emit_signal("attack_finished")
 
 
@@ -313,7 +317,7 @@ func animate_hit(direction: Vector2) -> void:
 			"completed"
 		)
 
-	set_pose(Pose.IDLE)
+	reset_pose()
 
 	if not _stamina_bar_animating:
 		yield(_stamina_bar, "animation_finished")
@@ -323,14 +327,15 @@ func animate_hit(direction: Vector2) -> void:
 
 func animate_death(direction: Vector2) -> void:
 	var real_direction := direction.normalized()
+	var new_offset := get_cell_offset() \
+			+ (real_direction * _AnimationDistances.DEATH)
 
 	emit_signal("dying")
 
 	set_pose(Pose.DEATH)
 	if direction != Vector2.ZERO:
 		yield(
-			animate_offset(real_direction * _AnimationDistances.DEATH,
-				_anim.current_animation_length,
+			animate_offset(new_offset, _anim.current_animation_length,
 				Tween.TRANS_QUAD, Tween.EASE_OUT),
 			"completed"
 		)

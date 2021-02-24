@@ -4,10 +4,10 @@ extends Node2D
 
 
 # The top-left corner of the tile object
-export var origin_cell := Vector2.ZERO setget set_origin_cell, get_origin_cell
+export var origin_cell: Vector2 setget set_origin_cell, get_origin_cell
 
 # Offset is in cells
-export var cell_offset := Vector2.ZERO setget set_cell_offset, get_cell_offset
+export var cell_offset: Vector2 setget set_cell_offset, get_cell_offset
 
 # Rect size is in cells
 export var rect_size := Vector2.ONE setget set_rect_size
