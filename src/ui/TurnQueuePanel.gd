@@ -14,8 +14,8 @@ onready var _tween := $Tween as Tween
 
 
 func set_queue(turn_order: Array) -> void:
-	_queue.set_icons(turn_order)
-	_resize_panel()
+	_queue.call_deferred("set_icons", turn_order)
+	call_deferred("_resize_panel")
 
 
 func next_turn() -> void:
