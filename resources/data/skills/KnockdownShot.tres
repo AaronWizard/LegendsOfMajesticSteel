@@ -1,10 +1,11 @@
-[gd_resource type="Resource" load_steps=8 format=2]
+[gd_resource type="Resource" load_steps=9 format=2]
 
 [ext_resource path="res://src/skills/Skill.gd" type="Script" id=1]
 [ext_resource path="res://assets/graphics/ui/icons/actions/skills/knockdown_shot.png" type="Texture" id=2]
 [ext_resource path="res://src/data/skilleffects/KnockdownShot.gd" type="Script" id=3]
 [ext_resource path="res://src/maps/effects/Projectile.tscn" type="PackedScene" id=4]
 [ext_resource path="res://src/skills/ranges/DiamondRange.gd" type="Script" id=5]
+[ext_resource path="res://resources/data/conditions/KnockbackShotPenalty.tres" type="Resource" id=6]
 
 [sub_resource type="Resource" id=1]
 script = ExtResource( 5 )
@@ -17,6 +18,7 @@ script = ExtResource( 3 )
 distance = 1
 projectile_scene = ExtResource( 4 )
 rotate_projectile = true
+condition_effect = ExtResource( 6 )
 
 [resource]
 script = ExtResource( 1 )

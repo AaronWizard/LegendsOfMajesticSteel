@@ -5,6 +5,8 @@ export var distance := 1
 export var projectile_scene: PackedScene
 export var rotate_projectile := false
 
+export var condition_effect: Resource
+
 
 func run(target_cell: Vector2, _aoe: Array, source_actor: Actor, map: Map) \
 		-> void:
@@ -21,6 +23,10 @@ func run(target_cell: Vector2, _aoe: Array, source_actor: Actor, map: Map) \
 	projectile_effect.children.append(
 		PushActorProcess.new(target_actor, map, source_actor.stats.attack,
 			dir_type, distance)
+	)
+	projectile_effect.children.append(
+		ApplyConditionProcess.new(
+			target_actor, condition_effect as ConditionEffect)
 	)
 
 	var attack := AttackProcess.new(source_actor, dir, true, projectile_effect)
