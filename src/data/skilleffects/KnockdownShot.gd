@@ -1,6 +1,7 @@
 class_name KnockdownShot
 extends SkillEffect
 
+export var distance := 1
 export var projectile_scene: PackedScene
 export var rotate_projectile := false
 
@@ -19,7 +20,7 @@ func run(target_cell: Vector2, _aoe: Array, source_actor: Actor, map: Map) \
 	var projectile_effect = MapEffectProcess.new(projectile, "finished", map)
 	projectile_effect.children.append(
 		PushActorProcess.new(target_actor, map, source_actor.stats.attack,
-			dir_type, 2)
+			dir_type, distance)
 	)
 
 	var attack := AttackProcess.new(source_actor, dir, true, projectile_effect)
