@@ -9,7 +9,7 @@ func run(target_cell: Vector2, _aoe: Array, source_actor: Actor, map: Map) \
 
 	var attack := AttackProcess.new(
 		source_actor, direction, false,
-		TakeDamageProcess.new(
+		DamageActor.new(
 			target_actor, map, source_actor.stats.attack, direction
 		)
 	)

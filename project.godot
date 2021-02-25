@@ -99,6 +99,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/game/Constants.gd"
 }, {
+"base": "Process",
+"class": "DamageActor",
+"language": "GDScript",
+"path": "res://src/processes/DamageActor.gd"
+}, {
 "base": "SkillAOE",
 "class": "DiamondAOE",
 "language": "GDScript",
@@ -294,11 +299,6 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/actors/Stats.gd"
 }, {
-"base": "Process",
-"class": "TakeDamageProcess",
-"language": "GDScript",
-"path": "res://src/processes/TakeDamageProcess.gd"
-}, {
 "base": "Node2D",
 "class": "TargetCursor",
 "language": "GDScript",
@@ -368,6 +368,7 @@ _global_script_class_icons={
 "ConditionIcons": "",
 "ConditionsPanel": "",
 "Constants": "",
+"DamageActor": "",
 "DiamondAOE": "",
 "DiamondRange": "",
 "Directions": "",
@@ -407,7 +408,6 @@ _global_script_class_icons={
 "State": "",
 "StateMachine": "",
 "Stats": "",
-"TakeDamageProcess": "",
 "TargetCursor": "",
 "TargetingData": "",
 "TileGeometry": "",

@@ -1,4 +1,4 @@
-class_name TakeDamageProcess
+class_name DamageActor
 extends Process
 
 var target_actor: Actor
