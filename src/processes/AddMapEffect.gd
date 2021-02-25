@@ -1,4 +1,4 @@
-class_name AddMappEffect
+class_name AddMapEffect
 extends Process
 
 var effect: Node2D

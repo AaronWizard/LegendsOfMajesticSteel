@@ -15,7 +15,7 @@ func run(target_cell: Vector2, aoe: Array, source_actor: Actor, map: Map) \
 	var direction := Directions.get_vector(dir_type)
 
 	var effect := _create_spell_effect(target_cell, dir_type)
-	var effect_process := AddMappEffect.new(
+	var effect_process := AddMapEffect.new(
 			effect, "animation_finished", map)
 	on_hit.children.append(effect_process)
 

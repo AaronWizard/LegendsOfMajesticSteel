@@ -45,7 +45,7 @@ _global_script_classes=[ {
 "path": "res://src/ui/ActorStatusPanel.gd"
 }, {
 "base": "Process",
-"class": "AddMappEffect",
+"class": "AddMapEffect",
 "language": "GDScript",
 "path": "res://src/processes/AddMapEffect.gd"
 }, {
@@ -357,7 +357,7 @@ _global_script_class_icons={
 "ActorController": "",
 "ActorDefinition": "",
 "ActorStatusPanel": "",
-"AddMappEffect": "",
+"AddMapEffect": "",
 "AnimateAttack": "",
 "ApplyCondition": "",
 "ArcAOE": "",
