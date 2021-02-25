@@ -1,4 +1,4 @@
-class_name PushActorProcess
+class_name PushActor
 extends Process
 
 const _SPEED := 8 # Tiles per second

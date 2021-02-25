@@ -21,7 +21,7 @@ func run(target_cell: Vector2, _aoe: Array, source_actor: Actor, map: Map) \
 
 	var projectile_effect = AddMappEffect.new(projectile, "finished", map)
 	projectile_effect.children.append(
-		PushActorProcess.new(target_actor, map, source_actor.stats.attack,
+		PushActor.new(target_actor, map, source_actor.stats.attack,
 			dir_type, distance)
 	)
 	projectile_effect.children.append(

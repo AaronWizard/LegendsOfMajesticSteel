@@ -205,9 +205,9 @@ _global_script_classes=[ {
 "path": "res://src/skills/effects/ProjectileAttackEffect.gd"
 }, {
 "base": "Process",
-"class": "PushActorProcess",
+"class": "PushActor",
 "language": "GDScript",
-"path": "res://src/processes/PushActorProcess.gd"
+"path": "res://src/processes/PushActor.gd"
 }, {
 "base": "Container",
 "class": "RadialContainer",
@@ -389,7 +389,7 @@ _global_script_class_icons={
 "Process": "",
 "Projectile": "",
 "ProjectileAttackEffect": "",
-"PushActorProcess": "",
+"PushActor": "",
 "RadialContainer": "",
 "RangeData": "",
 "RangeDataFactory": "",
