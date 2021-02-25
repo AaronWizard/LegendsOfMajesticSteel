@@ -1,4 +1,4 @@
-class_name AttackProcess
+class_name AnimateAttack
 extends Process
 
 var actor: Actor

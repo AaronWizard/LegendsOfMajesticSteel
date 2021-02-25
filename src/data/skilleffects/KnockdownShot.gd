@@ -29,7 +29,7 @@ func run(target_cell: Vector2, _aoe: Array, source_actor: Actor, map: Map) \
 			target_actor, condition_effect as ConditionEffect)
 	)
 
-	var attack := AttackProcess.new(source_actor, dir, true, projectile_effect)
+	var attack := AnimateAttack.new(source_actor, dir, true, projectile_effect)
 
 	attack.run()
 	yield(attack, "finished")
