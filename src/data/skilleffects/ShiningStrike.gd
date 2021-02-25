@@ -26,7 +26,7 @@ func run(target_cell: Vector2, aoe: Array, source_actor: Actor, map: Map) \
 			var hit := DamageActor.new(
 					other_actor, map, source_actor.stats.attack,
 					other_actor.center_cell - source_actor.center_cell)
-			var penalty := ApplyConditionProcess.new(
+			var penalty := ApplyCondition.new(
 					other_actor, condition_effect as ConditionEffect)
 
 			on_hit.children.append(hit)

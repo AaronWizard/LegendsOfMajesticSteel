@@ -1,4 +1,4 @@
-class_name ApplyConditionProcess
+class_name ApplyCondition
 extends Process
 
 
@@ -12,4 +12,5 @@ func _init(new_actor: Actor, new_condition: ConditionEffect) -> void:
 
 
 func _run_self() -> void:
-	actor.add_condition(Condition.new(condition_effect))
+	if actor.is_alive:
+		actor.add_condition(Condition.new(condition_effect))

@@ -25,7 +25,7 @@ func run(target_cell: Vector2, _aoe: Array, source_actor: Actor, map: Map) \
 			dir_type, distance)
 	)
 	projectile_effect.children.append(
-		ApplyConditionProcess.new(
+		ApplyCondition.new(
 			target_actor, condition_effect as ConditionEffect)
 	)
 
