@@ -45,6 +45,11 @@ _global_script_classes=[ {
 "path": "res://src/ui/ActorStatusPanel.gd"
 }, {
 "base": "Process",
+"class": "AddMappEffect",
+"language": "GDScript",
+"path": "res://src/processes/AddMapEffect.gd"
+}, {
+"base": "Process",
 "class": "ApplyConditionProcess",
 "language": "GDScript",
 "path": "res://src/processes/ApplyConditionProcess.gd"
@@ -138,11 +143,6 @@ _global_script_classes=[ {
 "class": "Map",
 "language": "GDScript",
 "path": "res://src/maps/Map.gd"
-}, {
-"base": "Process",
-"class": "MapEffectProcess",
-"language": "GDScript",
-"path": "res://src/processes/MapEffectProcess.gd"
 }, {
 "base": "Node",
 "class": "MapHighlights",
@@ -357,6 +357,7 @@ _global_script_class_icons={
 "ActorController": "",
 "ActorDefinition": "",
 "ActorStatusPanel": "",
+"AddMappEffect": "",
 "ApplyConditionProcess": "",
 "ArcAOE": "",
 "AttackProcess": "",
@@ -376,7 +377,6 @@ _global_script_class_icons={
 "GameCamera": "",
 "KnockdownShot": "",
 "Map": "",
-"MapEffectProcess": "",
 "MapHighlights": "",
 "MeleeAttackEffect": "",
 "MouseControl": "",
