@@ -15,11 +15,9 @@ func run(target_cell: Vector2, _aoe: Array, source_actor: Actor, map: Map) \
 	var dir_type := TileGeometry.direction_from_rect_to_cell( \
 			target_cell, source_actor.cell_rect)
 
-	var projectile := _create_projectile(
-			source_actor.center_cell + source_actor.cell_offset,
-			target_actor.center_cell)
-
-	var projectile_effect = AddMapEffect.new(projectile, "finished", map)
+	var projectile_effect := ShowProjectile.new(projectile_scene, map,
+			source_actor.center_cell, target_actor.center_cell,
+			rotate_projectile)
 	projectile_effect.children.append(
 		PushActor.new(target_actor, map, source_actor.stats.attack,
 			dir_type, distance)
@@ -33,13 +31,3 @@ func run(target_cell: Vector2, _aoe: Array, source_actor: Actor, map: Map) \
 
 	attack.run()
 	yield(attack, "finished")
-
-
-func _create_projectile(start_cell: Vector2, end_cell: Vector2) -> Projectile:
-	var result := projectile_scene.instance() as Projectile
-	result.start_cell = start_cell
-	result.end_cell = end_cell
-	result.use_cell_offsets = false
-	result.rotate_sprite = rotate_projectile
-
-	return result
