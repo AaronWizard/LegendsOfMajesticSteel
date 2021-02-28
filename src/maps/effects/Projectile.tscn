@@ -9,6 +9,7 @@ offset = Vector2( -8, 1 )
 script = ExtResource( 2 )
 start_cell = Vector2( 2, 2 )
 end_cell = Vector2( 5, 5 )
+rotate_sprite = true
 
 [node name="Tween" type="Tween" parent="."]
 

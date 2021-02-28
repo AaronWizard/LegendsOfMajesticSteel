@@ -5,7 +5,9 @@ signal finished
 
 export var start_cell: Vector2
 export var end_cell: Vector2
-export var use_cell_offsets := true
+
+export var start_offset := true
+export var end_offset := true
 
 export var speed := 8 # In cells per second
 
@@ -15,10 +17,12 @@ onready var _tween := $Tween as Tween
 
 
 func _ready() -> void:
-	var start_pos := start_cell * Constants.TILE_SIZE_V
-	var end_pos := end_cell * Constants.TILE_SIZE_V
-	if use_cell_offsets:
+	var start_pos := (start_cell * Constants.TILE_SIZE_V)
+	var end_pos := (end_cell * Constants.TILE_SIZE_V)
+
+	if start_offset:
 		start_pos += Constants.TILE_HALF_SIZE_V
+	if end_offset:
 		end_pos += Constants.TILE_HALF_SIZE_V
 
 	var dist := start_cell.distance_to(end_cell)
