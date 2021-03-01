@@ -3,7 +3,7 @@ class_name Process
 signal finished
 
 var children := []
-var concurrent_children := false
+var concurrent_children := true
 
 var _waiter := SignalWaiter.new()
 
