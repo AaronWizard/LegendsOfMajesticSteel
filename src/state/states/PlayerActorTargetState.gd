@@ -12,6 +12,8 @@ var _skill_target: Vector2
 var _move_state: State
 var _chosen_action: Action = null
 
+var _predicted_damage_actors: Array
+
 
 func _init(interface: BattleInterface, player: Player, actor: Actor,
 		skill_index: int, move_state: State) -> void:
@@ -48,6 +50,8 @@ func end() -> void:
 	_interface.map_highlights.clear_aoe()
 	_interface.map_highlights.moves_visible = true
 
+	_clear_predicted_damage()
+
 	if _chosen_action:
 		_player.do_action(_chosen_action)
 
@@ -80,6 +84,8 @@ func _set_target(target_cell: Vector2) -> void:
 			_interface.map_highlights.set_aoe( \
 					targeting_data.get_aoe(target_cell))
 
+		_show_predicted_damage(targeting_data, target_cell)
+
 		_have_target = true
 		_skill_target = target_cell
 
@@ -89,6 +95,14 @@ func _confirm_target(target_cell: Vector2) -> void:
 		var skill := _get_skill()
 		_chosen_action = SkillAction.new( \
 				_actor, _interface.current_map, skill, target_cell)
+
+		var targeting_data := _actor.range_data.get_targeting_data(
+				_actor.origin_cell, _skill_index)
+		var predicted_damage := targeting_data.get_predicted_damage(_skill_target)
+		for a in predicted_damage:
+			var other_actor := a as Actor
+			other_actor.stamina_modifier = 0
+
 		emit_signal("pop_state")
 	else:
 		_set_target(target_cell)
@@ -96,3 +110,22 @@ func _confirm_target(target_cell: Vector2) -> void:
 
 func _get_skill() -> Skill:
 	return _actor.skills[_skill_index] as Skill
+
+
+func _show_predicted_damage( \
+		targeting_data: TargetingData, target_cell: Vector2) -> void:
+	_clear_predicted_damage()
+	var predicted_damage := targeting_data.get_predicted_damage(target_cell)
+	for a in predicted_damage:
+		var other_actor := a as Actor
+		var damage := predicted_damage[a] as int
+		other_actor.stamina_modifier = damage
+
+	_predicted_damage_actors = predicted_damage.keys()
+
+
+func _clear_predicted_damage() -> void:
+	for a in _predicted_damage_actors:
+		var other_actor := a as Actor
+		other_actor.stamina_modifier = 0
+	_predicted_damage_actors.clear()

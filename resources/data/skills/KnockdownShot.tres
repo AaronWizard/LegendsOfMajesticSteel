@@ -15,6 +15,7 @@ include_diagonals = false
 
 [sub_resource type="Resource" id=2]
 script = ExtResource( 3 )
+distance = 1
 projectile_scene = ExtResource( 4 )
 rotate_projectile = true
 condition_effect = ExtResource( 6 )

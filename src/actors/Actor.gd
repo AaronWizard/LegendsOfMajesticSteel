@@ -64,6 +64,7 @@ var turn_finished: bool setget , get_turn_finished
 var round_finished: bool setget , get_round_finished
 
 var target_visible: bool setget set_target_visible, get_target_visible
+var stamina_modifier: int setget set_stamina_modifier, get_stamina_modifier
 
 var pose: int = Pose.IDLE setget set_pose
 
@@ -172,6 +173,19 @@ func get_target_visible() -> bool:
 	if _target_cursor:
 		result = _target_cursor.visible
 	return result
+
+
+func set_stamina_modifier(value: int) -> void:
+	assert(not _stamina_bar_animating)
+	_stamina_bar.modifier = value
+	if _stamina_bar.modifier != 0:
+		_stamina_bar.visible = true
+	else:
+		_stamina_bar.visible = false
+
+
+func get_stamina_modifier() -> int:
+	return int(_stamina_bar.modifier)
 
 
 func start_battle() -> void:

@@ -259,6 +259,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/skills/SkillEffect.gd"
 }, {
+"base": "Reference",
+"class": "SkillEffectsUtil",
+"language": "GDScript",
+"path": "res://src/skills/effects/SkillEffectsUntil.gd"
+}, {
 "base": "PanelContainer",
 "class": "SkillPanel",
 "language": "GDScript",
@@ -405,6 +410,7 @@ _global_script_class_icons={
 "SkillAOE": "",
 "SkillAction": "",
 "SkillEffect": "",
+"SkillEffectsUtil": "",
 "SkillPanel": "",
 "SkillRange": "",
 "SpellAnimation": "",
