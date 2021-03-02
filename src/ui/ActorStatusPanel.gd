@@ -16,7 +16,7 @@ onready var _defence_stats := _stats.get_node("Defence") \
 		as Container
 
 onready var _stamina_bar := _defence_stats.get_node(
-		"StaminaBackground/CenterContainer/StaminaBar") as Range
+		"StaminaBackground/StaminaBar") as Range
 onready var _current_stamina := _defence_stats.get_node("CurrentStamina") \
 		as Label
 

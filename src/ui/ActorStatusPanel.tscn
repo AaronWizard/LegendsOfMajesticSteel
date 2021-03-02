@@ -9,8 +9,8 @@
 [ext_resource path="res://src/ui/ConditionsPanel.tscn" type="PackedScene" id=7]
 
 [node name="ActorStatusPanel" type="PanelContainer"]
-margin_right = 90.0
-margin_bottom = 38.0
+margin_right = 84.0
+margin_bottom = 43.0
 mouse_filter = 2
 size_flags_horizontal = 0
 theme = ExtResource( 1 )
@@ -22,12 +22,13 @@ __meta__ = {
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 margin_left = 3.0
 margin_top = 3.0
-margin_right = 97.0
-margin_bottom = 35.0
+margin_right = 81.0
+margin_bottom = 40.0
 
 [node name="PortraitButton" type="Button" parent="HBoxContainer"]
+margin_top = 2.0
 margin_right = 32.0
-margin_bottom = 32.0
+margin_bottom = 34.0
 rect_min_size = Vector2( 32, 32 )
 size_flags_horizontal = 4
 size_flags_vertical = 4
@@ -38,26 +39,25 @@ __meta__ = {
 
 [node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer"]
 margin_left = 34.0
-margin_top = 2.0
-margin_right = 94.0
-margin_bottom = 29.0
+margin_right = 78.0
+margin_bottom = 37.0
 size_flags_horizontal = 3
 size_flags_vertical = 4
 
 [node name="Name" type="Label" parent="HBoxContainer/VBoxContainer"]
-margin_right = 60.0
+margin_right = 44.0
 margin_bottom = 7.0
 size_flags_vertical = 0
 text = "Test"
 clip_text = true
 
-[node name="Stats" type="HBoxContainer" parent="HBoxContainer/VBoxContainer"]
+[node name="Stats" type="VBoxContainer" parent="HBoxContainer/VBoxContainer"]
 margin_top = 9.0
-margin_right = 60.0
-margin_bottom = 17.0
+margin_right = 44.0
+margin_bottom = 27.0
 
 [node name="Attack" type="HBoxContainer" parent="HBoxContainer/VBoxContainer/Stats"]
-margin_right = 14.0
+margin_right = 44.0
 margin_bottom = 8.0
 size_flags_vertical = 0
 
@@ -74,9 +74,9 @@ margin_bottom = 7.0
 text = "5"
 
 [node name="Defence" type="HBoxContainer" parent="HBoxContainer/VBoxContainer/Stats"]
-margin_left = 16.0
-margin_right = 60.0
-margin_bottom = 8.0
+margin_top = 10.0
+margin_right = 44.0
+margin_bottom = 18.0
 
 [node name="DefenceIcon" type="TextureRect" parent="HBoxContainer/VBoxContainer/Stats/Defence"]
 margin_right = 8.0
@@ -97,25 +97,23 @@ margin_bottom = 7.0
 size_flags_vertical = 4
 texture = ExtResource( 3 )
 
-[node name="CenterContainer" type="CenterContainer" parent="HBoxContainer/VBoxContainer/Stats/Defence/StaminaBackground"]
+[node name="StaminaBar" type="TextureProgress" parent="HBoxContainer/VBoxContainer/Stats/Defence/StaminaBackground"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+margin_left = 2.0
+margin_top = 2.0
+margin_right = -2.0
+margin_bottom = -2.0
+size_flags_vertical = 4
+value = 100.0
+texture_progress = ExtResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="StaminaBar" type="TextureProgress" parent="HBoxContainer/VBoxContainer/Stats/Defence/StaminaBackground/CenterContainer"]
-margin_left = 2.0
-margin_top = 2.0
-margin_right = 22.0
-margin_bottom = 4.0
-size_flags_vertical = 4
-value = 100.0
-texture_progress = ExtResource( 4 )
-
 [node name="ConditionsPanel" parent="HBoxContainer/VBoxContainer" instance=ExtResource( 7 )]
-margin_top = 19.0
-margin_right = 60.0
-margin_bottom = 27.0
+margin_top = 29.0
+margin_right = 44.0
+margin_bottom = 37.0
 
 [connection signal="pressed" from="HBoxContainer/PortraitButton" to="." method="_on_PortraitButton_pressed"]
