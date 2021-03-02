@@ -67,12 +67,12 @@ func _run_self() -> void:
 	if real_distance < distance:
 		real_attack *= 2
 
-	actor.stats.take_damage(real_attack)
 
 	if real_distance == 0:
 		_hit_other_actors(real_distance)
 		_hit_actor(actor, real_attack)
 	else:
+		actor.stats.take_damage(real_attack)
 		actor.set_pose(Actor.Pose.REACT)
 
 		actor.cell_offset = actor.origin_cell - final_cell
