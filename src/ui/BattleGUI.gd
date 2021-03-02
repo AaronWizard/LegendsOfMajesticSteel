@@ -19,21 +19,19 @@ onready var _skill_panel := $SkillPanel as SkillPanel
 onready var _action_menu_region := $ActionMenuRegion as Control
 
 onready var _action_menu := $ActionMenu as ActionMenu
-onready var _skill_menu_pivot := $SkillMenuPivot as Node2D
-
-onready var _skill_menu := $SkillMenuPivot/SkillMenu as RadialContainer
+onready var _skill_menu := $SkillMenu as SkillMenu
 
 func set_current_actor(value: Actor) -> void:
 	current_actor = value
 
 	_current_actor_status.clear()
 	_current_actor_status.visible = current_actor != null
-	_clear_skills()
+	_skill_menu.clear_skills()
 
 	if current_actor:
 		_current_actor_status.set_actor(current_actor)
 		_action_menu.set_skills(current_actor.skills)
-		_set_skills()
+		_skill_menu.set_skills(current_actor.skills)
 
 
 func set_other_actor(value: Actor) -> void:
@@ -51,7 +49,7 @@ func show_action_menu(screen_position: Vector2) -> void:
 
 
 func show_skill_menu(screen_position: Vector2) -> void:
-	_show_action_menu(_skill_menu_pivot, screen_position)
+	_show_action_menu(_skill_menu, screen_position)
 
 
 func show_skill_panel(skill: Skill) -> void:
@@ -70,25 +68,7 @@ func get_action_menu_pos() -> Vector2:
 
 func hide_action_menus() -> void:
 	_action_menu.visible = false
-	_skill_menu_pivot.visible = false
-
-
-func _set_skills() -> void:
-	for i in range(1, current_actor.skills.size()):
-		var index := i as int
-		var skill := current_actor.skills[index] as Skill
-		var button := Button.new()
-		button.icon = skill.icon
-		# warning-ignore:return_value_discarded
-		button.connect("pressed", self, "emit_signal",
-				["skill_selected", index])
-		_skill_menu.add_child(button)
-
-
-func _clear_skills() -> void:
-	for c in _skill_menu.get_children():
-		var button := c as Control
-		button.queue_free()
+	_skill_menu.visible = false
 
 
 func _show_action_menu(menu_pivot: Node2D, screen_position: Vector2) \
@@ -131,3 +111,7 @@ func _on_ActionMenu_skill_pressed() -> void:
 
 func _on_ActionMenu_wait_pressed() -> void:
 	emit_signal("wait_started")
+
+
+func _on_SkillMenu_skill_selected(skill_index: int) -> void:
+	emit_signal("skill_selected", skill_index)

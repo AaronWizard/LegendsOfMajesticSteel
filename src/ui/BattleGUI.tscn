@@ -5,7 +5,7 @@
 [ext_resource path="res://src/ui/TurnQueuePanel.tscn" type="PackedScene" id=3]
 [ext_resource path="res://src/ui/ActorStatusPanel.tscn" type="PackedScene" id=4]
 [ext_resource path="res://src/ui/ActionMenu.tscn" type="PackedScene" id=5]
-[ext_resource path="res://src/ui/RadialContainer.tscn" type="PackedScene" id=7]
+[ext_resource path="res://src/ui/SkillMenu.tscn" type="PackedScene" id=6]
 
 [node name="BattleGUI" type="CanvasLayer"]
 script = ExtResource( 1 )
@@ -66,21 +66,7 @@ __meta__ = {
 [node name="ActionMenu" parent="." instance=ExtResource( 5 )]
 visible = false
 
-[node name="SkillMenuPivot" type="Node2D" parent="."]
-visible = false
-__meta__ = {
-"_edit_group_": true
-}
-
-[node name="SkillMenu" parent="SkillMenuPivot" instance=ExtResource( 7 )]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -45.0
-margin_top = -45.0
-margin_right = 45.0
-margin_bottom = 45.0
+[node name="SkillMenu" parent="." instance=ExtResource( 6 )]
 
 [connection signal="portrait_pressed" from="CurrentActorStatus" to="." method="_on_CurrentActorStatus_portrait_pressed"]
 [connection signal="portrait_pressed" from="OtherActorStatus" to="." method="_on_CurrentActorStatus_portrait_pressed"]
@@ -88,3 +74,4 @@ margin_bottom = 45.0
 [connection signal="attack_pressed" from="ActionMenu" to="." method="_on_ActionMenu_attack_pressed"]
 [connection signal="skill_pressed" from="ActionMenu" to="." method="_on_ActionMenu_skill_pressed"]
 [connection signal="wait_pressed" from="ActionMenu" to="." method="_on_ActionMenu_wait_pressed"]
+[connection signal="skill_selected" from="SkillMenu" to="." method="_on_SkillMenu_skill_selected"]
