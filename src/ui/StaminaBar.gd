@@ -13,8 +13,9 @@ var _current_value: float
 
 onready var _stamina_front := $Background/StaminaFront as Range
 onready var _stamina_back := $Background/StaminaBack as Range
+onready var _modifier_text := $ModifierText as Label
+
 onready var _tween := $Tween as Tween
-onready var _prediction_timer := $PredictionTimer as Timer
 
 
 func reset() -> void:
@@ -69,23 +70,10 @@ func _set_modifier(new_value: float) -> void:
 	_stamina_front.value = _current_value
 	_stamina_back.value = _current_value
 
-	if modifier != 0:
-		_prediction_timer.start()
-	else:
-		_prediction_timer.stop()
-
-
-func _on_PredictionTimer_timeout() -> void:
-	assert(modifier != 0)
-
 	if modifier > 0:
-		_stamina_back.value = _get_alternating_value(_stamina_back.value)
-	else: #if modifier < 0:
-		_stamina_front.value = _get_alternating_value(_stamina_front.value)
+		_stamina_back.value += modifier
+	elif modifier < 0:
+		_stamina_front.value += modifier
 
-
-func _get_alternating_value(current: float) -> float:
-	var result := _current_value
-	if current == _current_value:
-		result += modifier
-	return result
+	_modifier_text.text = str(new_value)
+	_modifier_text.visible = modifier != 0
