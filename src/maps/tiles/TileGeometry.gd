@@ -68,6 +68,7 @@ static func get_line(start: Vector2, end: Vector2, include_ends := true) \
 			var x = lerp(start.x, end.x, weight)
 			var y = lerp(start.y, end.y, weight)
 			var cell := Vector2(x, y).round()
+			assert(result.find(cell) == -1)
 			result.append(cell)
 
 	if not include_ends:

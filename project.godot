@@ -24,6 +24,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/game/turns/actions/Action.gd"
 }, {
+"base": "Node2D",
+"class": "ActionMenu",
+"language": "GDScript",
+"path": "res://src/ui/ActionMenu.gd"
+}, {
 "base": "TileObject",
 "class": "Actor",
 "language": "GDScript",
@@ -363,6 +368,7 @@ _global_script_class_icons={
 "AI": "",
 "AITurn": "",
 "Action": "",
+"ActionMenu": "",
 "Actor": "",
 "ActorController": "",
 "ActorDefinition": "",

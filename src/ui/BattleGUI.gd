@@ -6,10 +6,6 @@ signal skill_cleared
 
 signal wait_started
 
-const _ACTION_MENU_ROTATION_ONE_B := 90
-const _ACTION_MENU_ROTATION_TWO_B := 0
-const _ACTION_MENU_ROTATION_THREE_B := 90
-
 var current_actor: Actor = null setget set_current_actor
 var other_actor: Actor = null setget set_other_actor
 
@@ -22,12 +18,8 @@ onready var _skill_panel := $SkillPanel as SkillPanel
 
 onready var _action_menu_region := $ActionMenuRegion as Control
 
-onready var _action_menu_pivot := $ActionMenuPivot as Node2D
+onready var _action_menu := $ActionMenu as ActionMenu
 onready var _skill_menu_pivot := $SkillMenuPivot as Node2D
-
-onready var _action_menu := $ActionMenuPivot/ActionMenu as RadialContainer
-onready var _attack_button := $ActionMenuPivot/ActionMenu/Attack as Control
-onready var _skills_button := $ActionMenuPivot/ActionMenu/Skill as Control
 
 onready var _skill_menu := $SkillMenuPivot/SkillMenu as RadialContainer
 
@@ -40,18 +32,7 @@ func set_current_actor(value: Actor) -> void:
 
 	if current_actor:
 		_current_actor_status.set_actor(current_actor)
-
-		_attack_button.visible = current_actor.skills.size() > 0
-		_skills_button.visible = current_actor.skills.size() > 1
-
-		match current_actor.skills.size():
-			0:
-				_action_menu.base_rotation = _ACTION_MENU_ROTATION_ONE_B
-			1:
-				_action_menu.base_rotation = _ACTION_MENU_ROTATION_TWO_B
-			_:
-				_action_menu.base_rotation = _ACTION_MENU_ROTATION_THREE_B
-
+		_action_menu.set_skills(current_actor.skills)
 		_set_skills()
 
 
@@ -66,7 +47,7 @@ func set_other_actor(value: Actor) -> void:
 
 
 func show_action_menu(screen_position: Vector2) -> void:
-	_show_action_menu(_action_menu_pivot, screen_position)
+	_show_action_menu(_action_menu, screen_position)
 
 
 func show_skill_menu(screen_position: Vector2) -> void:
@@ -84,11 +65,11 @@ func hide_skill_panel() -> void:
 
 
 func get_action_menu_pos() -> Vector2:
-	return _action_menu_pivot.position
+	return _action_menu.position
 
 
 func hide_action_menus() -> void:
-	_action_menu_pivot.visible = false
+	_action_menu.visible = false
 	_skill_menu_pivot.visible = false
 
 
@@ -134,19 +115,19 @@ func _on_CurrentActorStatus_portrait_pressed() -> void:
 	pass # Replace with function body.
 
 
-func _on_Attack_pressed() -> void:
-	emit_signal("skill_selected", 0)
-
-
-func _on_Skill_pressed() -> void:
-	_action_menu_pivot.visible = false
-	show_skill_menu(_action_menu_pivot.position)
-
-
-func _on_Wait_pressed() -> void:
-	emit_signal("wait_started")
-
-
 func _on_SkillPanel_cancelled() -> void:
 	_skill_panel.visible = false
 	emit_signal("skill_cleared")
+
+
+func _on_ActionMenu_attack_pressed() -> void:
+	emit_signal("skill_selected", 0)
+
+
+func _on_ActionMenu_skill_pressed() -> void:
+	_action_menu.visible = false
+	show_skill_menu(_action_menu.position)
+
+
+func _on_ActionMenu_wait_pressed() -> void:
+	emit_signal("wait_started")
