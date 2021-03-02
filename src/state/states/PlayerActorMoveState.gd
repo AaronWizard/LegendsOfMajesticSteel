@@ -74,8 +74,7 @@ func _set_action_menu_visible(visible: bool) -> void:
 	_interface.mouse.dragging_enabled = not _action_menu_visible
 
 	if _action_menu_visible:
-		var pos := _interface.current_map.get_screen_cell_pos(
-				_actor.center_cell)
+		var pos := _actor.center_screen_pos
 		_interface.gui.show_action_menu(pos)
 
 		var menu_pos := _interface.gui.get_action_menu_pos()

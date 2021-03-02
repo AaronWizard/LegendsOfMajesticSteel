@@ -46,11 +46,6 @@ func get_mouse_cell() -> Vector2:
 	return result
 
 
-func get_screen_cell_pos(cell: Vector2) -> Vector2:
-	return (cell * _ground.cell_size) \
-			+ _ground.get_global_transform_with_canvas().origin
-
-
 func get_tile_name(cell: Vector2) -> String:
 	var index := _ground.get_cellv(cell)
 	var name := _ground.tile_set.tile_get_name(index)
