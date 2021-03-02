@@ -29,13 +29,16 @@ position = Vector2( 24, 24 )
 material = SubResource( 3 )
 texture = ExtResource( 3 )
 
+[node name="StaminaBar" parent="Center/Offset/Sprite" index="0"]
+position = Vector2( 0, -24 )
+
 [node name="BloodSplatter" parent="Center" index="1"]
 amount = 56
 lifetime = 0.6
 visibility_rect = Rect2( -28, -28, 56, 56 )
 
-[node name="WaitIcon" parent="." index="1"]
+[node name="WaitIcon" parent="." index="2"]
 position = Vector2( 48, 48 )
 
-[node name="TargetCursor" parent="." index="2"]
+[node name="TargetCursor" parent="." index="3"]
 rect_size = Vector2( 2, 2 )

@@ -112,6 +112,8 @@ func _ready() -> void:
 func set_rect_size(value: Vector2) -> void:
 	.set_rect_size(value)
 
+	if _stamina_bar:
+		_stamina_bar.position.y = (-rect_size.y * Constants.TILE_SIZE_V.y) / 2
 	if _target_cursor:
 		_target_cursor.rect_size = rect_size
 	if _wait_icon:
