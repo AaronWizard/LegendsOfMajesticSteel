@@ -1,7 +1,8 @@
 class_name PlayerActorTargetState
-extends State
+extends PlayerState
 
-var _interface: BattleInterface
+export var move_state_path: NodePath
+
 var _player: Player
 var _actor: Actor
 var _skill_index: int
@@ -9,24 +10,21 @@ var _skill_index: int
 var _have_target := false
 var _skill_target: Vector2
 
-var _move_state: State
-var _chosen_action: Action = null
-
 var _predicted_damage_actors: Array
 
-
-func _init(interface: BattleInterface, player: Player, actor: Actor,
-		skill_index: int, move_state: State) -> void:
-	_interface = interface
-	_player = player
-	_actor = actor
-	_skill_index = skill_index
-	_move_state = move_state
+onready var _move_state := get_node(move_state_path) as State
 
 
-func start() -> void:
-	# warning-ignore:return_value_discarded
-	_interface.mouse.connect("click", self, "_mouse_click")
+func start(data: Dictionary) -> void:
+	.start(data)
+
+	_player = data.player as Player
+	assert(_player)
+	_actor = data.actor as Actor
+	assert(_actor)
+	_skill_index = data.skill_index as int
+
+
 	# warning-ignore:return_value_discarded
 	_interface.gui.connect("skill_cleared", self, "_skill_cleared")
 
@@ -40,7 +38,8 @@ func start() -> void:
 
 
 func end() -> void:
-	_interface.mouse.disconnect("click", self, "_mouse_click")
+	.end()
+
 	_interface.gui.disconnect("skill_cleared", self, "_skill_cleared")
 
 	_interface.gui.hide_skill_panel()
@@ -52,13 +51,16 @@ func end() -> void:
 
 	_clear_predicted_damage()
 
-	if _chosen_action:
-		_player.do_action(_chosen_action)
+	_player = null
+	_actor = null
+	_have_target = false
 
 
 func _skill_cleared() -> void:
-	assert(_chosen_action == null)
-	emit_signal("change_state", _move_state)
+	emit_signal("state_change_requested", _move_state, {
+		player = _player,
+		actor = _actor
+	})
 
 
 func _mouse_click(_position: Vector2) -> void:
@@ -93,17 +95,9 @@ func _set_target(target_cell: Vector2) -> void:
 func _confirm_target(target_cell: Vector2) -> void:
 	if _skill_target == target_cell:
 		var skill := _get_skill()
-		_chosen_action = SkillAction.new( \
+		var action := SkillAction.new( \
 				_actor, _interface.current_map, skill, target_cell)
-
-		var targeting_data := _actor.range_data.get_targeting_data(
-				_actor.origin_cell, _skill_index)
-		var predicted_damage := targeting_data.get_predicted_damage(_skill_target)
-		for a in predicted_damage:
-			var other_actor := a as Actor
-			other_actor.stamina_modifier = 0
-
-		emit_signal("pop_state")
+		_player.do_action(action)
 	else:
 		_set_target(target_cell)
 

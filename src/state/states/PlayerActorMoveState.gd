@@ -1,29 +1,26 @@
 class_name PlayerActorMoveState
-extends State
+extends PlayerState
 
-var _interface: BattleInterface
+export var target_state_path: NodePath
+
 var _player: Player
 var _actor: Actor
 
 var _other_actor: Actor
 
-var _doing_action := false
-var _chosen_action: Action
-
 var _action_menu_visible := false
 
-
-func _init(interface: BattleInterface, player: Player, actor: Actor) -> void:
-	_interface = interface
-	_player = player
-	_actor = actor
+onready var _target_state := get_node(target_state_path) as State
 
 
-func start() -> void:
-	_interface.mouse.dragging_enabled = true
+func start(data: Dictionary) -> void:
+	.start(data)
 
-	# warning-ignore:return_value_discarded
-	_interface.mouse.connect("click", self, "_mouse_click")
+	_player = data.player as Player
+	assert(_player)
+	_actor = data.actor as Actor
+	assert(_actor)
+
 	# warning-ignore:return_value_discarded
 	_interface.gui.connect("wait_started", self, "_wait_started")
 	# warning-ignore:return_value_discarded
@@ -31,26 +28,18 @@ func start() -> void:
 
 
 func end() -> void:
-	_interface.mouse.disconnect("click", self, "_mouse_click")
+	.end()
+
 	_interface.gui.disconnect("wait_started", self, "_wait_started")
 	_interface.gui.disconnect("skill_selected", self, "_skill_selected")
 
 	_set_action_menu_visible(false)
 	_interface.clear_other_actor()
 
-	if _doing_action:
-		_player.do_action(_chosen_action)
-
-
-func _wait_started() -> void:
-	_set_action_menu_visible(false)
-	_choose_action(null)
-
-
-func _skill_selected(_skill_index: int) -> void:
-	var state := PlayerActorTargetState.new(_interface, _player, _actor,
-			_skill_index, self)
-	emit_signal("change_state", state)
+	_player = null
+	_actor = null
+	_other_actor = null
+	_action_menu_visible = false
 
 
 func _mouse_click(_position: Vector2) -> void:
@@ -88,16 +77,26 @@ func _set_action_menu_visible(visible: bool) -> void:
 
 
 func _player_other_actor_clicked(target_cell: Vector2) -> void:
-	var actor := _interface.current_map.get_actor_on_cell(target_cell)
-	if (actor != null) and (actor != _actor) and (actor != _other_actor):
-		_other_actor = actor
-		_interface.set_other_actor(_other_actor)
+	var other_actor := _interface.current_map.get_actor_on_cell(target_cell)
+	if (other_actor != null) and (other_actor != _actor) \
+			and (other_actor != _other_actor):
+		_other_actor = other_actor
+		_interface.set_other_actor(other_actor)
 	else:
 		_other_actor = null
 		_interface.clear_other_actor()
 
 
+func _wait_started() -> void:
+	_set_action_menu_visible(false)
+	_choose_action(null)
+
+
+func _skill_selected(skill_index: int) -> void:
+	emit_signal("state_change_requested", _target_state, {
+		player = _player, actor = _actor, skill_index = skill_index
+	})
+
+
 func _choose_action(action: Action) -> void:
-	_doing_action = true
-	_chosen_action = action
-	emit_signal("pop_state")
+	_player.do_action(action)

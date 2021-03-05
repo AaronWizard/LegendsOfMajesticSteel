@@ -1,35 +1,22 @@
 class_name StateMachine
+extends Node
 
-var _current_state: State = null
+export var initial_state: NodePath
+
+onready var _current_state := get_node(initial_state) as State
 
 
-func change_state(new_state: State) -> void:
-	if _current_state != null:
-		 _end_state()
+func _ready() -> void:
+	for s in get_children():
+		var state := s as State
+		assert(state != null)
+		# warning-ignore:return_value_discarded
+		state.connect("state_change_requested", self, "change_state")
+	_current_state.start({})
 
+
+func change_state(new_state: State, data := {}) -> void:
+	assert(new_state.get_parent() == self)
+	_current_state.end()
 	_current_state = new_state
-
-	if _current_state != null:
-		_start_state()
-
-
-func pop_state() -> void:
-	_end_state()
-
-
-func _start_state() -> void:
-	# warning-ignore:return_value_discarded
-	_current_state.connect("change_state", self, "change_state")
-	# warning-ignore:return_value_discarded
-	_current_state.connect("pop_state", self, "pop_state")
-
-	_current_state.start()
-
-
-func _end_state() -> void:
-	var old_state := _current_state
-	_current_state = null
-
-	old_state.disconnect("change_state", self, "change_state")
-	old_state.disconnect("pop_state", self, "pop_state")
-	old_state.end()
+	_current_state.start(data)

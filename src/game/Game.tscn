@@ -1,9 +1,14 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://src/game/Game.gd" type="Script" id=1]
 [ext_resource path="res://src/ui/BattleInterface.tscn" type="PackedScene" id=2]
 [ext_resource path="res://src/data/maps/Map00.tscn" type="PackedScene" id=3]
 [ext_resource path="res://src/game/turns/TurnManager.tscn" type="PackedScene" id=4]
+[ext_resource path="res://src/state/StateMachine.gd" type="Script" id=5]
+[ext_resource path="res://src/state/State.gd" type="Script" id=6]
+[ext_resource path="res://src/state/states/PlayerPickActorState.gd" type="Script" id=7]
+[ext_resource path="res://src/state/states/PlayerActorMoveState.gd" type="Script" id=8]
+[ext_resource path="res://src/state/states/PlayerActorTargetState.gd" type="Script" id=9]
 
 [node name="Game" type="Node"]
 script = ExtResource( 1 )
@@ -14,6 +19,27 @@ start_map_file = ExtResource( 3 )
 [node name="TurnManager" parent="." instance=ExtResource( 4 )]
 
 [node name="BattleInterface" parent="." instance=ExtResource( 2 )]
+
+[node name="StateMachine" type="Node" parent="."]
+script = ExtResource( 5 )
+initial_state = NodePath("WaitState")
+
+[node name="WaitState" type="Node" parent="StateMachine"]
+script = ExtResource( 6 )
+
+[node name="PlayerPickActorState" type="Node" parent="StateMachine"]
+script = ExtResource( 7 )
+interface_path = NodePath("../../BattleInterface")
+
+[node name="PlayerActorMoveState" type="Node" parent="StateMachine"]
+script = ExtResource( 8 )
+interface_path = NodePath("../../BattleInterface")
+target_state_path = NodePath("../PlayerActorTargetState")
+
+[node name="PlayerActorTargetState" type="Node" parent="StateMachine"]
+script = ExtResource( 9 )
+interface_path = NodePath("../../BattleInterface")
+move_state_path = NodePath("../PlayerActorMoveState")
 
 [connection signal="action_starting" from="TurnManager" to="." method="_on_TurnManager_action_starting"]
 [connection signal="actor_died" from="TurnManager" to="." method="_on_TurnManager_actor_died"]

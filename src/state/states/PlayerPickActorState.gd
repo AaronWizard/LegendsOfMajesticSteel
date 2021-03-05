@@ -1,33 +1,28 @@
 class_name PlayerPickActorState
-extends State
+extends PlayerState
 
-var _interface: BattleInterface
 var _player_turn: PlayerTurn
 var _actors: Array
 
-var _chosen_actor: Actor
 
+func start(data: Dictionary) -> void:
+	.start(data)
 
-func _init(interface: BattleInterface, player_turn: PlayerTurn, actors: Array) \
-		-> void:
-	_interface = interface
-	_player_turn = player_turn
-	_actors = actors
+	_player_turn = data.player_turn as PlayerTurn
+	assert(_player_turn)
+	_actors = data.actors as Array
+	assert(_actors)
+	assert(_actors[0] is Actor)
 
-
-func start() -> void:
 	_set_actor_cursors(true)
 	_position_player_turn_camera()
-	_interface.mouse.dragging_enabled = true
-
-	# warning-ignore:return_value_discarded
-	_interface.mouse.connect("click", self, "_mouse_click")
 
 
 func end() -> void:
-	_interface.mouse.disconnect("click", self, "_mouse_click")
+	.end()
 	_set_actor_cursors(false)
-	_player_turn.use_actor(_chosen_actor)
+	_player_turn = null
+	_actors.clear()
 
 
 func _set_actor_cursors(cursor_visible: bool) -> void:
@@ -42,7 +37,6 @@ func _position_player_turn_camera() -> void:
 		var actor := a as Actor
 		average_pos += actor.position
 	average_pos /= float(_actors.size())
-
 	_interface.camera.move_to_position(average_pos)
 
 
@@ -51,10 +45,5 @@ func _mouse_click(_position: Vector2) -> void:
 	for a in _actors:
 		var actor := a as Actor
 		if actor.on_cell(target_cell):
-			_pick_player_actor(actor)
+			_player_turn.use_actor(actor)
 			break
-
-
-func _pick_player_actor(actor: Actor) -> void:
-	_chosen_actor = actor
-	emit_signal("pop_state")
