@@ -1,11 +1,10 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://src/ui/BattleGUI.gd" type="Script" id=1]
 [ext_resource path="res://src/ui/SkillPanel.tscn" type="PackedScene" id=2]
 [ext_resource path="res://src/ui/TurnQueuePanel.tscn" type="PackedScene" id=3]
 [ext_resource path="res://src/ui/ActorStatusPanel.tscn" type="PackedScene" id=4]
 [ext_resource path="res://src/ui/ActionMenu.tscn" type="PackedScene" id=5]
-[ext_resource path="res://src/ui/SkillMenu.tscn" type="PackedScene" id=6]
 
 [node name="BattleGUI" type="CanvasLayer"]
 script = ExtResource( 1 )
@@ -66,12 +65,9 @@ __meta__ = {
 [node name="ActionMenu" parent="." instance=ExtResource( 5 )]
 visible = false
 
-[node name="SkillMenu" parent="." instance=ExtResource( 6 )]
-
 [connection signal="portrait_pressed" from="CurrentActorStatus" to="." method="_on_CurrentActorStatus_portrait_pressed"]
 [connection signal="portrait_pressed" from="OtherActorStatus" to="." method="_on_CurrentActorStatus_portrait_pressed"]
 [connection signal="cancelled" from="SkillPanel" to="." method="_on_SkillPanel_cancelled"]
 [connection signal="attack_pressed" from="ActionMenu" to="." method="_on_ActionMenu_attack_pressed"]
-[connection signal="skill_pressed" from="ActionMenu" to="." method="_on_ActionMenu_skill_pressed"]
+[connection signal="skill_selected" from="ActionMenu" to="." method="_on_ActionMenu_skill_selected"]
 [connection signal="wait_pressed" from="ActionMenu" to="." method="_on_ActionMenu_wait_pressed"]
-[connection signal="skill_selected" from="SkillMenu" to="." method="_on_SkillMenu_skill_selected"]

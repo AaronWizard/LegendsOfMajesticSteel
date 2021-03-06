@@ -11,6 +11,11 @@ func set_base_rotation(new_value: float) -> void:
 	_arrange_children()
 
 
+func _notification(what):
+	if (what == NOTIFICATION_SORT_CHILDREN):
+		_arrange_children()
+
+
 func _arrange_children() -> void:
 	if get_children().size() > 0:
 		var angle_offset := (2 * PI) / _count_visible_children()
@@ -45,7 +50,3 @@ func _count_visible_children() -> int:
 		if control.visible:
 			result += 1
 	return result
-
-
-func _on_RadialContainer_sort_children() -> void:
-	_arrange_children()

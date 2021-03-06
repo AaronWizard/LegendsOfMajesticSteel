@@ -19,19 +19,18 @@ onready var _skill_panel := $SkillPanel as SkillPanel
 onready var _action_menu_region := $ActionMenuRegion as Control
 
 onready var _action_menu := $ActionMenu as ActionMenu
-onready var _skill_menu := $SkillMenu as SkillMenu
+
 
 func set_current_actor(value: Actor) -> void:
 	current_actor = value
 
 	_current_actor_status.clear()
 	_current_actor_status.visible = current_actor != null
-	_skill_menu.clear_skills()
+	_action_menu.clear_skills()
 
 	if current_actor:
 		_current_actor_status.set_actor(current_actor)
 		_action_menu.set_skills(current_actor.skills)
-		_skill_menu.set_skills(current_actor.skills)
 
 
 func set_other_actor(value: Actor) -> void:
@@ -45,11 +44,22 @@ func set_other_actor(value: Actor) -> void:
 
 
 func show_action_menu(screen_position: Vector2) -> void:
-	_show_action_menu(_action_menu, screen_position)
+	var rect := _action_menu_region.get_rect()
+	var pivot_position := Vector2(screen_position)
 
+	if not rect.has_point(pivot_position):
+		if pivot_position.x > rect.end.x:
+			pivot_position.x = rect.end.x
+		elif pivot_position.x < rect.position.x:
+			pivot_position.x = rect.position.x
 
-func show_skill_menu(screen_position: Vector2) -> void:
-	_show_action_menu(_skill_menu, screen_position)
+		if pivot_position.y < rect.position.y:
+			pivot_position.y = rect.position.y
+		elif pivot_position.y > rect.end.y:
+			pivot_position.y = rect.end.y
+
+	_action_menu.visible = true
+	_action_menu.position = pivot_position
 
 
 func show_skill_panel(skill: Skill) -> void:
@@ -68,27 +78,7 @@ func get_action_menu_pos() -> Vector2:
 
 func hide_action_menus() -> void:
 	_action_menu.visible = false
-	_skill_menu.visible = false
-
-
-func _show_action_menu(menu_pivot: Node2D, screen_position: Vector2) \
-		-> void:
-	var rect := _action_menu_region.get_rect()
-	var pivot_position := Vector2(screen_position)
-
-	if not rect.has_point(pivot_position):
-		if pivot_position.x > rect.end.x:
-			pivot_position.x = rect.end.x
-		elif pivot_position.x < rect.position.x:
-			pivot_position.x = rect.position.x
-
-		if pivot_position.y < rect.position.y:
-			pivot_position.y = rect.position.y
-		elif pivot_position.y > rect.end.y:
-			pivot_position.y = rect.end.y
-
-	menu_pivot.visible = true
-	menu_pivot.position = pivot_position
+	_action_menu.reset_menu()
 
 
 func _on_CurrentActorStatus_portrait_pressed() -> void:
@@ -104,14 +94,9 @@ func _on_ActionMenu_attack_pressed() -> void:
 	emit_signal("skill_selected", 0)
 
 
-func _on_ActionMenu_skill_pressed() -> void:
-	_action_menu.visible = false
-	show_skill_menu(_action_menu.position)
-
-
 func _on_ActionMenu_wait_pressed() -> void:
 	emit_signal("wait_started")
 
 
-func _on_SkillMenu_skill_selected(skill_index: int) -> void:
+func _on_ActionMenu_skill_selected(skill_index: int) -> void:
 	emit_signal("skill_selected", skill_index)
