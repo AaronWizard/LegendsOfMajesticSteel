@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://src/game/Game.gd" type="Script" id=1]
 [ext_resource path="res://src/ui/BattleInterface.tscn" type="PackedScene" id=2]
@@ -9,6 +9,8 @@
 [ext_resource path="res://src/state/states/PlayerPickActorState.gd" type="Script" id=7]
 [ext_resource path="res://src/state/states/PlayerActorMoveState.gd" type="Script" id=8]
 [ext_resource path="res://src/state/states/PlayerActorTargetState.gd" type="Script" id=9]
+[ext_resource path="res://assets/graphics/ui/mouse_cursor.png" type="Texture" id=10]
+[ext_resource path="res://src/ui/MouseCursor.gd" type="Script" id=11]
 
 [node name="Game" type="Node"]
 script = ExtResource( 1 )
@@ -40,6 +42,14 @@ target_state_path = NodePath("../PlayerActorTargetState")
 script = ExtResource( 9 )
 interface_path = NodePath("../../BattleInterface")
 move_state_path = NodePath("../PlayerActorMoveState")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="MouseCursor" type="Sprite" parent="CanvasLayer"]
+texture = ExtResource( 10 )
+centered = false
+offset = Vector2( -1, -1 )
+script = ExtResource( 11 )
 
 [connection signal="action_starting" from="TurnManager" to="." method="_on_TurnManager_action_starting"]
 [connection signal="actor_died" from="TurnManager" to="." method="_on_TurnManager_actor_died"]
