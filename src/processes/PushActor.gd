@@ -67,7 +67,6 @@ func _run_self() -> void:
 	if real_distance < distance:
 		real_attack *= 2
 
-
 	if real_distance == 0:
 		_hit_other_actors(real_distance)
 		_hit_actor(actor, real_attack)
