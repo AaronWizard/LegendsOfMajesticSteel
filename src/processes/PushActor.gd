@@ -14,11 +14,11 @@ var _dir_v: Vector2
 
 
 static func get_real_distance(pushed_actor: Actor, actor_map: Map,
-		push_direction: int, push_distance: int) -> int:
+		push_direction: int, max_distance: int) -> int:
 	var result := 0
 
 	var dir := Directions.get_vector(push_direction)
-	for i in range(1, push_distance + 1):
+	for i in range(1, max_distance + 1):
 		if actor_map.actor_can_enter_cell(
 				pushed_actor, pushed_actor.origin_cell + (dir * i)):
 			result += 1

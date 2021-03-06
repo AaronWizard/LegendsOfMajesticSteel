@@ -78,6 +78,29 @@ static func get_line(start: Vector2, end: Vector2, include_ends := true) \
 	return result
 
 
+static func get_thick_line(start: Vector2, end: Vector2, size: Vector2) \
+		-> Array:
+	var result: Array
+	var start_cells := get_rect_cells(Rect2(start, size))
+
+	if start == end:
+		result = start_cells
+	else:
+		var end_cells := get_rect_cells(Rect2(end, size))
+		assert(start_cells.size() == end_cells.size())
+
+		var all_cells := {}
+		for i in range(start_cells.size()):
+			var inner_start := start_cells[i] as Vector2
+			var inner_end := end_cells[i] as Vector2
+			var line := get_line(inner_start, inner_end)
+			for c in line:
+				all_cells[c] = true
+		result = all_cells.keys()
+
+	return result
+
+
 static func get_diagonal_distance(start: Vector2, end: Vector2) -> int:
 	var dx := end.x - start.x
 	var dy := end.y - start.y
