@@ -71,9 +71,10 @@ func _set_action_menu_visible(visible: bool) -> void:
 	_interface.mouse.dragging_enabled = not _action_menu_visible
 
 	if _action_menu_visible:
+		_interface.gui.action_menu_visible = true
 		_position_action_menu()
 	else:
-		_interface.gui.hide_action_menus()
+		_interface.gui.action_menu_visible = false
 
 
 func _player_other_actor_clicked(target_cell: Vector2) -> void:
@@ -104,9 +105,9 @@ func _choose_action(action: Action) -> void:
 
 func _position_action_menu() -> void:
 	var pos := _actor.center_screen_pos
-	_interface.gui.show_action_menu(pos)
+	_interface.gui.action_menu_position = pos
 
-	var menu_pos := _interface.gui.get_action_menu_pos()
+	var menu_pos := _interface.gui.action_menu_position
 	if menu_pos != pos:
 		var diff := menu_pos - pos
 		_interface.camera.position = _interface.camera.get_camera_position()
@@ -115,4 +116,5 @@ func _position_action_menu() -> void:
 
 
 func _screen_resized() -> void:
-	_position_action_menu()
+	if _action_menu_visible:
+		_position_action_menu()
