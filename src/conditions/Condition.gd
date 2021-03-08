@@ -6,6 +6,7 @@ var effect: ConditionEffect
 
 var rounds_left := 1
 
+var stat_modifiers: Array setget , get_stat_modifiers
 
 func _init(new_effect: ConditionEffect) -> void:
 	effect = new_effect
@@ -18,3 +19,11 @@ func start_round() -> void:
 			emit_signal("finished")
 		else:
 			rounds_left -= 1
+
+
+func get_stat_modifiers() -> Array:
+	return effect.stat_modifiers
+
+
+func get_stat_modifiers_by_type(stat_type: int) -> Array:
+	return effect.get_modifiers_by_type(stat_type)

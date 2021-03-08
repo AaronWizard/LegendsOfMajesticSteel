@@ -31,8 +31,6 @@ const _WALK_FRAME := 0
 const _REACT_FRAME := 2
 const _ACTION_FRAME := 3
 
-signal conditions_changed
-
 signal move_finished
 
 signal attack_hit
@@ -54,7 +52,6 @@ export(Faction) var faction := Faction.ENEMY
 var portrait: Texture setget , get_portrait
 
 var skills := []
-var conditions := []
 
 var range_data: RangeData
 
@@ -199,9 +196,7 @@ func start_round() -> void:
 	_wait_icon.visible = false
 	_turns_left = 1
 
-	for c in conditions:
-		var condition := c as Condition
-		condition.start_round()
+	stats.start_round()
 
 
 func start_turn() -> void:
@@ -216,20 +211,11 @@ func take_turn() -> void:
 
 
 func add_condition(condition: Condition) -> void:
-	if conditions.find(condition) == -1:
-		stats.add_condition_effect(condition.effect)
-		# warning-ignore:return_value_discarded
-		condition.connect("finished", self, "remove_condition", [condition])
-		conditions.append(condition)
-		emit_signal("conditions_changed")
+	stats.add_condition(condition)
 
 
 func remove_condition(condition: Condition) -> void:
-	if conditions.find(condition) > -1:
-		stats.remove_condition_effect(condition.effect)
-		condition.disconnect("finished", self, "remove_condition")
-		conditions.erase(condition)
-		emit_signal("conditions_changed")
+	stats.remove_condition(condition)
 
 
 func set_pose(value: int) -> void:
@@ -396,5 +382,5 @@ func _on_StaminaBar_animation_finished() -> void:
 	_stamina_bar.visible = false
 
 
-func _on_Stats_stat_changed(_stat) -> void:
+func _on_Stats_conditions_changed() -> void:
 	_condition_icons.update_icons(stats)

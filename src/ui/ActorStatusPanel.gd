@@ -39,7 +39,7 @@ func set_actor(actor: Actor) -> void:
 
 	_set_conditions(actor)
 	# warning-ignore:return_value_discarded
-	actor.connect("conditions_changed", self, "_set_conditions", [actor])
+	actor.stats.connect("conditions_changed", self, "_set_conditions", [actor])
 	_actor = actor
 
 
@@ -51,7 +51,7 @@ func clear() -> void:
 	_current_stamina.text = ""
 
 	if _actor:
-		_actor.disconnect("conditions_changed", self, "_set_conditions")
+		_actor.stats.disconnect("conditions_changed", self, "_set_conditions")
 		_actor = null
 
 

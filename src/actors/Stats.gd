@@ -1,7 +1,7 @@
 class_name Stats
 extends Node
 
-signal stat_changed(stat)
+signal conditions_changed
 signal stamina_changed(old_stamina, new_stamina)
 
 # Damage reduction turned into percentage based on this value
@@ -36,8 +36,8 @@ func get_stat(stat_type: int) -> int:
 	var add := 0
 
 	for c in _conditions:
-		var condition := c as ConditionEffect
-		var modifiers := condition.get_modifiers_by_type(stat_type)
+		var condition := c as Condition
+		var modifiers := condition.get_stat_modifiers_by_type(stat_type)
 
 		for m in modifiers:
 			var modifier := m as StatModifier
@@ -51,14 +51,24 @@ func get_stat_mod(stat_type: int) -> int:
 	return get_stat(stat_type) - get_base_stat(stat_type)
 
 
-func add_condition_effect(condition: ConditionEffect) -> void:
-	_conditions.append(condition)
-	_condition_notify(condition)
+func add_condition(condition: Condition) -> void:
+	if _conditions.find(condition) == -1:
+		_conditions.append(condition)
+		# warning-ignore:return_value_discarded
+		condition.connect("finished", self, "remove_condition", [condition],
+				CONNECT_ONESHOT)
+
+		emit_signal("conditions_changed")
 
 
-func remove_condition_effect(condition: ConditionEffect) -> void:
-	_conditions.erase(condition)
-	_condition_notify(condition)
+func remove_condition(condition: Condition) -> void:
+	if _conditions.find(condition) > -1:
+		_conditions.erase(condition)
+
+		if condition.is_connected("finished", self, "remove_condition"):
+			condition.disconnect("finished", self, "remove_condition")
+
+		emit_signal("conditions_changed")
 
 
 func get_max_stamina() -> int:
@@ -75,6 +85,12 @@ func get_move() -> int:
 
 func start_battle() -> void:
 	stamina = get_max_stamina()
+
+
+func start_round() -> void:
+	for c in _conditions:
+		var condition := c as Condition
+		condition.start_round()
 
 
 func get_is_alive() -> bool:
@@ -99,17 +115,6 @@ func take_damage(base_damage: int) -> void:
 func heal(heal_power: float, overflow: bool) -> void:
 	var regained_stamina := int(ceil(get_max_stamina() * heal_power))
 	_modify_stamina(regained_stamina, overflow)
-
-
-func _condition_notify(condition: ConditionEffect) -> void:
-	var changed_stats := {}
-
-	for m in condition.stat_modifiers:
-		var modifier := m as StatModifier
-		changed_stats[modifier.type] = true
-
-	for s in changed_stats:
-		emit_signal("stat_changed", s)
 
 
 func _modify_stamina(mod: int, overflow: bool) -> void:
