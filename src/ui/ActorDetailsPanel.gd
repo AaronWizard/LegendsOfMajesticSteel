@@ -1,6 +1,35 @@
 class_name ActorDetailsPanel
 extends PanelContainer
 
+var _stat_icons := {
+	StatType.Type.ATTACK: {
+		name = "Attack",
+		up = preload( \
+				"res://assets/graphics/ui/icons/conditions/attack_up.png") \
+				as Texture,
+		down = preload( \
+				"res://assets/graphics/ui/icons/conditions/attack_down.png") \
+				as Texture
+	},
+	StatType.Type.DAMAGE_REDUCTION: {
+		name = "Defence",
+		up = preload( \
+				"res://assets/graphics/ui/icons/conditions/defence_up.png") \
+				as Texture,
+		down = preload( \
+				"res://assets/graphics/ui/icons/conditions/defence_down.png") \
+				as Texture
+	},
+	StatType.Type.MOVE: {
+		name = "Move",
+		up = preload( \
+				"res://assets/graphics/ui/icons/conditions/move_up.png") \
+				as Texture,
+		down = preload( \
+				"res://assets/graphics/ui/icons/conditions/move_down.png") \
+				as Texture
+	}
+}
 
 onready var _portrait := $Container/Header/PortraitContainer/Portrait \
 		as TextureRect
@@ -35,6 +64,8 @@ func set_actor(actor: Actor) -> void:
 	_set_stats(actor, StatType.Type.ATTACK)
 	_set_stats(actor, StatType.Type.MOVE)
 
+	_set_conditions(actor)
+
 
 func clear() -> void:
 	_portrait.texture = null
@@ -44,7 +75,7 @@ func clear() -> void:
 		control.queue_free()
 
 
-func _set_stamina(actor:Actor) -> void:
+func _set_stamina(actor: Actor) -> void:
 	_current_stamina.text = str(actor.stats.stamina)
 	_max_stamina.text = str(actor.stats.max_stamina)
 
@@ -63,3 +94,39 @@ func _set_stats(actor: Actor, stat_type: int) -> void:
 		stat_mod_label.text = ""
 	else:
 		stat_mod_label.text = "(%s)" % str(stat_mod)
+
+
+func _set_conditions(actor: Actor) -> void:
+	var stat_mods := actor.stats.get_condition_stat_mods()
+	for s in stat_mods:
+		var stat_id := s as int
+		var modifier_data := stat_mods[stat_id] as Dictionary
+		for m in modifier_data:
+			var rounds := m as int
+			var modifier := modifier_data[rounds] as int
+
+			_show_stat_modifier(stat_id, modifier, rounds)
+
+
+func _show_stat_modifier(stat_type: int, mod: int, rounds_left) -> void:
+	if mod != 0:
+		var stat_ui_data := _stat_icons[stat_type] as Dictionary
+
+		var icon := TextureRect.new()
+		if mod > 0:
+			icon.texture = stat_ui_data.up as Texture
+		else:
+			icon.texture = stat_ui_data.down as Texture
+		_conditions.add_child(icon)
+
+		var stat_name_label := Label.new()
+		stat_name_label.text = stat_ui_data.name as String
+		_conditions.add_child(stat_name_label)
+
+		var mod_label := Label.new()
+		mod_label.text = str(mod)
+		_conditions.add_child(mod_label)
+
+		var rounds_label := Label.new()
+		rounds_label.text = "%s rounds" % str(rounds_left)
+		_conditions.add_child(rounds_label)

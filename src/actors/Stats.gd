@@ -93,10 +93,6 @@ func start_round() -> void:
 		condition.start_round()
 
 
-func get_is_alive() -> bool:
-	return stamina > 0
-
-
 # Get how much damage will be done with a given base damage
 func damage_from_attack(base_damage: int) -> int:
 	var dr := get_stat(StatType.Type.DAMAGE_REDUCTION)
@@ -115,6 +111,45 @@ func take_damage(base_damage: int) -> void:
 func heal(heal_power: float, overflow: bool) -> void:
 	var regained_stamina := int(ceil(get_max_stamina() * heal_power))
 	_modify_stamina(regained_stamina, overflow)
+
+
+func get_is_alive() -> bool:
+	return stamina > 0
+
+
+# Keys are stat type IDs
+# Values are dictionaries.
+# Keys of inner dictionaries are ints representing the number of rounds left.
+# Values of inner dictionaries are ints representing the total stat mod.
+# Stat mods with the same number of rounds left are combined.
+# Perminant stat mods have a key of -1
+func get_condition_stat_mods() -> Dictionary:
+	var result := {}
+
+	for c in _conditions:
+		var condition := c as Condition
+		for m in condition.get_stat_modifiers():
+			var modifier := m as StatModifier
+
+			var modifier_data: Dictionary
+			if not result.has(modifier.type):
+				modifier_data = {}
+				result[modifier.type] = modifier_data
+			else:
+				modifier_data = result[modifier.type]
+
+			var md_key: int
+			if condition.effect.time_type == ConditionEffect.TimeType.ROUNDS:
+				md_key = condition.rounds_left
+			else:
+				md_key = -1
+
+			if modifier_data.has(md_key):
+				modifier_data[md_key] += modifier.value
+			else:
+				modifier_data[md_key] = modifier.value
+
+	return result
 
 
 func _modify_stamina(mod: int, overflow: bool) -> void:
