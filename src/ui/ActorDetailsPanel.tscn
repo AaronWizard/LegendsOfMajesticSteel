@@ -8,10 +8,8 @@
 
 [node name="ActorDetailsPanel" type="PanelContainer"]
 anchor_bottom = 1.0
-margin_left = 2.0
-margin_top = 24.0
-margin_right = 89.0
-margin_bottom = -44.0
+margin_right = 87.0
+margin_bottom = -68.0
 theme = ExtResource( 3 )
 script = ExtResource( 2 )
 __meta__ = {

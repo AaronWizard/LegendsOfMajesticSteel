@@ -93,7 +93,7 @@ func _set_stats(actor: Actor, stat_type: int) -> void:
 	if stat_mod == 0:
 		stat_mod_label.text = ""
 	else:
-		stat_mod_label.text = "(%s)" % str(stat_mod)
+		stat_mod_label.text = _format_mod_str(stat_mod)
 
 
 func _set_conditions(actor: Actor) -> void:
@@ -124,9 +124,26 @@ func _show_stat_modifier(stat_type: int, mod: int, rounds_left) -> void:
 		_conditions.add_child(stat_name_label)
 
 		var mod_label := Label.new()
-		mod_label.text = str(mod)
+		mod_label.text = _format_mod_str(mod)
+		if stat_type == StatType.Type.DAMAGE_REDUCTION:
+			mod_label.text += "%"
 		_conditions.add_child(mod_label)
 
-		var rounds_label := Label.new()
-		rounds_label.text = "%s rounds" % str(rounds_left)
-		_conditions.add_child(rounds_label)
+		if rounds_left > -1:
+			var rounds_label := Label.new()
+			rounds_label.text = "%s rounds" % str(rounds_left)
+			_conditions.add_child(rounds_label)
+		else:
+			var rounds_space := Control.new()
+			_conditions.add_child(rounds_space)
+
+
+static func _format_mod_str(mod: int) -> String:
+	var result: String
+
+	if mod > 0:
+		result = "+%s" % mod
+	else:
+		result = str(mod)
+
+	return result
