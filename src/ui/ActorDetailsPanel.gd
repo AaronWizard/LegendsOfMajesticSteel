@@ -1,6 +1,9 @@
 class_name ActorDetailsPanel
 extends PanelContainer
 
+const _STAT_UP_LABEL := " up "
+const _STAT_DOWN_LABEL := " down "
+
 var _stat_icons := {
 	StatType.Type.ATTACK: {
 		name = "Attack",
@@ -51,7 +54,7 @@ onready var _stat_rows := {
 	}
 }
 
-onready var _conditions := $Container/ConditionsScroll/ConditionsGrid as Node
+onready var _conditions := $Container/ConditionsScroll/ConditionsList as Node
 
 
 func set_actor(actor: Actor) -> void:
@@ -93,7 +96,7 @@ func _set_stats(actor: Actor, stat_type: int) -> void:
 	if stat_mod == 0:
 		stat_mod_label.text = ""
 	else:
-		stat_mod_label.text = _format_mod_str(stat_mod)
+		stat_mod_label.text = "(%s)" % _format_mod_str(stat_mod)
 
 
 func _set_conditions(actor: Actor) -> void:
@@ -108,34 +111,43 @@ func _set_conditions(actor: Actor) -> void:
 			_show_stat_modifier(stat_id, modifier, rounds)
 
 
-func _show_stat_modifier(stat_type: int, mod: int, rounds_left) -> void:
+func _show_stat_modifier(stat_type: int, mod: int, rounds_left: int) -> void:
 	if mod != 0:
 		var stat_ui_data := _stat_icons[stat_type] as Dictionary
 
+		var condition_info := HBoxContainer.new()
+
+		# Icon
 		var icon := TextureRect.new()
 		if mod > 0:
 			icon.texture = stat_ui_data.up as Texture
 		else:
 			icon.texture = stat_ui_data.down as Texture
-		_conditions.add_child(icon)
+		condition_info.add_child(icon)
 
-		var stat_name_label := Label.new()
-		stat_name_label.text = stat_ui_data.name as String
-		_conditions.add_child(stat_name_label)
-
-		var mod_label := Label.new()
-		mod_label.text = _format_mod_str(mod)
+		# Label
+		var stat_info_label := Label.new()
+		stat_info_label.text = stat_ui_data.name as String
+		if mod > 0:
+			stat_info_label.text += _STAT_UP_LABEL
+		else:
+			stat_info_label.text += _STAT_DOWN_LABEL
+		stat_info_label.text += _format_mod_str(mod)
 		if stat_type == StatType.Type.DAMAGE_REDUCTION:
-			mod_label.text += "%"
-		_conditions.add_child(mod_label)
+			stat_info_label.text  += "%"
+		condition_info.add_child(stat_info_label)
 
+		# Add info
+		_conditions.add_child(condition_info)
+
+		# Rounds left
 		if rounds_left > -1:
 			var rounds_label := Label.new()
-			rounds_label.text = "%s rounds" % str(rounds_left)
+			rounds_label.size_flags_horizontal = SIZE_SHRINK_END
+			rounds_label.text = "%s round" % str(rounds_left)
+			if rounds_left != 1:
+				rounds_label.text += "s"
 			_conditions.add_child(rounds_label)
-		else:
-			var rounds_space := Control.new()
-			_conditions.add_child(rounds_space)
 
 
 static func _format_mod_str(mod: int) -> String:

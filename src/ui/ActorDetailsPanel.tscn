@@ -160,7 +160,9 @@ text = "Conditions"
 margin_top = 63.0
 margin_right = 81.0
 margin_bottom = 106.0
+size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="ConditionsGrid" type="GridContainer" parent="Container/ConditionsScroll"]
-columns = 4
+[node name="ConditionsList" type="VBoxContainer" parent="Container/ConditionsScroll"]
+margin_right = 81.0
+size_flags_horizontal = 3
