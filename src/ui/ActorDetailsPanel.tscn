@@ -6,21 +6,20 @@
 [ext_resource path="res://assets/graphics/ui/icons/stats/attack.png" type="Texture" id=4]
 [ext_resource path="res://assets/graphics/ui/icons/stats/defence.png" type="Texture" id=5]
 
-[node name="ActorDetailsPanel" type="PanelContainer"]
+[node name="ActorDetailsPanel" type="PopupPanel"]
+visible = true
 anchor_bottom = 1.0
 margin_right = 104.0
 margin_bottom = -45.0
 theme = ExtResource( 3 )
+popup_exclusive = true
 script = ExtResource( 2 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Container" type="VBoxContainer" parent="."]
-margin_left = 3.0
-margin_top = 3.0
-margin_right = 101.0
-margin_bottom = 132.0
+margin_left = 4.0
+margin_top = 4.0
+margin_right = 102.0
+margin_bottom = 131.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -157,7 +156,7 @@ text = "Conditions"
 [node name="ConditionsScroll" type="ScrollContainer" parent="Container"]
 margin_top = 63.0
 margin_right = 98.0
-margin_bottom = 103.0
+margin_bottom = 101.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 scroll_horizontal_enabled = false
@@ -169,9 +168,9 @@ columns = 3
 
 [node name="OK" type="Button" parent="Container"]
 margin_left = 74.0
-margin_top = 105.0
+margin_top = 103.0
 margin_right = 98.0
-margin_bottom = 129.0
+margin_bottom = 127.0
 rect_min_size = Vector2( 24, 24 )
 size_flags_horizontal = 8
 text = "OK"

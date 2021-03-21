@@ -45,6 +45,7 @@ Label/fonts/font = null
 Label/styles/normal = null
 Panel/styles/panel = ExtResource( 4 )
 PanelContainer/styles/panel = ExtResource( 4 )
+PopupPanel/styles/panel = ExtResource( 4 )
 VBoxContainer/constants/separation = 2
 VScrollBar/icons/decrement = null
 VScrollBar/icons/decrement_highlight = null

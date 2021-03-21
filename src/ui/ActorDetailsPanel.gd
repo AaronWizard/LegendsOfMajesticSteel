@@ -1,5 +1,5 @@
 class_name ActorDetailsPanel
-extends PanelContainer
+extends PopupPanel
 
 const _STAT_UP_LABEL := " up "
 const _STAT_DOWN_LABEL := " down "

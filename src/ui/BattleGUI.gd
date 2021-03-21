@@ -104,7 +104,7 @@ static func _set_actor(actor: Actor, actor_status: ActorStatusPanel) -> void:
 
 func _show_actor_details(actor: Actor) -> void:
 	_actor_details.set_actor(actor)
-	_actor_details.visible = true
+	_actor_details.popup()
 
 
 func _on_CurrentActorStatus_portrait_pressed() -> void:
