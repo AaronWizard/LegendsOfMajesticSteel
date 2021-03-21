@@ -38,7 +38,7 @@ onready var _portrait := $Container/Header/PortraitContainer/Portrait \
 		as TextureRect
 onready var _name := $Container/Header/VBoxContainer/Name as Label
 
-onready var _stamina := $Container/Header/VBoxContainer/StaminaValues as Node
+onready var _stamina := $Container/Header/VBoxContainer/Stamina as Node
 onready var _current_stamina := _stamina.get_node("CurrentStamina") as Label
 onready var _max_stamina := _stamina.get_node("MaxStamina") as Label
 
@@ -54,7 +54,7 @@ onready var _stat_rows := {
 	}
 }
 
-onready var _conditions := $Container/ConditionsScroll/ConditionsList as Node
+onready var _conditions := $Container/ConditionsScroll/Conditions as Node
 
 
 func set_actor(actor: Actor) -> void:
@@ -115,15 +115,13 @@ func _show_stat_modifier(stat_type: int, mod: int, rounds_left: int) -> void:
 	if mod != 0:
 		var stat_ui_data := _stat_icons[stat_type] as Dictionary
 
-		var condition_info := HBoxContainer.new()
-
 		# Icon
 		var icon := TextureRect.new()
 		if mod > 0:
 			icon.texture = stat_ui_data.up as Texture
 		else:
 			icon.texture = stat_ui_data.down as Texture
-		condition_info.add_child(icon)
+		_conditions.add_child(icon)
 
 		# Label
 		var stat_info_label := Label.new()
@@ -135,10 +133,7 @@ func _show_stat_modifier(stat_type: int, mod: int, rounds_left: int) -> void:
 		stat_info_label.text += _format_mod_str(mod)
 		if stat_type == StatType.Type.DAMAGE_REDUCTION:
 			stat_info_label.text  += "%"
-		condition_info.add_child(stat_info_label)
-
-		# Add info
-		_conditions.add_child(condition_info)
+		_conditions.add_child(stat_info_label)
 
 		# Rounds left
 		if rounds_left > -1:
@@ -148,6 +143,8 @@ func _show_stat_modifier(stat_type: int, mod: int, rounds_left: int) -> void:
 			if rounds_left != 1:
 				rounds_label.text += "s"
 			_conditions.add_child(rounds_label)
+		else:
+			_conditions.add_child(Control.new())
 
 
 static func _format_mod_str(mod: int) -> String:
@@ -159,3 +156,8 @@ static func _format_mod_str(mod: int) -> String:
 		result = str(mod)
 
 	return result
+
+
+func _on_OK_pressed() -> void:
+	clear()
+	visible = false

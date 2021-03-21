@@ -19,8 +19,7 @@ onready var turn_queue := $TurnQueuePanel as TurnQueuePanel
 onready var _current_actor_status := $CurrentActorStatus as ActorStatusPanel
 onready var _other_actor_status := $OtherActorStatus as ActorStatusPanel
 
-onready var _current_actor_details := $CurrentActorDetails as ActorDetailsPanel
-onready var _other_actor_details := $OtherActorDetails as ActorDetailsPanel
+onready var _actor_details := $ActorDetails as ActorDetailsPanel
 
 onready var _skill_panel := $SkillPanel as SkillPanel
 
@@ -34,13 +33,12 @@ func _ready() -> void:
 	_other_actor_status.visible = false
 	_skill_panel.visible = false
 	_action_menu.visible = false
-	_current_actor_details.visible = false
-	_other_actor_details.visible = false
+	_actor_details.visible = false
 
 
 func set_current_actor(value: Actor) -> void:
 	current_actor = value
-	_set_actor(current_actor, _current_actor_status, _current_actor_details)
+	_set_actor(current_actor, _current_actor_status)
 
 	if current_actor:
 		_action_menu.set_skills(current_actor.skills)
@@ -50,7 +48,7 @@ func set_current_actor(value: Actor) -> void:
 
 func set_other_actor(value: Actor) -> void:
 	other_actor = value
-	_set_actor(other_actor, _other_actor_status, _other_actor_details)
+	_set_actor(other_actor, _other_actor_status)
 
 
 func set_action_menu_pos(value: Vector2) -> void:
@@ -95,25 +93,26 @@ func hide_skill_panel() -> void:
 	_skill_panel.visible = false
 
 
-static func _set_actor(actor: Actor, actor_status: ActorStatusPanel,
-		actor_details: ActorDetailsPanel) -> void:
+static func _set_actor(actor: Actor, actor_status: ActorStatusPanel) -> void:
 	actor_status.visible = actor != null
-	actor_details.visible = false
 
 	if actor:
 		actor_status.set_actor(actor)
-		actor_details.set_actor(actor)
 	else:
 		actor_status.clear()
-		actor_details.clear()
+
+
+func _show_actor_details(actor: Actor) -> void:
+	_actor_details.set_actor(actor)
+	_actor_details.visible = true
 
 
 func _on_CurrentActorStatus_portrait_pressed() -> void:
-	_current_actor_details.visible = not _current_actor_details.visible
+	_show_actor_details(current_actor)
 
 
 func _on_OtherActorStatus_portrait_pressed() -> void:
-	_other_actor_details.visible = not _other_actor_details.visible
+	_show_actor_details(other_actor)
 
 
 func _on_SkillPanel_cancelled() -> void:
