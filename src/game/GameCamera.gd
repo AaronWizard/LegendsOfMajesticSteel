@@ -82,3 +82,5 @@ func _update_bounds() -> void:
 			var margin := int((view_size.y - _bounds.size.y) / 2)
 			limit_top -= margin
 			limit_bottom += margin
+
+	position = position
