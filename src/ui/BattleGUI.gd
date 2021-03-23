@@ -35,6 +35,9 @@ func _ready() -> void:
 	_action_menu.visible = false
 	_actor_details.visible = false
 
+	# warning-ignore:return_value_discarded
+	get_tree().get_root().connect("size_changed", self, "_on_size_changed")
+
 
 func set_current_actor(value: Actor) -> void:
 	current_actor = value
@@ -104,7 +107,7 @@ static func _set_actor(actor: Actor, actor_status: ActorStatusPanel) -> void:
 
 func _show_actor_details(actor: Actor) -> void:
 	_actor_details.set_actor(actor)
-	_actor_details.popup()
+	_actor_details.popup_centered()
 
 
 func _on_CurrentActorStatus_portrait_pressed() -> void:
@@ -130,3 +133,11 @@ func _on_ActionMenu_wait_pressed() -> void:
 
 func _on_ActionMenu_skill_selected(skill_index: int) -> void:
 	emit_signal("skill_selected", skill_index)
+
+
+func _on_size_changed() -> void:
+	if _actor_details.visible:
+		_actor_details.anchor_left = 0.5
+		_actor_details.anchor_right = 0.5
+		_actor_details.anchor_top = 0.5
+		_actor_details.anchor_bottom = 0.5
