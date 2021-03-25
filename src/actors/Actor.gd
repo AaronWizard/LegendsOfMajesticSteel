@@ -89,6 +89,8 @@ onready var _wait_icon := $WaitIcon as AnimatedSprite
 
 onready var _target_cursor := $TargetCursor as TargetCursor
 
+onready var _step_sound := $StepSound as AudioStreamPlayer
+
 
 func _ready() -> void:
 	._ready()
@@ -264,6 +266,7 @@ func move_step(target_cell: Vector2) -> void:
 
 	set_pose(Pose.WALK)
 
+	_step_sound.play()
 	yield(
 		animate_offset(Vector2.ZERO, _AnimationTimes.MOVE,
 			Tween.TRANS_QUAD, Tween.EASE_OUT),
