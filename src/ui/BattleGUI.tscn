@@ -62,7 +62,6 @@ __meta__ = {
 }
 
 [node name="ActionMenu" parent="." instance=ExtResource( 5 )]
-visible = false
 
 [node name="ActorDetails" parent="." instance=ExtResource( 6 )]
 anchor_left = 0.5

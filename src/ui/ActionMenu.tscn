@@ -1,11 +1,363 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://src/ui/ActionMenu.gd" type="Script" id=1]
+[ext_resource path="res://assets/graphics/ui/icons/actions/skills/shining_strike.png" type="Texture" id=2]
 [ext_resource path="res://assets/graphics/ui/icons/actions/wait.png" type="Texture" id=3]
 [ext_resource path="res://assets/graphics/ui/icons/actions/attack.png" type="Texture" id=4]
 [ext_resource path="res://src/ui/RadialContainer.gd" type="Script" id=5]
 [ext_resource path="res://assets/graphics/ui/icons/actions/skill.png" type="Texture" id=6]
 [ext_resource path="res://resources/visual/gui/theme_standard.tres" type="Theme" id=7]
+
+[sub_resource type="Animation" id=1]
+resource_name = "close_menu"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/path = NodePath("Container/Actions:margin_left")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, 28.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Container/Actions:margin_top")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, 28.0 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Container/Actions:margin_right")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, -28.0 ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Container/Actions:margin_bottom")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, -28.0 ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Container/Skills:margin_left")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, 28.0 ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("Container/Skills:margin_top")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, 28.0 ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("Container/Skills:margin_right")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, -28.0 ]
+}
+tracks/7/type = "value"
+tracks/7/path = NodePath("Container/Skills:margin_bottom")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, -28.0 ]
+}
+tracks/8/type = "value"
+tracks/8/path = NodePath("Container/Actions:visible")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/keys = {
+"times": PoolRealArray( 0.2 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+tracks/9/type = "value"
+tracks/9/path = NodePath("Container/Skills:visible")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/keys = {
+"times": PoolRealArray( 0.2 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+
+[sub_resource type="Animation" id=2]
+length = 0.2
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("Container/Actions:margin_left")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 28.0, 0.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Container/Actions:margin_top")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 28.0, 0.0 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Container/Actions:margin_right")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ -28.0, 0.0 ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Container/Actions:margin_bottom")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ -28.0, 0.0 ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Container/Actions:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("Container/Skills:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+
+[sub_resource type="Animation" id=3]
+length = 0.2
+tracks/0/type = "value"
+tracks/0/path = NodePath("Container/Skills:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ true ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Container/Skills:margin_left")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 28.0, 0.0 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Container/Skills:margin_top")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 28.0, 0.0 ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Container/Skills:margin_right")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ -28.0, 0.0 ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Container/Skills:margin_bottom")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ -28.0, 0.0 ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("Container/Actions:margin_left")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, 28.0 ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("Container/Actions:margin_top")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, 28.0 ]
+}
+tracks/7/type = "value"
+tracks/7/path = NodePath("Container/Actions:margin_right")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, -28.0 ]
+}
+tracks/8/type = "value"
+tracks/8/path = NodePath("Container/Actions:margin_bottom")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, -28.0 ]
+}
+tracks/9/type = "value"
+tracks/9/path = NodePath("Container/Actions:visible")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+
+[sub_resource type="Animation" id=4]
+resource_name = "start"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("Container/Actions:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Container/Skills:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
 
 [node name="ActionMenu" type="Node2D"]
 position = Vector2( 12, 12 )
@@ -24,12 +376,18 @@ rect_min_size = Vector2( 80, 80 )
 mouse_filter = 2
 theme = ExtResource( 7 )
 __meta__ = {
+"_edit_lock_": true,
 "_edit_use_anchors_": false
 }
 
 [node name="Actions" type="Container" parent="Container"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
+margin_left = 28.0
+margin_top = 28.0
+margin_right = -28.0
+margin_bottom = -28.0
 mouse_filter = 2
 script = ExtResource( 5 )
 __meta__ = {
@@ -39,30 +397,27 @@ __meta__ = {
 base_rotation = 90.0
 
 [node name="Wait" type="Button" parent="Container/Actions"]
-margin_left = 28.0
-margin_top = 56.0
-margin_right = 52.0
-margin_bottom = 80.0
+margin_top = -1.52588e-05
+margin_right = 24.0
+margin_bottom = 24.0
 icon = ExtResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Attack" type="Button" parent="Container/Actions"]
-margin_left = 3.75129
-margin_top = 14.0
-margin_right = 27.7513
-margin_bottom = 38.0
+margin_top = 3.8147e-06
+margin_right = 24.0
+margin_bottom = 24.0
 icon = ExtResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Skill" type="Button" parent="Container/Actions"]
-margin_left = 52.2487
-margin_top = 14.0
-margin_right = 76.2487
-margin_bottom = 38.0
+margin_top = 3.8147e-06
+margin_right = 24.0
+margin_bottom = 24.0
 icon = ExtResource( 6 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -72,11 +427,43 @@ __meta__ = {
 visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
+margin_left = 28.0
+margin_top = 28.0
+margin_right = -28.0
+margin_bottom = -28.0
 mouse_filter = 2
 script = ExtResource( 5 )
 __meta__ = {
+"_edit_group_": true,
 "_edit_use_anchors_": false
 }
+
+[node name="Button" type="Button" parent="Container/Skills"]
+margin_right = 24.0
+margin_bottom = 24.0
+icon = ExtResource( 2 )
+
+[node name="Button2" type="Button" parent="Container/Skills"]
+margin_right = 24.0
+margin_bottom = 24.0
+icon = ExtResource( 2 )
+
+[node name="Button3" type="Button" parent="Container/Skills"]
+margin_right = 24.0
+margin_bottom = 24.0
+icon = ExtResource( 2 )
+
+[node name="Button4" type="Button" parent="Container/Skills"]
+margin_right = 24.0
+margin_bottom = 24.0
+icon = ExtResource( 2 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "start"
+anims/close_menu = SubResource( 1 )
+anims/open_action_menu = SubResource( 2 )
+anims/open_skills_menu = SubResource( 3 )
+anims/start = SubResource( 4 )
 
 [connection signal="pressed" from="Container/Actions/Wait" to="." method="_on_Wait_pressed"]
 [connection signal="pressed" from="Container/Actions/Attack" to="." method="_on_Attack_pressed"]

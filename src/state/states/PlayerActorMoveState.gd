@@ -71,10 +71,10 @@ func _set_action_menu_visible(visible: bool) -> void:
 	_interface.mouse.dragging_enabled = not _action_menu_visible
 
 	if _action_menu_visible:
-		_interface.gui.action_menu_visible = true
+		_interface.gui.open_action_menu()
 		_position_action_menu()
 	else:
-		_interface.gui.action_menu_visible = false
+		_interface.gui.close_action_menu()
 
 
 func _player_other_actor_clicked(target_cell: Vector2) -> void:

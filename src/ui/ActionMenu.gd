@@ -17,6 +17,8 @@ onready var _skills := $Container/Skills as Control
 onready var _attack_button := _actions.get_node("Attack") as Control
 onready var _skills_button := _actions.get_node("Skill") as Control
 
+onready var _animation := $AnimationPlayer as AnimationPlayer
+
 
 func set_skills(skills: Array) -> void:
 	_set_actions(skills)
@@ -29,9 +31,12 @@ func clear_skills() -> void:
 		button.queue_free()
 
 
-func reset_menu() -> void:
-	_actions.visible = true
-	_skills.visible = false
+func open() -> void:
+	_animation.play("open_action_menu")
+
+
+func close() -> void:
+	_animation.play("close_menu")
 
 
 func _set_actions(skills: Array) -> void:
@@ -61,13 +66,15 @@ func _set_skills(skills: Array) -> void:
 
 
 func _on_Attack_pressed() -> void:
-	emit_signal("attack_pressed")
+	if not _animation.is_playing():
+		emit_signal("attack_pressed")
 
 
 func _on_Skill_pressed() -> void:
-	_actions.visible = false
-	_skills.visible = true
+	if not _animation.is_playing():
+		_animation.play("open_skills_menu")
 
 
 func _on_Wait_pressed() -> void:
-	emit_signal("wait_pressed")
+	if not _animation.is_playing():
+		emit_signal("wait_pressed")

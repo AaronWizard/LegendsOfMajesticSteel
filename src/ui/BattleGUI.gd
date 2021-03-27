@@ -11,8 +11,6 @@ var other_actor: Actor = null setget set_other_actor
 
 var action_menu_position: Vector2 setget \
 		set_action_menu_pos, get_action_menu_pos
-var action_menu_visible: bool setget \
-		set_action_menu_visible, get_action_menu_visible
 
 onready var turn_queue := $TurnQueuePanel as TurnQueuePanel
 
@@ -32,7 +30,6 @@ func _ready() -> void:
 	_current_actor_status.visible = false
 	_other_actor_status.visible = false
 	_skill_panel.visible = false
-	_action_menu.visible = false
 	_actor_details.visible = false
 
 	# warning-ignore:return_value_discarded
@@ -76,14 +73,12 @@ func get_action_menu_pos() -> Vector2:
 	return _action_menu.position
 
 
-func set_action_menu_visible(value: bool) -> void:
-	_action_menu.visible = value
-	if not _action_menu.visible:
-		_action_menu.reset_menu()
+func open_action_menu() -> void:
+	_action_menu.open()
 
 
-func get_action_menu_visible() -> bool:
-	return _action_menu.visible
+func close_action_menu() -> void:
+	_action_menu.close()
 
 
 func show_skill_panel(skill: Skill) -> void:
