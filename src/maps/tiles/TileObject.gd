@@ -15,6 +15,7 @@ export var rect_size := Vector2.ONE setget set_rect_size
 var center_cell: Vector2 setget , get_center_cell
 var cell_rect: Rect2 setget , get_cell_rect
 
+var center_pixel_pos: Vector2 setget , get_center_pixel_pos
 var center_screen_pos: Vector2 setget , get_center_screen_pos
 
 onready var _center := $Center as Position2D
@@ -89,6 +90,13 @@ func get_cell_rect() -> Rect2:
 
 func get_cell_rect_at_cell(cell: Vector2) -> Rect2:
 	return Rect2(cell, rect_size)
+
+
+func get_center_pixel_pos() -> Vector2:
+	var result := position
+	if _center:
+		result += _center.position
+	return result
 
 
 func get_center_screen_pos() -> Vector2:
