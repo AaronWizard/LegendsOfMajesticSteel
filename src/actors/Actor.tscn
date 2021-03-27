@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://src/maps/tiles/TileObject.tscn" type="PackedScene" id=1]
 [ext_resource path="res://resources/visual/shaders/dissolve_shader.shader" type="Shader" id=2]
@@ -7,6 +7,8 @@
 [ext_resource path="res://src/ui/ConditionIcons.tscn" type="PackedScene" id=5]
 [ext_resource path="res://src/actors/Stats.gd" type="Script" id=6]
 [ext_resource path="res://assets/sounds/step.wav" type="AudioStream" id=7]
+[ext_resource path="res://assets/sounds/hit.wav" type="AudioStream" id=8]
+[ext_resource path="res://assets/sounds/death.wav" type="AudioStream" id=9]
 [ext_resource path="res://resources/visual/animations/actor_idle.tres" type="Animation" id=10]
 [ext_resource path="res://src/ui/StaminaBar.tscn" type="PackedScene" id=14]
 [ext_resource path="res://src/maps/TargetCursor.tscn" type="PackedScene" id=19]
@@ -98,6 +100,12 @@ anims/actor_idle = ExtResource( 10 )
 
 [node name="StepSound" type="AudioStreamPlayer" parent="." index="6"]
 stream = ExtResource( 7 )
+
+[node name="HitSound" type="AudioStreamPlayer" parent="." index="7"]
+stream = ExtResource( 8 )
+
+[node name="DeathSound" type="AudioStreamPlayer" parent="." index="8"]
+stream = ExtResource( 9 )
 
 [connection signal="animation_finished" from="Center/Offset/Sprite/StaminaBar" to="." method="_on_StaminaBar_animation_finished"]
 [connection signal="conditions_changed" from="Stats" to="." method="_on_Stats_conditions_changed"]

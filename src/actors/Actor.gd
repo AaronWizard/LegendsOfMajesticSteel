@@ -90,6 +90,8 @@ onready var _wait_icon := $WaitIcon as AnimatedSprite
 onready var _target_cursor := $TargetCursor as TargetCursor
 
 onready var _step_sound := $StepSound as AudioStreamPlayer
+onready var _hit_sound := $HitSound as AudioStreamPlayer
+onready var _death_sound := $DeathSound as AudioStreamPlayer
 
 
 func _ready() -> void:
@@ -177,12 +179,13 @@ func get_target_visible() -> bool:
 
 
 func set_stamina_modifier(value: int) -> void:
-	assert(not _stamina_bar_animating)
-	_stamina_bar.modifier = value
-	if _stamina_bar.modifier != 0:
-		_stamina_bar.visible = true
-	else:
-		_stamina_bar.visible = false
+	if _stamina_bar:
+		assert(not _stamina_bar_animating)
+		_stamina_bar.modifier = value
+		if _stamina_bar.modifier != 0:
+			_stamina_bar.visible = true
+		else:
+			_stamina_bar.visible = false
 
 
 func get_stamina_modifier() -> int:
@@ -315,6 +318,7 @@ func animate_attack(direction: Vector2, reduced_lunge := false) -> void:
 
 func animate_hit(direction: Vector2) -> void:
 	set_pose(Pose.REACT)
+	_hit_sound.play()
 
 	if direction != Vector2.ZERO:
 		var real_direction := direction.normalized()
@@ -343,6 +347,12 @@ func animate_death(direction: Vector2) -> void:
 			+ (real_direction * _AnimationDistances.DEATH)
 
 	emit_signal("dying")
+	_hit_sound.play()
+	_death_sound.play()
+
+	var signal_waiter := SignalWaiter.new()
+	signal_waiter.wait_for_signal(_hit_sound, "finished")
+	signal_waiter.wait_for_signal(_death_sound, "finished")
 
 	set_pose(Pose.DEATH)
 	if direction != Vector2.ZERO:
@@ -353,6 +363,8 @@ func animate_death(direction: Vector2) -> void:
 		)
 	if _anim.is_playing():
 		yield(_anim, "animation_finished")
+	if signal_waiter.waiting:
+		yield(signal_waiter, "finished")
 
 	emit_signal("died")
 
