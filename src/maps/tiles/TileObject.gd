@@ -92,7 +92,10 @@ func get_cell_rect_at_cell(cell: Vector2) -> Rect2:
 
 
 func get_center_screen_pos() -> Vector2:
-	return _center.get_global_transform_with_canvas().origin
+	var result := position
+	if _center:
+		result = _center.get_global_transform_with_canvas().origin
+	return result
 
 
 func on_cell(cell: Vector2) -> bool:
