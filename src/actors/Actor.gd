@@ -369,6 +369,10 @@ func animate_death(direction: Vector2) -> void:
 	emit_signal("died")
 
 
+func play_hit_sound() -> void:
+	_hit_sound.play()
+
+
 func _randomize_idle_start() -> void:
 	if not Engine.editor_hint:
 		assert(_anim.current_animation == "actor_idle")

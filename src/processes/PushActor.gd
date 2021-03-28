@@ -73,6 +73,7 @@ func _run_self() -> void:
 	else:
 		actor.stats.take_damage(real_attack)
 		actor.set_pose(Actor.Pose.REACT)
+		actor.play_hit_sound()
 
 		actor.cell_offset = actor.origin_cell - final_cell
 		actor.origin_cell = final_cell
