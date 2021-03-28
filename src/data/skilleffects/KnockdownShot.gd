@@ -31,7 +31,9 @@ func predict_damage(target_cell: Vector2, _aoe: Array, source_cell: Vector2,
 	result[target_actor] = -damage
 
 	for a in blocking_actors:
-		result[a] = -source_actor.stats.attack
+		var other_actor := a as Actor
+		result[a] = -other_actor.stats.damage_from_attack(
+				source_actor.stats.attack)
 
 	return result
 
