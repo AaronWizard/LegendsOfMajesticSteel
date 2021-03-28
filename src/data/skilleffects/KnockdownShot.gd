@@ -21,10 +21,14 @@ func predict_damage(target_cell: Vector2, _aoe: Array, source_cell: Vector2,
 	var blocking_actors := PushActor.get_blocking_actors(target_actor, map,
 			direction, real_distance)
 
+	var damage: int
 	if real_distance < distance:
-		result[target_actor] = -source_actor.stats.attack * 2
+		damage = target_actor.stats.damage_from_attack(
+				source_actor.stats.attack * 2)
 	else:
-		result[target_actor] = -source_actor.stats.attack
+		damage = target_actor.stats.damage_from_attack(
+				source_actor.stats.attack)
+	result[target_actor] = -damage
 
 	for a in blocking_actors:
 		result[a] = -source_actor.stats.attack
