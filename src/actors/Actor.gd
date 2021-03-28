@@ -189,7 +189,10 @@ func set_stamina_modifier(value: int) -> void:
 
 
 func get_stamina_modifier() -> int:
-	return int(_stamina_bar.modifier)
+	var result := 0
+	if _stamina_bar:
+		result = int(_stamina_bar.modifier)
+	return result
 
 
 func start_battle() -> void:
