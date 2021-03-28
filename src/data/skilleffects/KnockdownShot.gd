@@ -56,7 +56,8 @@ func run(target_cell: Vector2, _aoe: Array, source_actor: Actor, map: Map) \
 			target_actor, condition_effect as ConditionEffect)
 	)
 
-	var attack := AnimateAttack.new(source_actor, dir, true, projectile_effect)
+	var attack := AnimateAttack.new(projectile_effect, source_actor, dir, true,
+			false)
 
 	attack.run()
 	yield(attack, "finished")

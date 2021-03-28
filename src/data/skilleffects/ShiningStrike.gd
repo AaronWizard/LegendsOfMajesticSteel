@@ -37,7 +37,7 @@ func run(target_cell: Vector2, aoe: Array, source_actor: Actor, map: Map) \
 			on_hit.children.append(hit)
 			on_hit.children.append(penalty)
 
-	var attack := AnimateAttack.new(source_actor, direction, true, on_hit)
+	var attack := AnimateAttack.new(on_hit, source_actor, direction, true)
 
 	attack.run()
 	yield(attack, "finished")

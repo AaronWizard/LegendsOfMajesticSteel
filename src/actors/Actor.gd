@@ -25,8 +25,6 @@ class _AnimationDistances:
 	const DEATH := 0.5
 
 
-enum Pose { IDLE, WALK, ACTION, REACT, DEATH }
-
 const _WALK_FRAME := 0
 const _REACT_FRAME := 2
 const _ACTION_FRAME := 3
@@ -42,6 +40,7 @@ signal dying
 signal died
 
 enum Faction { PLAYER, ENEMY }
+enum Pose { IDLE, WALK, ACTION, REACT, DEATH }
 
 export var character_name := "Actor"
 
@@ -90,6 +89,7 @@ onready var _wait_icon := $WaitIcon as AnimatedSprite
 onready var _target_cursor := $TargetCursor as TargetCursor
 
 onready var _step_sound := $StepSound as AudioStreamPlayer
+onready var _melee_attack_sound := $MeleeAttackSound as AudioStreamPlayer
 onready var _hit_sound := $HitSound as AudioStreamPlayer
 onready var _death_sound := $DeathSound as AudioStreamPlayer
 
@@ -190,7 +190,7 @@ func set_stamina_modifier(value: int) -> void:
 
 func get_stamina_modifier() -> int:
 	var result := 0
-	if _stamina_bar:
+	if not Engine.editor_hint:
 		result = int(_stamina_bar.modifier)
 	return result
 
@@ -283,11 +283,18 @@ func move_step(target_cell: Vector2) -> void:
 	emit_signal("move_finished")
 
 
-func animate_attack(direction: Vector2, reduced_lunge := false) -> void:
+func animate_attack(direction: Vector2, reduce_range := false,
+		play_sound := true) -> void:
 	var real_direction := direction.normalized()
 
 	set_pose(Pose.ACTION)
 	_set_facing(real_direction)
+
+	var hit_pos := real_direction
+	if reduce_range:
+		hit_pos *= _AnimationDistances.ATTACK_HIT_REDUCED
+	else:
+		hit_pos *= _AnimationDistances.ATTACK_HIT
 
 	yield(
 		animate_offset(-real_direction * _AnimationDistances.ATTACK_PREP,
@@ -295,11 +302,8 @@ func animate_attack(direction: Vector2, reduced_lunge := false) -> void:
 		"completed"
 	)
 
-	var hit_pos := real_direction
-	if reduced_lunge:
-		hit_pos *= _AnimationDistances.ATTACK_HIT_REDUCED
-	else:
-		hit_pos *= _AnimationDistances.ATTACK_HIT
+	if play_sound:
+		_melee_attack_sound.play()
 
 	yield(
 		animate_offset(hit_pos, _AnimationTimes.ATTACK_PREP,
