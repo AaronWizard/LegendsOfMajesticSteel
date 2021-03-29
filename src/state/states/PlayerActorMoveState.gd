@@ -37,8 +37,6 @@ func end() -> void:
 	_interface.gui.disconnect("skill_selected", self, "_skill_selected")
 
 	get_tree().disconnect("screen_resized", self, "_screen_resized")
-
-	_interface.gui.close_action_menu(false)
 	_interface.clear_other_actor()
 
 	_player = null
@@ -63,13 +61,13 @@ func _mouse_click(_position: Vector2) -> void:
 
 
 func _toggle_action_menu() -> void:
-	_interface.mouse.dragging_enabled = not _interface.gui.action_menu_open
-
 	if not _interface.gui.action_menu_open:
 		_interface.gui.open_action_menu()
 		_position_action_menu()
+		_interface.mouse.dragging_enabled = false
 	else:
 		_interface.gui.close_action_menu()
+		_interface.mouse.dragging_enabled = true
 
 
 func _player_other_actor_clicked(target_cell: Vector2) -> void:
@@ -88,12 +86,14 @@ func _wait_started() -> void:
 
 
 func _skill_selected(skill_index: int) -> void:
+	_interface.gui.close_action_menu(false)
 	emit_signal("state_change_requested", _target_state, {
 		player = _player, actor = _actor, skill_index = skill_index
 	})
 
 
 func _choose_action(action: Action) -> void:
+	_interface.gui.close_action_menu(false)
 	_player.do_action(action)
 
 
