@@ -99,8 +99,6 @@ func _ready() -> void:
 	if not Engine.editor_hint:
 		assert(actor_definition)
 		var ad := actor_definition as ActorDefinition
-
-		ad.init_stats(stats)
 		skills = ad.skills
 
 		_stamina_bar.max_stamina = stats.max_stamina
@@ -137,6 +135,8 @@ func set_actor_definition(value: Resource) -> void:
 		set_rect_size(ad.rect_size)
 		if _sprite:
 			_sprite.texture = ad.sprite
+		# Use $Stats instead of stats to work in tool mode
+		($Stats as Stats).init_from_def(ad)
 	else:
 		set_rect_size(Vector2.ONE)
 		if _sprite:
@@ -190,7 +190,7 @@ func set_stamina_modifier(value: int) -> void:
 
 func get_stamina_modifier() -> int:
 	var result := 0
-	if not Engine.editor_hint:
+	if _stamina_bar and not Engine.editor_hint:
 		result = int(_stamina_bar.modifier)
 	return result
 

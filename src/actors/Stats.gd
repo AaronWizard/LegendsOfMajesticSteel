@@ -1,3 +1,4 @@
+tool
 class_name Stats
 extends Node
 
@@ -21,6 +22,12 @@ var move: int setget , get_move
 
 func _ready() -> void:
 	_base_stats[StatType.Type.DAMAGE_REDUCTION] = 0.0
+
+
+func init_from_def(def: ActorDefinition) -> void:
+	set_base_stat(StatType.Type.MAX_STAMINA, def.max_stamina)
+	set_base_stat(StatType.Type.ATTACK, def.attack)
+	set_base_stat(StatType.Type.MOVE, def.move)
 
 
 func set_base_stat(stat_type: int, value: int) -> void:
