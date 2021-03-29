@@ -8,8 +8,6 @@ var _actor: Actor
 
 var _other_actor: Actor
 
-var _action_menu_visible: bool
-
 onready var _target_state := get_node(target_state_path) as State
 
 
@@ -21,7 +19,6 @@ func start(data: Dictionary) -> void:
 	_actor = data.actor as Actor
 	assert(_actor)
 
-	_action_menu_visible = false
 	_other_actor = null
 
 	# warning-ignore:return_value_discarded
@@ -41,21 +38,20 @@ func end() -> void:
 
 	get_tree().disconnect("screen_resized", self, "_screen_resized")
 
-	_set_action_menu_visible(false)
+	_interface.gui.close_action_menu(false)
 	_interface.clear_other_actor()
 
 	_player = null
 	_actor = null
 	_other_actor = null
-	_action_menu_visible = false
 
 
 func _mouse_click(_position: Vector2) -> void:
 	var target_cell := _interface.current_map.get_mouse_cell()
 
 	if _actor.on_cell(target_cell):
-		_set_action_menu_visible(not _action_menu_visible)
-	elif not _action_menu_visible:
+		_toggle_action_menu()
+	elif not _interface.gui.action_menu_open:
 		var path := _actor.range_data.get_walk_path(
 				_actor.origin_cell, target_cell)
 		if path.size() > 0:
@@ -66,11 +62,10 @@ func _mouse_click(_position: Vector2) -> void:
 			_player_other_actor_clicked(target_cell)
 
 
-func _set_action_menu_visible(visible: bool) -> void:
-	_action_menu_visible = visible
-	_interface.mouse.dragging_enabled = not _action_menu_visible
+func _toggle_action_menu() -> void:
+	_interface.mouse.dragging_enabled = not _interface.gui.action_menu_open
 
-	if _action_menu_visible:
+	if not _interface.gui.action_menu_open:
 		_interface.gui.open_action_menu()
 		_position_action_menu()
 	else:
@@ -89,7 +84,6 @@ func _player_other_actor_clicked(target_cell: Vector2) -> void:
 
 
 func _wait_started() -> void:
-	_set_action_menu_visible(false)
 	_choose_action(null)
 
 
@@ -116,5 +110,5 @@ func _position_action_menu() -> void:
 
 
 func _screen_resized() -> void:
-	if _action_menu_visible:
+	if _interface.gui.action_menu_open:
 		_position_action_menu()

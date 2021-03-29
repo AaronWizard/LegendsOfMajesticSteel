@@ -11,6 +11,7 @@ var other_actor: Actor = null setget set_other_actor
 
 var action_menu_position: Vector2 setget \
 		set_action_menu_pos, get_action_menu_pos
+var action_menu_open: bool setget , get_action_menu_open
 
 onready var turn_queue := $TurnQueuePanel as TurnQueuePanel
 
@@ -73,12 +74,16 @@ func get_action_menu_pos() -> Vector2:
 	return _action_menu.position
 
 
+func get_action_menu_open() -> bool:
+	return _action_menu.is_open
+
+
 func open_action_menu() -> void:
 	_action_menu.open()
 
 
-func close_action_menu() -> void:
-	_action_menu.close()
+func close_action_menu(with_sound := true) -> void:
+	_action_menu.close(with_sound)
 
 
 func show_skill_panel(skill: Skill) -> void:
