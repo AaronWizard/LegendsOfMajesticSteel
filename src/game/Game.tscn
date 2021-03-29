@@ -8,9 +8,9 @@
 [ext_resource path="res://src/state/State.gd" type="Script" id=6]
 [ext_resource path="res://src/state/states/PlayerPickActorState.tscn" type="PackedScene" id=7]
 [ext_resource path="res://src/state/states/PlayerActorMoveState.gd" type="Script" id=8]
-[ext_resource path="res://src/state/states/PlayerActorTargetState.gd" type="Script" id=9]
 [ext_resource path="res://assets/graphics/ui/mouse_cursor.png" type="Texture" id=10]
 [ext_resource path="res://src/ui/MouseCursor.gd" type="Script" id=11]
+[ext_resource path="res://src/state/states/PlayerActorTargetState.tscn" type="PackedScene" id=12]
 
 [node name="Game" type="Node"]
 script = ExtResource( 1 )
@@ -37,8 +37,7 @@ script = ExtResource( 8 )
 interface_path = NodePath("../../BattleInterface")
 target_state_path = NodePath("../PlayerActorTargetState")
 
-[node name="PlayerActorTargetState" type="Node" parent="StateMachine"]
-script = ExtResource( 9 )
+[node name="PlayerActorTargetState" parent="StateMachine" instance=ExtResource( 12 )]
 interface_path = NodePath("../../BattleInterface")
 move_state_path = NodePath("../PlayerActorMoveState")
 

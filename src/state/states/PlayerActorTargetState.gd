@@ -12,6 +12,8 @@ var _skill_target: Vector2
 
 var _predicted_damage_actors: Array
 
+onready var _pick_target_sound := $PickTargetSound as AudioStreamPlayer
+
 onready var _move_state := get_node(move_state_path) as State
 
 
@@ -78,6 +80,8 @@ func _set_target(target_cell: Vector2) -> void:
 	_interface.map_highlights.clear_aoe()
 
 	if target_cell in targeting_data.valid_targets:
+		_pick_target_sound.play()
+
 		_interface.map_highlights.target_cursor_visible = true
 		_interface.map_highlights.target_cursor_cell = target_cell
 
@@ -94,6 +98,8 @@ func _set_target(target_cell: Vector2) -> void:
 
 func _confirm_target(target_cell: Vector2) -> void:
 	if _skill_target == target_cell:
+		_pick_target_sound.play()
+
 		var skill := _get_skill()
 		var action := SkillAction.new( \
 				_actor, _interface.current_map, skill, target_cell)
