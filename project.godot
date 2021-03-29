@@ -154,7 +154,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/data/skilleffects/KnockdownShot.gd"
 }, {
-"base": "Node",
+"base": "Node2D",
 "class": "Map",
 "language": "GDScript",
 "path": "res://src/maps/Map.gd"

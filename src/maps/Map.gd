@@ -1,5 +1,5 @@
 class_name Map
-extends Node
+extends Node2D
 
 signal actor_dying(actor)
 signal actor_removed(actor)
