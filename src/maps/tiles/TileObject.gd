@@ -12,11 +12,12 @@ export var cell_offset: Vector2 setget set_cell_offset, get_cell_offset
 # Rect size is in cells
 export var rect_size := Vector2.ONE setget set_rect_size
 
-var center_cell: Vector2 setget , get_center_cell
 var cell_rect: Rect2 setget , get_cell_rect
 
+var center_cell: Vector2 setget , get_center_cell
 var center_pixel_pos: Vector2 setget , get_center_pixel_pos
 var center_screen_pos: Vector2 setget , get_center_screen_pos
+var real_pixel_pos: Vector2 setget , get_real_pixel_pos
 
 onready var _center := $Center as Position2D
 onready var _offset := $Center/Offset as Position2D
@@ -77,19 +78,19 @@ func set_rect_size(value: Vector2) -> void:
 	update()
 
 
-func get_center_cell() -> Vector2:
-	var result := get_origin_cell()
-	if _center:
-		result += _center.position / Constants.TILE_SIZE_V
-	return result
-
-
 func get_cell_rect() -> Rect2:
 	return get_cell_rect_at_cell(get_origin_cell())
 
 
 func get_cell_rect_at_cell(cell: Vector2) -> Rect2:
 	return Rect2(cell, rect_size)
+
+
+func get_center_cell() -> Vector2:
+	var result := get_origin_cell()
+	if _center:
+		result += _center.position / Constants.TILE_SIZE_V
+	return result
 
 
 func get_center_pixel_pos() -> Vector2:
@@ -103,6 +104,13 @@ func get_center_screen_pos() -> Vector2:
 	var result := position
 	if _center:
 		result = _center.get_global_transform_with_canvas().origin
+	return result
+
+
+func get_real_pixel_pos() -> Vector2:
+	var result := position
+	if _offset:
+		result = _offset.global_position
 	return result
 
 

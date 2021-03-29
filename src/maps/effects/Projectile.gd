@@ -15,8 +15,8 @@ onready var _start_sound := $StartSound as AudioStreamPlayer
 
 
 func start_animation() -> void:
-	var start_pos := start.center_pixel_pos
-	var end_pos := end.center_pixel_pos
+	var start_pos := start.real_pixel_pos
+	var end_pos := end.real_pixel_pos
 
 	var dist := start.center_cell.distance_to(end.center_cell)
 	var total_time := float(dist) / float(speed)
