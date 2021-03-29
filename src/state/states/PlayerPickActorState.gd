@@ -4,6 +4,8 @@ extends PlayerState
 var _player_turn: PlayerTurn
 var _actors: Array
 
+onready var _pick_sound := $PickSound as AudioStreamPlayer
+
 
 func start(data: Dictionary) -> void:
 	.start(data)
@@ -45,5 +47,6 @@ func _mouse_click(_position: Vector2) -> void:
 	for a in _actors:
 		var actor := a as Actor
 		if actor.on_cell(target_cell):
+			_pick_sound.play()
 			_player_turn.use_actor(actor)
 			break
