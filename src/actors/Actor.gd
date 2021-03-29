@@ -17,9 +17,9 @@ class _AnimationTimes:
 
 
 class _AnimationDistances:
-	const ATTACK_PREP := 0.5
-	const ATTACK_HIT_REDUCED := 0.5
-	const ATTACK_HIT := 0.75
+	const ATTACK_PREP := 0.25
+	const ATTACK_HIT_REDUCED := 0.25
+	const ATTACK_HIT := 0.5
 
 	const HIT_REACT := 0.25
 	const DEATH := 0.5
