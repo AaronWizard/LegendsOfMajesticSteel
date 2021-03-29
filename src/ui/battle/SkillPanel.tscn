@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://src/ui/battle/SkillPanel.gd" type="Script" id=1]
 [ext_resource path="res://assets/fonts/MinimalPixel v2.ttf" type="DynamicFontData" id=2]
@@ -10,6 +10,7 @@
 [ext_resource path="res://assets/graphics/ui/button_disabled_border.png" type="Texture" id=8]
 [ext_resource path="res://assets/graphics/ui/icons/actions/attack.png" type="Texture" id=9]
 [ext_resource path="res://assets/graphics/ui/icons/actions/cancel.png" type="Texture" id=10]
+[ext_resource path="res://src/ui/SoundButton.tscn" type="PackedScene" id=11]
 
 [sub_resource type="StyleBoxTexture" id=1]
 texture = ExtResource( 8 )
@@ -161,12 +162,13 @@ size_flags_horizontal = 3
 text = "Test"
 clip_text = true
 
-[node name="Cancel" type="Button" parent="HBoxContainer"]
+[node name="Cancel" parent="HBoxContainer" instance=ExtResource( 11 )]
 margin_left = 38.0
 margin_right = 62.0
 margin_bottom = 24.0
 size_flags_horizontal = 0
 size_flags_vertical = 4
 icon = ExtResource( 10 )
+sound_type = 1
 
 [connection signal="pressed" from="HBoxContainer/Cancel" to="." method="_on_Cancel_pressed"]
