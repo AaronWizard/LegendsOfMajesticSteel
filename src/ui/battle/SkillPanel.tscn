@@ -1,18 +1,18 @@
 [gd_scene load_steps=21 format=2]
 
-[ext_resource path="res://assets/fonts/MinimalPixel v2.ttf" type="DynamicFontData" id=1]
-[ext_resource path="res://assets/graphics/ui/button_border.png" type="Texture" id=2]
-[ext_resource path="res://assets/graphics/ui/button_pressed_border.png" type="Texture" id=3]
-[ext_resource path="res://assets/graphics/ui/panel_border.png" type="Texture" id=4]
-[ext_resource path="res://assets/graphics/ui/scroll_background.png" type="Texture" id=5]
-[ext_resource path="res://assets/graphics/ui/scroll_grabber.png" type="Texture" id=6]
-[ext_resource path="res://assets/graphics/ui/button_disabled_border.png" type="Texture" id=7]
-[ext_resource path="res://assets/graphics/ui/icons/actions/attack.png" type="Texture" id=8]
-[ext_resource path="res://assets/graphics/ui/icons/actions/cancel.png" type="Texture" id=9]
-[ext_resource path="res://src/ui/SkillPanel.gd" type="Script" id=10]
+[ext_resource path="res://src/ui/battle/SkillPanel.gd" type="Script" id=1]
+[ext_resource path="res://assets/fonts/MinimalPixel v2.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://assets/graphics/ui/button_border.png" type="Texture" id=3]
+[ext_resource path="res://assets/graphics/ui/button_pressed_border.png" type="Texture" id=4]
+[ext_resource path="res://assets/graphics/ui/panel_border.png" type="Texture" id=5]
+[ext_resource path="res://assets/graphics/ui/scroll_background.png" type="Texture" id=6]
+[ext_resource path="res://assets/graphics/ui/scroll_grabber.png" type="Texture" id=7]
+[ext_resource path="res://assets/graphics/ui/button_disabled_border.png" type="Texture" id=8]
+[ext_resource path="res://assets/graphics/ui/icons/actions/attack.png" type="Texture" id=9]
+[ext_resource path="res://assets/graphics/ui/icons/actions/cancel.png" type="Texture" id=10]
 
 [sub_resource type="StyleBoxTexture" id=1]
-texture = ExtResource( 7 )
+texture = ExtResource( 8 )
 region_rect = Rect2( 0, 0, 24, 24 )
 margin_left = 4.0
 margin_right = 4.0
@@ -24,16 +24,6 @@ axis_stretch_vertical = 1
 [sub_resource type="StyleBoxEmpty" id=2]
 
 [sub_resource type="StyleBoxTexture" id=3]
-texture = ExtResource( 2 )
-region_rect = Rect2( 0, 0, 24, 24 )
-margin_left = 4.0
-margin_right = 4.0
-margin_top = 4.0
-margin_bottom = 4.0
-axis_stretch_horizontal = 1
-axis_stretch_vertical = 1
-
-[sub_resource type="StyleBoxTexture" id=4]
 texture = ExtResource( 3 )
 region_rect = Rect2( 0, 0, 24, 24 )
 margin_left = 4.0
@@ -43,8 +33,18 @@ margin_bottom = 4.0
 axis_stretch_horizontal = 1
 axis_stretch_vertical = 1
 
+[sub_resource type="StyleBoxTexture" id=4]
+texture = ExtResource( 4 )
+region_rect = Rect2( 0, 0, 24, 24 )
+margin_left = 4.0
+margin_right = 4.0
+margin_top = 4.0
+margin_bottom = 4.0
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+
 [sub_resource type="StyleBoxTexture" id=5]
-texture = ExtResource( 6 )
+texture = ExtResource( 7 )
 region_rect = Rect2( 1, 0, 4, 6 )
 margin_left = 1.0
 margin_right = 1.0
@@ -54,7 +54,7 @@ expand_margin_left = 1.0
 expand_margin_right = 1.0
 
 [sub_resource type="StyleBoxTexture" id=6]
-texture = ExtResource( 5 )
+texture = ExtResource( 6 )
 region_rect = Rect2( 0, 0, 6, 6 )
 margin_left = 2.0
 margin_right = 2.0
@@ -62,7 +62,7 @@ margin_top = 2.0
 margin_bottom = 2.0
 
 [sub_resource type="StyleBoxTexture" id=7]
-texture = ExtResource( 4 )
+texture = ExtResource( 5 )
 region_rect = Rect2( 0, 0, 7, 7 )
 margin_left = 3.0
 margin_right = 3.0
@@ -70,7 +70,7 @@ margin_top = 3.0
 margin_bottom = 3.0
 
 [sub_resource type="StyleBoxTexture" id=8]
-texture = ExtResource( 6 )
+texture = ExtResource( 7 )
 region_rect = Rect2( 0, 1, 6, 4 )
 margin_left = 2.0
 margin_right = 2.0
@@ -83,7 +83,7 @@ expand_margin_bottom = 1.0
 size = 7
 outline_size = 1
 outline_color = Color( 0.133333, 0.137255, 0.137255, 1 )
-font_data = ExtResource( 1 )
+font_data = ExtResource( 2 )
 
 [sub_resource type="Theme" id=10]
 default_font = SubResource( 9 )
@@ -134,7 +134,7 @@ VScrollBar/styles/scroll_focus = SubResource( 6 )
 margin_right = 68.0
 margin_bottom = 30.0
 theme = SubResource( 10 )
-script = ExtResource( 10 )
+script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -150,7 +150,7 @@ margin_top = 4.0
 margin_right = 16.0
 margin_bottom = 20.0
 size_flags_vertical = 4
-texture = ExtResource( 8 )
+texture = ExtResource( 9 )
 
 [node name="Name" type="Label" parent="HBoxContainer"]
 margin_left = 18.0
@@ -167,5 +167,6 @@ margin_right = 62.0
 margin_bottom = 24.0
 size_flags_horizontal = 0
 size_flags_vertical = 4
-icon = ExtResource( 9 )
+icon = ExtResource( 10 )
+
 [connection signal="pressed" from="HBoxContainer/Cancel" to="." method="_on_Cancel_pressed"]

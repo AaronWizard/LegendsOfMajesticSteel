@@ -1,11 +1,11 @@
 [gd_scene load_steps=7 format=2]
 
-[ext_resource path="res://src/ui/BattleGUI.gd" type="Script" id=1]
-[ext_resource path="res://src/ui/SkillPanel.tscn" type="PackedScene" id=2]
-[ext_resource path="res://src/ui/TurnQueuePanel.tscn" type="PackedScene" id=3]
-[ext_resource path="res://src/ui/ActorStatusPanel.tscn" type="PackedScene" id=4]
-[ext_resource path="res://src/ui/ActionMenu.tscn" type="PackedScene" id=5]
-[ext_resource path="res://src/ui/ActorDetailsPanel.tscn" type="PackedScene" id=6]
+[ext_resource path="res://src/ui/battle/BattleGUI.gd" type="Script" id=1]
+[ext_resource path="res://src/ui/battle/SkillPanel.tscn" type="PackedScene" id=2]
+[ext_resource path="res://src/ui/battle/TurnQueuePanel.tscn" type="PackedScene" id=3]
+[ext_resource path="res://src/ui/battle/ActorStatusPanel.tscn" type="PackedScene" id=4]
+[ext_resource path="res://src/ui/battle/ActionMenu.tscn" type="PackedScene" id=5]
+[ext_resource path="res://src/ui/battle/ActorDetailsPanel.tscn" type="PackedScene" id=6]
 
 [node name="BattleGUI" type="CanvasLayer"]
 script = ExtResource( 1 )

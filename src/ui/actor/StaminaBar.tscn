@@ -1,13 +1,13 @@
 [gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://assets/graphics/ui/staminabar_background.png" type="Texture" id=1]
-[ext_resource path="res://assets/graphics/ui/staminabar_fill_back.png" type="Texture" id=2]
-[ext_resource path="res://assets/graphics/ui/staminabar_fill_front.png" type="Texture" id=3]
-[ext_resource path="res://src/ui/StaminaBar.gd" type="Script" id=4]
-[ext_resource path="res://resources/visual/gui/theme_standard.tres" type="Theme" id=5]
+[ext_resource path="res://assets/graphics/ui/staminabar_fill_back.png" type="Texture" id=1]
+[ext_resource path="res://src/ui/actor/StaminaBar.gd" type="Script" id=2]
+[ext_resource path="res://resources/visual/gui/theme_standard.tres" type="Theme" id=3]
+[ext_resource path="res://assets/graphics/ui/staminabar_background.png" type="Texture" id=4]
+[ext_resource path="res://assets/graphics/ui/staminabar_fill_front.png" type="Texture" id=5]
 
 [node name="StaminaBar" type="Node2D"]
-script = ExtResource( 4 )
+script = ExtResource( 2 )
 
 [node name="Background" type="TextureRect" parent="."]
 anchor_left = 0.5
@@ -17,7 +17,7 @@ anchor_bottom = 1.0
 margin_left = -12.0
 margin_top = -6.0
 margin_right = 12.0
-texture = ExtResource( 1 )
+texture = ExtResource( 4 )
 stretch_mode = 5
 __meta__ = {
 "_edit_group_": true,
@@ -32,7 +32,7 @@ margin_top = 2.0
 margin_right = -2.0
 margin_bottom = -2.0
 step = 0.0
-texture_progress = ExtResource( 2 )
+texture_progress = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -44,7 +44,7 @@ margin_left = 2.0
 margin_top = 2.0
 margin_right = -2.0
 margin_bottom = -2.0
-texture_progress = ExtResource( 3 )
+texture_progress = ExtResource( 5 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -56,7 +56,7 @@ anchor_bottom = 1.0
 margin_left = 13.0
 margin_top = -7.0
 margin_right = 20.0
-theme = ExtResource( 5 )
+theme = ExtResource( 3 )
 text = "-1"
 __meta__ = {
 "_edit_use_anchors_": false

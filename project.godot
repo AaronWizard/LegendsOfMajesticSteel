@@ -27,7 +27,7 @@ _global_script_classes=[ {
 "base": "Node2D",
 "class": "ActionMenu",
 "language": "GDScript",
-"path": "res://src/ui/ActionMenu.gd"
+"path": "res://src/ui/battle/ActionMenu.gd"
 }, {
 "base": "TileObject",
 "class": "Actor",
@@ -47,12 +47,12 @@ _global_script_classes=[ {
 "base": "PopupPanel",
 "class": "ActorDetailsPanel",
 "language": "GDScript",
-"path": "res://src/ui/ActorDetailsPanel.gd"
+"path": "res://src/ui/battle/ActorDetailsPanel.gd"
 }, {
 "base": "PanelContainer",
 "class": "ActorStatusPanel",
 "language": "GDScript",
-"path": "res://src/ui/ActorStatusPanel.gd"
+"path": "res://src/ui/battle/ActorStatusPanel.gd"
 }, {
 "base": "Process",
 "class": "AddMapEffect",
@@ -77,7 +77,7 @@ _global_script_classes=[ {
 "base": "CanvasLayer",
 "class": "BattleGUI",
 "language": "GDScript",
-"path": "res://src/ui/BattleGUI.gd"
+"path": "res://src/ui/battle/BattleGUI.gd"
 }, {
 "base": "Node",
 "class": "BattleInterface",
@@ -102,12 +102,12 @@ _global_script_classes=[ {
 "base": "Node2D",
 "class": "ConditionIcons",
 "language": "GDScript",
-"path": "res://src/ui/ConditionIcons.gd"
+"path": "res://src/ui/actor/ConditionIcons.gd"
 }, {
 "base": "HBoxContainer",
 "class": "ConditionsPanel",
 "language": "GDScript",
-"path": "res://src/ui/ConditionsPanel.gd"
+"path": "res://src/ui/battle/ConditionsPanel.gd"
 }, {
 "base": "Reference",
 "class": "Constants",
@@ -292,7 +292,7 @@ _global_script_classes=[ {
 "base": "PanelContainer",
 "class": "SkillPanel",
 "language": "GDScript",
-"path": "res://src/ui/SkillPanel.gd"
+"path": "res://src/ui/battle/SkillPanel.gd"
 }, {
 "base": "Resource",
 "class": "SkillRange",
@@ -307,7 +307,7 @@ _global_script_classes=[ {
 "base": "Node2D",
 "class": "StaminaBar",
 "language": "GDScript",
-"path": "res://src/ui/StaminaBar.gd"
+"path": "res://src/ui/actor/StaminaBar.gd"
 }, {
 "base": "Resource",
 "class": "StatModifier",
@@ -377,12 +377,12 @@ _global_script_classes=[ {
 "base": "ReferenceRect",
 "class": "TurnQueue",
 "language": "GDScript",
-"path": "res://src/ui/TurnQueue.gd"
+"path": "res://src/ui/battle/TurnQueue.gd"
 }, {
 "base": "ReferenceRect",
 "class": "TurnQueuePanel",
 "language": "GDScript",
-"path": "res://src/ui/TurnQueuePanel.gd"
+"path": "res://src/ui/battle/TurnQueuePanel.gd"
 } ]
 _global_script_class_icons={
 "AI": "",
