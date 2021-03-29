@@ -19,7 +19,7 @@ condition_effect = ExtResource( 7 )
 [resource]
 script = ExtResource( 1 )
 icon = ExtResource( 2 )
-name = "Shining Strike"
+name = "Shine Strike"
 description = "Skill description"
 range_type = ExtResource( 3 )
 target_type = 0
