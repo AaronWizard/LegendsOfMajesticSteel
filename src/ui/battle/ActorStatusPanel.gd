@@ -5,7 +5,7 @@ signal portrait_pressed
 
 var _actor: Actor
 
-onready var _portrait := $HBoxContainer/PortraitButton as Button
+onready var _portrait := $HBoxContainer/Portrait as Button
 onready var _name := $HBoxContainer/VBoxContainer/Name as Label
 
 onready var _stats := $HBoxContainer/VBoxContainer/Stats as Container
@@ -59,7 +59,7 @@ func _set_conditions(actor: Actor) -> void:
 	_conditions.update_icons(actor.stats)
 
 
-func _on_PortraitButton_pressed() -> void:
+func _on_Portrait_pressed() -> void:
 	emit_signal("portrait_pressed")
 
 
