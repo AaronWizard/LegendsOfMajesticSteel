@@ -17,9 +17,12 @@
 [ext_resource path="res://assets/graphics/actors/fighter.png" type="Texture" id=25]
 
 [sub_resource type="OpenSimplexNoise" id=1]
-seed = 1
+period = 4.0
 
 [sub_resource type="NoiseTexture" id=2]
+flags = 0
+width = 64
+height = 64
 noise = SubResource( 1 )
 
 [sub_resource type="ShaderMaterial" id=3]

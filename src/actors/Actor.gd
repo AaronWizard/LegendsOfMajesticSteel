@@ -96,8 +96,9 @@ onready var _death_sound := $DeathSound as AudioStreamPlayer
 
 func _ready() -> void:
 	._ready()
+	set_actor_definition(actor_definition)
+
 	if not Engine.editor_hint:
-		assert(actor_definition)
 		var ad := actor_definition as ActorDefinition
 		skills = ad.skills
 
