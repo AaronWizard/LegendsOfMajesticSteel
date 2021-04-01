@@ -15,4 +15,4 @@ func predict_damage(_target_cell: Vector2, _source_cell: Vector2,
 
 
 func run(_target_cell: Vector2, _source_actor: Actor, _map: Map) -> void:
-	print("SkillEffect must implement start()")
+	push_warning("SkillEffect mus implement run()")

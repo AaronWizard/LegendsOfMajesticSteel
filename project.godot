@@ -262,7 +262,7 @@ _global_script_classes=[ {
 "base": "Resource",
 "class": "SkillEffect",
 "language": "GDScript",
-"path": "res://src/skills/SkillEffect.gd"
+"path": "res://src/skills/effects/SkillEffect.gd"
 }, {
 "base": "PanelContainer",
 "class": "SkillPanel",
