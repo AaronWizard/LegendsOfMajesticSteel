@@ -10,7 +10,7 @@ onready var _name := $HBoxContainer/Name as Label
 
 func set_skill(skill: Skill) -> void:
 	_icon.texture = skill.icon
-	_name.text = skill.name
+	_name.text = skill.skill_name
 
 
 func clear() -> void:

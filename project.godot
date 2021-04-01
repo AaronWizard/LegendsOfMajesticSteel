@@ -244,7 +244,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/game/SignalWaiter.gd"
 }, {
-"base": "Resource",
+"base": "Node",
 "class": "Skill",
 "language": "GDScript",
 "path": "res://src/skills/Skill.gd"
@@ -259,7 +259,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/game/turns/actions/SkillAction.gd"
 }, {
-"base": "Resource",
+"base": "Node",
 "class": "SkillEffect",
 "language": "GDScript",
 "path": "res://src/skills/effects/SkillEffect.gd"

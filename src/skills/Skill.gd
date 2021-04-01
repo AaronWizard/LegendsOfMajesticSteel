@@ -1,18 +1,14 @@
 class_name Skill
-extends Resource
+extends Node
 
 enum TargetType { ANY, ANY_ACTOR, ENEMY, ALLY, EMPTY_CELL }
 
 export var icon: Texture
-export var name := "Skill"
+export var skill_name := "Skill"
 export var description := "Skill description"
 
 export var range_type: Resource
 export(TargetType) var target_type := TargetType.ANY
-
-export var aoe_type: Resource
-
-export var skill_effect: Resource
 
 
 func get_targeting_data(source_cell: Vector2, source_actor: Actor, map: Map) \
@@ -39,8 +35,9 @@ func get_targeting_data(source_cell: Vector2, source_actor: Actor, map: Map) \
 
 
 func run(source_actor: Actor, map: Map, target: Vector2) -> void:
-	var effect := skill_effect as SkillEffect
-	yield(effect.run(target, source_actor, map), "completed")
+	for e in get_children():
+		var effect := e as SkillEffect
+		yield(effect.run(target, source_actor, map), "completed")
 
 
 func _get_range(source_cell: Vector2, source_actor: Actor, map: Map) -> Array:
@@ -85,12 +82,28 @@ func _is_valid_target(target_cell: Vector2, source_actor: Actor, map: Map) \
 # Assumes target_cell is in range
 func _get_aoe(target_cell: Vector2, source_cell: Vector2, source_actor: Actor,
 		map: Map) -> Array:
-	var effect := skill_effect as SkillEffect
-	return effect.get_aoe(target_cell, source_cell, source_actor, map)
+	var result := {}
+	for e in get_children():
+		var effect := e as SkillEffect
+		var aoe := effect.get_aoe(target_cell, source_cell, source_actor, map)
+		for c in aoe:
+			var cell := c as Vector2
+			result[cell] = true
+	return result.keys()
 
 
 # Keys are actors. Values are damage amounts.
 func _predict_damages(target_cell: Vector2, source_cell: Vector2,
 		source_actor: Actor, map: Map) -> Dictionary:
-	var effect := skill_effect as SkillEffect
-	return effect.predict_damage(target_cell, source_cell, source_actor, map)
+	var result := {}
+	for e in get_children():
+		var effect := e as SkillEffect
+		var effect_damages := effect.predict_damage(
+				target_cell, source_cell, source_actor, map)
+		for a in effect_damages:
+			var actor := a as Actor
+			var damage := effect_damages[actor] as int
+			if not result.has(actor):
+				result[actor] = 0
+			result[actor] += damage
+	return result

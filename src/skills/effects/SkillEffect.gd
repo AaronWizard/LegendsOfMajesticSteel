@@ -1,5 +1,5 @@
 class_name SkillEffect
-extends Resource
+extends Node
 
 # Array of Vector2
 func get_aoe(_target_cell: Vector2, _source_cell: Vector2, _source_actor: Actor,
