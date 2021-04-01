@@ -317,7 +317,7 @@ _global_script_classes=[ {
 "base": "Reference",
 "class": "TargetingData",
 "language": "GDScript",
-"path": "res://src/control/TargetingData.gd"
+"path": "res://src/skills/TargetingData.gd"
 }, {
 "base": "Reference",
 "class": "TileGeometry",
