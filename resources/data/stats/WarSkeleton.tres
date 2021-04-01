@@ -1,7 +1,8 @@
-[gd_resource type="Resource" load_steps=3 format=2]
+[gd_resource type="Resource" load_steps=4 format=2]
 
 [ext_resource path="res://src/actors/ActorDefinition.gd" type="Script" id=1]
 [ext_resource path="res://assets/graphics/actors/war_skeleton.png" type="Texture" id=2]
+[ext_resource path="res://src/skills/skills/MeleeAttack.tscn" type="PackedScene" id=3]
 
 [resource]
 script = ExtResource( 1 )
@@ -10,4 +11,4 @@ rect_size = Vector2( 2, 2 )
 max_stamina = 10
 attack = 3
 move = 4
-skills = [  ]
+skills = [ ExtResource( 3 ) ]

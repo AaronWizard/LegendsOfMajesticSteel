@@ -1,0 +1,17 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://src/skills/Skill.gd" type="Script" id=1]
+[ext_resource path="res://resources/data/skillranges/melee_range.tres" type="Resource" id=2]
+[ext_resource path="res://assets/graphics/ui/icons/actions/attack.png" type="Texture" id=3]
+[ext_resource path="res://src/skills/effects/AttackTargetedActorEffect.gd" type="Script" id=4]
+
+[node name="MeleeAttack" type="Node"]
+script = ExtResource( 1 )
+icon = ExtResource( 3 )
+skill_name = "Attack"
+description = "Strike the foe"
+range_type = ExtResource( 2 )
+target_type = 2
+
+[node name="AttackTargetedActorEffect" type="Node" parent="."]
+script = ExtResource( 4 )
