@@ -29,7 +29,7 @@ func run(target_cell: Vector2, source_actor: Actor, map: Map) -> void:
 
 	if actor.is_alive:
 		actor.animate_hit(direction)
-		yield(actor, "hit_reaction_finished")
 	else:
 		actor.animate_death(direction)
-		yield(actor, "died")
+
+	yield(actor, "animation_finished")

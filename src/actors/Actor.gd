@@ -29,12 +29,9 @@ const _WALK_FRAME := 0
 const _REACT_FRAME := 2
 const _ACTION_FRAME := 3
 
-signal move_finished
+signal animation_finished
 
 signal attack_hit
-signal attack_finished
-
-signal hit_reaction_finished
 
 signal dying
 signal died
@@ -63,6 +60,10 @@ var target_visible: bool setget set_target_visible, get_target_visible
 var stamina_modifier: int setget set_stamina_modifier, get_stamina_modifier
 
 var pose: int = Pose.IDLE setget set_pose
+
+var animating: bool setget , get_is_animating
+
+var _animating := false
 
 var _did_skill: bool = false
 var _turns_left: int = false
@@ -258,6 +259,10 @@ func reset_pose() -> void:
 	set_pose(Pose.IDLE)
 
 
+func get_is_animating() -> bool:
+	return _animating
+
+
 func animate_offset(new_offset: Vector2, duration: float,
 		trans_type: int, ease_type: int) -> void:
 	# warning-ignore:return_value_discarded
@@ -271,6 +276,7 @@ func animate_offset(new_offset: Vector2, duration: float,
 
 func move_step(target_cell: Vector2) -> void:
 	assert(get_origin_cell().distance_squared_to(target_cell) == 1)
+	_animating = true
 
 	var diff := target_cell - get_origin_cell()
 
@@ -289,18 +295,22 @@ func move_step(target_cell: Vector2) -> void:
 	)
 
 	reset_pose()
-	emit_signal("move_finished")
+
+	_animating = false
+	emit_signal("animation_finished")
 
 
-func animate_attack(direction: Vector2, reduce_range := false,
+func animate_attack(direction: Vector2, reduce_lunge := false,
 		play_sound := true) -> void:
+	_animating = true
+
 	var real_direction := direction.normalized()
 
 	set_pose(Pose.ACTION)
 	_set_facing(real_direction)
 
 	var hit_pos := real_direction
-	if reduce_range:
+	if reduce_lunge:
 		hit_pos *= _AnimationDistances.ATTACK_HIT_REDUCED
 	else:
 		hit_pos *= _AnimationDistances.ATTACK_HIT
@@ -329,10 +339,14 @@ func animate_attack(direction: Vector2, reduce_range := false,
 	)
 
 	reset_pose()
-	emit_signal("attack_finished")
+
+	_animating = false
+	emit_signal("animation_finished")
 
 
 func animate_hit(direction: Vector2) -> void:
+	_animating = true
+
 	set_pose(Pose.REACT)
 	_hit_sound.play()
 
@@ -354,10 +368,13 @@ func animate_hit(direction: Vector2) -> void:
 	if not _stamina_bar_animating:
 		yield(_stamina_bar, "animation_finished")
 
-	emit_signal("hit_reaction_finished")
+	_animating = false
+	emit_signal("animation_finished")
 
 
 func animate_death(direction: Vector2) -> void:
+	_animating = true
+
 	var real_direction := direction.normalized()
 	var new_offset := get_cell_offset() \
 			+ (real_direction * _AnimationDistances.DEATH)
@@ -382,6 +399,8 @@ func animate_death(direction: Vector2) -> void:
 	if signal_waiter.waiting:
 		yield(signal_waiter, "finished")
 
+	_animating = false
+	emit_signal("animation_finished")
 	emit_signal("died")
 
 

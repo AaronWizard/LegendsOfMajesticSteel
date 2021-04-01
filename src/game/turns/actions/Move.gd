@@ -19,7 +19,7 @@ func run() -> void:
 	while path.size() > 0:
 		var cell := path.pop_front() as Vector2
 		actor.move_step(cell)
-		yield(actor, "move_finished")
+		yield(actor, "animation_finished")
 
 	if _mouse:
 		_mouse.disconnect("click", self, "_click_to_cancel")
