@@ -13,7 +13,7 @@ export var attack := 1
 export var move := 4
 
 # First skill is actor's standard attack
-export(Array, Resource) var skills := []
+export(Array, PackedScene) var skills := []
 
 
 func get_portrait() -> Texture:

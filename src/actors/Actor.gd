@@ -50,7 +50,7 @@ export(Faction) var faction := Faction.ENEMY
 
 var portrait: Texture setget , get_portrait
 
-var skills := []
+var skills: Array setget , get_skills
 
 var range_data: RangeData
 
@@ -99,9 +99,6 @@ func _ready() -> void:
 	set_actor_definition(actor_definition)
 
 	if not Engine.editor_hint:
-		var ad := actor_definition as ActorDefinition
-		skills = ad.skills
-
 		_stamina_bar.max_stamina = stats.max_stamina
 		_condition_icons.update_icons(stats)
 
@@ -138,12 +135,19 @@ func set_actor_definition(value: Resource) -> void:
 			_sprite.texture = ad.sprite
 		# Use $Stats instead of stats to work in tool mode
 		($Stats as Stats).init_from_def(ad)
+		if not Engine.editor_hint:
+			for s in ad.skills:
+				var skill_scene := s as PackedScene
+				var skill := skill_scene.instance() as Node
+				$Skills.add_child(skill)
 	else:
 		set_rect_size(Vector2.ONE)
 		if _sprite:
 			_sprite.texture \
 					= preload("res://assets/graphics/actors/fighter.png")
-		skills.clear()
+		for s in $Skills:
+			var skill := s as Node
+			skill.queue_free()
 
 
 func get_is_alive() -> bool:
@@ -163,6 +167,10 @@ func get_round_finished() -> bool:
 
 func set_target_visible(new_value: bool) -> void:
 	_target_cursor.visible = new_value
+
+
+func get_skills() -> Array:
+	return $Skills.get_children()
 
 
 func get_portrait() -> Texture:
