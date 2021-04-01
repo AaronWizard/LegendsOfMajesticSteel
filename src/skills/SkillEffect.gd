@@ -1,21 +1,18 @@
 class_name SkillEffect
 extends Resource
 
-# warning-ignore:unused_argument
-# warning-ignore:unused_argument
-# warning-ignore:unused_argument
-# warning-ignore:unused_argument
-# warning-ignore:unused_argument
+# Array of Vector2
+func get_aoe(_target_cell: Vector2, _source_cell: Vector2, _source_actor: Actor,
+		_map: Map) -> Array:
+	return []
+
+
 # Keys are actors, values are ints
-func predict_damage(target_cell: Vector2, aoe: Array, source_cell: Vector2,
-		source_actor: Actor, map: Map) -> Dictionary:
+# Negative values are damage, positive values are healing
+func predict_damage(_target_cell: Vector2, _source_cell: Vector2,
+		_source_actor: Actor, _map: Map) -> Dictionary:
 	return {}
 
 
-# warning-ignore:unused_argument
-# warning-ignore:unused_argument
-# warning-ignore:unused_argument
-# warning-ignore:unused_argument
-func run(target_cell: Vector2, aoe: Array, source_actor: Actor, map: Map) \
-		-> void:
+func run(_target_cell: Vector2, _source_actor: Actor, _map: Map) -> void:
 	print("SkillEffect must implement start()")
