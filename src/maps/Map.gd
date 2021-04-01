@@ -81,7 +81,7 @@ func on_defensive_terrain(actor: Actor) -> bool:
 	var defensive_tiles := 0
 	var clear_tiles := 0
 
-	for c in actor.get_covered_cells():
+	for c in actor.covered_cells:
 		var covered := c as Vector2
 		var properties := get_tile_properties(covered)
 		if properties and properties.is_defensive:
@@ -167,7 +167,7 @@ func add_effect(effect: Node2D) -> void:
 
 
 func _actor_dying(actor: Actor) -> void:
-	for c in actor.get_covered_cells():
+	for c in actor.covered_cells:
 		var cell := c as Vector2
 		add_decal(Decal.BLOOD_SPLATTER, cell)
 	emit_signal("actor_dying", actor)
