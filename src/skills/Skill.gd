@@ -1,3 +1,4 @@
+tool
 class_name Skill
 extends Node
 
@@ -9,6 +10,23 @@ export var description := "Skill description"
 
 export var range_type: Resource
 export(TargetType) var target_type := TargetType.ANY
+
+
+func _get_configuration_warning() -> String:
+	var result := ""
+
+	if get_child_count() == 0:
+		result = "Skills need to have a SkillEffect node"
+	elif not get_child(0) is SkillEffect:
+		result = "First child is not a SkillEffect"
+	else:
+		for i in range(1, get_child_count()):
+			var child := get_child(i as int)
+			if child is SkillEffect:
+				result = "Only first skill effect will be used"
+				break
+
+	return result
 
 
 func get_targeting_data(source_cell: Vector2, source_actor: Actor, map: Map) \
@@ -35,9 +53,8 @@ func get_targeting_data(source_cell: Vector2, source_actor: Actor, map: Map) \
 
 
 func run(source_actor: Actor, map: Map, target: Vector2) -> void:
-	for e in get_children():
-		var effect := e as SkillEffect
-		yield(effect.run(target, source_actor, map), "completed")
+	_get_effect().run(target, source_actor, map)
+	yield(_get_effect(), "finished")
 
 
 func _get_range(source_cell: Vector2, source_actor: Actor, map: Map) -> Array:
@@ -79,31 +96,18 @@ func _is_valid_target(target_cell: Vector2, source_actor: Actor, map: Map) \
 	return result
 
 
+func _get_effect() -> SkillEffect:
+	return get_child(0) as SkillEffect
+
+
 # Assumes target_cell is in range
 func _get_aoe(target_cell: Vector2, source_cell: Vector2, source_actor: Actor,
 		map: Map) -> Array:
-	var result := {}
-	for e in get_children():
-		var effect := e as SkillEffect
-		var aoe := effect.get_aoe(target_cell, source_cell, source_actor, map)
-		for c in aoe:
-			var cell := c as Vector2
-			result[cell] = true
-	return result.keys()
+	return _get_effect().get_aoe(target_cell, source_cell, source_actor, map)
 
 
 # Keys are actors. Values are damage amounts.
 func _predict_damages(target_cell: Vector2, source_cell: Vector2,
 		source_actor: Actor, map: Map) -> Dictionary:
-	var result := {}
-	for e in get_children():
-		var effect := e as SkillEffect
-		var effect_damages := effect.predict_damage(
-				target_cell, source_cell, source_actor, map)
-		for a in effect_damages:
-			var actor := a as Actor
-			var damage := effect_damages[actor] as int
-			if not result.has(actor):
-				result[actor] = 0
-			result[actor] += damage
-	return result
+	return _get_effect().predict_damage(
+			target_cell, source_cell, source_actor, map)
