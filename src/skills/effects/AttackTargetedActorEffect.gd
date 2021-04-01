@@ -17,7 +17,7 @@ func predict_damage(target_cell: Vector2, _source_cell: Vector2,
 	return { actor: -damage }
 
 
-func run(target_cell: Vector2, source_actor: Actor, map: Map) -> void:
+func _run_self(target_cell: Vector2, source_actor: Actor, map: Map) -> void:
 	var actor := map.get_actor_on_cell(target_cell)
 	var damage := actor.stats.damage_from_attack(source_actor.stats.attack)
 
