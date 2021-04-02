@@ -1,10 +1,6 @@
 class_name SkillEffectGroup
 extends SkillEffect
 
-enum GroupType { GROUP, SEQUENCE }
-
-export(GroupType) var group_type := GroupType.GROUP
-
 
 func get_aoe(target_cell: Vector2, source_cell: Vector2, source_actor: Actor,
 		map: Map) -> Array:
@@ -40,11 +36,8 @@ func _run_self(target_cell: Vector2, source_actor: Actor, map: Map) -> void:
 	for c in get_children():
 		var child := c as SkillEffect
 		child.run(target_cell, source_actor, map)
-		if group_type == GroupType.SEQUENCE:
-			yield(child, "finished")
-		else:
-			assert(child.running)
-			waiter.wait_for_signal(child, "finished")
+		assert(child.running)
+		waiter.wait_for_signal(child, "finished")
 
 	if waiter.waiting:
 		yield(waiter, "finished")
