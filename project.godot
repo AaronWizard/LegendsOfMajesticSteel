@@ -219,6 +219,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/maps/effects/Projectile.gd"
 }, {
+"base": "SkillEffect",
+"class": "ProjectileEffect",
+"language": "GDScript",
+"path": "res://src/skills/effects/ProjectileEffect.gd"
+}, {
 "base": "SkillAOE",
 "class": "PushAOE",
 "language": "GDScript",
@@ -272,7 +277,7 @@ _global_script_classes=[ {
 "base": "Node",
 "class": "SkillEffect",
 "language": "GDScript",
-"path": "res://src/skills/effects/SkillEffect.gd"
+"path": "res://src/skills/SkillEffect.gd"
 }, {
 "base": "SkillEffect",
 "class": "SkillEffectGroup",
@@ -417,6 +422,7 @@ _global_script_class_icons={
 "PlayerTurn": "",
 "Process": "",
 "Projectile": "",
+"ProjectileEffect": "",
 "PushAOE": "",
 "PushActor": "",
 "RadialContainer": "",

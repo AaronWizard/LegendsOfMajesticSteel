@@ -130,3 +130,9 @@ func get_covered_cells_at_cell(cell: Vector2) -> Array:
 		var real_cell := covered + cell
 		result.append(real_cell)
 	return result
+
+
+func copy(other: TileObject) -> void:
+	set_origin_cell(other.origin_cell)
+	set_cell_offset(other.cell_offset)
+	set_rect_size(other.rect_size)
