@@ -1,0 +1,24 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://src/skills/Skill.gd" type="Script" id=1]
+[ext_resource path="res://resources/data/skillranges/melee_range.tres" type="Resource" id=2]
+[ext_resource path="res://assets/graphics/ui/icons/actions/skills/shining_strike.png" type="Texture" id=3]
+[ext_resource path="res://src/skills/effects/AnimateAttackEffect.gd" type="Script" id=4]
+[ext_resource path="res://src/skills/effects/MapAnimationEffect.gd" type="Script" id=5]
+[ext_resource path="res://src/data/mapeffects/ShineStrikeSwoosh.tscn" type="PackedScene" id=6]
+
+[node name="ShineStrike" type="Node"]
+script = ExtResource( 1 )
+icon = ExtResource( 3 )
+skill_name = "Shine Strike"
+description = "A sweep of searing light"
+range_type = ExtResource( 2 )
+
+[node name="AnimateAttackEffect" type="Node" parent="."]
+script = ExtResource( 4 )
+reduce_lunge = true
+
+[node name="MapAnimationEffect" type="Node" parent="AnimateAttackEffect"]
+script = ExtResource( 5 )
+map_anim_scene = ExtResource( 6 )
+rotated = true
