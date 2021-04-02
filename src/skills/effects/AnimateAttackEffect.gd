@@ -30,7 +30,7 @@ func _run_self(target_cell: Vector2, source_actor: Actor, map: Map):
 		var target_actor := map.get_actor_on_cell(target_cell)
 		direction = target_actor.center_cell - source_actor.center_cell
 	else:
-		direction = target_cell - source_actor.center_cell
+		direction = target_cell - source_actor.origin_cell
 
 	source_actor.animate_attack(direction, reduce_lunge, default_sound)
 
