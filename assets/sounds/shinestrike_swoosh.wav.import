@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/shinestrike_swoosh.wav-f364842ad4ddd62d4ab74f73d6358f36.sample"
+
+[deps]
+
+source_file="res://assets/sounds/shinestrike_swoosh.wav"
+dest_files=[ "res://.import/shinestrike_swoosh.wav-f364842ad4ddd62d4ab74f73d6358f36.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0
