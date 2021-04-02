@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://src/maps/effects/MapAnimation.gd" type="Script" id=1]
+[ext_resource path="res://src/maps/tiles/TileObject.tscn" type="PackedScene" id=2]
+
+[node name="MapAnimation" instance=ExtResource( 2 )]
+script = ExtResource( 1 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="Center/Offset" index="0"]
+
+[node name="Sound" type="AudioStreamPlayer" parent="." index="1"]
+autoplay = true
+
+[connection signal="animation_finished" from="Center/Offset/AnimatedSprite" to="." method="_on_AnimatedSprite_animation_finished"]
