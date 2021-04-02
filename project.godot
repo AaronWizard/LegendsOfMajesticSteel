@@ -284,11 +284,6 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/skills/effects/SkillEffectGroup.gd"
 }, {
-"base": "SkillEffectGroup",
-"class": "SkillEffectSequence",
-"language": "GDScript",
-"path": "res://src/skills/effects/SkillEffectSequence.gd"
-}, {
 "base": "PanelContainer",
 "class": "SkillPanel",
 "language": "GDScript",
@@ -435,7 +430,6 @@ _global_script_class_icons={
 "SkillAction": "",
 "SkillEffect": "",
 "SkillEffectGroup": "",
-"SkillEffectSequence": "",
 "SkillPanel": "",
 "SkillRange": "",
 "StaminaBar": "",

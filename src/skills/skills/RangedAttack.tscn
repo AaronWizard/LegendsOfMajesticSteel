@@ -7,7 +7,7 @@
 [ext_resource path="res://src/skills/ranges/DiamondRange.gd" type="Script" id=5]
 [ext_resource path="res://assets/graphics/ui/icons/actions/attack.png" type="Texture" id=6]
 [ext_resource path="res://src/skills/effects/AttackTargetedActorEffect.gd" type="Script" id=7]
-[ext_resource path="res://src/skills/effects/SkillEffectSequence.gd" type="Script" id=8]
+[ext_resource path="res://src/skills/effects/SkillEffectGroup.gd" type="Script" id=8]
 
 [sub_resource type="Resource" id=1]
 script = ExtResource( 5 )
@@ -29,13 +29,14 @@ target_is_actor = true
 reduce_lunge = true
 default_sound = false
 
-[node name="SkillEffectSequence" type="Node" parent="AnimateAttackEffect"]
+[node name="SkillEffectGroup" type="Node" parent="AnimateAttackEffect"]
 script = ExtResource( 8 )
+group_type = 1
 
-[node name="ProjectileEffect" type="Node" parent="AnimateAttackEffect/SkillEffectSequence"]
+[node name="ProjectileEffect" type="Node" parent="AnimateAttackEffect/SkillEffectGroup"]
 script = ExtResource( 4 )
 projectile_scene = ExtResource( 3 )
 target_is_actor = true
 
-[node name="AttackTargetedActorEffect" type="Node" parent="AnimateAttackEffect/SkillEffectSequence"]
+[node name="AttackTargetedActorEffect" type="Node" parent="AnimateAttackEffect/SkillEffectGroup"]
 script = ExtResource( 7 )
