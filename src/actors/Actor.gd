@@ -129,6 +129,7 @@ func set_rect_size(value: Vector2) -> void:
 func set_actor_definition(value: Resource) -> void:
 	actor_definition = value
 
+	_clear_skills()
 	if actor_definition:
 		var ad := actor_definition as ActorDefinition
 		set_rect_size(ad.rect_size)
@@ -146,9 +147,6 @@ func set_actor_definition(value: Resource) -> void:
 		if _sprite:
 			_sprite.texture \
 					= preload("res://assets/graphics/actors/fighter.png")
-		for s in $Skills:
-			var skill := s as Node
-			skill.queue_free()
 
 
 func get_is_alive() -> bool:
@@ -414,6 +412,12 @@ func _randomize_idle_start() -> void:
 		randomize()
 		var offset := rand_range(0, _anim.current_animation_length)
 		_anim.advance(offset)
+
+
+func _clear_skills() -> void:
+	for s in $Skills.get_children():
+		var skill := s as Node
+		skill.queue_free()
 
 
 func _set_facing(direction: Vector2) -> void:
