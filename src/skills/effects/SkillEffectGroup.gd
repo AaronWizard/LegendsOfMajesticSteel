@@ -1,9 +1,21 @@
+tool
 class_name SkillEffectGroup, "res://assets/editor/skilleffectgroup.png"
 extends SkillEffect
 
 enum GroupType { GROUP, SEQUENCE }
 
 export(GroupType) var group_type := GroupType.GROUP
+
+
+func _get_configuration_warning() -> String:
+	var result := ""
+
+	for c in get_children():
+		if not (c is SkillEffect):
+			result = "ChildNodes must be SkillEffects"
+			break
+
+	return result
 
 
 func get_aoe(target_cell: Vector2, source_cell: Vector2, source_actor: Actor,
