@@ -9,8 +9,8 @@ var _running := false
 
 
 # Array of Vector2
-func get_aoe(_target_cell: Vector2, _source_cell: Vector2, _source_actor: Actor,
-		_map: Map) -> Array:
+func get_aoe(_target_cell: Vector2, _source_cell: Vector2,
+		_source_actor: Actor, _map: Map) -> Array:
 	return []
 
 
@@ -25,15 +25,17 @@ func get_is_running() -> bool:
 	return _running
 
 
-func run(target_cell: Vector2, source_actor: Actor, map: Map) -> void:
+func run(target_cell: Vector2, source_cell: Vector2,
+		source_actor: Actor, map: Map) -> void:
 	_running = true
-	call_deferred("_run_main", target_cell, source_actor, map)
+	call_deferred("_run_main", target_cell, source_cell, source_actor, map)
 
 
-func _run_main(target_cell: Vector2, source_actor: Actor, map: Map) -> void:
+func _run_main(target_cell: Vector2, source_cell: Vector2,
+		source_actor: Actor, map: Map) -> void:
 	var run_state
 	# warning-ignore:void_assignment
-	run_state = _run_self(target_cell, source_actor, map)
+	run_state = _run_self(target_cell, source_cell, source_actor, map)
 	if run_state is GDScriptFunctionState:
 		yield(run_state, "completed")
 
@@ -41,5 +43,6 @@ func _run_main(target_cell: Vector2, source_actor: Actor, map: Map) -> void:
 	emit_signal("finished")
 
 
-func _run_self(_target_cell: Vector2, _source_actor: Actor, _map: Map):
+func _run_self(_target_cell: Vector2, _source_cell: Vector2,
+		_source_actor: Actor, _map: Map):
 	push_warning("SkillEffect mus implement _run_self()")

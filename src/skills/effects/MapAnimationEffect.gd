@@ -5,7 +5,8 @@ export var map_anim_scene: PackedScene
 export var rotated := false
 
 
-func _run_self(target_cell: Vector2, source_actor: Actor, map: Map):
+func _run_self(target_cell: Vector2, _source_cell: Vector2,
+		source_actor: Actor, map: Map):
 	var map_anim := map_anim_scene.instance() as MapAnimation
 	map.add_effect(map_anim)
 

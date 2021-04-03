@@ -24,7 +24,8 @@ func predict_damage(target_cell: Vector2, source_cell: Vector2,
 	return result
 
 
-func _run_self(target_cell: Vector2, source_actor: Actor, map: Map):
+func _run_self(target_cell: Vector2, source_cell: Vector2,
+		source_actor: Actor, map: Map):
 	var direction: Vector2
 	if target_is_actor:
 		var target_actor := map.get_actor_on_cell(target_cell)
@@ -36,7 +37,7 @@ func _run_self(target_cell: Vector2, source_actor: Actor, map: Map):
 
 	if _onhit_effect():
 		yield(source_actor, "attack_hit")
-		_onhit_effect().run(target_cell, source_actor, map)
+		_onhit_effect().run(target_cell, source_cell, source_actor, map)
 		yield(_onhit_effect(), "finished")
 
 	if source_actor.animating:

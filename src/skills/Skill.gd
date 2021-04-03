@@ -53,7 +53,7 @@ func get_targeting_data(source_cell: Vector2, source_actor: Actor, map: Map) \
 
 
 func run(source_actor: Actor, map: Map, target: Vector2) -> void:
-	_get_effect().run(target, source_actor, map)
+	_get_effect().run(target, source_actor.origin_cell, source_actor, map)
 	yield(_get_effect(), "finished")
 
 

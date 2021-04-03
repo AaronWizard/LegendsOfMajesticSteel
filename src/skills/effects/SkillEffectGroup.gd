@@ -46,12 +46,13 @@ func predict_damage(target_cell: Vector2, source_cell: Vector2,
 	return result
 
 
-func _run_self(target_cell: Vector2, source_actor: Actor, map: Map) -> void:
+func _run_self(target_cell: Vector2, source_cell: Vector2,
+		source_actor: Actor, map: Map) -> void:
 	var waiter := SignalWaiter.new()
 
 	for c in get_children():
 		var child := c as SkillEffect
-		child.run(target_cell, source_actor, map)
+		child.run(target_cell, source_cell, source_actor, map)
 		if group_type == GroupType.SEQUENCE:
 			yield(child, "finished")
 		else:
