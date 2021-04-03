@@ -1,4 +1,5 @@
-class_name AttackTargetedActorEffect
+class_name AttackTargetedActorEffect, \
+		"res://assets/editor/attacktargetedactor_effect.png"
 extends SkillEffect
 
 export var use_direction := true

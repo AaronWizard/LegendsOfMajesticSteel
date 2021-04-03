@@ -1,5 +1,5 @@
 tool
-class_name Skill
+class_name Skill, "res://assets/editor/skill.png"
 extends Node
 
 enum TargetType { ANY, ANY_ACTOR, ENEMY, ALLY, EMPTY_CELL }

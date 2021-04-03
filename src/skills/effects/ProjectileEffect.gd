@@ -1,4 +1,4 @@
-class_name ProjectileEffect
+class_name ProjectileEffect, "res://assets/editor/projectile_effect.png"
 extends SkillEffect
 
 export var projectile_scene: PackedScene

@@ -1,5 +1,5 @@
 tool
-class_name Actor
+class_name Actor, "res://assets/editor/actor.png"
 extends TileObject
 
 class _AnimationTimes:

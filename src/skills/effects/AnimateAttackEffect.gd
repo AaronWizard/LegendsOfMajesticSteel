@@ -1,4 +1,4 @@
-class_name AnimateAttackEffect
+class_name AnimateAttackEffect, "res://assets/editor/animateattack_effect.png"
 extends SkillEffect
 
 export var target_is_actor := false

@@ -1,4 +1,4 @@
-class_name Map
+class_name Map, "res://assets/editor/map.png"
 extends Node2D
 
 signal actor_dying(actor)

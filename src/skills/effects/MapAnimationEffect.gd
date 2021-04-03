@@ -1,4 +1,4 @@
-class_name MapAnimationEffect
+class_name MapAnimationEffect, "res://assets/editor/mapanim_effect.png"
 extends SkillEffect
 
 export var map_anim_scene: PackedScene
