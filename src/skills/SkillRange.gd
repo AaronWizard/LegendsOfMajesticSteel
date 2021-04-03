@@ -1,4 +1,4 @@
-class_name SkillRange
+class_name SkillRange, "res://assets/editor/skill_range.png"
 extends Resource
 
 # Array of Vector2

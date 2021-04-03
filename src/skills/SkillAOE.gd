@@ -1,4 +1,4 @@
-class_name SkillAOE
+class_name SkillAOE, "res://assets/editor/skill_aoe.png"
 extends Resource
 
 
