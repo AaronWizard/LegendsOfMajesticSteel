@@ -64,6 +64,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/skills/effects/AnimateAttackEffect.gd"
 }, {
+"base": "SkillEffect",
+"class": "AoeEffect",
+"language": "GDScript",
+"path": "res://src/skills/effects/AoeEffect.gd"
+}, {
 "base": "Process",
 "class": "ApplyCondition",
 "language": "GDScript",
@@ -284,6 +289,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/skills/effects/SkillEffectGroup.gd"
 }, {
+"base": "SkillEffect",
+"class": "SkillEffectWrapper",
+"language": "GDScript",
+"path": "res://src/skills/effects/SkillEffectWrapper.gd"
+}, {
 "base": "PanelContainer",
 "class": "SkillPanel",
 "language": "GDScript",
@@ -386,6 +396,7 @@ _global_script_class_icons={
 "ActorStatusPanel": "",
 "AddMapEffect": "",
 "AnimateAttackEffect": "res://assets/editor/animateattack_effect.png",
+"AoeEffect": "res://assets/editor/aoe_effect.png",
 "ApplyCondition": "",
 "ArcAOE": "",
 "AttackTargetedActorEffect": "res://assets/editor/attacktargetedactor_effect.png",
@@ -430,6 +441,7 @@ _global_script_class_icons={
 "SkillAction": "",
 "SkillEffect": "",
 "SkillEffectGroup": "res://assets/editor/skilleffectgroup.png",
+"SkillEffectWrapper": "",
 "SkillPanel": "",
 "SkillRange": "",
 "StaminaBar": "",
