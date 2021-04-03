@@ -363,7 +363,7 @@ func animate_hit(direction: Vector2) -> void:
 
 	reset_pose()
 
-	if not _stamina_bar_animating:
+	if _stamina_bar_animating:
 		yield(_stamina_bar, "animation_finished")
 
 	_animating = false
