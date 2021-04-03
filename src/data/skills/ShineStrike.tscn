@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://src/skills/Skill.gd" type="Script" id=1]
 [ext_resource path="res://resources/data/skillranges/melee_range.tres" type="Resource" id=2]
@@ -6,6 +6,13 @@
 [ext_resource path="res://src/skills/effects/AnimateAttackEffect.gd" type="Script" id=4]
 [ext_resource path="res://src/skills/effects/MapAnimationEffect.gd" type="Script" id=5]
 [ext_resource path="res://src/data/mapeffects/ShineStrikeSwoosh.tscn" type="PackedScene" id=6]
+[ext_resource path="res://src/skills/effects/SkillEffectGroup.gd" type="Script" id=7]
+[ext_resource path="res://src/skills/effects/AoeEffect.gd" type="Script" id=8]
+[ext_resource path="res://src/skills/aoe/ArcAOE.gd" type="Script" id=9]
+[ext_resource path="res://src/skills/effects/AttackTargetedActorEffect.gd" type="Script" id=10]
+
+[sub_resource type="Resource" id=1]
+script = ExtResource( 9 )
 
 [node name="ShineStrike" type="Node"]
 script = ExtResource( 1 )
@@ -18,7 +25,19 @@ range_type = ExtResource( 2 )
 script = ExtResource( 4 )
 reduce_lunge = true
 
-[node name="MapAnimationEffect" type="Node" parent="AnimateAttackEffect"]
+[node name="SkillEffectGroup" type="Node" parent="AnimateAttackEffect"]
+script = ExtResource( 7 )
+
+[node name="MapAnimationEffect" type="Node" parent="AnimateAttackEffect/SkillEffectGroup"]
 script = ExtResource( 5 )
 map_anim_scene = ExtResource( 6 )
 rotated = true
+
+[node name="AoeEffect" type="Node" parent="AnimateAttackEffect/SkillEffectGroup"]
+script = ExtResource( 8 )
+aoe = SubResource( 1 )
+target_type = 2
+source_is_aoe_target = false
+
+[node name="AttackTargetedActorEffect" type="Node" parent="AnimateAttackEffect/SkillEffectGroup/AoeEffect"]
+script = ExtResource( 10 )
