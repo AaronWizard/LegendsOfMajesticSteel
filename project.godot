@@ -239,6 +239,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/processes/PushActor.gd"
 }, {
+"base": "SkillEffect",
+"class": "PushAttackActorEffect",
+"language": "GDScript",
+"path": "res://src/skills/effects/PushAttackActorEffect.gd"
+}, {
 "base": "Container",
 "class": "RadialContainer",
 "language": "GDScript",
@@ -421,6 +426,7 @@ _global_script_class_icons={
 "ProjectileEffect": "res://assets/editor/projectile_effect.png",
 "PushAOE": "",
 "PushActor": "",
+"PushAttackActorEffect": "res://assets/editor/pushattack_effect.png",
 "RadialContainer": "",
 "RangeData": "",
 "RangeDataFactory": "",

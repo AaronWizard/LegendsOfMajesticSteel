@@ -1,8 +1,9 @@
-[gd_resource type="Resource" load_steps=4 format=2]
+[gd_resource type="Resource" load_steps=5 format=2]
 
 [ext_resource path="res://src/data/skills/NimbleRangedAttack.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/graphics/actors/barbarian.png" type="Texture" id=2]
 [ext_resource path="res://src/actors/ActorDefinition.gd" type="Script" id=3]
+[ext_resource path="res://src/data/skills/KnockbackShot.tscn" type="PackedScene" id=4]
 
 [resource]
 script = ExtResource( 3 )
@@ -11,4 +12,4 @@ rect_size = Vector2( 1, 1 )
 max_stamina = 8
 attack = 2
 move = 5
-skills = [ ExtResource( 1 ) ]
+skills = [ ExtResource( 1 ), ExtResource( 4 ) ]
