@@ -402,6 +402,17 @@ func animate_death(direction: Vector2) -> void:
 	emit_signal("died")
 
 
+func receive_attack(attack: int, direction: Vector2) -> void:
+	stats.take_damage(attack)
+
+	if get_is_alive():
+		animate_hit(direction)
+	else:
+		animate_death(direction)
+
+	yield(self, "animation_finished")
+
+
 func play_hit_sound() -> void:
 	_hit_sound.play()
 

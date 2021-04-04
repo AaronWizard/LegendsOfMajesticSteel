@@ -27,7 +27,6 @@ target_type = 2
 
 [node name="AnimateAttackEffect" type="Node" parent="."]
 script = ExtResource( 4 )
-target_is_actor = true
 reduce_lunge = true
 default_sound = false
 
@@ -38,10 +37,10 @@ group_type = 1
 [node name="ProjectileEffect" type="Node" parent="AnimateAttackEffect/SkillEffectGroup"]
 script = ExtResource( 5 )
 projectile_scene = ExtResource( 6 )
-target_is_actor = true
 
 [node name="PushAttackActorEffect" type="Node" parent="AnimateAttackEffect/SkillEffectGroup"]
 script = ExtResource( 8 )
+max_distance = 2
 
 [node name="AddConditionToTargetEffect" type="Node" parent="AnimateAttackEffect/SkillEffectGroup"]
 script = ExtResource( 9 )
