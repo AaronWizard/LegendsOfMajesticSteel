@@ -68,6 +68,7 @@ func _run_self(target_cell: Vector2, source_cell: Vector2,
 	assert(map.actor_can_enter_cell(actor, end_cell))
 
 	actor.stats.take_damage(source_actor.stats.attack, direction, false)
+	actor.play_hit_sound()
 
 	var main_offset := end_cell - actor.origin_cell
 
@@ -89,6 +90,7 @@ func _run_self(target_cell: Vector2, source_cell: Vector2,
 
 	if actor.is_alive and (real_distance < max_distance):
 		actor.stats.take_damage(source_actor.stats.attack, -direction, false)
+		actor.play_hit_sound()
 
 	actor.origin_cell = end_cell
 	actor.cell_offset -= main_offset
@@ -102,9 +104,9 @@ func _run_self(target_cell: Vector2, source_cell: Vector2,
 			"completed"
 		)
 	elif real_distance < max_distance:
-		actor.animate_death(-direction)
+		actor.animate_death(-direction, false)
 	else:
-		actor.animate_death(direction)
+		actor.animate_death(direction, false)
 
 	if actor.animating:
 		yield(actor, "animation_finished")

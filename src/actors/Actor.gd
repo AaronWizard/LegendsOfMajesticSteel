@@ -337,17 +337,19 @@ func animate_attack(direction: Vector2, reduce_lunge := false,
 	emit_signal("animation_finished")
 
 
-func animate_death(direction: Vector2) -> void:
+func animate_death(direction: Vector2, play_hit_sound: bool) -> void:
 	var real_direction := direction.normalized()
 	var new_offset := get_cell_offset() \
 			+ (real_direction * _AnimationDistances.DEATH)
 
-	_hit_sound.play()
-	_death_sound.play()
-
 	var waiter := SignalWaiter.new()
-	waiter.wait_for_signal(_hit_sound, "finished")
+
+	if play_hit_sound:
+		waiter.wait_for_signal(_hit_sound, "finished")
+		_hit_sound.play()
+
 	waiter.wait_for_signal(_death_sound, "finished")
+	_death_sound.play()
 
 	set_pose(Pose.DEATH)
 	if direction != Vector2.ZERO:
@@ -437,7 +439,7 @@ func _on_Stats_damaged(amount: int, direction: Vector2,
 	else:
 		emit_signal("dying")
 		if standard_hit_anim:
-			yield(animate_death(direction), "completed")
+			yield(animate_death(direction, true), "completed")
 	_animating = false
 	emit_signal("animation_finished")
 
