@@ -338,6 +338,8 @@ func animate_attack(direction: Vector2, reduce_lunge := false,
 
 
 func animate_death(direction: Vector2, play_hit_sound: bool) -> void:
+	emit_signal("dying")
+
 	var real_direction := direction.normalized()
 	var new_offset := get_cell_offset() \
 			+ (real_direction * _AnimationDistances.DEATH)
@@ -437,7 +439,6 @@ func _on_Stats_damaged(amount: int, direction: Vector2,
 		if _stamina_bar_animating:
 			yield(_stamina_bar, "animation_finished")
 	else:
-		emit_signal("dying")
 		if standard_hit_anim:
 			yield(animate_death(direction, true), "completed")
 	_animating = false
