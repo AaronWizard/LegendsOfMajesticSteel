@@ -7,7 +7,7 @@
 [ext_resource path="res://src/skills/effects/ProjectileEffect.gd" type="Script" id=5]
 [ext_resource path="res://src/data/mapeffects/Arrow.tscn" type="PackedScene" id=6]
 [ext_resource path="res://src/skills/effects/SkillEffectGroup.gd" type="Script" id=7]
-[ext_resource path="res://src/skills/effects/PushAttackActorEffect.gd" type="Script" id=8]
+[ext_resource path="res://src/skills/effects/PushAttackTargetEffect.gd" type="Script" id=8]
 [ext_resource path="res://src/skills/effects/AddConditionToTargetEffect.gd" type="Script" id=9]
 [ext_resource path="res://resources/data/conditions/KnockbackShotPenalty.tres" type="Resource" id=10]
 
@@ -38,7 +38,7 @@ group_type = 1
 script = ExtResource( 5 )
 projectile_scene = ExtResource( 6 )
 
-[node name="PushAttackActorEffect" type="Node" parent="AnimateAttackEffect/SkillEffectGroup"]
+[node name="PushAttackTargetEffect" type="Node" parent="AnimateAttackEffect/SkillEffectGroup"]
 script = ExtResource( 8 )
 max_distance = 2
 

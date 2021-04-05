@@ -1,4 +1,4 @@
-class_name PushAttackActorEffect, "res://assets/editor/pushattack_effect.png"
+class_name PushAttackTargetEffect, "res://assets/editor/pushattack_effect.png"
 extends SkillEffect
 
 const _BLOCK_ATTACK_MULT := 2
