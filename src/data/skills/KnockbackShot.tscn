@@ -42,6 +42,6 @@ projectile_scene = ExtResource( 6 )
 script = ExtResource( 8 )
 max_distance = 2
 
-[node name="AddConditionToTargetEffect" type="Node" parent="AnimateAttackEffect/SkillEffectGroup"]
+[node name="AddConditionToTargetEffect" type="Node" parent="AnimateAttackEffect/SkillEffectGroup/PushAttackTargetEffect"]
 script = ExtResource( 9 )
 condition_effect = ExtResource( 10 )
