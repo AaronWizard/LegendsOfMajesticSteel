@@ -18,8 +18,7 @@ func show_map_highlights() -> bool:
 func run() -> void:
 	while path.size() > 0:
 		var cell := path.pop_front() as Vector2
-		actor.move_step(cell)
-		yield(actor, "animation_finished")
+		yield(actor.move_step(cell), "completed")
 
 	if _mouse:
 		_mouse.disconnect("click", self, "_click_to_cancel")

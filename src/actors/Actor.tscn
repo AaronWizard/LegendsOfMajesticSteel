@@ -118,4 +118,5 @@ stream = ExtResource( 9 )
 
 [connection signal="animation_finished" from="Center/Offset/Sprite/StaminaBar" to="." method="_on_StaminaBar_animation_finished"]
 [connection signal="conditions_changed" from="Stats" to="." method="_on_Stats_conditions_changed"]
-[connection signal="stamina_changed" from="Stats" to="." method="_on_Stats_stamina_changed"]
+[connection signal="damaged" from="Stats" to="." method="_on_Stats_damaged"]
+[connection signal="healed" from="Stats" to="." method="_on_Stats_healed"]

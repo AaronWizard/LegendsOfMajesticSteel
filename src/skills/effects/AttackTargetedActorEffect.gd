@@ -30,7 +30,6 @@ func _run_self(target_cell: Vector2, source_cell: Vector2,
 			start = source_actor.center_cell
 		direction = end - start
 
-	yield(
-			actor.receive_attack(source_actor.stats.attack, direction),
-			"completed"
-	)
+	actor.stats.take_damage(source_actor.stats.attack, direction)
+	if actor.animating:
+		yield(actor, "animation_finished")

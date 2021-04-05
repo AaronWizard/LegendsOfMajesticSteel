@@ -274,8 +274,6 @@ func animate_offset(new_offset: Vector2, duration: float,
 
 func move_step(target_cell: Vector2) -> void:
 	assert(get_origin_cell().distance_squared_to(target_cell) == 1)
-	_animating = true
-
 	var diff := target_cell - get_origin_cell()
 
 	set_origin_cell(target_cell)
@@ -293,9 +291,6 @@ func move_step(target_cell: Vector2) -> void:
 	)
 
 	reset_pose()
-
-	_animating = false
-	emit_signal("animation_finished")
 
 
 func animate_attack(direction: Vector2, reduce_lunge := false,
@@ -342,48 +337,17 @@ func animate_attack(direction: Vector2, reduce_lunge := false,
 	emit_signal("animation_finished")
 
 
-func animate_hit(direction: Vector2) -> void:
-	_animating = true
-
-	set_pose(Pose.REACT)
-	_hit_sound.play()
-
-	if direction != Vector2.ZERO:
-		var real_direction := direction.normalized()
-		yield(
-			animate_offset(real_direction * _AnimationDistances.HIT_REACT,
-				_AnimationTimes.HIT_REACT, Tween.TRANS_QUART, Tween.EASE_OUT),
-			"completed"
-		)
-		yield(
-			animate_offset(Vector2.ZERO, _AnimationTimes.HIT_RECOVER,
-					Tween.TRANS_QUAD, Tween.EASE_OUT),
-			"completed"
-		)
-
-	reset_pose()
-
-	if _stamina_bar_animating:
-		yield(_stamina_bar, "animation_finished")
-
-	_animating = false
-	emit_signal("animation_finished")
-
-
 func animate_death(direction: Vector2) -> void:
-	_animating = true
-
 	var real_direction := direction.normalized()
 	var new_offset := get_cell_offset() \
 			+ (real_direction * _AnimationDistances.DEATH)
 
-	emit_signal("dying")
 	_hit_sound.play()
 	_death_sound.play()
 
-	var signal_waiter := SignalWaiter.new()
-	signal_waiter.wait_for_signal(_hit_sound, "finished")
-	signal_waiter.wait_for_signal(_death_sound, "finished")
+	var waiter := SignalWaiter.new()
+	waiter.wait_for_signal(_hit_sound, "finished")
+	waiter.wait_for_signal(_death_sound, "finished")
 
 	set_pose(Pose.DEATH)
 	if direction != Vector2.ZERO:
@@ -394,23 +358,10 @@ func animate_death(direction: Vector2) -> void:
 		)
 	if _anim.is_playing():
 		yield(_anim, "animation_finished")
-	if signal_waiter.waiting:
-		yield(signal_waiter, "finished")
+	if waiter.waiting:
+		yield(waiter, "finished")
 
-	_animating = false
-	emit_signal("animation_finished")
 	emit_signal("died")
-
-
-func receive_attack(attack: int, direction: Vector2) -> void:
-	stats.take_damage(attack)
-
-	if get_is_alive():
-		animate_hit(direction)
-	else:
-		animate_death(direction)
-
-	yield(self, "animation_finished")
 
 
 func play_hit_sound() -> void:
@@ -439,11 +390,30 @@ func _set_facing(direction: Vector2) -> void:
 	# else change nothing
 
 
-func _on_Stats_stamina_changed(old_stamina: int, new_stamina: int) -> void:
-	if get_is_alive():
-		_stamina_bar_animating = true
-		_stamina_bar.visible = true
-		_stamina_bar.animate_change(new_stamina - old_stamina)
+func _animate_staminabar(change: int) -> void:
+	_stamina_bar_animating = true
+	_stamina_bar.visible = true
+	_stamina_bar.animate_change(change)
+
+
+func _animate_hit(direction: Vector2) -> void:
+	set_pose(Pose.REACT)
+	_hit_sound.play()
+
+	if direction != Vector2.ZERO:
+		var real_direction := direction.normalized()
+		yield(
+			animate_offset(real_direction * _AnimationDistances.HIT_REACT,
+				_AnimationTimes.HIT_REACT, Tween.TRANS_QUART, Tween.EASE_OUT),
+			"completed"
+		)
+		yield(
+			animate_offset(Vector2.ZERO, _AnimationTimes.HIT_RECOVER,
+					Tween.TRANS_QUAD, Tween.EASE_OUT),
+			"completed"
+		)
+
+	reset_pose()
 
 
 func _on_StaminaBar_animation_finished() -> void:
@@ -453,3 +423,24 @@ func _on_StaminaBar_animation_finished() -> void:
 
 func _on_Stats_conditions_changed() -> void:
 	_condition_icons.update_icons(stats)
+
+
+func _on_Stats_damaged(amount: int, direction: Vector2,
+		standard_hit_anim: bool) -> void:
+	_animating = true
+	if get_is_alive():
+		_animate_staminabar(-amount)
+		if standard_hit_anim:
+			yield(_animate_hit(direction), "completed")
+		if _stamina_bar_animating:
+			yield(_stamina_bar, "animation_finished")
+	else:
+		emit_signal("dying")
+		if standard_hit_anim:
+			yield(animate_death(direction), "completed")
+	_animating = false
+	emit_signal("animation_finished")
+
+
+func _on_Stats_healed(amount: int) -> void:
+	_animate_staminabar(amount)
