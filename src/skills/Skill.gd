@@ -1,18 +1,32 @@
-class_name Skill
-extends Resource
+tool
+class_name Skill, "res://assets/editor/skill.png"
+extends Node
 
-enum TargetType { ANY, ANY_ACTOR, ENEMY, ALLY, EMPTY }
+enum TargetType { ANY, ANY_ACTOR, ENEMY, ALLY, EMPTY_CELL }
 
 export var icon: Texture
-export var name := "Skill"
+export var skill_name := "Skill"
 export var description := "Skill description"
 
 export var range_type: Resource
 export(TargetType) var target_type := TargetType.ANY
 
-export var aoe_type: Resource
 
-export var skill_effect: Resource
+func _get_configuration_warning() -> String:
+	var result := ""
+
+	if get_child_count() == 0:
+		result = "Skills need to have a SkillEffect node"
+	elif not get_child(0) is SkillEffect:
+		result = "First child is not a SkillEffect"
+	else:
+		for i in range(1, get_child_count()):
+			var child := get_child(i as int)
+			if child is SkillEffect:
+				result = "Only first skill effect will be used"
+				break
+
+	return result
 
 
 func get_targeting_data(source_cell: Vector2, source_actor: Actor, map: Map) \
@@ -29,8 +43,8 @@ func get_targeting_data(source_cell: Vector2, source_actor: Actor, map: Map) \
 			var aoe := _get_aoe(target_cell, source_cell, source_actor, map)
 			aoe_by_target[target_cell] = aoe
 
-			var predicted_damages := _predict_damages(target_cell, aoe,
-					source_cell, source_actor, map)
+			var predicted_damages := _predict_damages(target_cell, source_cell,
+					source_actor, map)
 			predicted_damage_by_target[target_cell] = predicted_damages
 
 	return TargetingData.new(
@@ -39,9 +53,8 @@ func get_targeting_data(source_cell: Vector2, source_actor: Actor, map: Map) \
 
 
 func run(source_actor: Actor, map: Map, target: Vector2) -> void:
-	var aoe := _get_aoe(target, source_actor.origin_cell, source_actor, map)
-	var effect := skill_effect as SkillEffect
-	yield(effect.run(target, aoe, source_actor, map), "completed")
+	_get_effect().run(target, source_actor.origin_cell, source_actor, map)
+	yield(_get_effect(), "finished")
 
 
 func _get_range(source_cell: Vector2, source_actor: Actor, map: Map) -> Array:
@@ -62,7 +75,7 @@ func _is_valid_target(target_cell: Vector2, source_actor: Actor, map: Map) \
 	match target_type:
 		TargetType.ANY_ACTOR:
 			result = actor_on_target != null
-		TargetType.EMPTY:
+		TargetType.EMPTY_CELL:
 			result = actor_on_target == null
 		TargetType.ENEMY, TargetType.ALLY:
 			if actor_on_target:
@@ -83,19 +96,18 @@ func _is_valid_target(target_cell: Vector2, source_actor: Actor, map: Map) \
 	return result
 
 
+func _get_effect() -> SkillEffect:
+	return get_child(0) as SkillEffect
+
+
 # Assumes target_cell is in range
 func _get_aoe(target_cell: Vector2, source_cell: Vector2, source_actor: Actor,
 		map: Map) -> Array:
-	var aoe := aoe_type as SkillAOE
-	var result := [target_cell]
-	if aoe:
-		result = aoe.get_aoe(target_cell, source_cell, source_actor, map)
-	return result
+	return _get_effect().get_aoe(target_cell, source_cell, source_actor, map)
 
 
 # Keys are actors. Values are damage amounts.
-func _predict_damages(target_cell: Vector2, aoe: Array, source_cell: Vector2,
+func _predict_damages(target_cell: Vector2, source_cell: Vector2,
 		source_actor: Actor, map: Map) -> Dictionary:
-	var effect := skill_effect as SkillEffect
-	return effect.predict_damage(target_cell, aoe, source_cell,
-			source_actor, map)
+	return _get_effect().predict_damage(
+			target_cell, source_cell, source_actor, map)

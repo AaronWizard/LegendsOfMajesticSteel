@@ -83,7 +83,9 @@ __meta__ = {
 [node name="Stats" type="Node" parent="." index="1"]
 script = ExtResource( 6 )
 
-[node name="WaitIcon" type="AnimatedSprite" parent="." index="2"]
+[node name="Skills" type="Node" parent="." index="2"]
+
+[node name="WaitIcon" type="AnimatedSprite" parent="." index="3"]
 visible = false
 position = Vector2( 24, 24 )
 frames = SubResource( 5 )
@@ -92,28 +94,29 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="TargetCursor" parent="." index="3" instance=ExtResource( 19 )]
+[node name="TargetCursor" parent="." index="4" instance=ExtResource( 19 )]
 visible = false
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="4"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="5"]
 autoplay = "actor_idle"
 anims/actor_death = ExtResource( 3 )
 anims/actor_idle = ExtResource( 10 )
 
-[node name="Tween" type="Tween" parent="." index="5"]
+[node name="Tween" type="Tween" parent="." index="6"]
 
-[node name="StepSound" type="AudioStreamPlayer" parent="." index="6"]
+[node name="StepSound" type="AudioStreamPlayer" parent="." index="7"]
 stream = ExtResource( 7 )
 
-[node name="MeleeAttackSound" type="AudioStreamPlayer" parent="." index="7"]
+[node name="MeleeAttackSound" type="AudioStreamPlayer" parent="." index="8"]
 stream = ExtResource( 11 )
 
-[node name="HitSound" type="AudioStreamPlayer" parent="." index="8"]
+[node name="HitSound" type="AudioStreamPlayer" parent="." index="9"]
 stream = ExtResource( 8 )
 
-[node name="DeathSound" type="AudioStreamPlayer" parent="." index="9"]
+[node name="DeathSound" type="AudioStreamPlayer" parent="." index="10"]
 stream = ExtResource( 9 )
 
 [connection signal="animation_finished" from="Center/Offset/Sprite/StaminaBar" to="." method="_on_StaminaBar_animation_finished"]
 [connection signal="conditions_changed" from="Stats" to="." method="_on_Stats_conditions_changed"]
-[connection signal="stamina_changed" from="Stats" to="." method="_on_Stats_stamina_changed"]
+[connection signal="damaged" from="Stats" to="." method="_on_Stats_damaged"]
+[connection signal="healed" from="Stats" to="." method="_on_Stats_healed"]

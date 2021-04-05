@@ -13,6 +13,7 @@ export var cell_offset: Vector2 setget set_cell_offset, get_cell_offset
 export var rect_size := Vector2.ONE setget set_rect_size
 
 var cell_rect: Rect2 setget , get_cell_rect
+var covered_cells: Array setget , get_covered_cells
 
 var center_cell: Vector2 setget , get_center_cell
 var center_pixel_pos: Vector2 setget , get_center_pixel_pos
@@ -66,9 +67,8 @@ func set_rect_size(value: Vector2) -> void:
 	rect_size = value
 
 	_covered_cells.clear()
-	var covered_cells := TileGeometry.get_rect_cells( \
-			Rect2(Vector2.ZERO, rect_size))
-	for c in covered_cells:
+	var cells := TileGeometry.get_rect_cells(Rect2(Vector2.ZERO, rect_size))
+	for c in cells:
 		var covered := c as Vector2
 		_covered_cells[covered] = true
 
@@ -130,3 +130,9 @@ func get_covered_cells_at_cell(cell: Vector2) -> Array:
 		var real_cell := covered + cell
 		result.append(real_cell)
 	return result
+
+
+func copy(other: TileObject) -> void:
+	set_origin_cell(other.origin_cell)
+	set_cell_offset(other.cell_offset)
+	set_rect_size(other.rect_size)

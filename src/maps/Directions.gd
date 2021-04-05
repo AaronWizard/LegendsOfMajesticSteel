@@ -47,6 +47,24 @@ static func get_closest_direction_type(vector: Vector2) -> int:
 	return result
 
 
+static func normalized_direction(vector: Vector2) -> Vector2:
+	var normalized_vector := vector.normalized()
+	var result: Vector2
+	var closest_dist_sq := -1.0
+	for d in _VALUES.values():
+		var direction := d as Vector2
+		if direction == normalized_vector:
+			result = direction
+			break
+		else:
+			var distance_sq := direction.distance_squared_to(normalized_vector)
+			if (closest_dist_sq < 0) or (distance_sq < closest_dist_sq):
+				result = direction
+				closest_dist_sq = distance_sq
+
+	return result
+
+
 static func left_direction_type(direction_type: int) -> int:
 	return _rotated_direction_type(direction_type, PI / 2)
 

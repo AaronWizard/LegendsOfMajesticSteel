@@ -1,4 +1,4 @@
-class_name ConditionEffect
+class_name ConditionEffect, "res://assets/editor/condition_effect.png"
 extends Resource
 
 enum TimeType {

@@ -1,0 +1,42 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://src/skills/Skill.gd" type="Script" id=1]
+[ext_resource path="res://src/skills/effects/AnimateAttackEffect.gd" type="Script" id=2]
+[ext_resource path="res://src/data/mapeffects/Arrow.tscn" type="PackedScene" id=3]
+[ext_resource path="res://src/skills/effects/ProjectileEffect.gd" type="Script" id=4]
+[ext_resource path="res://src/skills/ranges/DiamondRange.gd" type="Script" id=5]
+[ext_resource path="res://assets/graphics/ui/icons/actions/attack.png" type="Texture" id=6]
+[ext_resource path="res://src/skills/effects/AttackTargetedActorEffect.gd" type="Script" id=7]
+[ext_resource path="res://src/skills/effects/SkillEffectGroup.gd" type="Script" id=8]
+
+[sub_resource type="Resource" id=1]
+script = ExtResource( 5 )
+min_dist = 2
+max_dist = 2
+include_diagonals = true
+
+[node name="RangedAttack" type="Node"]
+script = ExtResource( 1 )
+icon = ExtResource( 6 )
+skill_name = "Attack"
+description = "Pierce the foe from afar"
+range_type = SubResource( 1 )
+target_type = 2
+
+[node name="AnimateAttackEffect" type="Node" parent="."]
+script = ExtResource( 2 )
+target_is_actor = true
+reduce_lunge = true
+default_sound = false
+
+[node name="SkillEffectGroup" type="Node" parent="AnimateAttackEffect"]
+script = ExtResource( 8 )
+group_type = 1
+
+[node name="ProjectileEffect" type="Node" parent="AnimateAttackEffect/SkillEffectGroup"]
+script = ExtResource( 4 )
+projectile_scene = ExtResource( 3 )
+target_is_actor = true
+
+[node name="AttackTargetedActorEffect" type="Node" parent="AnimateAttackEffect/SkillEffectGroup"]
+script = ExtResource( 7 )

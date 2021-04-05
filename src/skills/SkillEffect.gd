@@ -1,21 +1,48 @@
 class_name SkillEffect
-extends Resource
+extends Node
 
-# warning-ignore:unused_argument
-# warning-ignore:unused_argument
-# warning-ignore:unused_argument
-# warning-ignore:unused_argument
-# warning-ignore:unused_argument
+signal finished
+
+var running: bool setget , get_is_running
+
+var _running := false
+
+
+# Array of Vector2
+func get_aoe(_target_cell: Vector2, _source_cell: Vector2,
+		_source_actor: Actor, _map: Map) -> Array:
+	return []
+
+
 # Keys are actors, values are ints
-func predict_damage(target_cell: Vector2, aoe: Array, source_cell: Vector2,
-		source_actor: Actor, map: Map) -> Dictionary:
+# Negative values are damage, positive values are healing
+func predict_damage(_target_cell: Vector2, _source_cell: Vector2,
+		_source_actor: Actor, _map: Map) -> Dictionary:
 	return {}
 
 
-# warning-ignore:unused_argument
-# warning-ignore:unused_argument
-# warning-ignore:unused_argument
-# warning-ignore:unused_argument
-func run(target_cell: Vector2, aoe: Array, source_actor: Actor, map: Map) \
-		-> void:
-	print("SkillEffect must implement start()")
+func get_is_running() -> bool:
+	return _running
+
+
+func run(target_cell: Vector2, source_cell: Vector2,
+		source_actor: Actor, map: Map) -> void:
+	_running = true
+	call_deferred("_run_main", target_cell, source_cell, source_actor, map)
+
+
+func _run_main(target_cell: Vector2, source_cell: Vector2,
+		source_actor: Actor, map: Map) -> void:
+	var run_state
+	# warning-ignore:void_assignment
+	run_state = _run_self(target_cell, source_cell, source_actor, map)
+	if run_state is GDScriptFunctionState:
+		yield(run_state, "completed")
+
+	_running = false
+	emit_signal("finished")
+
+
+func _run_self(_target_cell: Vector2, _source_cell: Vector2,
+		_source_actor: Actor, _map: Map):
+	push_warning("SkillEffect mus implement _run_self()")

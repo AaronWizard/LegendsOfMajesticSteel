@@ -1,0 +1,47 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://src/skills/Skill.gd" type="Script" id=1]
+[ext_resource path="res://assets/graphics/ui/icons/actions/skills/knockdown_shot.png" type="Texture" id=2]
+[ext_resource path="res://src/skills/ranges/DiamondRange.gd" type="Script" id=3]
+[ext_resource path="res://src/skills/effects/AnimateAttackEffect.gd" type="Script" id=4]
+[ext_resource path="res://src/skills/effects/ProjectileEffect.gd" type="Script" id=5]
+[ext_resource path="res://src/data/mapeffects/Arrow.tscn" type="PackedScene" id=6]
+[ext_resource path="res://src/skills/effects/SkillEffectGroup.gd" type="Script" id=7]
+[ext_resource path="res://src/skills/effects/PushAttackTargetEffect.gd" type="Script" id=8]
+[ext_resource path="res://src/skills/effects/AddConditionToTargetEffect.gd" type="Script" id=9]
+[ext_resource path="res://resources/data/conditions/KnockbackShotPenalty.tres" type="Resource" id=10]
+
+[sub_resource type="Resource" id=1]
+script = ExtResource( 3 )
+min_dist = 1
+max_dist = 2
+include_diagonals = false
+
+[node name="KnockbackShot" type="Node"]
+script = ExtResource( 1 )
+icon = ExtResource( 2 )
+skill_name = "Knockback Shot"
+description = "Knock the enemy prone with pummeling arrows."
+range_type = SubResource( 1 )
+target_type = 2
+
+[node name="AnimateAttackEffect" type="Node" parent="."]
+script = ExtResource( 4 )
+reduce_lunge = true
+default_sound = false
+
+[node name="SkillEffectGroup" type="Node" parent="AnimateAttackEffect"]
+script = ExtResource( 7 )
+group_type = 1
+
+[node name="ProjectileEffect" type="Node" parent="AnimateAttackEffect/SkillEffectGroup"]
+script = ExtResource( 5 )
+projectile_scene = ExtResource( 6 )
+
+[node name="PushAttackTargetEffect" type="Node" parent="AnimateAttackEffect/SkillEffectGroup"]
+script = ExtResource( 8 )
+max_distance = 2
+
+[node name="AddConditionToTargetEffect" type="Node" parent="AnimateAttackEffect/SkillEffectGroup/PushAttackTargetEffect"]
+script = ExtResource( 9 )
+condition_effect = ExtResource( 10 )

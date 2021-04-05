@@ -3,7 +3,9 @@ class_name Stats
 extends Node
 
 signal conditions_changed
-signal stamina_changed(old_stamina, new_stamina)
+
+signal damaged(amount, direction, standard_hit_anim)
+signal healed(amount)
 
 # Damage reduction turned into percentage based on this value
 const DAMAGE_REDUCTION_RANGE := 100.0
@@ -109,15 +111,21 @@ func damage_from_attack(base_damage: int) -> int:
 	return int(final_damage)
 
 
-func take_damage(base_damage: int) -> void:
+func take_damage(base_damage: int, direction: Vector2,
+		standard_hit_anim := true) -> void:
 	var damage := damage_from_attack(base_damage)
-	_modify_stamina(-damage, true)
+	stamina -= damage
+	emit_signal("damaged", damage, direction, standard_hit_anim)
 
 
 # Heal stamina by a percentage of max_stamina
 func heal(heal_power: float, overflow: bool) -> void:
 	var regained_stamina := int(ceil(get_max_stamina() * heal_power))
-	_modify_stamina(regained_stamina, overflow)
+	if overflow:
+		stamina += regained_stamina
+	else:
+		stamina = int(clamp(stamina + regained_stamina, 0, get_max_stamina()))
+	emit_signal("healed", regained_stamina)
 
 
 func get_is_alive() -> bool:
@@ -157,12 +165,3 @@ func get_condition_stat_mods() -> Dictionary:
 				modifier_data[md_key] = modifier.value
 
 	return result
-
-
-func _modify_stamina(mod: int, overflow: bool) -> void:
-	var old_stamina := stamina
-	if overflow:
-		stamina += mod
-	else:
-		stamina = int(clamp(stamina + mod, 0, get_max_stamina()))
-	emit_signal("stamina_changed", old_stamina, stamina)

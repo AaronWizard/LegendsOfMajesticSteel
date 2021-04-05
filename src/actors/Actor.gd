@@ -1,5 +1,5 @@
 tool
-class_name Actor
+class_name Actor, "res://assets/editor/actor.png"
 extends TileObject
 
 class _AnimationTimes:
@@ -29,12 +29,9 @@ const _WALK_FRAME := 0
 const _REACT_FRAME := 2
 const _ACTION_FRAME := 3
 
-signal move_finished
+signal animation_finished
 
 signal attack_hit
-signal attack_finished
-
-signal hit_reaction_finished
 
 signal dying
 signal died
@@ -50,7 +47,7 @@ export(Faction) var faction := Faction.ENEMY
 
 var portrait: Texture setget , get_portrait
 
-var skills := []
+var skills: Array setget , get_skills
 
 var range_data: RangeData
 
@@ -63,6 +60,10 @@ var target_visible: bool setget set_target_visible, get_target_visible
 var stamina_modifier: int setget set_stamina_modifier, get_stamina_modifier
 
 var pose: int = Pose.IDLE setget set_pose
+
+var animating: bool setget , get_is_animating
+
+var _animating := false
 
 var _did_skill: bool = false
 var _turns_left: int = false
@@ -99,9 +100,6 @@ func _ready() -> void:
 	set_actor_definition(actor_definition)
 
 	if not Engine.editor_hint:
-		var ad := actor_definition as ActorDefinition
-		skills = ad.skills
-
 		_stamina_bar.max_stamina = stats.max_stamina
 		_condition_icons.update_icons(stats)
 
@@ -131,6 +129,7 @@ func set_rect_size(value: Vector2) -> void:
 func set_actor_definition(value: Resource) -> void:
 	actor_definition = value
 
+	_clear_skills()
 	if actor_definition:
 		var ad := actor_definition as ActorDefinition
 		set_rect_size(ad.rect_size)
@@ -138,12 +137,16 @@ func set_actor_definition(value: Resource) -> void:
 			_sprite.texture = ad.sprite
 		# Use $Stats instead of stats to work in tool mode
 		($Stats as Stats).init_from_def(ad)
+		if not Engine.editor_hint:
+			for s in ad.skills:
+				var skill_scene := s as PackedScene
+				var skill := skill_scene.instance() as Node
+				$Skills.add_child(skill)
 	else:
 		set_rect_size(Vector2.ONE)
 		if _sprite:
 			_sprite.texture \
 					= preload("res://assets/graphics/actors/fighter.png")
-		skills.clear()
 
 
 func get_is_alive() -> bool:
@@ -163,6 +166,10 @@ func get_round_finished() -> bool:
 
 func set_target_visible(new_value: bool) -> void:
 	_target_cursor.visible = new_value
+
+
+func get_skills() -> Array:
+	return $Skills.get_children()
 
 
 func get_portrait() -> Texture:
@@ -250,6 +257,10 @@ func reset_pose() -> void:
 	set_pose(Pose.IDLE)
 
 
+func get_is_animating() -> bool:
+	return _animating
+
+
 func animate_offset(new_offset: Vector2, duration: float,
 		trans_type: int, ease_type: int) -> void:
 	# warning-ignore:return_value_discarded
@@ -263,7 +274,6 @@ func animate_offset(new_offset: Vector2, duration: float,
 
 func move_step(target_cell: Vector2) -> void:
 	assert(get_origin_cell().distance_squared_to(target_cell) == 1)
-
 	var diff := target_cell - get_origin_cell()
 
 	set_origin_cell(target_cell)
@@ -281,18 +291,19 @@ func move_step(target_cell: Vector2) -> void:
 	)
 
 	reset_pose()
-	emit_signal("move_finished")
 
 
-func animate_attack(direction: Vector2, reduce_range := false,
+func animate_attack(direction: Vector2, reduce_lunge := false,
 		play_sound := true) -> void:
+	_animating = true
+
 	var real_direction := direction.normalized()
 
 	set_pose(Pose.ACTION)
 	_set_facing(real_direction)
 
 	var hit_pos := real_direction
-	if reduce_range:
+	if reduce_lunge:
 		hit_pos *= _AnimationDistances.ATTACK_HIT_REDUCED
 	else:
 		hit_pos *= _AnimationDistances.ATTACK_HIT
@@ -321,10 +332,75 @@ func animate_attack(direction: Vector2, reduce_range := false,
 	)
 
 	reset_pose()
-	emit_signal("attack_finished")
+
+	_animating = false
+	emit_signal("animation_finished")
 
 
-func animate_hit(direction: Vector2) -> void:
+func animate_death(direction: Vector2, play_hit_sound: bool) -> void:
+	emit_signal("dying")
+
+	var real_direction := direction.normalized()
+	var new_offset := get_cell_offset() \
+			+ (real_direction * _AnimationDistances.DEATH)
+
+	var waiter := SignalWaiter.new()
+
+	if play_hit_sound:
+		waiter.wait_for_signal(_hit_sound, "finished")
+		_hit_sound.play()
+
+	waiter.wait_for_signal(_death_sound, "finished")
+	_death_sound.play()
+
+	set_pose(Pose.DEATH)
+	if direction != Vector2.ZERO:
+		yield(
+			animate_offset(new_offset, _anim.current_animation_length,
+				Tween.TRANS_QUAD, Tween.EASE_OUT),
+			"completed"
+		)
+	if _anim.is_playing():
+		yield(_anim, "animation_finished")
+	if waiter.waiting:
+		yield(waiter, "finished")
+
+	emit_signal("died")
+
+
+func play_hit_sound() -> void:
+	_hit_sound.play()
+
+
+func _randomize_idle_start() -> void:
+	if not Engine.editor_hint:
+		assert(_anim.current_animation == "actor_idle")
+		randomize()
+		var offset := rand_range(0, _anim.current_animation_length)
+		_anim.advance(offset)
+
+
+func _clear_skills() -> void:
+	for s in $Skills.get_children():
+		var skill := s as Node
+		skill.queue_free()
+
+
+func _set_facing(direction: Vector2) -> void:
+	if direction.x < 0:
+		_sprite.flip_h = true
+	elif direction.x > 0:
+		_sprite.flip_h = false
+	# else change nothing
+
+
+func _animate_staminabar(change: int) -> void:
+	_stamina_bar_animating = true
+	_stamina_bar.visible = true
+	_stamina_bar.animate_change(change)
+
+
+func _animate_hit(direction: Vector2) -> void:
 	set_pose(Pose.REACT)
 	_hit_sound.play()
 
@@ -343,66 +419,6 @@ func animate_hit(direction: Vector2) -> void:
 
 	reset_pose()
 
-	if not _stamina_bar_animating:
-		yield(_stamina_bar, "animation_finished")
-
-	emit_signal("hit_reaction_finished")
-
-
-func animate_death(direction: Vector2) -> void:
-	var real_direction := direction.normalized()
-	var new_offset := get_cell_offset() \
-			+ (real_direction * _AnimationDistances.DEATH)
-
-	emit_signal("dying")
-	_hit_sound.play()
-	_death_sound.play()
-
-	var signal_waiter := SignalWaiter.new()
-	signal_waiter.wait_for_signal(_hit_sound, "finished")
-	signal_waiter.wait_for_signal(_death_sound, "finished")
-
-	set_pose(Pose.DEATH)
-	if direction != Vector2.ZERO:
-		yield(
-			animate_offset(new_offset, _anim.current_animation_length,
-				Tween.TRANS_QUAD, Tween.EASE_OUT),
-			"completed"
-		)
-	if _anim.is_playing():
-		yield(_anim, "animation_finished")
-	if signal_waiter.waiting:
-		yield(signal_waiter, "finished")
-
-	emit_signal("died")
-
-
-func play_hit_sound() -> void:
-	_hit_sound.play()
-
-
-func _randomize_idle_start() -> void:
-	if not Engine.editor_hint:
-		assert(_anim.current_animation == "actor_idle")
-		randomize()
-		var offset := rand_range(0, _anim.current_animation_length)
-		_anim.advance(offset)
-
-
-func _set_facing(direction: Vector2) -> void:
-	if direction.x < 0:
-		_sprite.flip_h = true
-	elif direction.x > 0:
-		_sprite.flip_h = false
-	# else change nothing
-
-
-func _on_Stats_stamina_changed(old_stamina: int, new_stamina: int) -> void:
-	if get_is_alive():
-		_stamina_bar_animating = true
-		_stamina_bar.visible = true
-		_stamina_bar.animate_change(new_stamina - old_stamina)
-
 
 func _on_StaminaBar_animation_finished() -> void:
 	_stamina_bar_animating = false
@@ -411,3 +427,23 @@ func _on_StaminaBar_animation_finished() -> void:
 
 func _on_Stats_conditions_changed() -> void:
 	_condition_icons.update_icons(stats)
+
+
+func _on_Stats_damaged(amount: int, direction: Vector2,
+		standard_hit_anim: bool) -> void:
+	_animating = true
+	if get_is_alive():
+		_animate_staminabar(-amount)
+		if standard_hit_anim:
+			yield(_animate_hit(direction), "completed")
+		if _stamina_bar_animating:
+			yield(_stamina_bar, "animation_finished")
+	else:
+		if standard_hit_anim:
+			yield(animate_death(direction, true), "completed")
+	_animating = false
+	emit_signal("animation_finished")
+
+
+func _on_Stats_healed(amount: int) -> void:
+	_animate_staminabar(amount)
