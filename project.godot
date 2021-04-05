@@ -119,11 +119,6 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/game/Constants.gd"
 }, {
-"base": "Process",
-"class": "DamageActor",
-"language": "GDScript",
-"path": "res://src/processes/DamageActor.gd"
-}, {
 "base": "SkillAOE",
 "class": "DiamondAOE",
 "language": "GDScript",
@@ -214,11 +209,6 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/control/PlayerTurn.gd"
 }, {
-"base": "Reference",
-"class": "Process",
-"language": "GDScript",
-"path": "res://src/processes/Process.gd"
-}, {
 "base": "Node2D",
 "class": "Projectile",
 "language": "GDScript",
@@ -233,11 +223,6 @@ _global_script_classes=[ {
 "class": "PushAOE",
 "language": "GDScript",
 "path": "res://src/skills/aoe/PushAOE.gd"
-}, {
-"base": "Process",
-"class": "PushActor",
-"language": "GDScript",
-"path": "res://src/processes/PushActor.gd"
 }, {
 "base": "SkillEffect",
 "class": "PushAttackTargetEffect",
@@ -402,7 +387,6 @@ _global_script_class_icons={
 "ConditionIcons": "",
 "ConditionsPanel": "",
 "Constants": "",
-"DamageActor": "",
 "DiamondAOE": "",
 "DiamondRange": "",
 "Directions": "",
@@ -421,11 +405,9 @@ _global_script_class_icons={
 "PlayerPickActorState": "",
 "PlayerState": "",
 "PlayerTurn": "",
-"Process": "",
 "Projectile": "",
 "ProjectileEffect": "res://assets/editor/projectile_effect.png",
 "PushAOE": "",
-"PushActor": "",
 "PushAttackTargetEffect": "res://assets/editor/pushattack_effect.png",
 "RadialContainer": "",
 "RangeData": "",
