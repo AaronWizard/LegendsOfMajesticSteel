@@ -219,11 +219,6 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/skills/effects/ProjectileEffect.gd"
 }, {
-"base": "SkillAOE",
-"class": "PushAOE",
-"language": "GDScript",
-"path": "res://src/skills/aoe/PushAOE.gd"
-}, {
 "base": "SkillEffect",
 "class": "PushAttackTargetEffect",
 "language": "GDScript",
@@ -407,7 +402,6 @@ _global_script_class_icons={
 "PlayerTurn": "",
 "Projectile": "",
 "ProjectileEffect": "res://assets/editor/projectile_effect.png",
-"PushAOE": "",
 "PushAttackTargetEffect": "res://assets/editor/pushattack_effect.png",
 "RadialContainer": "",
 "RangeData": "",
