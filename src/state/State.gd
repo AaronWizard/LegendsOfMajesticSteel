@@ -11,3 +11,7 @@ func start(_data: Dictionary) -> void:
 
 func end() -> void:
 	pass
+
+
+func unhandled_input(_event: InputEvent) -> void:
+	pass
