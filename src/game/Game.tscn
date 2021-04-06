@@ -58,20 +58,20 @@ next_turn_state_path = NodePath("../NextTurnState")
 script = ExtResource( 8 )
 move_state_path = NodePath("../ActorMoveState")
 skill_state_path = NodePath("../ActorSkillState")
-next_turn_state_path = NodePath("../NextTurnState")
+turn_start_state_path = NodePath("../ActorStartTurnState")
 player_target_state_path = NodePath("../PlayerActorTargetState")
 
 [node name="PlayerActorTargetState" parent="StateMachine" instance=ExtResource( 12 )]
 move_state_path = NodePath("../ActorMoveState")
 skill_state_path = NodePath("../ActorSkillState")
-next_turn_state_path = NodePath("../NextTurnState")
+turn_start_state_path = NodePath("../ActorStartTurnState")
 player_move_state_path = NodePath("../PlayerActorMoveState")
 
 [node name="AIPickActorActionState" type="Node" parent="StateMachine"]
 script = ExtResource( 4 )
 move_state_path = NodePath("../ActorMoveState")
 skill_state_path = NodePath("../ActorSkillState")
-next_turn_state_path = NodePath("../NextTurnState")
+turn_start_state_path = NodePath("../ActorStartTurnState")
 
 [node name="ActorMoveState" type="Node" parent="StateMachine"]
 script = ExtResource( 9 )

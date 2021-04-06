@@ -4,11 +4,10 @@ extends PickActorState
 var _actor_picker := AIPickActor.new()
 
 
-#func _get_faction() -> int:
-#	return Actor.Faction.ENEMY
+func _get_faction() -> int:
+	return Actor.Faction.ENEMY
 
 
 func _choose_actor() -> void:
-	print(_actors)
 	var actor := _actor_picker.pick_actor(_actors, _game.map)
 	_pick_actor(actor)

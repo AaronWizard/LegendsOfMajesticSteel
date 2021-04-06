@@ -17,7 +17,6 @@ func _next_turn() -> void:
 	_game.refresh_range_data()
 
 	var faction := _game.turn_manager.next_faction()
-	print(faction)
 	match faction:
 		Actor.Faction.PLAYER:
 			_pick_actor(_player_pick_actor)
