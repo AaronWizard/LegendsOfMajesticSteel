@@ -55,32 +55,32 @@ func _run_self(target_cell: Vector2, source_cell: Vector2,
 	assert(get_child_count() == 1)
 
 	var targets := _get_targets(target_cell, source_cell, source_actor, map)
+	if not targets.empty():
+		var main_effect := _get_child_effect()
+		for _i in range(1, targets.size()):
+			var new_child := main_effect.duplicate()
+			add_child(new_child)
 
-	var main_effect := _get_child_effect()
-	for _i in range(1, targets.size()):
-		var new_child := main_effect.duplicate()
-		add_child(new_child)
+		assert(get_child_count() == targets.size())
 
-	assert(get_child_count() == targets.size())
+		var waiter := SignalWaiter.new()
+		for i in range(targets.size()):
+			var index := i as int
+			var aoe_target_cell := targets[index] as Vector2
+			var aoe_source_cell := _get_aoe_source_cell(source_cell, target_cell)
+			var child_effect := get_child(index) as SkillEffect
 
-	var waiter := SignalWaiter.new()
-	for i in range(targets.size()):
-		var index := i as int
-		var aoe_target_cell := targets[index] as Vector2
-		var aoe_source_cell := _get_aoe_source_cell(source_cell, target_cell)
-		var child_effect := get_child(index) as SkillEffect
+			child_effect.run(aoe_target_cell, aoe_source_cell, source_actor, map)
+			assert(child_effect.running)
+			waiter.wait_for_signal(child_effect, "finished")
 
-		child_effect.run(aoe_target_cell, aoe_source_cell, source_actor, map)
-		assert(child_effect.running)
-		waiter.wait_for_signal(child_effect, "finished")
+		if waiter.waiting:
+			yield(waiter, "finished")
 
-	if waiter.waiting:
-		yield(waiter, "finished")
-
-	while get_child_count() > 1:
-		var new_child := get_children().back() as Node
-		remove_child(new_child)
-		new_child.queue_free()
+		while get_child_count() > 1:
+			var new_child := get_children().back() as Node
+			remove_child(new_child)
+			new_child.queue_free()
 
 	assert(get_child_count() == 1)
 
