@@ -39,11 +39,5 @@ func clear_other_actor() -> void:
 	gui.other_actor = null
 
 
-func action_starting(action: Action) -> void:
-	mouse.dragging_enabled = false
-	camera.follow_actor(action.actor)
-	map_highlights.moves_visible = action.show_map_highlights()
-
-
 func _on_MouseControl_drag(relative: Vector2) -> void:
 	camera.drag(relative)

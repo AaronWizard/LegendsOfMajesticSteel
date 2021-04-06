@@ -206,6 +206,7 @@ func get_stamina_modifier() -> int:
 func start_battle() -> void:
 	stats.start_battle()
 	_stamina_bar.reset()
+	start_round()
 
 
 func start_round() -> void:

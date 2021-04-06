@@ -1,16 +1,22 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://src/game/Game.gd" type="Script" id=1]
 [ext_resource path="res://src/ui/BattleInterface.tscn" type="PackedScene" id=2]
 [ext_resource path="res://src/data/maps/Map00.tscn" type="PackedScene" id=3]
-[ext_resource path="res://src/game/turns/TurnManager.tscn" type="PackedScene" id=4]
+[ext_resource path="res://src/state/states/pickaction/AIPickActorActionState.gd" type="Script" id=4]
 [ext_resource path="res://src/state/StateMachine.gd" type="Script" id=5]
-[ext_resource path="res://src/state/State.gd" type="Script" id=6]
-[ext_resource path="res://src/state/states/PlayerPickActorState.tscn" type="PackedScene" id=7]
-[ext_resource path="res://src/state/states/PlayerActorMoveState.gd" type="Script" id=8]
+[ext_resource path="res://src/state/states/NextTurnState.gd" type="Script" id=6]
+[ext_resource path="res://src/state/states/pickactor/PlayerPickActorState.tscn" type="PackedScene" id=7]
+[ext_resource path="res://src/state/states/pickaction/PlayerActorMoveState.gd" type="Script" id=8]
+[ext_resource path="res://src/state/states/doaction/ActorMoveState.gd" type="Script" id=9]
 [ext_resource path="res://assets/graphics/ui/mouse_cursor.png" type="Texture" id=10]
 [ext_resource path="res://src/ui/MouseCursor.gd" type="Script" id=11]
-[ext_resource path="res://src/state/states/PlayerActorTargetState.tscn" type="PackedScene" id=12]
+[ext_resource path="res://src/state/states/pickaction/PlayerActorTargetState.tscn" type="PackedScene" id=12]
+[ext_resource path="res://src/state/states/doaction/ActorSkillState.gd" type="Script" id=13]
+[ext_resource path="res://src/game/TurnManager.gd" type="Script" id=14]
+[ext_resource path="res://src/state/states/pickactor/AIPickActorState.gd" type="Script" id=15]
+[ext_resource path="res://src/state/State.gd" type="Script" id=16]
+[ext_resource path="res://src/state/states/ActorStartTurnState.gd" type="Script" id=17]
 
 [node name="Game" type="Node"]
 script = ExtResource( 1 )
@@ -18,28 +24,62 @@ start_map_file = ExtResource( 3 )
 
 [node name="Map" type="Node" parent="."]
 
-[node name="TurnManager" parent="." instance=ExtResource( 4 )]
-
 [node name="BattleInterface" parent="." instance=ExtResource( 2 )]
+
+[node name="TurnManager" type="Node" parent="."]
+script = ExtResource( 14 )
 
 [node name="StateMachine" type="Node" parent="."]
 script = ExtResource( 5 )
-initial_state = NodePath("WaitState")
+initial_state = NodePath("Loading")
 
-[node name="WaitState" type="Node" parent="StateMachine"]
+[node name="Loading" type="Node" parent="StateMachine"]
+script = ExtResource( 16 )
+
+[node name="NextTurnState" type="Node" parent="StateMachine"]
 script = ExtResource( 6 )
+player_pick_actor_state_path = NodePath("../PlayerPickActorState")
+ai_pick_actor_state_path = NodePath("../AIPickActorState")
 
 [node name="PlayerPickActorState" parent="StateMachine" instance=ExtResource( 7 )]
-interface_path = NodePath("../../BattleInterface")
+turn_start_state_path = NodePath("../ActorStartTurnState")
+
+[node name="AIPickActorState" type="Node" parent="StateMachine"]
+script = ExtResource( 15 )
+turn_start_state_path = NodePath("../ActorStartTurnState")
+
+[node name="ActorStartTurnState" type="Node" parent="StateMachine"]
+script = ExtResource( 17 )
+player_turn_state_path = NodePath("../PlayerActorMoveState")
+ai_turn_state_path = NodePath("../AIPickActorActionState")
+next_turn_state_path = NodePath("../NextTurnState")
 
 [node name="PlayerActorMoveState" type="Node" parent="StateMachine"]
 script = ExtResource( 8 )
-interface_path = NodePath("../../BattleInterface")
-target_state_path = NodePath("../PlayerActorTargetState")
+move_state_path = NodePath("../ActorMoveState")
+skill_state_path = NodePath("../ActorSkillState")
+next_turn_state_path = NodePath("../NextTurnState")
+player_target_state_path = NodePath("../PlayerActorTargetState")
 
 [node name="PlayerActorTargetState" parent="StateMachine" instance=ExtResource( 12 )]
-interface_path = NodePath("../../BattleInterface")
-move_state_path = NodePath("../PlayerActorMoveState")
+move_state_path = NodePath("../ActorMoveState")
+skill_state_path = NodePath("../ActorSkillState")
+next_turn_state_path = NodePath("../NextTurnState")
+player_move_state_path = NodePath("../PlayerActorMoveState")
+
+[node name="AIPickActorActionState" type="Node" parent="StateMachine"]
+script = ExtResource( 4 )
+move_state_path = NodePath("../ActorMoveState")
+skill_state_path = NodePath("../ActorSkillState")
+next_turn_state_path = NodePath("../NextTurnState")
+
+[node name="ActorMoveState" type="Node" parent="StateMachine"]
+script = ExtResource( 9 )
+turn_start_state_path = NodePath("../ActorStartTurnState")
+
+[node name="ActorSkillState" type="Node" parent="StateMachine"]
+script = ExtResource( 13 )
+turn_start_state_path = NodePath("../ActorStartTurnState")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -49,10 +89,4 @@ centered = false
 offset = Vector2( -1, -1 )
 script = ExtResource( 11 )
 
-[connection signal="action_starting" from="TurnManager" to="." method="_on_TurnManager_action_starting"]
-[connection signal="actor_died" from="TurnManager" to="." method="_on_TurnManager_actor_died"]
-[connection signal="battle_started" from="TurnManager" to="." method="_on_TurnManager_battle_started"]
-[connection signal="player_turn_waiting_for_input" from="TurnManager" to="." method="_on_TurnManager_player_turn_waiting_for_input"]
-[connection signal="player_waiting_for_input" from="TurnManager" to="." method="_on_TurnManager_player_waiting_for_input"]
-[connection signal="turn_ended" from="TurnManager" to="." method="_on_TurnManager_turn_ended"]
-[connection signal="turn_started" from="TurnManager" to="." method="_on_TurnManager_turn_started"]
+[connection signal="round_started" from="TurnManager" to="." method="_on_TurnManager_round_started"]
