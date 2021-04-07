@@ -12,14 +12,16 @@ func start(data: Dictionary) -> void:
 	assert(_target)
 
 	_game.interface.camera.move_to_position(_target * Constants.TILE_SIZE)
-	_game.interface.mouse.dragging_enabled = false
-	_game.interface.map_highlights.moves_visible = false
 
 	.start(data)
 
 
 func end() -> void:
 	_skill = null
+
+
+func _show_move_range() -> bool:
+	return false
 
 
 func _run() -> void:

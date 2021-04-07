@@ -22,8 +22,6 @@ func start(data: Dictionary) -> void:
 	assert(_path[0] is Vector2)
 
 	_game.interface.camera.follow_actor(_game.current_actor)
-	_game.interface.mouse.dragging_enabled = false
-	_game.interface.map_highlights.moves_visible = true
 
 	.start(data)
 

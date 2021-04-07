@@ -1,8 +1,6 @@
 class_name AIPickActorActionState
 extends PickActorActionState
 
-const _PAUSE_TIME := 0.3
-
 var _actor_ai := AIActorTurn.new()
 
 
@@ -11,8 +9,6 @@ func start(_data: Dictionary) -> void:
 
 
 func _pick_action() -> void:
-	yield(get_tree().create_timer(_PAUSE_TIME), "timeout")
-
 	var action := _actor_ai.pick_action(_game.current_actor, _game.map)
 	match (action.type as int):
 		AIActorTurn.ActionType.MOVE:
