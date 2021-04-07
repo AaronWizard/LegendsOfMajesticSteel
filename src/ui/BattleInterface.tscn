@@ -12,6 +12,7 @@ script = ExtResource( 5 )
 [node name="MapHighlights" parent="." instance=ExtResource( 1 )]
 
 [node name="GameCamera" parent="." instance=ExtResource( 2 )]
+smoothing_speed = 6.0
 
 [node name="MouseControl" type="Node" parent="."]
 script = ExtResource( 4 )
