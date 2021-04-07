@@ -1,7 +1,7 @@
 class_name ActorActionState
 extends GameState
 
-const _POST_TURN_WAIT_TIME := 0.2
+const _POST_TURN_WAIT_TIME := 0.25
 
 export var turn_start_state_path: NodePath
 export var next_turn_state_path: NodePath

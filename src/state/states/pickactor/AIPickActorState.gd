@@ -1,7 +1,7 @@
 class_name AIPickActorState
 extends PickActorState
 
-const _PAUSE_TIME := 0.3
+const _PAUSE_TIME := 0.4
 
 var _actor_picker := AIPickActor.new()
 
@@ -16,5 +16,6 @@ func _choose_actor() -> void:
 
 
 func _pick_actor(actor: Actor) -> void:
+	_game.start_turn(actor)
 	yield(get_tree().create_timer(_PAUSE_TIME), "timeout")
-	._pick_actor(actor)
+	emit_signal("state_change_requested", _turn_start_state)
