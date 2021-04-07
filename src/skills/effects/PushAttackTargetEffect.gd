@@ -37,7 +37,7 @@ func predict_damage(target_cell: Vector2, source_cell: Vector2,
 	var blocking_actors := _get_blocking_actors(actor, map, direction, end_cell)
 
 	var attack := source_actor.stats.attack
-	if not blocking_actors.empty():
+	if real_distance < max_distance:
 		attack *= 2
 	var damage := actor.stats.damage_from_attack(attack)
 	result[actor] = -damage
