@@ -33,4 +33,5 @@ func _finish() -> void:
 		_game.end_turn()
 		emit_signal("state_change_requested", _next_turn_state)
 	else:
+		_game.refresh_range_data(true)
 		emit_signal("state_change_requested", _turn_start_state)

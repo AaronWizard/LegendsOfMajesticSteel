@@ -42,10 +42,10 @@ func get_turn_manager() -> TurnManager:
 	return _turn_manager
 
 
-func refresh_range_data(actor_to_exclude: Actor = null) -> void:
+func refresh_range_data(exclude_current: bool) -> void:
 	for a in _map.get_actors():
 		var actor := a as Actor
-		if actor != actor_to_exclude:
+		if not exclude_current or actor != _current_actor:
 			actor.range_data = RangeDataFactory.create_range_data(actor, _map)
 
 

@@ -14,7 +14,7 @@ func start(_data: Dictionary) -> void:
 
 
 func _next_turn() -> void:
-	_game.refresh_range_data()
+	_game.refresh_range_data(false)
 
 	var faction := _game.turn_manager.next_faction()
 	match faction:
