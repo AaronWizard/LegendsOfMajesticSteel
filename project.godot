@@ -40,7 +40,7 @@ _global_script_classes=[ {
 "path": "res://src/actors/Actor.gd"
 }, {
 "base": "GameState",
-"class": "ActorAction",
+"class": "ActorActionState",
 "language": "GDScript",
 "path": "res://src/state/states/doaction/ActorActionState.gd"
 }, {
@@ -54,12 +54,12 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/ui/battle/ActorDetailsPanel.gd"
 }, {
-"base": "ActorAction",
+"base": "ActorActionState",
 "class": "ActorMoveState",
 "language": "GDScript",
 "path": "res://src/state/states/doaction/ActorMoveState.gd"
 }, {
-"base": "ActorAction",
+"base": "ActorActionState",
 "class": "ActorSkillState",
 "language": "GDScript",
 "path": "res://src/state/states/doaction/ActorSkillState.gd"
@@ -376,7 +376,7 @@ _global_script_class_icons={
 "AIPickActorState": "",
 "ActionMenu": "",
 "Actor": "res://assets/editor/actor.png",
-"ActorAction": "",
+"ActorActionState": "",
 "ActorDefinition": "",
 "ActorDetailsPanel": "",
 "ActorMoveState": "",

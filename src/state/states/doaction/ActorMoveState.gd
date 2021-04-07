@@ -1,5 +1,5 @@
 class_name ActorMoveState
-extends ActorAction
+extends ActorActionState
 
 var _path: Array
 
@@ -25,12 +25,14 @@ func start(data: Dictionary) -> void:
 	_game.interface.mouse.dragging_enabled = false
 	_game.interface.map_highlights.moves_visible = true
 
-	call_deferred("_move")
+	.start(data)
 
 
-func _move() -> void:
+func _ends_turn() -> bool:
+	return false
+
+
+func _run() -> void:
 	while _path.size() > 0:
 		var cell := _path.pop_front() as Vector2
 		yield(_game.current_actor.move_step(cell), "completed")
-
-	_finish(false)

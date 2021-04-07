@@ -62,10 +62,12 @@ func _get_active_actors(faction: int) -> Array:
 
 func start_turn(actor: Actor) -> void:
 	_current_actor = actor
-	interface.set_current_actor(actor)
+	_current_actor.start_turn()
+	_interface.set_current_actor(actor)
 
 
 func end_turn() -> void:
+	_current_actor.end_turn()
 	_current_actor = null
 	_interface.clear_current_actor()
 	_turn_manager.advance_turn()

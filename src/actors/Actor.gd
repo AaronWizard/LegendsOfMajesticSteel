@@ -217,10 +217,11 @@ func start_round() -> void:
 
 
 func start_turn() -> void:
+	assert(_turns_left > 0)
 	_did_skill = false
 
 
-func take_turn() -> void:
+func end_turn() -> void:
 	_did_skill = true
 	_turns_left -= 1
 	if get_round_finished():

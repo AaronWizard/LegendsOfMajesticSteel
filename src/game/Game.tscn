@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://src/game/Game.gd" type="Script" id=1]
 [ext_resource path="res://src/ui/BattleInterface.tscn" type="PackedScene" id=2]
@@ -17,6 +17,7 @@
 [ext_resource path="res://src/state/states/pickactor/AIPickActorState.gd" type="Script" id=15]
 [ext_resource path="res://src/state/State.gd" type="Script" id=16]
 [ext_resource path="res://src/state/states/ActorStartTurnState.gd" type="Script" id=17]
+[ext_resource path="res://src/state/states/doaction/ActorActionState.gd" type="Script" id=18]
 
 [node name="Game" type="Node"]
 script = ExtResource( 1 )
@@ -52,34 +53,40 @@ turn_start_state_path = NodePath("../ActorStartTurnState")
 script = ExtResource( 17 )
 player_turn_state_path = NodePath("../PlayerActorMoveState")
 ai_turn_state_path = NodePath("../AIPickActorActionState")
-next_turn_state_path = NodePath("../NextTurnState")
 
 [node name="PlayerActorMoveState" type="Node" parent="StateMachine"]
 script = ExtResource( 8 )
 move_state_path = NodePath("../ActorMoveState")
 skill_state_path = NodePath("../ActorSkillState")
-turn_start_state_path = NodePath("../ActorStartTurnState")
+wait_state_path = NodePath("../ActorWaitState")
 player_target_state_path = NodePath("../PlayerActorTargetState")
 
 [node name="PlayerActorTargetState" parent="StateMachine" instance=ExtResource( 12 )]
 move_state_path = NodePath("../ActorMoveState")
 skill_state_path = NodePath("../ActorSkillState")
-turn_start_state_path = NodePath("../ActorStartTurnState")
+wait_state_path = NodePath("../ActorWaitState")
 player_move_state_path = NodePath("../PlayerActorMoveState")
 
 [node name="AIPickActorActionState" type="Node" parent="StateMachine"]
 script = ExtResource( 4 )
 move_state_path = NodePath("../ActorMoveState")
 skill_state_path = NodePath("../ActorSkillState")
-turn_start_state_path = NodePath("../ActorStartTurnState")
+wait_state_path = NodePath("../ActorWaitState")
 
 [node name="ActorMoveState" type="Node" parent="StateMachine"]
 script = ExtResource( 9 )
 turn_start_state_path = NodePath("../ActorStartTurnState")
+next_turn_state_path = NodePath("../NextTurnState")
 
 [node name="ActorSkillState" type="Node" parent="StateMachine"]
 script = ExtResource( 13 )
 turn_start_state_path = NodePath("../ActorStartTurnState")
+next_turn_state_path = NodePath("../NextTurnState")
+
+[node name="ActorWaitState" type="Node" parent="StateMachine"]
+script = ExtResource( 18 )
+turn_start_state_path = NodePath("../ActorStartTurnState")
+next_turn_state_path = NodePath("../NextTurnState")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
