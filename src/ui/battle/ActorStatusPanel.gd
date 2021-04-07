@@ -3,8 +3,6 @@ extends PanelContainer
 
 signal portrait_pressed
 
-var _actor: Actor
-
 onready var _portrait := $HBoxContainer/Portrait as Button
 onready var _name := $HBoxContainer/VBoxContainer/Name as Label
 
@@ -34,10 +32,6 @@ func set_actor(actor: Actor) -> void:
 
 	_current_stamina.text = str(actor.stats.stamina)
 
-	# warning-ignore:return_value_discarded
-	actor.stats.connect("conditions_changed", self, "_set_conditions", [actor])
-	_actor = actor
-
 
 func clear() -> void:
 	_portrait.icon = null
@@ -45,10 +39,6 @@ func clear() -> void:
 	_name.text = ""
 	_stamina_bar.value = 0
 	_current_stamina.text = ""
-
-	if _actor:
-		_actor.stats.disconnect("conditions_changed", self, "_set_conditions")
-		_actor = null
 
 
 func _on_Portrait_pressed() -> void:
