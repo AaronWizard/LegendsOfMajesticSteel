@@ -342,6 +342,8 @@ func animate_attack(direction: Vector2, reduce_lunge := false,
 func animate_death(direction: Vector2, play_hit_sound: bool) -> void:
 	emit_signal("dying")
 
+	_stamina_bar.visible = false
+
 	var real_direction := direction.normalized()
 	var new_offset := get_cell_offset() \
 			+ (real_direction * _AnimationDistances.DEATH)
