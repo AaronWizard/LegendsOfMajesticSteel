@@ -129,11 +129,6 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/ui/actor/ConditionIcons.gd"
 }, {
-"base": "HBoxContainer",
-"class": "ConditionsPanel",
-"language": "GDScript",
-"path": "res://src/ui/battle/ConditionsPanel.gd"
-}, {
 "base": "Reference",
 "class": "Constants",
 "language": "GDScript",
@@ -394,7 +389,6 @@ _global_script_class_icons={
 "Condition": "",
 "ConditionEffect": "res://assets/editor/condition_effect.png",
 "ConditionIcons": "",
-"ConditionsPanel": "",
 "Constants": "",
 "DiamondAOE": "",
 "DiamondRange": "",

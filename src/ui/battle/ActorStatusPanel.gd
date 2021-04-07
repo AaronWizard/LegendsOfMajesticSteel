@@ -20,9 +20,6 @@ onready var _stamina_bar := _defence_stats.get_node(
 onready var _current_stamina := _defence_stats.get_node("CurrentStamina") \
 		as Label
 
-onready var _conditions := $HBoxContainer/VBoxContainer/ConditionsPanel \
-		as ConditionsPanel
-
 
 func set_actor(actor: Actor) -> void:
 	clear()
@@ -37,7 +34,6 @@ func set_actor(actor: Actor) -> void:
 
 	_current_stamina.text = str(actor.stats.stamina)
 
-	_set_conditions(actor)
 	# warning-ignore:return_value_discarded
 	actor.stats.connect("conditions_changed", self, "_set_conditions", [actor])
 	_actor = actor
@@ -55,19 +51,5 @@ func clear() -> void:
 		_actor = null
 
 
-func _set_conditions(actor: Actor) -> void:
-	_conditions.update_icons(actor.stats)
-
-
 func _on_Portrait_pressed() -> void:
 	emit_signal("portrait_pressed")
-
-
-static func _stat_mod_type(mod: int) -> int:
-	var result = ConditionsPanel.StatMod.SAME
-	if mod != 0:
-		if mod > 0:
-			result = ConditionsPanel.StatMod.UP
-		else:
-			result = ConditionsPanel.StatMod.DOWN
-	return result
