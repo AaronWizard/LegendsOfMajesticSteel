@@ -38,6 +38,8 @@ func _run() -> void:
 
 
 func _finish() -> void:
+	_game.map.update_terrain_effects()
+
 	if not _game.current_actor.is_alive or _ends_turn():
 		_game.end_turn()
 		yield(get_tree().create_timer(_POST_TURN_WAIT_TIME), "timeout")
