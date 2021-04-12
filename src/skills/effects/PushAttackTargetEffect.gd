@@ -104,9 +104,9 @@ func _run_self(target_cell: Vector2, source_cell: Vector2,
 			"completed"
 		)
 	elif real_distance < max_distance:
-		actor.animate_death(-direction, false)
+		yield(actor.animate_death(-direction, false), "completed")
 	else:
-		actor.animate_death(direction, false)
+		yield(actor.animate_death(direction, false), "completed")
 
 	if actor.animating:
 		yield(actor, "animation_finished")
