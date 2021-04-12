@@ -61,6 +61,7 @@ func _get_active_actors(faction: int) -> Array:
 
 
 func start_turn(actor: Actor) -> void:
+	assert(actor.is_alive)
 	_current_actor = actor
 	_current_actor.start_turn()
 	_interface.set_current_actor(actor)

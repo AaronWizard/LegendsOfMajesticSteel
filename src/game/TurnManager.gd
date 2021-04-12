@@ -17,6 +17,9 @@ func roll_initiative(actors: Array) -> void:
 		var actor := a as Actor
 		_turn_order.append(actor.faction)
 
+	randomize()
+	_turn_order.shuffle()
+
 
 func get_turn_order() -> Array:
 	return _turn_order.duplicate()
@@ -40,9 +43,9 @@ func remove_actor(actor: Actor) -> int:
 	else:
 		index = _turn_order.rfind(actor.faction)
 
-	if index > -1:
-		_turn_order.remove(index)
-		if index < _turn_index:
-			_turn_index -= 1
+	assert(index > -1)
+	_turn_order.remove(index)
+	if index < _turn_index:
+		_turn_index -= 1
 
 	return index
