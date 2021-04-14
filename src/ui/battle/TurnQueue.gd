@@ -48,6 +48,7 @@ func next_turn() -> void:
 
 	# warning-ignore:return_value_discarded
 	_tween.start()
+	_update_min_size()
 
 
 func remove_icon(index: int) -> void:
@@ -57,8 +58,6 @@ func remove_icon(index: int) -> void:
 
 	if index < _turn_index:
 		_turn_index -= 1
-
-	_update_min_size()
 
 
 func clear() -> void:

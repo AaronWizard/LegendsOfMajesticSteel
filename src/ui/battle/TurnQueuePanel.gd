@@ -20,11 +20,11 @@ func set_queue(turn_order: Array) -> void:
 
 func next_turn() -> void:
 	_queue.next_turn()
+	_animate_resize()
 
 
 func remove_icon(index: int) -> void:
 	_queue.remove_icon(index)
-	_animate_resize()
 
 
 func _resize_panel() -> void:

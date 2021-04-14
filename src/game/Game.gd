@@ -77,7 +77,7 @@ func end_turn() -> void:
 
 func _load_map(map_file: PackedScene) -> void:
 	if _map != null:
-		_map.disconnect("actor_removed", self, "_on_map_actor_removed")
+		_map.disconnect("actor_dying", self, "_on_map_actor_dying")
 		_map_container.remove_child(_map)
 		_map.queue_free()
 		_map = null
@@ -92,7 +92,7 @@ func _load_map(map_file: PackedScene) -> void:
 	_interface.current_map = new_map
 
 	# warning-ignore:return_value_discarded
-	_map.connect("actor_removed", self, "_on_map_actor_removed")
+	_map.connect("actor_dying", self, "_on_map_actor_dying")
 
 
 func _start_battle() -> void:
@@ -106,7 +106,7 @@ func _start_battle() -> void:
 	_state_machine.change_state(_next_turn_state)
 
 
-func _on_map_actor_removed(actor: Actor) -> void:
+func _on_map_actor_dying(actor: Actor) -> void:
 	var turn_index := _turn_manager.remove_actor(actor)
 	_interface.gui.turn_queue.remove_icon(turn_index)
 
