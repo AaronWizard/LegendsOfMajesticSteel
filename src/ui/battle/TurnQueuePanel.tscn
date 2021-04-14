@@ -1,7 +1,6 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://src/ui/battle/TurnQueuePanel.gd" type="Script" id=1]
-[ext_resource path="res://assets/graphics/ui/icons/turnqueue/current_turn_cursor.png" type="Texture" id=2]
 [ext_resource path="res://resources/visual/gui/theme_standard.tres" type="Theme" id=3]
 [ext_resource path="res://src/ui/battle/TurnQueue.tscn" type="PackedScene" id=4]
 
@@ -20,7 +19,6 @@ __meta__ = {
 margin_right = 14.0
 margin_bottom = 14.0
 rect_min_size = Vector2( 14, 14 )
-rect_clip_content = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -41,14 +39,6 @@ __meta__ = {
 [node name="QueueBlock" type="Control" parent="Panel/ScrollBlock/Scroll"]
 
 [node name="TurnQueue" parent="Panel/ScrollBlock/Scroll/QueueBlock" instance=ExtResource( 4 )]
-
-[node name="CurrentTurnCursor" type="TextureRect" parent="Panel/ScrollBlock/Scroll/QueueBlock"]
-margin_right = 8.0
-margin_bottom = 8.0
-texture = ExtResource( 2 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Tween" type="Tween" parent="."]
 
