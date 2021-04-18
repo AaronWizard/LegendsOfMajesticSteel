@@ -1,4 +1,4 @@
-class_name TileProperties
+class_name TileProperties, "res://assets/editor/tile_properties.png"
 extends Resource
 
 export(Array, String) var tile_names := PoolStringArray()

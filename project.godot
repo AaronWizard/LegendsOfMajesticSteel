@@ -443,8 +443,8 @@ _global_script_class_icons={
 "TargetingData": "",
 "TileGeometry": "",
 "TileObject": "",
-"TileProperties": "",
-"TilePropertiesSet": "",
+"TileProperties": "res://assets/editor/tile_properties.png",
+"TilePropertiesSet": "res://assets/editor/tile_properties_set.png",
 "TurnManager": "",
 "TurnQueue": "",
 "TurnQueuePanel": ""

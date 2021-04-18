@@ -1,4 +1,4 @@
-class_name TilePropertiesSet
+class_name TilePropertiesSet, "res://assets/editor/tile_properties_set.png"
 extends Resource
 
 export(Array, Resource) var properties := []
