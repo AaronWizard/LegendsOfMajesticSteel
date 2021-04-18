@@ -1,6 +1,6 @@
 [gd_scene load_steps=10 format=2]
 
-[ext_resource path="res://src/maps/effects/MapAnimation.tscn" type="PackedScene" id=1]
+[ext_resource path="res://src/core/maps/effects/MapAnimation.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/sounds/shinestrike_swoosh.wav" type="AudioStream" id=2]
 [ext_resource path="res://assets/graphics/effects/shining_strike.png" type="Texture" id=3]
 

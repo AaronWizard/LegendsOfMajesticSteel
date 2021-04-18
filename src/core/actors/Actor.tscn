@@ -1,21 +1,21 @@
 [gd_scene load_steps=22 format=2]
 
-[ext_resource path="res://src/maps/tiles/TileObject.tscn" type="PackedScene" id=1]
-[ext_resource path="res://resources/visual/shaders/dissolve_shader.shader" type="Shader" id=2]
-[ext_resource path="res://resources/visual/animations/actor_death.tres" type="Animation" id=3]
-[ext_resource path="res://src/actors/Actor.gd" type="Script" id=4]
-[ext_resource path="res://src/ui/actor/ConditionIcons.tscn" type="PackedScene" id=5]
-[ext_resource path="res://src/actors/Stats.gd" type="Script" id=6]
-[ext_resource path="res://assets/sounds/step.wav" type="AudioStream" id=7]
+[ext_resource path="res://src/core/actors/Actor.gd" type="Script" id=1]
+[ext_resource path="res://assets/graphics/actors/fighter.png" type="Texture" id=2]
+[ext_resource path="res://src/core/actors/Stats.gd" type="Script" id=3]
+[ext_resource path="res://src/core/actors/ActorTurnStatus.gd" type="Script" id=4]
+[ext_resource path="res://src/core/maps/TargetCursor.tscn" type="PackedScene" id=5]
+[ext_resource path="res://resources/visual/shaders/dissolve_shader.shader" type="Shader" id=6]
+[ext_resource path="res://src/core/maps/tiles/TileObject.tscn" type="PackedScene" id=7]
 [ext_resource path="res://assets/sounds/hit.wav" type="AudioStream" id=8]
-[ext_resource path="res://assets/sounds/death.wav" type="AudioStream" id=9]
-[ext_resource path="res://resources/visual/animations/actor_idle.tres" type="Animation" id=10]
-[ext_resource path="res://assets/sounds/melee_swing.wav" type="AudioStream" id=11]
-[ext_resource path="res://src/actors/ActorTurnStatus.gd" type="Script" id=12]
-[ext_resource path="res://src/ui/actor/StaminaBar.tscn" type="PackedScene" id=14]
-[ext_resource path="res://src/maps/TargetCursor.tscn" type="PackedScene" id=19]
-[ext_resource path="res://assets/graphics/ui/icons/wait.png" type="Texture" id=24]
-[ext_resource path="res://assets/graphics/actors/fighter.png" type="Texture" id=25]
+[ext_resource path="res://resources/visual/animations/actor_death.tres" type="Animation" id=9]
+[ext_resource path="res://assets/sounds/step.wav" type="AudioStream" id=10]
+[ext_resource path="res://src/ui/actor/ConditionIcons.tscn" type="PackedScene" id=11]
+[ext_resource path="res://assets/sounds/death.wav" type="AudioStream" id=12]
+[ext_resource path="res://resources/visual/animations/actor_idle.tres" type="Animation" id=13]
+[ext_resource path="res://assets/sounds/melee_swing.wav" type="AudioStream" id=14]
+[ext_resource path="res://assets/graphics/ui/icons/wait.png" type="Texture" id=15]
+[ext_resource path="res://src/ui/actor/StaminaBar.tscn" type="PackedScene" id=16]
 
 [sub_resource type="OpenSimplexNoise" id=1]
 period = 4.0
@@ -28,7 +28,7 @@ noise = SubResource( 1 )
 
 [sub_resource type="ShaderMaterial" id=3]
 resource_local_to_scene = true
-shader = ExtResource( 2 )
+shader = ExtResource( 6 )
 shader_param/dissolve = 0.0
 shader_param/dissolve_texture = SubResource( 2 )
 
@@ -45,26 +45,26 @@ color = Color( 0.941176, 0.964706, 0.941176, 1 )
 
 [sub_resource type="SpriteFrames" id=5]
 animations = [ {
-"frames": [ ExtResource( 24 ), null ],
+"frames": [ ExtResource( 15 ), null ],
 "loop": true,
 "name": "default",
 "speed": 2.0
 } ]
 
-[node name="Actor" instance=ExtResource( 1 )]
-script = ExtResource( 4 )
+[node name="Actor" instance=ExtResource( 7 )]
+script = ExtResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="Center/Offset" index="0"]
 material = SubResource( 3 )
-texture = ExtResource( 25 )
+texture = ExtResource( 2 )
 hframes = 4
 
-[node name="StaminaBar" parent="Center/Offset/Sprite" index="0" instance=ExtResource( 14 )]
+[node name="StaminaBar" parent="Center/Offset/Sprite" index="0" instance=ExtResource( 16 )]
 visible = false
 position = Vector2( 0, -12 )
 z_index = 1
 
-[node name="ConditionIcons" parent="Center/Offset/Sprite" index="1" instance=ExtResource( 5 )]
+[node name="ConditionIcons" parent="Center/Offset/Sprite" index="1" instance=ExtResource( 11 )]
 position = Vector2( -12, -12 )
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="Center/Offset" index="1"]
@@ -82,10 +82,10 @@ __meta__ = {
 }
 
 [node name="TurnStatus" type="Node" parent="." index="1"]
-script = ExtResource( 12 )
+script = ExtResource( 4 )
 
 [node name="Stats" type="Node" parent="." index="2"]
-script = ExtResource( 6 )
+script = ExtResource( 3 )
 
 [node name="Skills" type="Node" parent="." index="3"]
 
@@ -98,27 +98,27 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="TargetCursor" parent="." index="5" instance=ExtResource( 19 )]
+[node name="TargetCursor" parent="." index="5" instance=ExtResource( 5 )]
 visible = false
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." index="6"]
 autoplay = "actor_idle"
-anims/actor_death = ExtResource( 3 )
-anims/actor_idle = ExtResource( 10 )
+anims/actor_death = ExtResource( 9 )
+anims/actor_idle = ExtResource( 13 )
 
 [node name="Tween" type="Tween" parent="." index="7"]
 
 [node name="StepSound" type="AudioStreamPlayer" parent="." index="8"]
-stream = ExtResource( 7 )
+stream = ExtResource( 10 )
 
 [node name="MeleeAttackSound" type="AudioStreamPlayer" parent="." index="9"]
-stream = ExtResource( 11 )
+stream = ExtResource( 14 )
 
 [node name="HitSound" type="AudioStreamPlayer" parent="." index="10"]
 stream = ExtResource( 8 )
 
 [node name="DeathSound" type="AudioStreamPlayer" parent="." index="11"]
-stream = ExtResource( 9 )
+stream = ExtResource( 12 )
 
 [connection signal="animation_finished" from="Center/Offset/Sprite/StaminaBar" to="." method="_on_StaminaBar_animation_finished"]
 [connection signal="round_finished" from="TurnStatus" to="." method="_on_TurnStatus_round_finished"]

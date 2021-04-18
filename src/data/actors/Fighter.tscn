@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://resources/visual/shaders/dissolve_shader.shader" type="Shader" id=1]
-[ext_resource path="res://src/actors/Actor.tscn" type="PackedScene" id=2]
+[ext_resource path="res://src/core/actors/Actor.tscn" type="PackedScene" id=2]
 [ext_resource path="res://resources/data/stats/Fighter.tres" type="Resource" id=3]
 
 [sub_resource type="OpenSimplexNoise" id=1]

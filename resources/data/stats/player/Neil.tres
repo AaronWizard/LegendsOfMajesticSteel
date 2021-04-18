@@ -2,7 +2,7 @@
 
 [ext_resource path="res://src/data/skills/NimbleRangedAttack.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/graphics/actors/barbarian.png" type="Texture" id=2]
-[ext_resource path="res://src/actors/ActorDefinition.gd" type="Script" id=3]
+[ext_resource path="res://src/core/actors/ActorDefinition.gd" type="Script" id=3]
 [ext_resource path="res://src/data/skills/KnockbackShot.tscn" type="PackedScene" id=4]
 
 [resource]

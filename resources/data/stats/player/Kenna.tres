@@ -1,8 +1,8 @@
 [gd_resource type="Resource" load_steps=5 format=2]
 
 [ext_resource path="res://assets/graphics/actors/warrior_maiden.png" type="Texture" id=1]
-[ext_resource path="res://src/skills/skills/MeleeAttack.tscn" type="PackedScene" id=2]
-[ext_resource path="res://src/actors/ActorDefinition.gd" type="Script" id=3]
+[ext_resource path="res://src/core/skills/skills/MeleeAttack.tscn" type="PackedScene" id=2]
+[ext_resource path="res://src/core/actors/ActorDefinition.gd" type="Script" id=3]
 [ext_resource path="res://src/data/skills/ShineStrike.tscn" type="PackedScene" id=4]
 
 [resource]
