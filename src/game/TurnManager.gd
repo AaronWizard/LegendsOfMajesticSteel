@@ -38,7 +38,7 @@ func advance_turn() -> void:
 func remove_actor(actor: Actor) -> int:
 	var index: int
 
-	if actor.round_finished:
+	if actor.turn_status.round_finished:
 		index = _turn_order.rfind(actor.faction, _turn_index)
 	else:
 		index = _turn_order.rfind(actor.faction)

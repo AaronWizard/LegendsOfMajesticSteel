@@ -14,7 +14,6 @@ func start(_data: Dictionary) -> void:
 
 func _start_turn() -> void:
 	assert(_game.current_actor.is_alive)
-	assert(not _game.current_actor.turn_finished)
 
 	match _game.current_actor.faction:
 		Actor.Faction.PLAYER:

@@ -47,15 +47,13 @@ export(Faction) var faction := Faction.ENEMY
 
 var portrait: Texture setget , get_portrait
 
+var turn_status: ActorTurnStatus setget , get_turn_status
 var stats: Stats setget , get_stats
 var skills: Array setget , get_skills
 
 var range_data: RangeData
 
 var is_alive: bool setget , get_is_alive
-
-var turn_finished: bool setget , get_turn_finished
-var round_finished: bool setget , get_round_finished
 
 var target_visible: bool setget set_target_visible, get_target_visible
 var stamina_modifier: int setget set_stamina_modifier, get_stamina_modifier
@@ -65,9 +63,6 @@ var pose: int = Pose.IDLE setget set_pose
 var animating: bool setget , get_is_animating
 
 var _animating := false
-
-var _did_skill: bool = false
-var _turns_left: int = false
 
 var _stamina_bar_animating := false
 
@@ -135,7 +130,7 @@ func set_actor_definition(value: Resource) -> void:
 		if _sprite:
 			_sprite.texture = ad.sprite
 
-		if not Engine.editor_int:
+		if not Engine.editor_hint:
 			get_stats().init_from_def(ad)
 			for s in ad.skills:
 				var skill_scene := s as PackedScene
@@ -155,16 +150,15 @@ func get_is_alive() -> bool:
 	return result
 
 
-func get_turn_finished() -> bool:
-	return _did_skill
-
-
-func get_round_finished() -> bool:
-	return _turns_left == 0
-
-
 func set_target_visible(new_value: bool) -> void:
 	_target_cursor.visible = new_value
+
+
+func get_turn_status() -> ActorTurnStatus:
+	var result: ActorTurnStatus = null
+	if $TurnStatus:
+		result = $TurnStatus as ActorTurnStatus
+	return result
 
 
 func get_stats() -> Stats:
@@ -172,6 +166,7 @@ func get_stats() -> Stats:
 	if $Stats:
 		result = $Stats as Stats
 	return result
+
 
 func get_skills() -> Array:
 	var result := []
@@ -214,26 +209,7 @@ func get_stamina_modifier() -> int:
 func start_battle() -> void:
 	get_stats().start_battle()
 	_stamina_bar.reset()
-	start_round()
-
-
-func start_round() -> void:
-	_wait_icon.visible = false
-	_turns_left = 1
-
-	get_stats().start_round()
-
-
-func start_turn() -> void:
-	assert(_turns_left > 0)
-	_did_skill = false
-
-
-func end_turn() -> void:
-	_did_skill = true
-	_turns_left -= 1
-	if get_round_finished():
-		_wait_icon.visible = true
+	get_turn_status().start_round()
 
 
 func set_pose(value: int) -> void:
@@ -427,6 +403,15 @@ func _animate_hit(direction: Vector2) -> void:
 func _on_StaminaBar_animation_finished() -> void:
 	_stamina_bar_animating = false
 	_stamina_bar.visible = false
+
+
+func _on_TurnStatus_round_started() -> void:
+	_wait_icon.visible = false
+	get_stats().start_round()
+
+
+func _on_TurnStatus_round_finished() -> void:
+	_wait_icon.visible = true
 
 
 func _on_Stats_conditions_changed() -> void:
