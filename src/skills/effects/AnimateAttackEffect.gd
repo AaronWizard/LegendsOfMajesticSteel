@@ -1,5 +1,5 @@
 class_name AnimateAttackEffect, "res://assets/editor/animateattack_effect.png"
-extends SkillEffect
+extends SkillEffectWrapper
 
 export var target_is_actor := false
 export var reduce_lunge := false
@@ -8,20 +8,12 @@ export var default_sound := true
 
 func get_aoe(target_cell: Vector2, source_cell: Vector2, source_actor: Actor,
 		map: Map) -> Array:
-	var result := []
-	if _onhit_effect():
-		result = _onhit_effect().get_aoe(
-				target_cell, source_cell, source_actor, map)
-	return result
+	return _child_aoe(target_cell, source_cell, source_actor, map)
 
 
 func predict_damage(target_cell: Vector2, source_cell: Vector2,
 		source_actor: Actor, map: Map) -> Dictionary:
-	var result := {}
-	if _onhit_effect():
-		result = _onhit_effect().predict_damage(
-				target_cell, source_cell, source_actor, map)
-	return result
+	return _predict_child_damage(target_cell, source_cell, source_actor, map)
 
 
 func _run_self(target_cell: Vector2, source_cell: Vector2,
@@ -35,17 +27,13 @@ func _run_self(target_cell: Vector2, source_cell: Vector2,
 
 	source_actor.animate_attack(direction, reduce_lunge, default_sound)
 
-	if _onhit_effect():
+	if _child_effect():
 		yield(source_actor, "attack_hit")
-		_onhit_effect().run(target_cell, source_cell, source_actor, map)
-		yield(_onhit_effect(), "finished")
+
+		var child_state = _run_child_effect(target_cell, source_cell,
+				source_actor, map)
+		if child_state is GDScriptFunctionState:
+			yield(child_state, "completed")
 
 	if source_actor.animating:
 		yield(source_actor, "animation_finished")
-
-
-func _onhit_effect() -> SkillEffect:
-	var result: SkillEffect = null
-	if get_child_count() > 0:
-		result = get_child(0) as SkillEffect
-	return result

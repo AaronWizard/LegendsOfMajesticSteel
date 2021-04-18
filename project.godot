@@ -84,12 +84,12 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/skills/effects/AddConditionToTargetEffect.gd"
 }, {
-"base": "SkillEffect",
+"base": "SkillEffectWrapper",
 "class": "AnimateAttackEffect",
 "language": "GDScript",
 "path": "res://src/skills/effects/AnimateAttackEffect.gd"
 }, {
-"base": "SkillEffect",
+"base": "SkillEffectWrapper",
 "class": "AoeEffect",
 "language": "GDScript",
 "path": "res://src/skills/effects/AoeEffect.gd"
@@ -239,7 +239,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/skills/effects/ProjectileEffect.gd"
 }, {
-"base": "SkillEffect",
+"base": "SkillEffectWrapper",
 "class": "PushAttackTargetEffect",
 "language": "GDScript",
 "path": "res://src/skills/effects/PushAttackTargetEffect.gd"
@@ -283,6 +283,11 @@ _global_script_classes=[ {
 "class": "SkillEffectGroup",
 "language": "GDScript",
 "path": "res://src/skills/effects/SkillEffectGroup.gd"
+}, {
+"base": "SkillEffect",
+"class": "SkillEffectWrapper",
+"language": "GDScript",
+"path": "res://src/skills/effects/SkillEffectWrapper.gd"
 }, {
 "base": "PanelContainer",
 "class": "SkillPanel",
@@ -425,6 +430,7 @@ _global_script_class_icons={
 "SkillAOE": "res://assets/editor/skill_aoe.png",
 "SkillEffect": "",
 "SkillEffectGroup": "res://assets/editor/skilleffectgroup.png",
+"SkillEffectWrapper": "",
 "SkillPanel": "",
 "SkillRange": "res://assets/editor/skill_range.png",
 "StaminaBar": "",

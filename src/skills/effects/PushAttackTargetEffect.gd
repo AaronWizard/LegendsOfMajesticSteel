@@ -1,5 +1,5 @@
 class_name PushAttackTargetEffect, "res://assets/editor/pushattack_effect.png"
-extends SkillEffect
+extends SkillEffectWrapper
 
 const _SPEED := 7.0 # Cells per second
 const _LAND_HIT_DIST := 0.25
@@ -113,10 +113,10 @@ func _run_self(target_cell: Vector2, source_cell: Vector2,
 	if other_attack_waiter.waiting:
 		yield(other_attack_waiter, "finished")
 
-	var run_state = _run_target_lands_effect(end_cell, source_cell,
+	var landing_state = _run_child_effect(end_cell, source_cell,
 			source_actor, map)
-	if run_state is GDScriptFunctionState:
-		yield(run_state, "completed")
+	if landing_state is GDScriptFunctionState:
+		yield(landing_state, "completed")
 
 
 func _get_push_direction(actor: Actor, source_cell: Vector2) -> Vector2:
@@ -170,12 +170,3 @@ func _hit_blocking_actors(actor: Actor, map: Map, direction: Vector2,
 		waiter.wait_for_signal(other_actor, "animation_finished")
 
 	return waiter
-
-
-func _run_target_lands_effect(target_cell: Vector2, source_cell: Vector2,
-		source_actor: Actor, map: Map):
-	if get_child_count() > 0:
-		var effect := get_child(0) as SkillEffect
-		if effect:
-			effect.run(target_cell, source_cell, source_actor, map)
-			yield(effect, "finished")
