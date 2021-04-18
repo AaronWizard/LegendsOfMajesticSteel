@@ -110,21 +110,24 @@ func _run_self(target_cell: Vector2, source_cell: Vector2,
 	var push_data := _PushData.new(max_distance, block_damages_allies_only,
 			target_cell, source_cell, map)
 
-	assert(map.actor_can_enter_cell(push_data.actor, push_data.end_cell))
+	var actor := push_data.actor
 
-	push_data.actor.stats.take_damage(source_actor.stats.attack, push_data.direction, false)
-	push_data.actor.play_hit_sound()
+	assert(map.actor_can_enter_cell(actor, push_data.end_cell))
 
-	var main_offset := push_data.end_cell - push_data.actor.origin_cell
+	actor.stats.take_damage(source_actor.stats.attack,
+			push_data.direction, false)
+	actor.play_hit_sound()
+
+	var main_offset := push_data.end_cell - actor.origin_cell
 
 	var offset := main_offset
 	if push_data.real_distance < max_distance:
 		offset += push_data.direction * _BLOCK_HIT_DIST
-	elif push_data.actor.stats.is_alive:
+	elif actor.stats.is_alive:
 		offset += push_data.direction * _LAND_HIT_DIST
 
 	yield(
-		push_data.actor.animate_offset(
+		actor.animate_offset(
 			offset, push_data.real_distance / _SPEED,
 			Tween.TRANS_QUAD, Tween.EASE_IN_OUT),
 		"completed"
@@ -133,32 +136,29 @@ func _run_self(target_cell: Vector2, source_cell: Vector2,
 	var other_attack_waiter := _hit_blocking_actors(push_data,
 			source_actor.stats.attack)
 
-	if push_data.actor.stats.is_alive \
-			and (push_data.real_distance < max_distance):
-		push_data.actor.stats.take_damage(source_actor.stats.attack,
+	if actor.stats.is_alive and (push_data.real_distance < max_distance):
+		actor.stats.take_damage(source_actor.stats.attack,
 				-push_data.direction, false)
-		push_data.actor.play_hit_sound()
+		actor.play_hit_sound()
 
-	push_data.actor.origin_cell = push_data.end_cell
-	push_data.actor.cell_offset -= main_offset
+	actor.origin_cell = push_data.end_cell
+	actor.cell_offset -= main_offset
 
-	if push_data.actor.stats.is_alive:
-		assert(push_data.actor.cell_offset != Vector2.ZERO)
+	if actor.stats.is_alive:
+		assert(actor.cell_offset != Vector2.ZERO)
 		yield(
-			push_data.actor.animate_offset(
+			actor.animate_offset(
 				Vector2.ZERO, _BLOCK_HIT_DIST / _SPEED,
 				Tween.TRANS_QUAD, Tween.EASE_OUT),
 			"completed"
 		)
 	elif push_data.real_distance < max_distance:
-		yield(push_data.actor.animate_death(-push_data.direction, false),
-				"completed")
+		yield(actor.animate_death(-push_data.direction, false), "completed")
 	else:
-		yield(push_data.actor.animate_death(push_data.direction, false),
-				"completed")
+		yield(actor.animate_death(push_data.direction, false), "completed")
 
-	if push_data.actor.animating:
-		yield(push_data.actor, "animation_finished")
+	if actor.animating:
+		yield(actor, "animation_finished")
 	if other_attack_waiter.waiting:
 		yield(other_attack_waiter, "finished")
 
