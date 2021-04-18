@@ -75,7 +75,7 @@ func _run_self(target_cell: Vector2, source_cell: Vector2,
 	var offset := main_offset
 	if real_distance < max_distance:
 		offset += direction * _BLOCK_HIT_DIST
-	elif actor.is_alive:
+	elif actor.stats.is_alive:
 		offset += direction * _LAND_HIT_DIST
 
 	yield(
@@ -88,14 +88,14 @@ func _run_self(target_cell: Vector2, source_cell: Vector2,
 	var other_attack_waiter := _hit_blocking_actors(actor, map, direction,
 		end_cell, source_actor.stats.attack)
 
-	if actor.is_alive and (real_distance < max_distance):
+	if actor.stats.is_alive and (real_distance < max_distance):
 		actor.stats.take_damage(source_actor.stats.attack, -direction, false)
 		actor.play_hit_sound()
 
 	actor.origin_cell = end_cell
 	actor.cell_offset -= main_offset
 
-	if actor.is_alive:
+	if actor.stats.is_alive:
 		assert(actor.cell_offset != Vector2.ZERO)
 		yield(
 			actor.animate_offset(

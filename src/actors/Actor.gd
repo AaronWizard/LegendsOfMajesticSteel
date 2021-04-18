@@ -53,8 +53,6 @@ var skills: Array setget , get_skills
 
 var range_data: RangeData
 
-var is_alive: bool setget , get_is_alive
-
 var target_visible: bool setget set_target_visible, get_target_visible
 var stamina_modifier: int setget set_stamina_modifier, get_stamina_modifier
 
@@ -141,13 +139,6 @@ func set_actor_definition(value: Resource) -> void:
 		if _sprite:
 			_sprite.texture \
 					= preload("res://assets/graphics/actors/fighter.png")
-
-
-func get_is_alive() -> bool:
-	var result := true
-	if not Engine.editor_hint:
-		result = get_stats().get_is_alive()
-	return result
 
 
 func set_target_visible(new_value: bool) -> void:
@@ -421,7 +412,7 @@ func _on_Stats_conditions_changed() -> void:
 func _on_Stats_damaged(amount: int, direction: Vector2,
 		standard_hit_anim: bool) -> void:
 	_animating = true
-	if get_is_alive():
+	if get_stats().is_alive:
 		_animate_staminabar(-amount)
 		if standard_hit_anim:
 			yield(_animate_hit(direction), "completed")

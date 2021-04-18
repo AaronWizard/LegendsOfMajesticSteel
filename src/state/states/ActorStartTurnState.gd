@@ -13,7 +13,7 @@ func start(_data: Dictionary) -> void:
 
 
 func _start_turn() -> void:
-	assert(_game.current_actor.is_alive)
+	assert(_game.current_actor.stats.is_alive)
 
 	match _game.current_actor.faction:
 		Actor.Faction.PLAYER:
