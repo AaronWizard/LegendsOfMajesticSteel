@@ -47,6 +47,7 @@ export(Faction) var faction := Faction.ENEMY
 
 var portrait: Texture setget , get_portrait
 
+var stats: Stats setget , get_stats
 var skills: Array setget , get_skills
 
 var range_data: RangeData
@@ -69,8 +70,6 @@ var _did_skill: bool = false
 var _turns_left: int = false
 
 var _stamina_bar_animating := false
-
-onready var stats := $Stats as Stats
 
 onready var remote_transform := $Center/Offset/RemoteTransform2D \
 		as RemoteTransform2D
@@ -100,8 +99,8 @@ func _ready() -> void:
 	set_actor_definition(actor_definition)
 
 	if not Engine.editor_hint:
-		_stamina_bar.max_stamina = stats.max_stamina
-		_condition_icons.update_icons(stats)
+		_stamina_bar.max_stamina = get_stats().max_stamina
+		_condition_icons.update_icons(get_stats())
 
 		_wait_icon.play()
 		_randomize_idle_start()
@@ -135,9 +134,9 @@ func set_actor_definition(value: Resource) -> void:
 		set_rect_size(ad.rect_size)
 		if _sprite:
 			_sprite.texture = ad.sprite
-		# Use $Stats instead of stats to work in tool mode
-		($Stats as Stats).init_from_def(ad)
-		if not Engine.editor_hint:
+
+		if not Engine.editor_int:
+			get_stats().init_from_def(ad)
 			for s in ad.skills:
 				var skill_scene := s as PackedScene
 				var skill := skill_scene.instance() as Node
@@ -151,8 +150,8 @@ func set_actor_definition(value: Resource) -> void:
 
 func get_is_alive() -> bool:
 	var result := true
-	if stats and not Engine.editor_hint:
-		result = stats.get_is_alive()
+	if not Engine.editor_hint:
+		result = get_stats().get_is_alive()
 	return result
 
 
@@ -168,8 +167,17 @@ func set_target_visible(new_value: bool) -> void:
 	_target_cursor.visible = new_value
 
 
+func get_stats() -> Stats:
+	var result: Stats = null
+	if $Stats:
+		result = $Stats as Stats
+	return result
+
 func get_skills() -> Array:
-	return $Skills.get_children()
+	var result := []
+	if $Skills:
+		result = $Skills.get_children()
+	return result
 
 
 func get_portrait() -> Texture:
@@ -204,7 +212,7 @@ func get_stamina_modifier() -> int:
 
 
 func start_battle() -> void:
-	stats.start_battle()
+	get_stats().start_battle()
 	_stamina_bar.reset()
 	start_round()
 
@@ -213,7 +221,7 @@ func start_round() -> void:
 	_wait_icon.visible = false
 	_turns_left = 1
 
-	stats.start_round()
+	get_stats().start_round()
 
 
 func start_turn() -> void:
@@ -422,7 +430,7 @@ func _on_StaminaBar_animation_finished() -> void:
 
 
 func _on_Stats_conditions_changed() -> void:
-	_condition_icons.update_icons(stats)
+	_condition_icons.update_icons(get_stats())
 
 
 func _on_Stats_damaged(amount: int, direction: Vector2,
