@@ -12,7 +12,7 @@ func _get_configuration_warning() -> String:
 
 	for c in get_children():
 		if not (c is SkillEffect):
-			result = "ChildNodes must be SkillEffects"
+			result = "Child nodes must all be SkillEffects"
 			break
 
 	return result
