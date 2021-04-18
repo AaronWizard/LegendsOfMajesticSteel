@@ -16,4 +16,4 @@ func _run_self(target_cell: Vector2, _source_cell: Vector2,
 	var actor := map.get_actor_on_cell(target_cell)
 	if actor:
 		var ce := condition_effect as ConditionEffect
-		actor.add_condition(Condition.new(ce))
+		actor.stats.add_condition(Condition.new(ce))

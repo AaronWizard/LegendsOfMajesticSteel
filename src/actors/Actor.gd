@@ -228,14 +228,6 @@ func end_turn() -> void:
 		_wait_icon.visible = true
 
 
-func add_condition(condition: Condition) -> void:
-	stats.add_condition(condition)
-
-
-func remove_condition(condition: Condition) -> void:
-	stats.remove_condition(condition)
-
-
 func set_pose(value: int) -> void:
 	var old_pose := pose
 	pose = value

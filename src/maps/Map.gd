@@ -157,9 +157,9 @@ func update_terrain_effects() -> void:
 	for a in get_actors():
 		var actor := a as Actor
 		if on_defensive_terrain(actor):
-			actor.add_condition(_cover_condition)
+			actor.stats.add_condition(_cover_condition)
 		else:
-			actor.remove_condition(_cover_condition)
+			actor.stats.remove_condition(_cover_condition)
 
 
 func add_effect(effect: Node2D) -> void:
