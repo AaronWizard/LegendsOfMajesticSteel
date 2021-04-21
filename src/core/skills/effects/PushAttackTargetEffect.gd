@@ -71,14 +71,26 @@ export var block_damages_allies_only := true
 
 
 func get_aoe(target_cell: Vector2, source_cell: Vector2,
-		_source_actor: Actor, map: Map) -> Array:
+		source_actor: Actor, map: Map) -> Array:
 	var push_data := _PushData.new(max_distance, block_damages_allies_only,
 			target_cell, source_cell, map)
+
+	var visible_end_cell := push_data.end_cell
 	if not push_data.blocking_actors.empty():
-		push_data.end_cell += push_data.direction
+		visible_end_cell += push_data.direction
 
 	var result := TileGeometry.get_thick_line(push_data.actor.origin_cell,
-			push_data.end_cell, push_data.actor.rect_size)
+			visible_end_cell, push_data.actor.rect_size)
+
+	push_data.actor.virtual_origin_cell = push_data.end_cell
+
+	var landing_aoe := _child_aoe(push_data.end_cell, source_cell,
+			source_actor, map)
+	for c in landing_aoe:
+		var cell := c as Vector2
+		if result.find(cell) == -1:
+			result.append(cell)
+
 	return result
 
 
@@ -101,6 +113,17 @@ func predict_damage(target_cell: Vector2, source_cell: Vector2,
 				source_actor.stats.attack)
 		assert(not result.has(blocking_actor))
 		result[blocking_actor] = -other_damage
+
+	push_data.actor.virtual_origin_cell = push_data.end_cell
+
+	var landing_damage := _predict_child_damage(push_data.end_cell, source_cell,
+			source_actor, map)
+	for a in landing_damage:
+		var actor := a as Actor
+		var a_damage := landing_damage[actor] as int
+		if not result.has(actor):
+			result[actor] = 0
+		result[actor] += a_damage
 
 	return result
 
