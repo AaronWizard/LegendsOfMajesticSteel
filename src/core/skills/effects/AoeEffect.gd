@@ -20,7 +20,7 @@ func get_aoe(target_cell: Vector2, source_cell: Vector2,
 	var targets := _get_targets_from_base(base_aoe, source_actor.faction, map)
 	for t in targets:
 		var aoe_target_cell := t as Vector2
-		var aoe_source_cell := _get_aoe_source_cell(source_cell, target_cell)
+		var aoe_source_cell := _get_aoe_source_cell(target_cell, source_cell)
 		var child_aoe := _child_aoe(aoe_target_cell,
 				aoe_source_cell, source_actor, map)
 		for c in child_aoe:
@@ -37,7 +37,7 @@ func predict_damage(target_cell: Vector2, source_cell: Vector2,
 	var targets := _get_targets(target_cell, source_cell, source_actor, map)
 	for t in targets:
 		var aoe_target_cell := t as Vector2
-		var aoe_source_cell := _get_aoe_source_cell(source_cell, target_cell)
+		var aoe_source_cell := _get_aoe_source_cell(target_cell, source_cell)
 		var child_damages := _predict_child_damage(
 				aoe_target_cell, aoe_source_cell, source_actor, map)
 		for a in child_damages:
@@ -68,7 +68,7 @@ func _run_self(target_cell: Vector2, source_cell: Vector2,
 			var index := i as int
 			var aoe_target_cell := targets[index] as Vector2
 			var aoe_source_cell := _get_aoe_source_cell(
-					source_cell, target_cell)
+					target_cell, source_cell)
 			var child_effect := get_child(index) as SkillEffect
 
 			child_effect.run(aoe_target_cell, aoe_source_cell,
