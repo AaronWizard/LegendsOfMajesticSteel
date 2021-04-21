@@ -60,9 +60,12 @@ var pose: int = Pose.IDLE setget set_pose
 
 var animating: bool setget , get_is_animating
 
-var _animating := false
+var virtual_origin_cell: Vector2 setget set_virtual_origin_cell
 
+var _animating := false
 var _stamina_bar_animating := false
+
+var _using_virtual_origin := false
 
 onready var remote_transform := $Center/Offset/RemoteTransform2D \
 		as RemoteTransform2D
@@ -89,7 +92,7 @@ onready var _death_sound := $DeathSound as AudioStreamPlayer
 
 func _ready() -> void:
 	._ready()
-	set_actor_definition(actor_definition)
+	#set_actor_definition(actor_definition)
 
 	if not Engine.editor_hint:
 		_stamina_bar.max_stamina = get_stats().max_stamina
@@ -99,6 +102,21 @@ func _ready() -> void:
 		_randomize_idle_start()
 
 
+# Override
+func set_origin_cell(value: Vector2) -> void:
+	.set_origin_cell(value)
+	_using_virtual_origin = false
+
+
+# Override
+func get_origin_cell() -> Vector2:
+	var result := .get_origin_cell()
+	if _using_virtual_origin:
+		result = virtual_origin_cell
+	return result
+
+
+# Override
 func set_rect_size(value: Vector2) -> void:
 	.set_rect_size(value)
 
@@ -116,6 +134,16 @@ func set_rect_size(value: Vector2) -> void:
 				= _AnimationTimes.BLOOD * max(rect_size.x, rect_size.y)
 		_blood_splatter.visibility_rect = Rect2(
 				-pixel_rect_size / 2, pixel_rect_size)
+
+
+func set_virtual_origin_cell(value: Vector2) -> void:
+	virtual_origin_cell = value
+	_using_virtual_origin = true
+
+
+func reset_virtual_origin() -> void:
+	virtual_origin_cell = Vector2.ZERO
+	_using_virtual_origin = false
 
 
 func set_actor_definition(value: Resource) -> void:

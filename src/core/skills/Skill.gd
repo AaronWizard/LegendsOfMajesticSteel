@@ -103,11 +103,16 @@ func _get_effect() -> SkillEffect:
 # Assumes target_cell is in range
 func _get_aoe(target_cell: Vector2, source_cell: Vector2, source_actor: Actor,
 		map: Map) -> Array:
-	return _get_effect().get_aoe(target_cell, source_cell, source_actor, map)
+	var result := _get_effect().get_aoe(
+			target_cell, source_cell, source_actor, map)
+	map.reset_actor_virtual_origins()
+	return result
 
 
 # Keys are actors. Values are damage amounts.
 func _predict_damages(target_cell: Vector2, source_cell: Vector2,
 		source_actor: Actor, map: Map) -> Dictionary:
-	return _get_effect().predict_damage(
+	var result := _get_effect().predict_damage(
 			target_cell, source_cell, source_actor, map)
+	map.reset_actor_virtual_origins()
+	return result

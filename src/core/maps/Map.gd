@@ -153,6 +153,12 @@ func remove_actor(actor: Actor) -> void:
 	emit_signal("actor_removed", actor)
 
 
+func reset_actor_virtual_origins() -> void:
+	for a in get_actors():
+		var actor := a as Actor
+		actor.reset_virtual_origin()
+
+
 func update_terrain_effects() -> void:
 	for a in get_actors():
 		var actor := a as Actor
