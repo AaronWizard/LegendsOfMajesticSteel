@@ -339,6 +339,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/core/skills/TargetingData.gd"
 }, {
+"base": "TileSet",
+"class": "TerrainTileSet",
+"language": "GDScript",
+"path": "res://src/core/maps/TerrainTileSet.gd"
+}, {
 "base": "Reference",
 "class": "TileGeometry",
 "language": "GDScript",
@@ -353,11 +358,6 @@ _global_script_classes=[ {
 "class": "TileProperties",
 "language": "GDScript",
 "path": "res://src/core/maps/tiles/TileProperties.gd"
-}, {
-"base": "Resource",
-"class": "TilePropertiesSet",
-"language": "GDScript",
-"path": "res://src/core/maps/tiles/TilePropertiesSet.gd"
 }, {
 "base": "Node",
 "class": "TurnManager",
@@ -441,10 +441,10 @@ _global_script_class_icons={
 "Stats": "",
 "TargetCursor": "",
 "TargetingData": "",
+"TerrainTileSet": "res://assets/editor/tile_properties_set.png",
 "TileGeometry": "",
 "TileObject": "",
 "TileProperties": "res://assets/editor/tile_properties.png",
-"TilePropertiesSet": "res://assets/editor/tile_properties_set.png",
 "TurnManager": "",
 "TurnQueue": "",
 "TurnQueuePanel": ""

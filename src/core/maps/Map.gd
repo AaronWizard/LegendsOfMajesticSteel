@@ -1,3 +1,4 @@
+tool
 class_name Map, "res://assets/editor/map.png"
 extends Node2D
 
@@ -8,8 +9,6 @@ enum Decal { BLOOD_SPLATTER = 0 }
 
 const _COVER_EFFECT := preload("res://resources/data/conditions/Cover.tres")
 
-export var tile_properties_set: Resource
-
 var _cover_condition := Condition.new(_COVER_EFFECT)
 
 onready var _ground := $Ground as TileMap
@@ -19,14 +18,26 @@ onready var _effects := $Effects as Node
 
 
 func _ready() -> void:
-	for a in get_actors():
-		var actor := a as Actor
-		# warning-ignore:return_value_discarded
-		actor.connect("dying", self, "_actor_dying", [actor], CONNECT_ONESHOT)
-		# warning-ignore:return_value_discarded
-		actor.connect("died", self, "remove_actor", [actor], CONNECT_ONESHOT)
+	if not Engine.editor_hint:
+		for a in get_actors():
+			var actor := a as Actor
+			# warning-ignore:return_value_discarded
+			actor.connect("dying", self, "_actor_dying", [actor],
+					CONNECT_ONESHOT)
+			# warning-ignore:return_value_discarded
+			actor.connect("died", self, "remove_actor", [actor],
+					CONNECT_ONESHOT)
 
-	update_terrain_effects()
+		update_terrain_effects()
+
+
+func _get_configuration_warning() -> String:
+	var result := ""
+
+	if not (_ground.tile_set is TerrainTileSet):
+		result = "Ground tile set needs to be a TerrainTileSet"
+
+	return result
 
 
 func get_rect() -> Rect2:
@@ -55,12 +66,10 @@ func get_tile_name(cell: Vector2) -> String:
 func get_tile_properties(cell: Vector2) -> TileProperties:
 	var result: TileProperties = null
 
-	var tps := tile_properties_set as TilePropertiesSet
-
-	if tps:
-		var tile_name := get_tile_name(cell)
-		if tile_name:
-			result = tps.get_properties(tile_name)
+	var tileset := _ground.tile_set as TerrainTileSet
+	var tile_name := get_tile_name(cell)
+	if tile_name:
+		result = tileset.get_properties(tile_name)
 
 	return result
 
