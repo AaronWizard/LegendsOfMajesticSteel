@@ -14,7 +14,7 @@ var _stat_icons := {
 				"res://assets/graphics/ui/icons/conditions/attack_down.png") \
 				as Texture
 	},
-	StatType.Type.DAMAGE_REDUCTION: {
+	StatType.Type.DEFENCE: {
 		name = "Defence",
 		up = preload( \
 				"res://assets/graphics/ui/icons/conditions/defence_up.png") \
@@ -131,7 +131,7 @@ func _show_stat_modifier(stat_type: int, mod: int, rounds_left: int) -> void:
 		else:
 			stat_info_label.text += _STAT_DOWN_LABEL
 		stat_info_label.text += _format_mod_str(mod)
-		if stat_type == StatType.Type.DAMAGE_REDUCTION:
+		if stat_type == StatType.Type.DEFENCE:
 			stat_info_label.text  += "%"
 		_conditions.add_child(stat_info_label)
 

@@ -23,7 +23,7 @@ func update_icons(stats: Stats) -> void:
 	_clear()
 
 	_add_stat_mod_icon(stats, StatType.Type.ATTACK, _attack_up, _attack_down)
-	_add_stat_mod_icon(stats, StatType.Type.DAMAGE_REDUCTION,
+	_add_stat_mod_icon(stats, StatType.Type.DEFENCE,
 			_defence_up, _defence_down)
 	_add_stat_mod_icon(stats, StatType.Type.MOVE, _move_up, _move_down)
 

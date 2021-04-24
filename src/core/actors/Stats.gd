@@ -22,7 +22,7 @@ var move: int setget , get_move
 
 
 func _ready() -> void:
-	_base_stats[StatType.Type.DAMAGE_REDUCTION] = 0.0
+	_base_stats[StatType.Type.DEFENCE] = 0.0
 
 
 func init_from_def(def: ActorDefinition) -> void:
@@ -103,7 +103,7 @@ func start_round() -> void:
 
 # Get how much damage will be done with a given base damage
 func damage_from_attack(base_damage: int) -> int:
-	var dr := get_stat(StatType.Type.DAMAGE_REDUCTION)
+	var dr := get_stat(StatType.Type.DEFENCE)
 	var attack_mod := (DAMAGE_REDUCTION_RANGE - dr) / DAMAGE_REDUCTION_RANGE
 	var reduced_damage := base_damage * attack_mod
 	var final_damage := max(1, reduced_damage)
