@@ -21,6 +21,12 @@ func predict_damage(_target_cell: Vector2, _source_cell: Vector2,
 	return {}
 
 
+# Keys are actors, values arrays of condition effects
+func predict_conditions(_target_cell: Vector2, _source_cell: Vector2,
+		_source_actor: Actor, _map: Map) -> Dictionary:
+	return {}
+
+
 func get_is_running() -> bool:
 	return _running
 

@@ -128,6 +128,16 @@ func predict_damage(target_cell: Vector2, source_cell: Vector2,
 	return result
 
 
+func predict_conditions(target_cell: Vector2, source_cell: Vector2,
+		source_actor: Actor, map: Map) -> Dictionary:
+	var push_data := _PushData.new(max_distance, block_damages_allies_only,
+			target_cell, source_cell, map)
+	push_data.actor.virtual_origin_cell = push_data.end_cell
+
+	return _predict_child_conditions(push_data.end_cell, source_cell,
+			source_actor, map)
+
+
 func _run_self(target_cell: Vector2, source_cell: Vector2,
 		source_actor: Actor, map: Map):
 	var push_data := _PushData.new(max_distance, block_damages_allies_only,

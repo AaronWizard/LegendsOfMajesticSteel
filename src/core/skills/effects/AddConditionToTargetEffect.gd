@@ -11,6 +11,17 @@ func get_aoe(target_cell: Vector2, _source_cell: Vector2, _source_actor: Actor,
 	return actor.covered_cells
 
 
+func predict_conditions(target_cell: Vector2, _source_cell: Vector2,
+		_source_actor: Actor, map: Map) -> Dictionary:
+	var result := {}
+
+	var actor := map.get_actor_on_cell(target_cell)
+	if actor:
+		result[actor] = [condition_effect as ConditionEffect]
+
+	return result
+
+
 func _run_self(target_cell: Vector2, _source_cell: Vector2,
 		_source_actor: Actor, map: Map) -> void:
 	var actor := map.get_actor_on_cell(target_cell)

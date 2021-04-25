@@ -50,6 +50,26 @@ func predict_damage(target_cell: Vector2, source_cell: Vector2,
 	return result
 
 
+func predict_conditions(target_cell: Vector2, source_cell: Vector2,
+		source_actor: Actor, map: Map) -> Dictionary:
+	var result := {}
+
+	var targets := _get_targets(target_cell, source_cell, source_actor, map)
+	for t in targets:
+		var aoe_target_cell := t as Vector2
+		var aoe_source_cell := _get_aoe_source_cell(target_cell, source_cell)
+		var child_conditions := _predict_child_conditions(
+				aoe_target_cell, aoe_source_cell, source_actor, map)
+		for a in child_conditions:
+			var actor := a as Actor
+			var conditions := child_conditions[actor] as Array
+			if not result.has(actor):
+				result[actor] = []
+			(result[actor] as Array).append_array(conditions)
+
+	return result
+
+
 func _run_self(target_cell: Vector2, source_cell: Vector2,
 		source_actor: Actor, map: Map):
 	assert(get_child_count() == 1)

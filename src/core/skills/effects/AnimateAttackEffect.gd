@@ -16,6 +16,12 @@ func predict_damage(target_cell: Vector2, source_cell: Vector2,
 	return _predict_child_damage(target_cell, source_cell, source_actor, map)
 
 
+func predict_conditions(target_cell: Vector2, source_cell: Vector2,
+		source_actor: Actor, map: Map) -> Dictionary:
+	return _predict_child_conditions(target_cell, source_cell,
+			source_actor, map)
+
+
 func _run_self(target_cell: Vector2, source_cell: Vector2,
 		source_actor: Actor, map: Map):
 	var direction: Vector2

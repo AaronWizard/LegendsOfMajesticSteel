@@ -20,6 +20,15 @@ func _predict_child_damage(target_cell: Vector2, source_cell: Vector2,
 	return result
 
 
+func _predict_child_conditions(target_cell: Vector2, source_cell: Vector2,
+		source_actor: Actor, map: Map) -> Dictionary:
+	var result := {}
+	if _child_effect():
+		result = _child_effect().predict_conditions(
+				target_cell, source_cell, source_actor, map)
+	return result
+
+
 func _run_child_effect(target_cell: Vector2, source_cell: Vector2,
 		source_actor: Actor, map: Map) -> void:
 	if _child_effect():

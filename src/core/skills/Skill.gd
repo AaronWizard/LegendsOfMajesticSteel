@@ -32,9 +32,12 @@ func _get_configuration_warning() -> String:
 func get_targeting_data(source_cell: Vector2, source_actor: Actor, map: Map) \
 		-> TargetingData:
 	var target_range := _get_range(source_cell, source_actor, map)
+
 	var valid_targets := []
 	var aoe_by_target := {}
 	var predicted_damage_by_target := {}
+	var predicted_conditions_by_target := {}
+
 	for c in target_range:
 		var target_cell := c as Vector2
 		if _is_valid_target(target_cell, source_actor, map):
@@ -45,11 +48,19 @@ func get_targeting_data(source_cell: Vector2, source_actor: Actor, map: Map) \
 
 			var predicted_damages := _predict_damages(target_cell, source_cell,
 					source_actor, map)
-			predicted_damage_by_target[target_cell] = predicted_damages
+			if predicted_damages.size() > 0:
+				predicted_damage_by_target[target_cell] = predicted_damages
+
+			var predicted_conditions := _predict_conditions(
+					target_cell, source_cell, source_actor, map)
+			if predicted_conditions.size() > 0:
+				predicted_conditions_by_target[target_cell] \
+						= predicted_conditions
 
 	return TargetingData.new(
 			source_cell, target_range, valid_targets,
-			aoe_by_target, predicted_damage_by_target)
+			aoe_by_target, predicted_damage_by_target,
+			predicted_conditions_by_target)
 
 
 func run(source_actor: Actor, map: Map, target: Vector2) -> void:
@@ -113,6 +124,14 @@ func _get_aoe(target_cell: Vector2, source_cell: Vector2, source_actor: Actor,
 func _predict_damages(target_cell: Vector2, source_cell: Vector2,
 		source_actor: Actor, map: Map) -> Dictionary:
 	var result := _get_effect().predict_damage(
+			target_cell, source_cell, source_actor, map)
+	map.reset_actor_virtual_origins()
+	return result
+
+
+func _predict_conditions(target_cell: Vector2, source_cell: Vector2,
+		source_actor: Actor, map: Map) -> Dictionary:
+	var result := _get_effect().predict_conditions(
 			target_cell, source_cell, source_actor, map)
 	map.reset_actor_virtual_origins()
 	return result

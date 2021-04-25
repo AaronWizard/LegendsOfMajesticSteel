@@ -46,6 +46,22 @@ func predict_damage(target_cell: Vector2, source_cell: Vector2,
 	return result
 
 
+func predict_conditions(target_cell: Vector2, source_cell: Vector2,
+		source_actor: Actor, map: Map) -> Dictionary:
+	var result := {}
+	for e in get_children():
+		var effect := e as SkillEffect
+		var effect_conditions := effect.predict_conditions(
+				target_cell, source_cell, source_actor, map)
+		for a in effect_conditions:
+			var actor := a as Actor
+			var conditions := effect_conditions[actor] as Array
+			if not result.has(actor):
+				result[actor] = []
+			(result[actor] as Array).append_array(conditions)
+	return result
+
+
 func _run_self(target_cell: Vector2, source_cell: Vector2,
 		source_actor: Actor, map: Map) -> void:
 	var waiter := SignalWaiter.new()
