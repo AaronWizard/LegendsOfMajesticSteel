@@ -43,26 +43,27 @@ func get_walk_path(start: Vector2, end: Vector2) -> Array:
 	return result
 
 
-func get_targeting_data(cell: Vector2, skill_index: int) -> TargetingData:
-	var key := Vector3(cell.x, cell.y, skill_index)
+func get_targeting_data(source_cell: Vector2, skill_index: int) \
+		-> TargetingData:
+	var key := Vector3(source_cell.x, source_cell.y, skill_index)
 	var result := _targeting_data_set[key] as TargetingData
 	return result
 
 
-func get_valid_skill_indices_at_cell(cell: Vector2) -> Array:
+func get_valid_skill_indices_at_cell(source_cell: Vector2) -> Array:
 	var result := []
 
-	if _valid_source_cells.has(cell):
-		var skills_set := _valid_source_cells[cell] as Dictionary
+	if _valid_source_cells.has(source_cell):
+		var skills_set := _valid_source_cells[source_cell] as Dictionary
 		result = skills_set.keys()
 
 	return result
 
 
-func skill_is_valid_at_cell(cell: Vector2, skill_index: int) -> bool:
+func skill_is_valid_at_cell(source_cell: Vector2, skill_index: int) -> bool:
 	var result := false
-	if _valid_source_cells.has(cell):
-		var skills_set := _valid_source_cells[cell] as Dictionary
+	if _valid_source_cells.has(source_cell):
+		var skills_set := _valid_source_cells[source_cell] as Dictionary
 		result = skills_set.has(skill_index)
 	return result
 

@@ -87,10 +87,14 @@ func get_cell_move_cost(cell: Vector2, actor: Actor) -> int:
 
 
 func on_defensive_terrain(actor: Actor) -> bool:
+	return is_defensive_terrain_at_cell(actor, actor.origin_cell)
+
+
+func is_defensive_terrain_at_cell(actor: Actor, cell: Vector2) -> bool:
 	var defensive_tiles := 0
 	var clear_tiles := 0
 
-	for c in actor.covered_cells:
+	for c in actor.get_covered_cells_at_cell(cell):
 		var covered := c as Vector2
 		var properties := get_tile_properties(covered)
 		if properties and properties.is_defensive:

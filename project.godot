@@ -29,6 +29,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/state/states/pickactor/AIPickActorState.gd"
 }, {
+"base": "Reference",
+"class": "AIScoredAction",
+"language": "GDScript",
+"path": "res://src/control/AIScoredAction.gd"
+}, {
 "base": "Node2D",
 "class": "ActionMenu",
 "language": "GDScript",
@@ -379,6 +384,7 @@ _global_script_class_icons={
 "AIPickActor": "",
 "AIPickActorActionState": "",
 "AIPickActorState": "",
+"AIScoredAction": "",
 "ActionMenu": "",
 "Actor": "res://assets/editor/actor.png",
 "ActorActionState": "",

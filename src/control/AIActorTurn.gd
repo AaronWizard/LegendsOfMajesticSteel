@@ -2,98 +2,113 @@ class_name AIActorTurn
 
 enum ActionType { WAIT, MOVE, SKILL }
 
-var _random := ExtRandomNumberGenerator.new()
-
-var _moved := false
-
-
-func _ready() -> void:
-	_random.randomize()
-	_moved = false
+var _next_skill_index := -1
+var _next_target: Vector2
 
 
 func get_pauses() -> bool:
 	return true
 
 
-func pick_action(actor: Actor, _map: Map) -> Dictionary:
+func pick_action(actor: Actor, map: Map) -> Dictionary:
+	var result: Dictionary
+
+	if _next_skill_index > -1:
+		result = _skill_action(actor)
+	else:
+		result = _choose_next_action(actor, map)
+
+	return result
+
+
+func _choose_next_action(actor: Actor, map: Map) -> Dictionary:
 	var result := _wait_action()
 
 	var range_data := actor.range_data
-	if not range_data.get_valid_skill_source_cells().empty():
-		_moved = false
+	var scored_actions := []
 
-		if not range_data.get_valid_skill_indices_at_cell(
-				actor.origin_cell).empty():
-			result = _pick_random_skill(actor, range_data)
-		else:
-			var path := _pick_random_action_path(actor.origin_cell, range_data)
-			result = _move_action(path)
+	if range_data.get_valid_skill_source_cells().empty():
+		for c in range_data.get_move_range():
+			var source_cell := c as Vector2
+			var action := _get_scored_move_action(actor, map, source_cell)
+			scored_actions.append(action)
 	else:
-		var want_move := not _moved
-		_moved = want_move
+		for c in range_data.get_valid_skill_source_cells():
+			var source_cell := c as Vector2
+			var actions := _get_scored_skill_actions(actor, map, source_cell)
+			scored_actions.append_array(actions)
 
-		if want_move:
-			var path := _pick_random_path(actor.origin_cell, range_data)
-			result = _move_action(path)
+	scored_actions.sort_custom(self, "_sort_scored_actions")
+	var action := scored_actions[0] as AIScoredAction
 
-	return result
+	var is_skill := action.skill_index > -1
+	var is_move := action.source_cell != actor.origin_cell
 
+	if is_move:
+		result = _move_action(actor, action.source_cell)
 
-func _pick_random_path(start_cell: Vector2, range_data: RangeData) -> Array:
-	var cells := range_data.get_move_range()
-	cells.erase(start_cell)
-	assert(not (start_cell in cells))
-
-	return _random_path(start_cell, range_data, cells)
-
-
-func _pick_random_action_path(start_cell: Vector2, range_data: RangeData) \
-		-> Array:
-	var cells := range_data.get_valid_skill_source_cells()
-	return _random_path(start_cell, range_data, cells)
-
-
-func _random_path(start_cell: Vector2, range_data: RangeData, cells: Array) \
-		-> Array:
-	var target := _random.rand_array_element(cells) as Vector2
-
-	var path = range_data.get_walk_path(start_cell, target)
-	assert(path.size() > 0)
-
-	return path
-
-
-func _pick_random_skill(actor: Actor, range_data: RangeData) -> Dictionary:
-	var skill_indicies := range_data.get_valid_skill_indices_at_cell(
-			actor.origin_cell)
-	var skill_index = _random.rand_array_element(skill_indicies) as int
-
-	var skill := actor.skills[skill_index] as Skill
-	var targeting_data := \
-			range_data.get_targeting_data(actor.origin_cell, skill_index)
-
-	# Pick random target
-	var target_cell := \
-			_random.rand_array_element(targeting_data.valid_targets) as Vector2
-
-	var result := _skill_action(skill, target_cell)
+	if is_skill:
+		_next_skill_index = action.skill_index
+		_next_target = action.target_cell
+		if not is_move:
+			result = _skill_action(actor)
 
 	return result
 
 
-func _move_action(path: Array) -> Dictionary:
+func _get_scored_move_action(actor: Actor, map: Map, source_cell: Vector2) \
+		-> AIScoredAction:
+	assert(actor.range_data.get_valid_skill_indices_at_cell(
+			source_cell).empty())
+	var result := AIScoredAction.new_move_action(actor, map, source_cell)
+	return result
+
+
+func _get_scored_skill_actions(actor: Actor, map: Map, source_cell: Vector2) \
+		-> Array:
+	var result := []
+
+	var skill_is := actor.range_data.get_valid_skill_indices_at_cell(
+			source_cell)
+	assert(not skill_is.empty())
+
+	for i in skill_is:
+		var skill_index := i as int
+		var targeting_data := actor.range_data.get_targeting_data(
+				source_cell, skill_index)
+		assert(not targeting_data.valid_targets.empty())
+		for t in targeting_data.valid_targets:
+			var target_cell := t as Vector2
+			var scored_action := AIScoredAction.new_skill_action(
+					actor, map, skill_index, targeting_data,
+					target_cell)
+			result.append(scored_action)
+
+	return result
+
+
+func _sort_scored_actions(action_a: AIScoredAction, action_b: AIScoredAction) \
+		-> bool:
+	return action_a.score < action_b.score
+
+
+func _move_action(actor: Actor, target_cell: Vector2) -> Dictionary:
+	var path := actor.range_data.get_walk_path(actor.origin_cell, target_cell)
+	assert(not path.empty())
 	return {
 		type = ActionType.MOVE,
 		path = path
 	}
 
 
-func _skill_action(skill: Skill, target: Vector2) -> Dictionary:
+func _skill_action(actor: Actor) -> Dictionary:
+	var skill := actor.skills[_next_skill_index] as Skill
+	_next_skill_index = -1
+
 	return {
 		type = ActionType.SKILL,
 		skill = skill,
-		target = target
+		target = _next_target
 	}
 
 
