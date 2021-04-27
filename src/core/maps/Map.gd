@@ -109,6 +109,17 @@ func get_actors() -> Array:
 	return _actors.get_children()
 
 
+func get_actors_by_faction(faction: int) -> Array:
+	var all_actors := get_actors()
+	var result := []
+	for a in all_actors:
+		var actor := a as Actor
+		if actor.faction == faction:
+			result.append(actor)
+
+	return result
+
+
 func get_actor_on_cell(cell: Vector2) -> Actor:
 	var result: Actor = null
 

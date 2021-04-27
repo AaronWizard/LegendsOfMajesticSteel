@@ -49,12 +49,12 @@ func refresh_range_data(exclude_current: bool) -> void:
 			actor.range_data = RangeDataFactory.create_range_data(actor, _map)
 
 
-func _get_active_actors(faction: int) -> Array:
+func get_active_actors(faction: int) -> Array:
 	var result := []
 
-	for a in _map.get_actors():
+	for a in _map.get_actors_by_faction(faction):
 		var actor := a as Actor
-		if (actor.faction == faction) and not actor.turn_status.round_finished:
+		if not actor.turn_status.round_finished:
 			result.append(actor)
 
 	return result

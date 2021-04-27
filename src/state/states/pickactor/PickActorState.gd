@@ -10,7 +10,7 @@ onready var _turn_start_state := get_node(turn_start_state_path) as State
 
 func start(_data: Dictionary) -> void:
 	var faction := _get_faction()
-	_actors = _game._get_active_actors(faction)
+	_actors = _game.get_active_actors(faction)
 	assert(_actors.size() > 0)
 	if _actors.size() == 1:
 		call_deferred("_pick_actor", _actors[0])

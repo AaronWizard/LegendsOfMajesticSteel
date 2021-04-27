@@ -5,10 +5,6 @@ const _DIST_RANDOM_WEIGHT := 0.25
 var _random := RandomNumberGenerator.new()
 
 
-func _get_faction() -> int:
-	return Actor.Faction.ENEMY
-
-
 func pick_actor(actors: Array, map: Map) -> Actor:
 	_random.randomize()
 
@@ -19,13 +15,7 @@ func pick_actor(actors: Array, map: Map) -> Actor:
 
 
 func _enemy_actors(map: Map) -> Array:
-	var result := []
-	var actors := map.get_actors()
-	for a in actors:
-		var actor := a as Actor
-		if actor.faction == Actor.Faction.PLAYER:
-			result.append(actor)
-	return result
+	return map.get_actors_by_faction(Actor.Faction.PLAYER)
 
 
 func _get_sorted_actor(actors: Array, enemies: Array) -> Actor:
