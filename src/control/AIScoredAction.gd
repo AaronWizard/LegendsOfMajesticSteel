@@ -3,7 +3,10 @@ class_name AIScoredAction
 const _KILL_WEIGHT := 2.0
 const _STAT_MOD_WEIGHT := 0.25
 
-const _DEFENSIVE_TERRAIN_WEIGHT := 0.25
+const _DEFENSIVE_TERRAIN_WEIGHT := 0.5
+const _ENEMY_DISTANCE_APPROACH_WEIGHT := 0.5
+
+const _RANDOM_RANGE := 0.15
 
 var score: float
 
@@ -14,6 +17,8 @@ var target_cell: Vector2
 
 var _actor: Actor
 var _map: Map
+
+var _random := RandomNumberGenerator.new()
 
 
 static func new_skill_action(new_actor: Actor, new_map: Map,
@@ -65,10 +70,13 @@ func _calculate_score() -> void:
 	else:
 		_score_move_cell()
 
+	_random.randomize()
+	score += _random.randf() * _RANDOM_RANGE
+
 
 func _score_move_cell() -> void:
 	var enemy_dist := _average_enemy_distance()
-	score += enemy_dist
+	score += 1 - enemy_dist
 
 
 func _score_skill_source_cell() -> void:
@@ -76,7 +84,7 @@ func _score_skill_source_cell() -> void:
 		score += _DEFENSIVE_TERRAIN_WEIGHT
 
 	var enemy_dist := _average_enemy_distance()
-	score += enemy_dist
+	score += enemy_dist * _ENEMY_DISTANCE_APPROACH_WEIGHT
 
 
 func _average_enemy_distance() -> float:

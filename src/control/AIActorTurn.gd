@@ -89,7 +89,7 @@ func _get_scored_skill_actions(actor: Actor, map: Map, source_cell: Vector2) \
 
 func _sort_scored_actions(action_a: AIScoredAction, action_b: AIScoredAction) \
 		-> bool:
-	return action_a.score < action_b.score
+	return action_a.score > action_b.score
 
 
 func _move_action(actor: Actor, target_cell: Vector2) -> Dictionary:
