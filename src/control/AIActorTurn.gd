@@ -2,8 +2,7 @@ class_name AIActorTurn
 
 enum ActionType { WAIT, MOVE, SKILL }
 
-var _next_skill_index := -1
-var _next_target: Vector2
+var _action_queue := []
 
 
 func get_pauses() -> bool:
@@ -11,19 +10,14 @@ func get_pauses() -> bool:
 
 
 func pick_action(actor: Actor, map: Map) -> Dictionary:
-	var result: Dictionary
+	if _action_queue.empty():
+		_queue_actions(actor, map)
 
-	if _next_skill_index > -1:
-		result = _skill_action(actor)
-	else:
-		result = _choose_next_action(actor, map)
-
+	var result := _action_queue.pop_front() as Dictionary
 	return result
 
 
-func _choose_next_action(actor: Actor, map: Map) -> Dictionary:
-	var result := _wait_action()
-
+func _queue_actions(actor: Actor, map: Map) -> void:
 	var range_data := actor.range_data
 	var scored_actions := []
 
@@ -39,21 +33,19 @@ func _choose_next_action(actor: Actor, map: Map) -> Dictionary:
 			scored_actions.append_array(actions)
 
 	scored_actions.sort_custom(self, "_sort_scored_actions")
-	var action := scored_actions[0] as AIScoredAction
+	var scored_action := scored_actions[0] as AIScoredAction
 
-	var is_skill := action.skill_index > -1
-	var is_move := action.source_cell != actor.origin_cell
+	var is_skill := scored_action.skill_index > -1
+	var is_move := scored_action.source_cell != actor.origin_cell
 
 	if is_move:
-		result = _move_action(actor, action.source_cell)
+		_queue_move_action(actor, scored_action.source_cell)
 
 	if is_skill:
-		_next_skill_index = action.skill_index
-		_next_target = action.target_cell
-		if not is_move:
-			result = _skill_action(actor)
-
-	return result
+		_queue_skill_action(
+				actor, scored_action.skill_index, scored_action.target_cell)
+	else:
+		_queue_wait_action()
 
 
 func _get_scored_move_action(actor: Actor, map: Map, source_cell: Vector2) \
@@ -92,25 +84,26 @@ func _sort_scored_actions(action_a: AIScoredAction, action_b: AIScoredAction) \
 	return action_a.score > action_b.score
 
 
-func _move_action(actor: Actor, target_cell: Vector2) -> Dictionary:
+func _queue_move_action(actor: Actor, target_cell: Vector2) -> void:
 	var path := actor.range_data.get_walk_path(actor.origin_cell, target_cell)
 	assert(not path.empty())
-	return {
+	var action := {
 		type = ActionType.MOVE,
 		path = path
 	}
+	_action_queue.push_back(action)
 
 
-func _skill_action(actor: Actor) -> Dictionary:
-	var skill := actor.skills[_next_skill_index] as Skill
-	_next_skill_index = -1
-
-	return {
+func _queue_skill_action(actor: Actor, skill_index: int, target: Vector2) \
+		-> void:
+	var action := {
 		type = ActionType.SKILL,
-		skill = skill,
-		target = _next_target
+		skill = actor.skills[skill_index] as Skill,
+		target = target
 	}
+	_action_queue.push_back(action)
 
 
-func _wait_action() -> Dictionary:
-	return { type = ActionType.WAIT }
+func _queue_wait_action() -> void:
+	var action := { type = ActionType.WAIT }
+	_action_queue.push_back(action)
