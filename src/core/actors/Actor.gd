@@ -415,6 +415,9 @@ func _animate_hit(direction: Vector2) -> void:
 					Tween.TRANS_QUAD, Tween.EASE_OUT),
 			"completed"
 		)
+	else:
+		_anim.play("actor_shake")
+		yield(_anim, "animation_finished")
 
 	reset_pose()
 
