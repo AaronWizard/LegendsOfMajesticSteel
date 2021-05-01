@@ -121,7 +121,12 @@ func set_rect_size(value: Vector2) -> void:
 	.set_rect_size(value)
 
 	if _stamina_bar:
-		_stamina_bar.position.y = (-rect_size.y * Constants.TILE_SIZE_V.y) / 2
+		_stamina_bar.position = Vector2(
+			0, (-rect_size.y * Constants.TILE_SIZE_V.y) / 2
+		)
+	if _condition_icons:
+		_condition_icons.position = (rect_size.y * Constants.TILE_SIZE_V) / -2
+
 	if _target_cursor:
 		_target_cursor.rect_size = rect_size
 	if _wait_icon:
