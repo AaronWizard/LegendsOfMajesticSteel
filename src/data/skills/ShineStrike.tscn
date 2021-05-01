@@ -39,6 +39,7 @@ rotated = true
 script = ExtResource( 8 )
 aoe = SubResource( 1 )
 target_type = 2
+source_is_aoe_target = false
 
 [node name="SkillEffectGroup" type="Node" parent="AnimateAttackEffect/SkillEffectGroup/AoeEffect"]
 script = ExtResource( 7 )
