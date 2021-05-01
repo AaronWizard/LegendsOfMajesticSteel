@@ -25,9 +25,12 @@ func _run_self(target_cell: Vector2, source_cell: Vector2,
 	var direction := Vector2.ZERO
 	if use_direction:
 		var end := actor.center_cell
-		var start := source_cell
+		var start: Vector2
 		if source_cell == source_actor.origin_cell:
 			start = source_actor.center_cell
+		else:
+			start = source_cell + Vector2(0.5, 0.5)
+
 		direction = end - start
 
 	actor.stats.take_damage(source_actor.stats.attack, direction)
