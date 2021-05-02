@@ -62,9 +62,10 @@ func get_stat_mod(stat_type: int) -> int:
 func add_condition(condition: Condition) -> void:
 	if _conditions.find(condition) == -1:
 		_conditions.append(condition)
+
+		assert(not condition.is_connected("finished", self, "remove_condition"))
 		# warning-ignore:return_value_discarded
-		condition.connect("finished", self, "remove_condition", [condition],
-				CONNECT_ONESHOT)
+		condition.connect("finished", self, "remove_condition", [condition])
 
 		emit_signal("conditions_changed")
 
