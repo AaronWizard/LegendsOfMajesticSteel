@@ -1,0 +1,82 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://src/game/ScreenTransition.gd" type="Script" id=1]
+
+[sub_resource type="Shader" id=1]
+code = "shader_type canvas_item;
+render_mode unshaded;
+
+uniform float cutoff : hint_range(0.0, 1.0);
+uniform sampler2D mask : hint_albedo;
+
+void fragment()
+{
+	float value = texture(mask, UV).r;
+	float alpha = step(cutoff, value);
+	COLOR = vec4(COLOR.rgb, alpha);
+}"
+
+[sub_resource type="OpenSimplexNoise" id=2]
+period = 8.0
+
+[sub_resource type="NoiseTexture" id=3]
+width = 256
+height = 256
+seamless = true
+noise = SubResource( 2 )
+
+[sub_resource type="ShaderMaterial" id=4]
+shader = SubResource( 1 )
+shader_param/cutoff = 1.0
+shader_param/mask = SubResource( 3 )
+
+[sub_resource type="Animation" id=5]
+resource_name = "fade_in"
+length = 0.75
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:material:shader_param/cutoff")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.75 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, 1.0 ]
+}
+
+[sub_resource type="Animation" id=6]
+resource_name = "fade_out"
+length = 0.75
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:material:shader_param/cutoff")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.75 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 1.0, 0.0 ]
+}
+
+[node name="ScreenTransition" type="ColorRect"]
+material = SubResource( 4 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+color = Color( 0.133333, 0.137255, 0.137255, 1 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/fade_in = SubResource( 5 )
+anims/fade_out = SubResource( 6 )
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]

@@ -12,6 +12,9 @@ var turn_manager: TurnManager setget , get_turn_manager
 var _map: Map
 var _current_actor: Actor
 
+onready var _screen_transition := $CanvasLayer/ScreenTransition \
+		as ScreenTransition
+
 onready var _map_container := $Map
 onready var _interface := $BattleInterface as BattleInterface
 onready var _turn_manager := $TurnManager as TurnManager
@@ -23,7 +26,7 @@ onready var _next_turn_state := $StateMachine/NextTurnState as State
 func _ready() -> void:
 	_current_actor = null
 	_load_map(start_map_file)
-	_start_battle()
+	_screen_transition.fade_in()
 
 
 func get_map() -> Map:
@@ -103,6 +106,10 @@ func _start_battle() -> void:
 	_interface.gui.turn_queue.set_queue(_turn_manager.turn_order)
 
 	_state_machine.change_state(_next_turn_state)
+
+
+func _on_ScreenTransition_faded_in() -> void:
+	_start_battle()
 
 
 func _on_map_actor_dying(actor: Actor) -> void:
