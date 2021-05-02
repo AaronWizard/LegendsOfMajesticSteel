@@ -172,3 +172,21 @@ static func get_closest_rect_cell(cell: Vector2, rect: Rect2) -> Vector2:
 static func direction_from_rect_to_cell(cell: Vector2, rect: Rect2) -> int:
 	var rect_cell := get_closest_rect_cell(cell, rect)
 	return Directions.get_closest_direction_type(cell - rect_cell)
+
+
+static func center_cell_of_cells(cells: Array) -> Vector2:
+	var started := false
+	var rect := Rect2()
+	for c in cells:
+		var cell := c as Vector2
+		if started:
+			rect.position.x = min(rect.position.x, cell.x)
+			rect.position.y = min(rect.position.y, cell.y)
+			rect.end.x = max(rect.end.x, cell.x)
+			rect.end.y = max(rect.end.y, cell.y)
+		else:
+			rect.position = cell
+			rect.end = cell
+
+	var result := rect.position + (rect.size / 2.0)
+	return result

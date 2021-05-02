@@ -26,7 +26,8 @@ onready var _next_turn_state := $StateMachine/NextTurnState as State
 func _ready() -> void:
 	_current_actor = null
 	_load_map(start_map_file)
-	_screen_transition.fade_in()
+	_position_camera_start()
+	_start_battle()
 
 
 func get_map() -> Map:
@@ -97,6 +98,19 @@ func _load_map(map_file: PackedScene) -> void:
 	_map.connect("actor_dying", self, "_on_map_actor_dying")
 
 
+func _position_camera_start() -> void:
+	var player_actors := get_map().get_actors_by_faction(Actor.Faction.PLAYER)
+
+	var cells := []
+	for a in player_actors:
+		var actor := a as Actor
+		cells.append(actor.center_cell - Vector2(0.5, 0.5))
+
+	var center_cell := TileGeometry.center_cell_of_cells(cells)
+	center_cell *= Constants.TILE_SIZE
+	get_interface().camera.position = center_cell
+
+
 func _start_battle() -> void:
 	for a in _map.get_actors():
 		var actor := a as Actor
@@ -105,11 +119,11 @@ func _start_battle() -> void:
 	_turn_manager.roll_initiative(_map.get_actors())
 	_interface.gui.turn_queue.set_queue(_turn_manager.turn_order)
 
+	_screen_transition.fade_in()
+	yield(_screen_transition, "faded_in")
+	yield(get_tree().create_timer(0.1), "timeout")
+
 	_state_machine.change_state(_next_turn_state)
-
-
-func _on_ScreenTransition_faded_in() -> void:
-	_start_battle()
 
 
 func _on_map_actor_dying(actor: Actor) -> void:

@@ -98,6 +98,3 @@ offset = Vector2( -1, -1 )
 script = ExtResource( 11 )
 
 [node name="ScreenTransition" parent="CanvasLayer" instance=ExtResource( 19 )]
-
-[connection signal="round_started" from="TurnManager" to="." method="_on_TurnManager_round_started"]
-[connection signal="faded_in" from="CanvasLayer/ScreenTransition" to="." method="_on_ScreenTransition_faded_in"]

@@ -34,12 +34,14 @@ func _set_actor_cursors(cursor_visible: bool) -> void:
 
 
 func _position_player_turn_camera() -> void:
-	var average_pos := Vector2.ZERO
+	var cells := []
 	for a in _actors:
 		var actor := a as Actor
-		average_pos += actor.position
-	average_pos /= float(_actors.size())
-	_game.interface.camera.move_to_position(average_pos)
+		cells.append(actor.center_cell - Vector2(0.5, 0.5))
+
+	var center_cell := TileGeometry.center_cell_of_cells(cells)
+	center_cell *= Constants.TILE_SIZE
+	_game.interface.camera.move_to_position(center_cell)
 
 
 func _mouse_click(_position: Vector2) -> void:
