@@ -24,7 +24,10 @@ onready var _next_turn_state := $StateMachine/NextTurnState as State
 
 
 func _ready() -> void:
-	randomize()
+	var seed_number := OS.get_unix_time()
+	seed(seed_number)
+	if OS.is_debug_build():
+		print("Random seed: %d" % seed_number)
 
 	_current_actor = null
 	_load_map(start_map_file)
