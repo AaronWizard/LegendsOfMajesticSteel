@@ -24,6 +24,8 @@ onready var _next_turn_state := $StateMachine/NextTurnState as State
 
 
 func _ready() -> void:
+	randomize()
+
 	_current_actor = null
 	_load_map(start_map_file)
 	_position_camera_start()

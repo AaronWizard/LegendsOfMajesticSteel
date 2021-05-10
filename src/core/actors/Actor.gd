@@ -379,7 +379,6 @@ func play_hit_sound() -> void:
 func _randomize_idle_start() -> void:
 	if not Engine.editor_hint:
 		assert(_anim.current_animation == "actor_idle")
-		randomize()
 		var offset := rand_range(0, _anim.current_animation_length)
 		_anim.advance(offset)
 

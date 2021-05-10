@@ -17,7 +17,6 @@ func roll_initiative(actors: Array) -> void:
 		var actor := a as Actor
 		_turn_order.append(actor.faction)
 
-	randomize()
 	_turn_order.shuffle()
 
 

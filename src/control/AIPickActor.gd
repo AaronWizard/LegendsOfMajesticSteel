@@ -2,12 +2,8 @@ class_name AIPickActor
 
 const _DIST_RANDOM_WEIGHT := 0.25
 
-var _random := RandomNumberGenerator.new()
-
 
 func pick_actor(actors: Array, map: Map) -> Actor:
-	_random.randomize()
-
 	var enemies := _enemy_actors(map)
 	var actor := _get_sorted_actor(actors, enemies)
 
@@ -39,7 +35,7 @@ func _get_sorted_actor(actors: Array, enemies: Array) -> Actor:
 		sort_array.append(tuple)
 
 	for t in sort_array:
-		var rand_dist := _random.randf_range(
+		var rand_dist := rand_range(
 			-(max_dist_sqr * _DIST_RANDOM_WEIGHT),
 			(max_dist_sqr * _DIST_RANDOM_WEIGHT)
 		)

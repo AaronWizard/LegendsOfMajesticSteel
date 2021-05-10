@@ -18,8 +18,6 @@ var target_cell: Vector2
 var _actor: Actor
 var _map: Map
 
-var _random := RandomNumberGenerator.new()
-
 
 static func new_skill_action(new_actor: Actor, new_map: Map,
 		new_skill_index: int, new_targeting_data: TargetingData,
@@ -70,8 +68,7 @@ func _calculate_score() -> void:
 	else:
 		_score_move_cell()
 
-	_random.randomize()
-	score += _random.randf() * _RANDOM_RANGE
+	score += randf() * _RANDOM_RANGE
 
 
 func _score_move_cell() -> void:
