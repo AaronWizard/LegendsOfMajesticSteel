@@ -120,11 +120,6 @@ _global_script_classes=[ {
 "path": "res://src/ui/BattleInterface.gd"
 }, {
 "base": "Reference",
-"class": "BreadthFirstSearch",
-"language": "GDScript",
-"path": "res://src/control/BreadthFirstSearch.gd"
-}, {
-"base": "Reference",
 "class": "Condition",
 "language": "GDScript",
 "path": "res://src/conditions/Condition.gd"
@@ -203,6 +198,11 @@ _global_script_classes=[ {
 "class": "NextTurnState",
 "language": "GDScript",
 "path": "res://src/state/states/NextTurnState.gd"
+}, {
+"base": "Reference",
+"class": "Pathfinding",
+"language": "GDScript",
+"path": "res://src/control/Pathfinding.gd"
 }, {
 "base": "GameState",
 "class": "PickActorActionState",
@@ -402,7 +402,6 @@ _global_script_class_icons={
 "AttackTargetedActorEffect": "res://assets/editor/attacktargetedactor_effect.png",
 "BattleGUI": "",
 "BattleInterface": "",
-"BreadthFirstSearch": "",
 "Condition": "",
 "ConditionEffect": "res://assets/editor/condition_effect.png",
 "ConditionIcons": "",
@@ -419,6 +418,7 @@ _global_script_class_icons={
 "MapHighlights": "",
 "MouseControl": "",
 "NextTurnState": "",
+"Pathfinding": "",
 "PickActorActionState": "",
 "PickActorState": "",
 "PlayerActorMoveState": "",

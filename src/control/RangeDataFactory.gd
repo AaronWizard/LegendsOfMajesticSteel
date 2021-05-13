@@ -28,7 +28,7 @@ static func create_range_data(actor: Actor, map: Map) -> RangeData:
 static func _create_base_move_range(actor: Actor, map: Map) -> Dictionary:
 	var result := {}
 
-	var mr := BreadthFirstSearch.find_move_range(actor, map)
+	var mr := Pathfinding.find_move_range(actor, map)
 	for c in mr:
 		var cell := c as Vector2
 		result[cell] = true
