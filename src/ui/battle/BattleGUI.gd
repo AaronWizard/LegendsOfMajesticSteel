@@ -86,8 +86,8 @@ func close_action_menu(with_sound := true) -> void:
 	_action_menu.close(with_sound)
 
 
-func show_skill_panel(skill: Skill) -> void:
-	_skill_panel.set_skill(skill)
+func show_skill_panel(skill: Skill, no_valid_targets: bool) -> void:
+	_skill_panel.set_skill(skill, no_valid_targets)
 	_skill_panel.visible = true
 
 

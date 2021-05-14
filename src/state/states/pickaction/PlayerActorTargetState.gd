@@ -26,7 +26,12 @@ func start(data: Dictionary) -> void:
 	# warning-ignore:return_value_discarded
 	_game.interface.gui.connect("skill_cleared", self, "_skill_cleared")
 
-	_game.interface.gui.show_skill_panel(_get_skill())
+	_game.interface.gui.show_skill_panel(
+		_get_skill(),
+		not _game.current_actor.range_data.skill_is_valid_at_cell(
+			_game.current_actor.origin_cell, _skill_index
+		)
+	)
 
 	var targeting_data := _game.current_actor.range_data.get_targeting_data(
 			_game.current_actor.origin_cell, _skill_index)

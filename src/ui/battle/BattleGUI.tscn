@@ -23,7 +23,7 @@ anchor_top = 1.0
 anchor_bottom = 1.0
 margin_left = 2.0
 margin_top = -40.0
-margin_right = 87.0
+margin_right = 89.0
 margin_bottom = -2.0
 size_flags_horizontal = 1
 
@@ -32,22 +32,19 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -87.0
+margin_left = -89.0
 margin_top = -40.0
 margin_right = -2.0
 margin_bottom = -2.0
 size_flags_horizontal = 1
 
 [node name="SkillPanel" parent="." instance=ExtResource( 2 )]
-visible = false
 anchor_left = 1.0
-anchor_top = 1.0
 anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = -91.0
-margin_top = -40.0
+margin_left = -111.0
+margin_top = 24.0
 margin_right = -2.0
-margin_bottom = -2.0
+margin_bottom = 54.0
 
 [node name="ActionMenuRegion" type="ReferenceRect" parent="."]
 anchor_right = 1.0
