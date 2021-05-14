@@ -19,8 +19,10 @@ func _next_turn() -> void:
 	var faction := _game.turn_manager.next_faction()
 	match faction:
 		Actor.Faction.PLAYER:
+			assert(_game.get_active_actors(Actor.Faction.PLAYER).size() > 0)
 			_pick_actor(_player_pick_actor)
 		Actor.Faction.ENEMY:
+			assert(_game.get_active_actors(Actor.Faction.ENEMY).size() > 0)
 			_pick_actor(_ai_pick_actor)
 		_:
 			push_error("Invalid faction '%d'" % faction)
