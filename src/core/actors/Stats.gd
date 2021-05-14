@@ -5,6 +5,7 @@ signal conditions_changed
 
 signal damaged(amount, direction, standard_hit_anim)
 signal healed(amount)
+signal energy_changed(amount)
 
 # Damage reduction turned into percentage based on this value
 const DAMAGE_REDUCTION_RANGE := 100.0
@@ -13,12 +14,16 @@ var _base_stats := {}
 var _conditions := []
 
 var stamina: int
+var energy: int
 
 var is_alive: bool setget , get_is_alive
 
 var max_stamina: int setget , get_max_stamina
+var max_energy: int setget , get_max_energy
 var attack: int setget , get_attack
 var move: int setget , get_move
+
+var _first_round := false
 
 
 func _ready() -> void:
@@ -27,6 +32,7 @@ func _ready() -> void:
 
 func init_from_def(def: ActorDefinition) -> void:
 	set_base_stat(StatType.Type.MAX_STAMINA, def.max_stamina)
+	set_base_stat(StatType.Type.MAX_ENERGY, def.max_energy)
 	set_base_stat(StatType.Type.ATTACK, def.attack)
 	set_base_stat(StatType.Type.MOVE, def.move)
 
@@ -84,6 +90,10 @@ func get_max_stamina() -> int:
 	return get_stat(StatType.Type.MAX_STAMINA)
 
 
+func get_max_energy() -> int:
+	return get_stat(StatType.Type.MAX_ENERGY)
+
+
 func get_attack() -> int:
 	return get_stat(StatType.Type.ATTACK)
 
@@ -94,12 +104,28 @@ func get_move() -> int:
 
 func start_battle() -> void:
 	stamina = get_max_stamina()
+	energy = 0
+	_first_round = true
 
 
 func start_round() -> void:
+	if not _first_round:
+		charge_energy()
+		_first_round = false
+
 	for c in _conditions:
 		var condition := c as Condition
 		condition.start_round()
+
+
+func charge_energy() -> void:
+	energy = int(clamp(energy + 1, 0, get_max_energy()))
+	emit_signal("energy_changed", 1)
+
+
+func spend_energy(cost: int) -> void:
+	energy = int(clamp(energy - cost, 0, get_max_energy()))
+	emit_signal("energy_changed", cost)
 
 
 # Get how much damage will be done with a given base damage
@@ -116,6 +142,9 @@ func take_damage(base_damage: int, direction: Vector2,
 	var damage := damage_from_attack(base_damage)
 	stamina -= damage
 	emit_signal("damaged", damage, direction, standard_hit_anim)
+
+	if get_is_alive():
+		charge_energy()
 
 
 # Heal stamina by a percentage of max_stamina

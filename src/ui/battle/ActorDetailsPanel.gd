@@ -38,9 +38,17 @@ onready var _portrait := $Container/Header/PortraitContainer/Portrait \
 		as TextureRect
 onready var _name := $Container/Header/VBoxContainer/Name as Label
 
-onready var _stamina := $Container/Header/VBoxContainer/Stamina as Node
-onready var _current_stamina := _stamina.get_node("CurrentStamina") as Label
-onready var _max_stamina := _stamina.get_node("MaxStamina") as Label
+onready var _resources := $Container/Header/VBoxContainer/Resources as Control
+
+onready var _current_stamina := _resources.get_node("CurrentStamina") as Label
+onready var _max_stamina := _resources.get_node("MaxStamina") as Label
+
+onready var _current_energy := _resources.get_node("CurrentEnergy") as Label
+onready var _max_energy := _resources.get_node("MaxEnergy") as Label
+
+onready var _energy_icon := _resources.get_node("EnergyIcon") as Control
+onready var _energy_label := _resources.get_node("EnergyLabel") as Control
+onready var _energy_slash := _resources.get_node("Slash2") as Control
 
 onready var _stats := $Container/Stats as Node
 onready var _stat_rows := {
@@ -54,7 +62,8 @@ onready var _stat_rows := {
 	}
 }
 
-onready var _conditions := $Container/ConditionsScroll/Conditions as Node
+onready var _no_conditions := $Container/NoConditions as Control
+onready var _conditions := $Container/ConditionsScroll/Conditions as Control
 
 
 func set_actor(actor: Actor) -> void:
@@ -62,7 +71,9 @@ func set_actor(actor: Actor) -> void:
 
 	_portrait.texture = actor.portrait
 	_name.text = actor.character_name
+
 	_set_stamina(actor)
+	_set_energy(actor)
 
 	_set_stats(actor, StatType.Type.ATTACK)
 	_set_stats(actor, StatType.Type.MOVE)
@@ -83,6 +94,19 @@ func _set_stamina(actor: Actor) -> void:
 	_max_stamina.text = str(actor.stats.max_stamina)
 
 
+func _set_energy(actor: Actor) -> void:
+	var energy_visible := actor.stats.max_energy > 0
+
+	_energy_icon.visible = energy_visible
+	_energy_label.visible = energy_visible
+	_current_energy.visible = energy_visible
+	_energy_slash.visible = energy_visible
+	_max_energy.visible = energy_visible
+
+	_current_energy.text = str(actor.stats.energy)
+	_max_energy.text = str(actor.stats.max_energy)
+
+
 func _set_stats(actor: Actor, stat_type: int) -> void:
 	var stat_value := actor.stats.get_stat(stat_type)
 	var stat_mod := actor.stats.get_stat_mod(stat_type)
@@ -101,6 +125,10 @@ func _set_stats(actor: Actor, stat_type: int) -> void:
 
 func _set_conditions(actor: Actor) -> void:
 	var stat_mods := actor.stats.get_condition_stat_mods()
+
+	_no_conditions.visible = stat_mods.size() == 0
+	_conditions.visible = stat_mods.size() > 0
+
 	for s in stat_mods:
 		var stat_id := s as int
 		var modifier_data := stat_mods[stat_id] as Dictionary

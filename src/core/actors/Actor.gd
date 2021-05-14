@@ -92,9 +92,9 @@ onready var _death_sound := $DeathSound as AudioStreamPlayer
 
 func _ready() -> void:
 	._ready()
-	#set_actor_definition(actor_definition)
 
 	if not Engine.editor_hint:
+		set_actor_definition(actor_definition)
 		_stamina_bar.max_stamina = get_stats().max_stamina
 		_condition_icons.update_icons(get_stats())
 

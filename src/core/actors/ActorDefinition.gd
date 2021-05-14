@@ -9,6 +9,7 @@ export var portrait: Texture setget , get_portrait
 export var rect_size := Vector2.ONE
 
 export var max_stamina := 1
+export var max_energy := 0
 export var attack := 1
 export var move := 4
 

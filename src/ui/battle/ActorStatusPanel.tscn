@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://src/ui/battle/ActorStatusPanel.gd" type="Script" id=1]
 [ext_resource path="res://resources/visual/gui/theme_standard.tres" type="Theme" id=2]
@@ -6,11 +6,12 @@
 [ext_resource path="res://assets/graphics/ui/staminabar_fill_front.png" type="Texture" id=4]
 [ext_resource path="res://assets/graphics/ui/icons/stats/defence.png" type="Texture" id=5]
 [ext_resource path="res://assets/graphics/ui/icons/stats/attack.png" type="Texture" id=6]
+[ext_resource path="res://assets/graphics/ui/icons/stats/energy.png" type="Texture" id=7]
 [ext_resource path="res://src/ui/SoundButton.tscn" type="PackedScene" id=8]
 
 [node name="ActorStatusPanel" type="PanelContainer"]
-margin_right = 84.0
-margin_bottom = 38.0
+margin_right = 82.0
+margin_bottom = 47.0
 mouse_filter = 2
 size_flags_horizontal = 0
 theme = ExtResource( 2 )
@@ -19,13 +20,24 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
 margin_left = 3.0
 margin_top = 3.0
-margin_right = 81.0
-margin_bottom = 35.0
+margin_right = 79.0
+margin_bottom = 44.0
 
-[node name="Portrait" parent="HBoxContainer" instance=ExtResource( 8 )]
+[node name="Name" type="Label" parent="VBoxContainer"]
+margin_right = 76.0
+margin_bottom = 7.0
+size_flags_vertical = 0
+text = "Test"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+margin_top = 9.0
+margin_right = 76.0
+margin_bottom = 41.0
+
+[node name="Portrait" parent="VBoxContainer/HBoxContainer" instance=ExtResource( 8 )]
 margin_right = 32.0
 margin_bottom = 32.0
 rect_min_size = Vector2( 32, 32 )
@@ -33,68 +45,53 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 theme = ExtResource( 2 )
 
-[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer"]
+[node name="Stats" type="GridContainer" parent="VBoxContainer/HBoxContainer"]
 margin_left = 34.0
-margin_top = 2.0
-margin_right = 78.0
+margin_top = 3.0
+margin_right = 76.0
 margin_bottom = 29.0
-size_flags_horizontal = 3
 size_flags_vertical = 4
+columns = 3
 
-[node name="Name" type="Label" parent="HBoxContainer/VBoxContainer"]
-margin_right = 44.0
-margin_bottom = 7.0
-size_flags_vertical = 0
-text = "Test"
-clip_text = true
-
-[node name="Stats" type="VBoxContainer" parent="HBoxContainer/VBoxContainer"]
-margin_top = 9.0
-margin_right = 44.0
-margin_bottom = 27.0
-
-[node name="Attack" type="HBoxContainer" parent="HBoxContainer/VBoxContainer/Stats"]
-margin_right = 44.0
-margin_bottom = 8.0
-size_flags_vertical = 0
-
-[node name="AttackIcon" type="TextureRect" parent="HBoxContainer/VBoxContainer/Stats/Attack"]
+[node name="AttackIcon" type="TextureRect" parent="VBoxContainer/HBoxContainer/Stats"]
 margin_right = 8.0
 margin_bottom = 8.0
 size_flags_vertical = 4
 texture = ExtResource( 6 )
 
-[node name="Attack" type="Label" parent="HBoxContainer/VBoxContainer/Stats/Attack"]
-margin_left = 10.0
-margin_right = 14.0
+[node name="Attack" type="Label" parent="VBoxContainer/HBoxContainer/Stats"]
+margin_left = 9.0
+margin_right = 17.0
 margin_bottom = 7.0
 text = "5"
 
-[node name="Defence" type="HBoxContainer" parent="HBoxContainer/VBoxContainer/Stats"]
-margin_top = 10.0
-margin_right = 44.0
-margin_bottom = 18.0
-
-[node name="DefenceIcon" type="TextureRect" parent="HBoxContainer/VBoxContainer/Stats/Defence"]
-margin_right = 8.0
+[node name="Blank" type="Control" parent="VBoxContainer/HBoxContainer/Stats"]
+margin_left = 18.0
+margin_right = 42.0
 margin_bottom = 8.0
+
+[node name="DefenceIcon" type="TextureRect" parent="VBoxContainer/HBoxContainer/Stats"]
+margin_top = 9.0
+margin_right = 8.0
+margin_bottom = 17.0
 texture = ExtResource( 5 )
 
-[node name="CurrentStamina" type="Label" parent="HBoxContainer/VBoxContainer/Stats/Defence"]
-margin_left = 10.0
-margin_right = 18.0
-margin_bottom = 7.0
+[node name="CurrentStamina" type="Label" parent="VBoxContainer/HBoxContainer/Stats"]
+margin_left = 9.0
+margin_top = 9.0
+margin_right = 17.0
+margin_bottom = 16.0
 text = "20"
 
-[node name="StaminaBackground" type="TextureRect" parent="HBoxContainer/VBoxContainer/Stats/Defence"]
-margin_left = 20.0
-margin_top = 1.0
-margin_right = 44.0
-margin_bottom = 7.0
+[node name="StaminaBackground" type="TextureRect" parent="VBoxContainer/HBoxContainer/Stats"]
+margin_left = 18.0
+margin_top = 10.0
+margin_right = 42.0
+margin_bottom = 16.0
 size_flags_vertical = 4
 texture = ExtResource( 3 )
 
-[node name="StaminaBar" type="TextureProgress" parent="HBoxContainer/VBoxContainer/Stats/Defence/StaminaBackground"]
+[node name="StaminaBar" type="TextureProgress" parent="VBoxContainer/HBoxContainer/Stats/StaminaBackground"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 2.0
@@ -108,4 +105,39 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[connection signal="pressed" from="HBoxContainer/Portrait" to="." method="_on_Portrait_pressed"]
+[node name="EnergyIcon" type="TextureRect" parent="VBoxContainer/HBoxContainer/Stats"]
+margin_top = 18.0
+margin_right = 8.0
+margin_bottom = 26.0
+texture = ExtResource( 7 )
+
+[node name="CurrentEnergy" type="Label" parent="VBoxContainer/HBoxContainer/Stats"]
+margin_left = 9.0
+margin_top = 18.0
+margin_right = 17.0
+margin_bottom = 25.0
+text = "20"
+
+[node name="EnergyBackground" type="TextureRect" parent="VBoxContainer/HBoxContainer/Stats"]
+margin_left = 18.0
+margin_top = 19.0
+margin_right = 42.0
+margin_bottom = 25.0
+size_flags_vertical = 4
+texture = ExtResource( 3 )
+
+[node name="EnergyBar" type="TextureProgress" parent="VBoxContainer/HBoxContainer/Stats/EnergyBackground"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 2.0
+margin_top = 2.0
+margin_right = -2.0
+margin_bottom = -2.0
+size_flags_vertical = 4
+value = 100.0
+texture_progress = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/Portrait" to="." method="_on_Portrait_pressed"]
