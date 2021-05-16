@@ -3,7 +3,9 @@ extends PanelContainer
 
 signal portrait_pressed
 
-onready var _portrait := $VBoxContainer/HBoxContainer/Portrait as Button
+onready var _portrait_button := $VBoxContainer/HBoxContainer/PortraitButton as Button
+onready var _portrait := $VBoxContainer/HBoxContainer/PortraitButton/Portrait as TextureRect
+
 onready var _name := $VBoxContainer/Name as Label
 
 onready var _stats := $VBoxContainer/HBoxContainer/Stats as Container
@@ -22,10 +24,11 @@ onready var _energy_icon := _stats.get_node("EnergyIcon") as Control
 onready var _energy_background := _stats.get_node("EnergyBackground") as Control
 
 
-func set_actor(actor: Actor) -> void:
+func set_actor(actor: Actor, portrait_clickable: bool) -> void:
 	clear()
-	_portrait.icon = actor.portrait
-	_portrait.disabled = false
+	_portrait_button.disabled = not portrait_clickable
+	_portrait.texture = actor.portrait
+
 	_name.text = actor.character_name
 
 	_attack.text = str(actor.stats.attack)
@@ -43,8 +46,8 @@ func set_actor(actor: Actor) -> void:
 
 
 func clear() -> void:
-	_portrait.icon = null
-	_portrait.disabled = true
+	_portrait_button.disabled = true
+	_portrait.texture = null
 	_name.text = ""
 
 	_stamina_bar.value = 0
@@ -60,5 +63,5 @@ func _set_energy_visible(visible: bool) -> void:
 	_energy_background.visible = visible
 
 
-func _on_Portrait_pressed() -> void:
+func _on_PortraitButton_pressed() -> void:
 	emit_signal("portrait_pressed")

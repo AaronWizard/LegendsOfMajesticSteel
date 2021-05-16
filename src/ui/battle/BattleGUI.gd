@@ -39,7 +39,12 @@ func _ready() -> void:
 
 func set_current_actor(value: Actor) -> void:
 	current_actor = value
-	_set_actor(current_actor, _current_actor_status)
+
+	var portrait_clickable := (current_actor != null) \
+			and (current_actor.faction == (Actor.Faction.PLAYER as int))
+	_set_actor(
+		current_actor, _current_actor_status, portrait_clickable
+	)
 
 	if current_actor:
 		_action_menu.set_skills(current_actor.skills)
@@ -49,7 +54,7 @@ func set_current_actor(value: Actor) -> void:
 
 func set_other_actor(value: Actor) -> void:
 	other_actor = value
-	_set_actor(other_actor, _other_actor_status)
+	_set_actor(other_actor, _other_actor_status, true)
 
 
 func set_action_menu_pos(value: Vector2) -> void:
@@ -96,11 +101,12 @@ func hide_skill_panel() -> void:
 	_skill_panel.visible = false
 
 
-static func _set_actor(actor: Actor, actor_status: ActorStatusPanel) -> void:
+static func _set_actor(actor: Actor, actor_status: ActorStatusPanel,
+		portrait_clickable: bool) -> void:
 	actor_status.visible = actor != null
 
 	if actor:
-		actor_status.set_actor(actor)
+		actor_status.set_actor(actor, portrait_clickable)
 	else:
 		actor_status.clear()
 
