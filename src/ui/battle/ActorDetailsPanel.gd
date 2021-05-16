@@ -63,6 +63,7 @@ onready var _stat_rows := {
 }
 
 onready var _no_conditions := $Container/NoConditions as Control
+onready var _conditions_scroll := $Container/ConditionsScroll as Control
 onready var _conditions := $Container/ConditionsScroll/Conditions as Control
 
 
@@ -127,7 +128,7 @@ func _set_conditions(actor: Actor) -> void:
 	var stat_mods := actor.stats.get_condition_stat_mods()
 
 	_no_conditions.visible = stat_mods.size() == 0
-	_conditions.visible = stat_mods.size() > 0
+	_conditions_scroll.visible = stat_mods.size() > 0
 
 	for s in stat_mods:
 		var stat_id := s as int

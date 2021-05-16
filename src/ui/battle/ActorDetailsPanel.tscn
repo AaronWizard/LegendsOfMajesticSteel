@@ -11,7 +11,7 @@
 [node name="ActorDetailsPanel" type="PopupPanel"]
 visible = true
 margin_right = 100.0
-margin_bottom = 99.0
+margin_bottom = 135.0
 theme = ExtResource( 2 )
 popup_exclusive = true
 script = ExtResource( 1 )
@@ -23,7 +23,7 @@ __meta__ = {
 margin_left = 3.0
 margin_top = 3.0
 margin_right = 97.0
-margin_bottom = 96.0
+margin_bottom = 132.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -126,9 +126,11 @@ margin_bottom = 16.0
 text = "10"
 
 [node name="Stats" type="GridContainer" parent="Container"]
+margin_left = 16.0
 margin_top = 32.0
-margin_right = 94.0
+margin_right = 77.0
 margin_bottom = 49.0
+size_flags_horizontal = 4
 columns = 4
 __meta__ = {
 "_edit_use_anchors_": false
@@ -188,7 +190,7 @@ text = "(-10)"
 margin_top = 51.0
 margin_right = 94.0
 margin_bottom = 58.0
-text = "Conditions"
+text = "Conditions:"
 
 [node name="NoConditions" type="Label" parent="Container"]
 margin_left = 23.0
@@ -196,28 +198,28 @@ margin_top = 60.0
 margin_right = 71.0
 margin_bottom = 67.0
 size_flags_horizontal = 4
+size_flags_vertical = 2
 text = "No conditions"
 
 [node name="ConditionsScroll" type="ScrollContainer" parent="Container"]
 visible = false
-margin_top = 63.0
-margin_right = 106.0
-margin_bottom = 122.0
-rect_min_size = Vector2( 0, 50 )
+margin_top = 60.0
+margin_right = 94.0
+margin_bottom = 103.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 scroll_horizontal_enabled = false
 
 [node name="Conditions" type="GridContainer" parent="Container/ConditionsScroll"]
-margin_right = 106.0
+margin_right = 94.0
 size_flags_horizontal = 3
 columns = 3
 
 [node name="OK" parent="Container" instance=ExtResource( 6 )]
 margin_left = 70.0
-margin_top = 69.0
+margin_top = 105.0
 margin_right = 94.0
-margin_bottom = 93.0
+margin_bottom = 129.0
 rect_min_size = Vector2( 24, 24 )
 size_flags_horizontal = 8
 text = "OK"
