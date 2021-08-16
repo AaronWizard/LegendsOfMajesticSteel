@@ -119,11 +119,13 @@ func start_round() -> void:
 
 
 func charge_energy() -> void:
+	print(get_parent().name + ' charging energy')
 	energy = int(clamp(energy + 1, 0, get_max_energy()))
 	emit_signal("energy_changed", 1)
 
 
 func spend_energy(cost: int) -> void:
+	assert(energy >= cost)
 	energy = int(clamp(energy - cost, 0, get_max_energy()))
 	emit_signal("energy_changed", cost)
 

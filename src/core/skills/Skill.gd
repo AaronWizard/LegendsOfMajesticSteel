@@ -65,7 +65,7 @@ func get_targeting_data(source_cell: Vector2, source_actor: Actor, map: Map) \
 
 
 func run(source_actor: Actor, map: Map, target: Vector2) -> void:
-	source_actor.stats.energy -= energy_cost
+	source_actor.stats.spend_energy(energy_cost)
 	_get_effect().run(target, source_actor.origin_cell, source_actor, map)
 	yield(_get_effect(), "finished")
 
