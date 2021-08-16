@@ -47,7 +47,8 @@ func set_current_actor(value: Actor) -> void:
 	)
 
 	if current_actor:
-		_action_menu.set_skills(current_actor.skills)
+		_action_menu.set_skills(
+				current_actor.skills, current_actor.stats.energy)
 	else:
 		_action_menu.clear_skills()
 

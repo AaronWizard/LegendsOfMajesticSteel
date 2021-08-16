@@ -22,6 +22,7 @@ script = ExtResource( 1 )
 icon = ExtResource( 2 )
 skill_name = "Knockback Shot"
 description = "Knock the enemy prone with pummeling arrows."
+energy_cost = 3
 range_type = SubResource( 1 )
 target_type = 2
 

@@ -112,11 +112,12 @@ static func _create_targeting_data_set(move_range: Dictionary,
 		for i in range(actor.skills.size()):
 			var skill_index := i as int
 			var skill := actor.skills[skill_index] as Skill
-			var targeting_data := skill.get_targeting_data(
-					source_cell, actor, map)
+			if actor.stats.energy >= skill.energy_cost:
+				var targeting_data := skill.get_targeting_data(
+						source_cell, actor, map)
 
-			var key := Vector3(source_cell.x, source_cell.y, skill_index)
-			result[key] = targeting_data
+				var key := Vector3(source_cell.x, source_cell.y, skill_index)
+				result[key] = targeting_data
 
 	return result
 

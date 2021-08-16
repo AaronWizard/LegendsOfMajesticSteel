@@ -30,9 +30,9 @@ func get_is_open() -> bool:
 	return _is_open
 
 
-func set_skills(skills: Array) -> void:
+func set_skills(skills: Array, energy: int) -> void:
+	_set_skills(skills, energy)
 	_set_actions(skills)
-	_set_skills(skills)
 
 
 func clear_skills() -> void:
@@ -53,30 +53,31 @@ func close(with_sound := true) -> void:
 	_animation.play("close_menu")
 
 
-func _set_actions(skills: Array) -> void:
-	_attack_button.visible = skills.size() > 0
-	_skills_button.visible = skills.size() > 1
-
-	match skills.size():
-		0:
-			_actions.base_rotation = _ROTATION_ONE_B
-		1:
-			_actions.base_rotation = _ROTATION_TWO_B
-		_:
-			_actions.base_rotation = _ROTATION_THREE_B
-
-
-func _set_skills(skills: Array) -> void:
+func _set_skills(skills: Array, energy: int) -> void:
 	clear_skills()
 	for i in range(1, skills.size()):
 		var index := i as int
 		var skill := skills[index] as Skill
-		var button := Constants.create_sound_button()
-		button.icon = skill.icon
-		# warning-ignore:return_value_discarded
-		button.connect("pressed", self, "emit_signal",
-				["skill_selected", index])
-		_skills.add_child(button)
+		if energy >= skill.energy_cost:
+			var button := Constants.create_sound_button()
+			button.icon = skill.icon
+			# warning-ignore:return_value_discarded
+			button.connect("pressed", self, "emit_signal",
+					["skill_selected", index])
+			_skills.add_child(button)
+
+
+func _set_actions(skills: Array) -> void:
+	_attack_button.visible = skills.size() > 0
+	_skills_button.visible = _skills.get_child_count() > 0
+
+	match [_attack_button.visible, _skills_button.visible]:
+		[false, false]:
+			_actions.base_rotation = _ROTATION_ONE_B
+		[true, false]:
+			_actions.base_rotation = _ROTATION_TWO_B
+		_:
+			_actions.base_rotation = _ROTATION_THREE_B
 
 
 func _on_Attack_pressed() -> void:

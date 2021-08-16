@@ -7,6 +7,7 @@ enum TargetType { ANY, ANY_ACTOR, ENEMY, ALLY, EMPTY_CELL }
 export var icon: Texture
 export var skill_name := "Skill"
 export var description := "Skill description"
+export var energy_cost := 0
 
 export var range_type: Resource
 export(TargetType) var target_type := TargetType.ANY
@@ -64,6 +65,7 @@ func get_targeting_data(source_cell: Vector2, source_actor: Actor, map: Map) \
 
 
 func run(source_actor: Actor, map: Map, target: Vector2) -> void:
+	source_actor.stats.energy -= energy_cost
 	_get_effect().run(target, source_actor.origin_cell, source_actor, map)
 	yield(_get_effect(), "finished")
 
