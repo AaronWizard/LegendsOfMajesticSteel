@@ -1,4 +1,4 @@
-# Legends of Majestic Steel
+# Mightiest Steel
 
 AaronWizard, 2020
 
