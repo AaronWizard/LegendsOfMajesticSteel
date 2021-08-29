@@ -165,6 +165,11 @@ _global_script_classes=[ {
 "path": "res://src/game/GameCamera.gd"
 }, {
 "base": "State",
+"class": "GameOverState",
+"language": "GDScript",
+"path": "res://src/state/states/GameOverState.gd"
+}, {
+"base": "State",
 "class": "GameState",
 "language": "GDScript",
 "path": "res://src/state/states/GameState.gd"
@@ -411,6 +416,7 @@ _global_script_class_icons={
 "Directions": "",
 "Game": "",
 "GameCamera": "",
+"GameOverState": "",
 "GameState": "",
 "Map": "res://assets/editor/map.png",
 "MapAnimation": "",

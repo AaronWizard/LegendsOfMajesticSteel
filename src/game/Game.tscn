@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://src/game/Game.gd" type="Script" id=1]
 [ext_resource path="res://src/ui/BattleInterface.tscn" type="PackedScene" id=2]
@@ -19,6 +19,7 @@
 [ext_resource path="res://src/state/states/ActorStartTurnState.gd" type="Script" id=17]
 [ext_resource path="res://src/state/states/doaction/ActorActionState.gd" type="Script" id=18]
 [ext_resource path="res://src/game/ScreenTransition.tscn" type="PackedScene" id=19]
+[ext_resource path="res://src/state/states/GameOverState.gd" type="Script" id=20]
 
 [node name="Game" type="Node"]
 script = ExtResource( 1 )
@@ -42,6 +43,7 @@ script = ExtResource( 16 )
 script = ExtResource( 6 )
 player_pick_actor_state_path = NodePath("../PlayerPickActorState")
 ai_pick_actor_state_path = NodePath("../AIPickActorState")
+game_over_state_path = NodePath("../GameOverState")
 
 [node name="PlayerPickActorState" parent="StateMachine" instance=ExtResource( 7 )]
 turn_start_state_path = NodePath("../ActorStartTurnState")
@@ -88,6 +90,10 @@ next_turn_state_path = NodePath("../NextTurnState")
 script = ExtResource( 18 )
 turn_start_state_path = NodePath("../ActorStartTurnState")
 next_turn_state_path = NodePath("../NextTurnState")
+
+[node name="GameOverState" type="Node" parent="StateMachine"]
+script = ExtResource( 20 )
+screen_transition_path = NodePath("../../CanvasLayer/ScreenTransition")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 

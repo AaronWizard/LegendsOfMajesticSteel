@@ -69,6 +69,20 @@ func get_active_actors(faction: int) -> Array:
 	return result
 
 
+func player_won() -> bool:
+	var result := false
+	var enemies := _map.get_actors_by_faction(Actor.Faction.ENEMY)
+	result = enemies.size() == 0
+	return result
+
+
+func player_lost() -> bool:
+	var result := false
+	var players := _map.get_actors_by_faction(Actor.Faction.PLAYER)
+	result = players.size() == 0
+	return result
+
+
 func start_turn(actor: Actor) -> void:
 	assert(actor.stats.is_alive)
 	_current_actor = actor
