@@ -15,3 +15,7 @@ func _on_Start_pressed() -> void:
 	yield(_screen_transition, "faded_out")
 	# warning-ignore:return_value_discarded
 	get_tree().change_scene(_GAME_SCENE_PATH)
+
+
+func _on_Quit_pressed() -> void:
+	get_tree().notification(MainLoop.NOTIFICATION_WM_QUIT_REQUEST)

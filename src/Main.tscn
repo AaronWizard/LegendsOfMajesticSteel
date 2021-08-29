@@ -23,18 +23,32 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Start" parent="." instance=ExtResource( 3 )]
+[node name="HBoxContainer" type="VBoxContainer" parent="."]
 anchor_left = 0.5
-anchor_top = 0.75
+anchor_top = 0.667
 anchor_right = 0.5
-anchor_bottom = 0.75
+anchor_bottom = 0.667
 margin_left = -24.0
-margin_top = -24.0
+margin_top = -26.0
 margin_right = 24.0
-margin_bottom = 0.0
+margin_bottom = 26.0
+
+[node name="Start" parent="HBoxContainer" instance=ExtResource( 3 )]
+margin_right = 48.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 48, 24 )
 theme = ExtResource( 2 )
 text = "Start"
 
+[node name="Quit" parent="HBoxContainer" instance=ExtResource( 3 )]
+margin_top = 28.0
+margin_right = 48.0
+margin_bottom = 52.0
+rect_min_size = Vector2( 48, 24 )
+theme = ExtResource( 2 )
+text = "Quit"
+
 [node name="ScreenTransition" parent="." instance=ExtResource( 5 )]
 
-[connection signal="pressed" from="Start" to="." method="_on_Start_pressed"]
+[connection signal="pressed" from="HBoxContainer/Start" to="." method="_on_Start_pressed"]
+[connection signal="pressed" from="HBoxContainer/Quit" to="." method="_on_Quit_pressed"]
