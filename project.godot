@@ -468,6 +468,10 @@ config/name="Legends of Majestic Steel"
 run/main_scene="res://src/Main.tscn"
 config/icon="res://icon.png"
 
+[autoload]
+
+PixelMouse="*res://src/ui/PixelMouse.tscn"
+
 [display]
 
 window/size/width=180

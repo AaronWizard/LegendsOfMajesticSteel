@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://src/game/Game.gd" type="Script" id=1]
 [ext_resource path="res://src/ui/BattleInterface.tscn" type="PackedScene" id=2]
@@ -9,8 +9,6 @@
 [ext_resource path="res://src/state/states/pickactor/PlayerPickActorState.tscn" type="PackedScene" id=7]
 [ext_resource path="res://src/state/states/pickaction/PlayerActorMoveState.gd" type="Script" id=8]
 [ext_resource path="res://src/state/states/doaction/ActorMoveState.gd" type="Script" id=9]
-[ext_resource path="res://assets/graphics/ui/mouse_cursor.png" type="Texture" id=10]
-[ext_resource path="res://src/ui/MouseCursor.gd" type="Script" id=11]
 [ext_resource path="res://src/state/states/pickaction/PlayerActorTargetState.tscn" type="PackedScene" id=12]
 [ext_resource path="res://src/state/states/doaction/ActorSkillState.gd" type="Script" id=13]
 [ext_resource path="res://src/game/TurnManager.gd" type="Script" id=14]
@@ -96,12 +94,6 @@ script = ExtResource( 20 )
 screen_transition_path = NodePath("../../CanvasLayer/ScreenTransition")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
-
-[node name="MouseCursor" type="Sprite" parent="CanvasLayer"]
-texture = ExtResource( 10 )
-centered = false
-offset = Vector2( -1, -1 )
-script = ExtResource( 11 )
 
 [node name="ScreenTransition" parent="CanvasLayer" instance=ExtResource( 19 )]
 
