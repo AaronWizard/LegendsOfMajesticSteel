@@ -21,7 +21,3 @@ func _ready() -> void:
 
 func _play_press_sound() -> void:
 	_sound.play()
-
-
-func _on_SoundButton_pressed() -> void:
-	pass # Replace with function body.
