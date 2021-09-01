@@ -476,7 +476,7 @@ _global_script_class_icons={
 
 [application]
 
-config/name="Legends of Majestic Steel"
+config/name="Mightiest Steel"
 run/main_scene="res://src/Main.tscn"
 config/icon="res://icon.png"
 
