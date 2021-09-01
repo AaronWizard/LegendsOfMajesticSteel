@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://src/game/Game.gd" type="Script" id=1]
 [ext_resource path="res://src/ui/BattleInterface.tscn" type="PackedScene" id=2]
@@ -9,6 +9,8 @@
 [ext_resource path="res://src/state/states/pickactor/PlayerPickActorState.tscn" type="PackedScene" id=7]
 [ext_resource path="res://src/state/states/pickaction/PlayerActorMoveState.gd" type="Script" id=8]
 [ext_resource path="res://src/state/states/doaction/ActorMoveState.gd" type="Script" id=9]
+[ext_resource path="res://src/ui/VictoryText.tscn" type="PackedScene" id=10]
+[ext_resource path="res://src/state/states/VictoryState.gd" type="Script" id=11]
 [ext_resource path="res://src/state/states/pickaction/PlayerActorTargetState.tscn" type="PackedScene" id=12]
 [ext_resource path="res://src/state/states/doaction/ActorSkillState.gd" type="Script" id=13]
 [ext_resource path="res://src/game/TurnManager.gd" type="Script" id=14]
@@ -41,6 +43,7 @@ script = ExtResource( 16 )
 script = ExtResource( 6 )
 player_pick_actor_state_path = NodePath("../PlayerPickActorState")
 ai_pick_actor_state_path = NodePath("../AIPickActorState")
+victory_state_path = NodePath("../VictoryState")
 game_over_state_path = NodePath("../GameOverState")
 
 [node name="PlayerPickActorState" parent="StateMachine" instance=ExtResource( 7 )]
@@ -93,7 +96,14 @@ next_turn_state_path = NodePath("../NextTurnState")
 script = ExtResource( 20 )
 screen_transition_path = NodePath("../../CanvasLayer/ScreenTransition")
 
+[node name="VictoryState" type="Node" parent="StateMachine"]
+script = ExtResource( 11 )
+victory_text_path = NodePath("../../CanvasLayer/VictoryText")
+screen_transition_path = NodePath("../../CanvasLayer/ScreenTransition")
+
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="VictoryText" parent="CanvasLayer" instance=ExtResource( 10 )]
 
 [node name="ScreenTransition" parent="CanvasLayer" instance=ExtResource( 19 )]
 

@@ -383,6 +383,16 @@ _global_script_classes=[ {
 "class": "TurnQueuePanel",
 "language": "GDScript",
 "path": "res://src/ui/battle/TurnQueuePanel.gd"
+}, {
+"base": "State",
+"class": "VictoryState",
+"language": "GDScript",
+"path": "res://src/state/states/VictoryState.gd"
+}, {
+"base": "Node",
+"class": "VictoryText",
+"language": "GDScript",
+"path": "res://src/ui/VictoryText.gd"
 } ]
 _global_script_class_icons={
 "AIActorTurn": "",
@@ -459,7 +469,9 @@ _global_script_class_icons={
 "TileProperties": "res://assets/editor/tile_properties.png",
 "TurnManager": "",
 "TurnQueue": "",
-"TurnQueuePanel": ""
+"TurnQueuePanel": "",
+"VictoryState": "",
+"VictoryText": ""
 }
 
 [application]
