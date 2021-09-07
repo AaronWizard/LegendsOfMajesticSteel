@@ -1,0 +1,64 @@
+[gd_scene load_steps=15 format=2]
+
+[ext_resource path="res://src/core/skills/Skill.gd" type="Script" id=1]
+[ext_resource path="res://src/core/skills/effects/AnimateAttackEffect.gd" type="Script" id=2]
+[ext_resource path="res://src/core/skills/ranges/DiamondRange.gd" type="Script" id=3]
+[ext_resource path="res://assets/graphics/effects/rocket.png" type="Texture" id=4]
+[ext_resource path="res://src/core/skills/effects/SkillEffectGroup.gd" type="Script" id=5]
+[ext_resource path="res://src/core/skills/effects/ProjectileEffect.gd" type="Script" id=6]
+[ext_resource path="res://src/data/mapeffects/Rocket.tscn" type="PackedScene" id=7]
+[ext_resource path="res://src/core/skills/effects/AoeEffect.gd" type="Script" id=8]
+[ext_resource path="res://src/core/skills/aoe/DiamondAOE.gd" type="Script" id=9]
+[ext_resource path="res://src/core/skills/effects/MapAnimationEffect.gd" type="Script" id=10]
+[ext_resource path="res://src/data/mapeffects/Explosion.tscn" type="PackedScene" id=11]
+[ext_resource path="res://src/core/skills/effects/AttackTargetedActorEffect.gd" type="Script" id=12]
+
+[sub_resource type="Resource" id=1]
+script = ExtResource( 3 )
+min_dist = 2
+max_dist = 4
+include_diagonals = true
+
+[sub_resource type="Resource" id=2]
+script = ExtResource( 9 )
+min_dist = 0
+max_dist = 1
+
+[node name="RocketShot" type="Node"]
+script = ExtResource( 1 )
+icon = ExtResource( 4 )
+skill_name = "Rocket Shot"
+description = "Launch an explosive rocket"
+energy_cost = 3
+range_type = SubResource( 1 )
+
+[node name="AnimateAttackEffect" type="Node" parent="."]
+script = ExtResource( 2 )
+reduce_lunge = true
+
+[node name="SkillEffectGroup" type="Node" parent="AnimateAttackEffect"]
+script = ExtResource( 5 )
+group_type = 1
+
+[node name="ProjectileEffect" type="Node" parent="AnimateAttackEffect/SkillEffectGroup"]
+script = ExtResource( 6 )
+projectile_scene = ExtResource( 7 )
+
+[node name="SkillEffectGroup" type="Node" parent="AnimateAttackEffect/SkillEffectGroup"]
+script = ExtResource( 5 )
+
+[node name="ExplosionAnim" type="Node" parent="AnimateAttackEffect/SkillEffectGroup/SkillEffectGroup"]
+script = ExtResource( 8 )
+aoe = SubResource( 2 )
+
+[node name="MapAnimationEffect" type="Node" parent="AnimateAttackEffect/SkillEffectGroup/SkillEffectGroup/ExplosionAnim"]
+script = ExtResource( 10 )
+map_anim_scene = ExtResource( 11 )
+
+[node name="ActorDamage" type="Node" parent="AnimateAttackEffect/SkillEffectGroup/SkillEffectGroup"]
+script = ExtResource( 8 )
+aoe = SubResource( 2 )
+target_type = 1
+
+[node name="AttackTargetedActorEffect" type="Node" parent="AnimateAttackEffect/SkillEffectGroup/SkillEffectGroup/ActorDamage"]
+script = ExtResource( 12 )
