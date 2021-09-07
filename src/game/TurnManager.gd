@@ -13,11 +13,19 @@ func roll_initiative(actors: Array) -> void:
 	_turn_order.clear()
 	_turn_index = 0
 
+	var randomized_turn_order := []
+
 	for a in actors:
 		var actor := a as Actor
-		_turn_order.append(actor.faction)
+		
+		if (actor.faction == Actor.Faction.PLAYER) and _turn_order.empty():
+			# Players go first
+			_turn_order.append(actor.faction)
+		else:
+			randomized_turn_order.append(actor.faction)
 
-	_turn_order.shuffle()
+	randomized_turn_order.shuffle()
+	_turn_order.append_array(randomized_turn_order)
 
 
 func get_turn_order() -> Array:
