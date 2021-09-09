@@ -20,6 +20,7 @@ script = ExtResource( 4 )
 icon = ExtResource( 1 )
 skill_name = "Attack"
 description = "Pierce the foe from afar"
+energy_cost = -1
 range_type = SubResource( 1 )
 target_type = 2
 

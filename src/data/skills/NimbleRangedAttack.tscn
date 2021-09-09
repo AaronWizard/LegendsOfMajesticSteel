@@ -10,4 +10,5 @@ max_dist = 2
 include_diagonals = true
 
 [node name="NimbleRangedAttack" instance=ExtResource( 1 )]
+energy_cost = -1
 range_type = SubResource( 1 )
