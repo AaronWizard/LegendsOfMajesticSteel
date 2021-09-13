@@ -26,8 +26,8 @@ class _AnimationDistances:
 
 
 const _WALK_FRAME := 0
-const _REACT_FRAME := 2
-const _ACTION_FRAME := 3
+const _REACT_FRAME := 1
+const _ACTION_FRAME := 2
 
 signal animation_finished
 
