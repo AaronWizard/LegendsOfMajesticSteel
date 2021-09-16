@@ -1,8 +1,9 @@
-[gd_resource type="Resource" load_steps=4 format=2]
+[gd_resource type="Resource" load_steps=5 format=2]
 
 [ext_resource path="res://src/core/actors/ActorDefinition.gd" type="Script" id=1]
 [ext_resource path="res://assets/graphics/actors/beastwoman.png" type="Texture" id=2]
 [ext_resource path="res://src/data/skills/MeleeAttack.tscn" type="PackedScene" id=3]
+[ext_resource path="res://src/data/skills/Ravage.tscn" type="PackedScene" id=4]
 
 [resource]
 script = ExtResource( 1 )
@@ -12,4 +13,4 @@ max_stamina = 10
 max_energy = 6
 attack = 4
 move = 5
-skills = [ ExtResource( 3 ) ]
+skills = [ ExtResource( 3 ), ExtResource( 4 ) ]
