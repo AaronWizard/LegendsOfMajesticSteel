@@ -12,6 +12,8 @@ export var energy_cost := 0
 export var range_type: Resource
 export(TargetType) var target_type := TargetType.ANY
 
+export var use_action_pose := false
+
 
 func _get_configuration_warning() -> String:
 	var result := ""
@@ -65,9 +67,14 @@ func get_targeting_data(source_cell: Vector2, source_actor: Actor, map: Map) \
 
 
 func run(source_actor: Actor, map: Map, target: Vector2) -> void:
+	if use_action_pose:
+		source_actor.pose = Actor.Pose.ACTION
+	
 	source_actor.stats.spend_energy(energy_cost)
 	_get_effect().run(target, source_actor.origin_cell, source_actor, map)
 	yield(_get_effect(), "finished")
+
+	source_actor.reset_pose()
 
 
 func _get_range(source_cell: Vector2, source_actor: Actor, map: Map) -> Array:

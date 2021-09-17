@@ -20,6 +20,7 @@ icon = ExtResource( 8 )
 skill_name = "Ravage"
 description = "Tear the foes around you"
 energy_cost = 3
+use_action_pose = true
 
 [node name="SkillEffectGroup" type="Node" parent="."]
 script = ExtResource( 4 )
