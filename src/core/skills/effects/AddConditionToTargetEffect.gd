@@ -1,4 +1,5 @@
-class_name AddConditionToTargetEffect, "res://assets/editor/add_condition_effect.png"
+class_name AddConditionToTargetEffect, \
+		"res://assets/editor/add_condition_effect.png"
 extends SkillEffect
 
 
