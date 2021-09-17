@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://src/core/skills/Skill.gd" type="Script" id=1]
 [ext_resource path="res://src/core/skills/effects/AnimateAttackEffect.gd" type="Script" id=2]
@@ -12,11 +12,13 @@
 [ext_resource path="res://src/core/skills/effects/MapAnimationEffect.gd" type="Script" id=10]
 [ext_resource path="res://src/data/mapeffects/Explosion.tscn" type="PackedScene" id=11]
 [ext_resource path="res://src/core/skills/effects/AttackTargetedActorEffect.gd" type="Script" id=12]
+[ext_resource path="res://assets/sounds/explosion.wav" type="AudioStream" id=13]
+[ext_resource path="res://src/core/skills/effects/SoundEffect.gd" type="Script" id=14]
 
 [sub_resource type="Resource" id=1]
 script = ExtResource( 3 )
 min_dist = 2
-max_dist = 4
+max_dist = 3
 include_diagonals = true
 
 [sub_resource type="Resource" id=2]
@@ -35,6 +37,7 @@ range_type = SubResource( 1 )
 [node name="AnimateAttackEffect" type="Node" parent="."]
 script = ExtResource( 2 )
 reduce_lunge = true
+default_sound = false
 
 [node name="SkillEffectGroup" type="Node" parent="AnimateAttackEffect"]
 script = ExtResource( 5 )
@@ -46,6 +49,10 @@ projectile_scene = ExtResource( 7 )
 
 [node name="SkillEffectGroup" type="Node" parent="AnimateAttackEffect/SkillEffectGroup"]
 script = ExtResource( 5 )
+
+[node name="SoundEffect" type="Node" parent="AnimateAttackEffect/SkillEffectGroup/SkillEffectGroup"]
+script = ExtResource( 14 )
+stream = ExtResource( 13 )
 
 [node name="ExplosionAnim" type="Node" parent="AnimateAttackEffect/SkillEffectGroup/SkillEffectGroup"]
 script = ExtResource( 8 )
