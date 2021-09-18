@@ -74,8 +74,6 @@ func _set_target(target_cell: Vector2) -> void:
 	var targeting_data := _game.current_actor.range_data.get_targeting_data(
 			_game.current_actor.origin_cell, _skill_index)
 
-	_game.interface.map_highlights.clear_aoe()
-
 	if target_cell in targeting_data.valid_targets:
 		_pick_target_sound.play()
 
