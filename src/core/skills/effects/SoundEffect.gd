@@ -14,3 +14,4 @@ func _run_self(_target_cell: Vector2, _source_cell: Vector2,
 	yield(stream_player, "finished")
 	
 	map.remove_child(stream_player)
+	stream_player.queue_free()
