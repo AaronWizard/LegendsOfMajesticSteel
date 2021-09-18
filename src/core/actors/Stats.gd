@@ -109,7 +109,6 @@ func start_battle() -> void:
 
 
 func start_round() -> void:
-	print('new round for ' + get_parent().name)
 	if not _first_round:
 		charge_energy()
 	_first_round = false
