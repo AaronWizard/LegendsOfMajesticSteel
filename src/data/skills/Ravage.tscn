@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://src/core/skills/Skill.gd" type="Script" id=1]
 [ext_resource path="res://src/core/skills/effects/AoeEffect.gd" type="Script" id=2]
@@ -8,6 +8,8 @@
 [ext_resource path="res://src/core/skills/effects/MapAnimationEffect.gd" type="Script" id=6]
 [ext_resource path="res://src/data/mapeffects/Scratch.tscn" type="PackedScene" id=7]
 [ext_resource path="res://assets/graphics/ui/icons/actions/skills/ravage.png" type="Texture" id=8]
+[ext_resource path="res://src/core/skills/effects/SoundEffect.gd" type="Script" id=9]
+[ext_resource path="res://assets/sounds/ravage.wav" type="AudioStream" id=10]
 
 [sub_resource type="Resource" id=1]
 script = ExtResource( 3 )
@@ -24,6 +26,10 @@ use_action_pose = true
 
 [node name="SkillEffectGroup" type="Node" parent="."]
 script = ExtResource( 4 )
+
+[node name="SoundEffect" type="Node" parent="SkillEffectGroup"]
+script = ExtResource( 9 )
+stream = ExtResource( 10 )
 
 [node name="AoeEffect" type="Node" parent="SkillEffectGroup"]
 script = ExtResource( 2 )
