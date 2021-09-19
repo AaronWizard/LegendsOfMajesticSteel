@@ -2,6 +2,12 @@ extends Node
 
 const _MAIN_SCENE_PATH := "res://src/Main.tscn"
 
+onready var _quit_button := $HBoxContainer/Quit as CanvasItem
+
+
+func _ready() -> void:
+	_quit_button.visible = OS.get_name() != "HTML5"
+
 
 func _on_MainMenu_pressed() -> void:
 	# warning-ignore:return_value_discarded
