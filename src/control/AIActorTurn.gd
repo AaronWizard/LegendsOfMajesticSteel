@@ -30,8 +30,8 @@ func _queue_actions(actor: Actor, map: Map) -> void:
 			_queue_skill_action(actor, action.skill_index, action.target_cell)
 		else:
 			_queue_wait_action()
-
-	_queue_wait_action()
+	else:
+		_queue_wait_action()
 
 
 func _get_best_action(actor: Actor, map: Map) -> AIScoredAction:
