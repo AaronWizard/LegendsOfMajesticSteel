@@ -46,12 +46,15 @@ func _get_best_action(actor: Actor, map: Map) -> AIScoredAction:
 		for i in range(actor.skills.size()):
 			var skill_index := i as int
 			var skill := actor.skills[skill_index] as Skill
-			var targeting_data := skill.get_targeting_data(cell, actor, map)
-			for t in targeting_data.valid_targets:
-				var target_cell := t as Vector2
-				var skill_action := AIScoredAction.new_skill_action(
-						actor, map, skill_index, targeting_data, target_cell)
-				skill_actions.append(skill_action)
+			if skill.energy_cost <= actor.stats.energy:
+				var targeting_data := skill.get_targeting_data(
+						cell, actor, map)
+				for t in targeting_data.valid_targets:
+					var target_cell := t as Vector2
+					var skill_action := AIScoredAction.new_skill_action(
+							actor, map, skill_index, targeting_data,
+							target_cell)
+					skill_actions.append(skill_action)
 
 	var result: AIScoredAction = null
 
