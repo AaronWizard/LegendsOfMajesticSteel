@@ -254,16 +254,6 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/ui/RadialContainer.gd"
 }, {
-"base": "Reference",
-"class": "RangeData",
-"language": "GDScript",
-"path": "res://src/control/RangeData.gd"
-}, {
-"base": "Reference",
-"class": "RangeDataFactory",
-"language": "GDScript",
-"path": "res://src/control/RangeDataFactory.gd"
-}, {
 "base": "ColorRect",
 "class": "ScreenTransition",
 "language": "GDScript",
@@ -398,6 +388,16 @@ _global_script_classes=[ {
 "class": "VictoryText",
 "language": "GDScript",
 "path": "res://src/ui/VictoryText.gd"
+}, {
+"base": "Reference",
+"class": "WalkRange",
+"language": "GDScript",
+"path": "res://src/control/WalkRange.gd"
+}, {
+"base": "Reference",
+"class": "WalkRangeFactory",
+"language": "GDScript",
+"path": "res://src/control/WalkRangeFactory.gd"
 } ]
 _global_script_class_icons={
 "AIActorTurn": "",
@@ -449,8 +449,6 @@ _global_script_class_icons={
 "ProjectileEffect": "res://assets/editor/projectile_effect.png",
 "PushAttackTargetEffect": "res://assets/editor/pushattack_effect.png",
 "RadialContainer": "",
-"RangeData": "",
-"RangeDataFactory": "",
 "ScreenTransition": "",
 "SignalWaiter": "",
 "Skill": "res://assets/editor/skill.png",
@@ -477,7 +475,9 @@ _global_script_class_icons={
 "TurnQueue": "",
 "TurnQueuePanel": "",
 "VictoryState": "",
-"VictoryText": ""
+"VictoryText": "",
+"WalkRange": "",
+"WalkRangeFactory": ""
 }
 
 [application]

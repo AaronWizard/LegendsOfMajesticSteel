@@ -3,7 +3,8 @@ extends PickActorActionState
 
 export var player_move_state_path: NodePath
 
-var _skill_index: int
+var _skill: Skill
+var _targetting_data: TargetingData
 
 var _have_target := false
 var _skill_target: Vector2
@@ -20,22 +21,19 @@ func start(data: Dictionary) -> void:
 	# warning-ignore:return_value_discarded
 	_game.interface.mouse.connect("click", self, "_mouse_click")
 
-	_skill_index = data.skill_index as int
-
+	var skill_index = data.skill_index as int
+	_skill = _game.current_actor.skills[skill_index] as Skill
+	_targetting_data = _skill.get_targeting_data(
+			_game.current_actor.origin_cell, _game.current_actor, _game.map)
 
 	# warning-ignore:return_value_discarded
 	_game.interface.gui.connect("skill_cleared", self, "_skill_cleared")
 
 	_game.interface.gui.show_skill_panel(
-		_get_skill(),
-		not _game.current_actor.range_data.skill_is_valid_at_cell(
-			_game.current_actor.origin_cell, _skill_index
-		)
+		_skill, _targetting_data.valid_targets.size() == 0
 	)
 
-	var targeting_data := _game.current_actor.range_data.get_targeting_data(
-			_game.current_actor.origin_cell, _skill_index)
-	_game.interface.map_highlights.set_targets(targeting_data.target_range)
+	_game.interface.map_highlights.set_targets(_targetting_data.target_range)
 	_game.interface.map_highlights.moves_visible = false
 	_game.interface.map_highlights.clear_other_moves()
 
@@ -55,6 +53,8 @@ func end() -> void:
 
 	_clear_predicted_damage()
 
+	_skill = null
+	_targetting_data = null
 	_have_target = false
 
 
@@ -71,19 +71,16 @@ func _mouse_click(_position: Vector2) -> void:
 
 
 func _set_target(target_cell: Vector2) -> void:
-	var targeting_data := _game.current_actor.range_data.get_targeting_data(
-			_game.current_actor.origin_cell, _skill_index)
-
-	if target_cell in targeting_data.valid_targets:
+	if target_cell in _targetting_data.valid_targets:
 		_pick_target_sound.play()
 
 		_game.interface.map_highlights.target_cursor_visible = true
 		_game.interface.map_highlights.target_cursor_cell = target_cell
 
-		var aoe := targeting_data.get_aoe(target_cell)
+		var aoe := _targetting_data.get_aoe(target_cell)
 		_game.interface.map_highlights.set_aoe(aoe)
 
-		_show_predicted_damage(targeting_data, target_cell)
+		_show_predicted_damage(_targetting_data, target_cell)
 
 		_have_target = true
 		_skill_target = target_cell
@@ -93,15 +90,9 @@ func _confirm_target(target_cell: Vector2) -> void:
 	if _skill_target == target_cell:
 		_pick_target_sound.play()
 
-		var skill := _get_skill()
-
-		_do_skill(skill, target_cell)
+		_do_skill(_skill, target_cell)
 	else:
 		_set_target(target_cell)
-
-
-func _get_skill() -> Skill:
-	return _game.current_actor.skills[_skill_index] as Skill
 
 
 func _show_predicted_damage( \

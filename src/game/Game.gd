@@ -51,11 +51,11 @@ func get_turn_manager() -> TurnManager:
 	return _turn_manager
 
 
-func refresh_range_data(exclude_current: bool) -> void:
+func refresh_walk_ranges(turn_start: bool) -> void:
 	for a in _map.get_actors():
 		var actor := a as Actor
-		if not exclude_current or actor != _current_actor:
-			actor.range_data = RangeDataFactory.create_range_data(actor, _map)
+		if turn_start or actor != _current_actor:
+			actor.walk_range = WalkRangeFactory.create_walk_range(actor, _map)
 
 
 func get_active_actors(faction: int) -> Array:

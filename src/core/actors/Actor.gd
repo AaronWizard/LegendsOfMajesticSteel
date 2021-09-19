@@ -51,7 +51,7 @@ var turn_status: ActorTurnStatus setget , get_turn_status
 var stats: Stats setget , get_stats
 var skills: Array setget , get_skills
 
-var range_data: RangeData
+var walk_range: WalkRange
 
 var target_visible: bool setget set_target_visible, get_target_visible
 var stamina_modifier: int setget set_stamina_modifier, get_stamina_modifier

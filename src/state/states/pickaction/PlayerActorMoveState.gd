@@ -42,7 +42,7 @@ func _mouse_click(_position: Vector2) -> void:
 	if _game.current_actor.on_cell(target_cell):
 		_toggle_action_menu()
 	elif not _game.interface.gui.action_menu_open:
-		var path := _game.current_actor.range_data.get_walk_path(
+		var path := _game.current_actor.walk_range.get_walk_path(
 				_game.current_actor.origin_cell, target_cell)
 		if path.size() > 0:
 			_do_move(path)

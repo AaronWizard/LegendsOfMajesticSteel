@@ -1,12 +1,24 @@
-class_name RangeData
+class_name WalkRange
 
-var _visible_move_range: Dictionary
+var origin_cell: Vector2
+
+# Cells the actor can actually occupy
 var _true_move_range: Dictionary
+
+# Includes cells outside the actor's true move range but would be covered by
+# the actor if it's a multi-tile actor. Visible cells are keys and their
+# corresponding origin cells are the values.
+var _visible_move_range: Dictionary
 
 var _walk_grid: AStar2D
 
-var _targeting_data_set: Dictionary
-var _valid_source_cells: Dictionary
+
+func _init(new_origin_cell: Vector2, new_true_move_range: Dictionary,
+		new_visible_move_range: Dictionary, new_walk_grid: AStar2D) -> void:
+	origin_cell = new_origin_cell
+	_true_move_range = new_true_move_range
+	_visible_move_range = new_visible_move_range
+	_walk_grid = new_walk_grid
 
 
 static func walk_path_point(walk_grid: AStar2D, cell: Vector2) -> int:
@@ -41,35 +53,6 @@ func get_walk_path(start: Vector2, end: Vector2) -> Array:
 			assert(result.size() > 0)
 
 	return result
-
-
-func get_targeting_data(source_cell: Vector2, skill_index: int) \
-		-> TargetingData:
-	var key := Vector3(source_cell.x, source_cell.y, skill_index)
-	var result := _targeting_data_set[key] as TargetingData
-	return result
-
-
-func get_valid_skill_indices_at_cell(source_cell: Vector2) -> Array:
-	var result := []
-
-	if _valid_source_cells.has(source_cell):
-		var skills_set := _valid_source_cells[source_cell] as Dictionary
-		result = skills_set.keys()
-
-	return result
-
-
-func skill_is_valid_at_cell(source_cell: Vector2, skill_index: int) -> bool:
-	var result := false
-	if _valid_source_cells.has(source_cell):
-		var skills_set := _valid_source_cells[source_cell] as Dictionary
-		result = skills_set.has(skill_index)
-	return result
-
-
-func get_valid_skill_source_cells() -> Array:
-	return _valid_source_cells.keys()
 
 
 func _walk_path_point(cell: Vector2) -> int:

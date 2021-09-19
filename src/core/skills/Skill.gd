@@ -69,7 +69,7 @@ func get_targeting_data(source_cell: Vector2, source_actor: Actor, map: Map) \
 func run(source_actor: Actor, map: Map, target: Vector2) -> void:
 	if use_action_pose:
 		source_actor.pose = Actor.Pose.ACTION
-	
+
 	source_actor.stats.spend_energy(energy_cost)
 	_get_effect().run(target, source_actor.origin_cell, source_actor, map)
 	yield(_get_effect(), "finished")
@@ -123,6 +123,8 @@ func _get_effect() -> SkillEffect:
 # Assumes target_cell is in range
 func _get_aoe(target_cell: Vector2, source_cell: Vector2, source_actor: Actor,
 		map: Map) -> Array:
+	if source_cell != source_actor.origin_cell:
+		source_actor.virtual_origin_cell = source_cell
 	var result := _get_effect().get_aoe(
 			target_cell, source_cell, source_actor, map)
 	map.reset_actor_virtual_origins()
@@ -132,6 +134,8 @@ func _get_aoe(target_cell: Vector2, source_cell: Vector2, source_actor: Actor,
 # Keys are actors. Values are damage amounts.
 func _predict_damages(target_cell: Vector2, source_cell: Vector2,
 		source_actor: Actor, map: Map) -> Dictionary:
+	if source_cell != source_actor.origin_cell:
+		source_actor.virtual_origin_cell = source_cell
 	var result := _get_effect().predict_damage(
 			target_cell, source_cell, source_actor, map)
 	map.reset_actor_virtual_origins()
@@ -140,6 +144,8 @@ func _predict_damages(target_cell: Vector2, source_cell: Vector2,
 
 func _predict_conditions(target_cell: Vector2, source_cell: Vector2,
 		source_actor: Actor, map: Map) -> Dictionary:
+	if source_cell != source_actor.origin_cell:
+		source_actor.virtual_origin_cell = source_cell
 	var result := _get_effect().predict_conditions(
 			target_cell, source_cell, source_actor, map)
 	map.reset_actor_virtual_origins()
