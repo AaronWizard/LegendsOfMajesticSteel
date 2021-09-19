@@ -64,6 +64,7 @@ func _calculate_score() -> void:
 	if skill_index > -1:
 		_score_skill_source_cell()
 		_score_damage()
+		_score_energy()
 		_score_conditions()
 	else:
 		_score_move_cell()
@@ -143,3 +144,15 @@ func _score_conditions() -> void:
 					modifier_score *= -1
 
 				score += modifier_score * _STAT_MOD_WEIGHT
+
+
+func _score_energy() -> void:
+	var skill := _actor.skills[skill_index] as Skill
+	var energy_cost := skill.energy_cost
+	var current_energy := _actor.stats.energy
+	var max_energy := _actor.stats.max_energy
+
+	if (energy_cost > 0) and (current_energy != max_energy):
+		var energy_score := float(energy_cost) / float(current_energy)
+		score -= energy_score
+	# Otherwise feel free to burn energy
