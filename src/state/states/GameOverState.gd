@@ -10,6 +10,8 @@ onready var _screen_transition := get_node(screen_transition_path) \
 
 
 func start(_data: Dictionary) -> void:
+	BackgroundMusic.stop()
+
 	_screen_transition.fade_out()
 	yield(_screen_transition, "faded_out")
 	# warning-ignore:return_value_discarded

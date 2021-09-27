@@ -13,6 +13,8 @@ onready var _screen_transition := get_node(screen_transition_path) \
 
 
 func start(_data: Dictionary) -> void:
+	BackgroundMusic.stop()
+
 	_victory_text.show_victory_text()
 	yield(_victory_text, "victory_text_shown")
 	_screen_transition.fade_out()

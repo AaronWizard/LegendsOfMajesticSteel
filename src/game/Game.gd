@@ -3,6 +3,8 @@ extends Node
 
 export var start_map_file: PackedScene = null
 
+const _MUSIC := preload("res://assets/music/battle01.mp3")
+
 var map: Map setget , get_map
 var current_actor: Actor setget , get_current_actor
 
@@ -141,6 +143,8 @@ func _start_battle() -> void:
 	_screen_transition.fade_in()
 	yield(_screen_transition, "faded_in")
 	yield(get_tree().create_timer(0.1), "timeout")
+
+	BackgroundMusic.start(_MUSIC)
 
 	_state_machine.change_state(_next_turn_state)
 
