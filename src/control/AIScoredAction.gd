@@ -150,9 +150,8 @@ func _score_energy() -> void:
 	var skill := _actor.skills[skill_index] as Skill
 	var energy_cost := skill.energy_cost
 	var current_energy := _actor.stats.energy
-	var max_energy := _actor.stats.max_energy
 
-	if (energy_cost > 0) and (current_energy != max_energy):
+	if energy_cost > 0:
+		assert(energy_cost < current_energy)
 		var energy_score := float(energy_cost) / float(current_energy)
 		score -= energy_score
-	# Otherwise feel free to burn energy
