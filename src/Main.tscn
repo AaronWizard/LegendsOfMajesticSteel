@@ -72,5 +72,20 @@ text = "Quit"
 
 [node name="ScreenTransition" parent="." instance=ExtResource( 5 )]
 
+[node name="Label" type="Label" parent="."]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -33.0
+margin_top = -11.0
+margin_right = 33.0
+margin_bottom = -4.0
+theme = ExtResource( 2 )
+text = "AaronWizard, 2021"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [connection signal="pressed" from="HBoxContainer/Start" to="." method="_on_Start_pressed"]
 [connection signal="pressed" from="HBoxContainer/Quit" to="." method="_on_Quit_pressed"]
