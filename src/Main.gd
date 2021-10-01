@@ -9,9 +9,11 @@ func _ready() -> void:
 	_quit_button.visible = OS.get_name() != "HTML5"
 	_screen_transition.fade_in()
 	yield(_screen_transition, "faded_in")
+	BackgroundMusic.start(preload("res://assets/music/start.mp3"))
 
 
 func _on_Start_pressed() -> void:
+	BackgroundMusic.stop()
 	_screen_transition.fade_out()
 	yield(_screen_transition, "faded_out")
 	# warning-ignore:return_value_discarded
