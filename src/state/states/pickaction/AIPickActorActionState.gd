@@ -1,15 +1,13 @@
 class_name AIPickActorActionState
 extends PickActorActionState
 
-var _actor_ai := AIActorTurn.new()
-
 
 func start(_data: Dictionary) -> void:
 	call_deferred("_pick_action")
 
 
 func _pick_action() -> void:
-	var action := _actor_ai.pick_action(_game.current_actor, _game.map)
+	var action := _game.actor_ai.pick_action(_game.current_actor, _game.map)
 	match (action.type as int):
 		AIActorTurn.ActionType.MOVE:
 			_do_move(action.path as Array)

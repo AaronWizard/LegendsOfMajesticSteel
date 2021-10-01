@@ -2,11 +2,13 @@ class_name AIActorTurn
 
 enum ActionType { WAIT, MOVE, SKILL }
 
+var _active_actors := {}
 var _action_queue := []
 
 
-func get_pauses() -> bool:
-	return true
+func reset() -> void:
+	_active_actors.clear()
+	_action_queue.clear()
 
 
 func pick_action(actor: Actor, map: Map) -> Dictionary:
@@ -23,11 +25,18 @@ func _queue_actions(actor: Actor, map: Map) -> void:
 		var is_skill := action.skill_index > -1
 		var is_move := action.source_cell != actor.origin_cell
 
-		if is_move:
-			_queue_move_action(actor, action.source_cell)
+		if is_skill and not _active_actors.has(actor.name):
+			_active_actors[actor.name] = true
 
-		if is_skill:
-			_queue_skill_action(actor, action.skill_index, action.target_cell)
+		if _active_actors.has(actor.name):
+			if is_move:
+				_queue_move_action(actor, action.source_cell)
+
+			if is_skill:
+				_queue_skill_action(
+						actor, action.skill_index, action.target_cell)
+			else:
+				_queue_wait_action()
 		else:
 			_queue_wait_action()
 	else:

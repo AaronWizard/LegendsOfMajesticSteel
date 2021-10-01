@@ -11,6 +11,8 @@ var current_actor: Actor setget , get_current_actor
 var interface: BattleInterface setget , get_interface
 var turn_manager: TurnManager setget , get_turn_manager
 
+var actor_ai := AIActorTurn.new()
+
 var _map: Map
 var _current_actor: Actor
 
@@ -136,6 +138,8 @@ func _start_battle() -> void:
 	for a in _map.get_actors():
 		var actor := a as Actor
 		actor.start_battle()
+
+	actor_ai.reset()
 
 	_turn_manager.roll_initiative(_map.get_actors())
 	_interface.gui.turn_queue.set_queue(_turn_manager.turn_order)
