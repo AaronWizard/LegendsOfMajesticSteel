@@ -152,6 +152,6 @@ func _score_energy() -> void:
 	var current_energy := _actor.stats.energy
 
 	if energy_cost > 0:
-		assert(energy_cost < current_energy)
+		assert(energy_cost <= current_energy)
 		var energy_score := float(energy_cost) / float(current_energy)
 		score -= energy_score
