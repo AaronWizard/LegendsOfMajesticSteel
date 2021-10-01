@@ -3,10 +3,12 @@ extends Node
 const _GAME_SCENE_PATH := "res://src/game/Game.tscn"
 
 onready var _screen_transition := $ScreenTransition as ScreenTransition
+onready var _title := $TitleContainer/TitleAnim as AnimatedSprite
 onready var _quit_button := $HBoxContainer/Quit as CanvasItem
 
 func _ready() -> void:
 	_quit_button.visible = OS.get_name() != "HTML5"
+	_title.playing = true
 	_screen_transition.fade_in()
 	yield(_screen_transition, "faded_in")
 	BackgroundMusic.start(preload("res://assets/music/start.mp3"))
