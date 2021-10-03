@@ -70,8 +70,6 @@ rect_min_size = Vector2( 48, 24 )
 theme = ExtResource( 2 )
 text = "Quit"
 
-[node name="ScreenTransition" parent="." instance=ExtResource( 5 )]
-
 [node name="Label" type="Label" parent="."]
 anchor_left = 0.5
 anchor_top = 1.0
@@ -86,6 +84,8 @@ text = "AaronWizard, 2021"
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="ScreenTransition" parent="." instance=ExtResource( 5 )]
 
 [connection signal="pressed" from="HBoxContainer/Start" to="." method="_on_Start_pressed"]
 [connection signal="pressed" from="HBoxContainer/Quit" to="." method="_on_Quit_pressed"]
