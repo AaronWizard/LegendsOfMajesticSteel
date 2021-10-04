@@ -6,6 +6,7 @@ onready var _quit_button := $HBoxContainer/Quit as CanvasItem
 
 
 func _ready() -> void:
+	BackgroundMusic.start(preload("res://assets/music/defeat.mp3"))
 	_quit_button.visible = OS.get_name() != "HTML5"
 
 
