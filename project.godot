@@ -485,6 +485,8 @@ _global_script_class_icons={
 config/name="Mightiest Steel"
 run/main_scene="res://src/Main.tscn"
 config/icon="res://icon.png"
+config/macos_native_icon="res://icons/icon.icns"
+config/windows_native_icon="res://icons/icon.ico"
 
 [autoload]
 
