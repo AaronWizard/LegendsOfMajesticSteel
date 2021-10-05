@@ -3,7 +3,7 @@ extends Node
 const _GAME_SCENE_PATH := "res://src/game/Game.tscn"
 
 onready var _screen_transition := $ScreenTransition as ScreenTransition
-onready var _title := $TitleContainer/TitleAnim as AnimatedSprite
+onready var _title := $VBoxContainer/TitleContainer/TitleAnim as AnimatedSprite
 onready var _quit_button := $HBoxContainer/Quit as CanvasItem
 
 func _ready() -> void:
