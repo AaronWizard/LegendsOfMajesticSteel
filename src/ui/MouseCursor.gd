@@ -2,8 +2,12 @@ extends Sprite
 
 
 func _ready() -> void:
-	position = get_global_mouse_position()
-	_set_mouse_on_screen(position)
+	visible = not OS.has_touchscreen_ui_hint()
+
+	set_process(visible)
+	if visible:
+		position = get_global_mouse_position()
+		_set_mouse_on_screen(position)
 
 
 func _process(_delta: float) -> void:
