@@ -94,9 +94,10 @@ func _queue_move_action(actor: Actor, target_cell: Vector2) -> void:
 
 func _queue_skill_action(actor: Actor, skill_index: int, target: Vector2) \
 		-> void:
+	var skill := actor.skills[skill_index] as Skill
 	var action := {
 		type = ActionType.SKILL,
-		skill = actor.skills[skill_index] as Skill,
+		skill = skill,
 		target = target
 	}
 	_action_queue.push_back(action)

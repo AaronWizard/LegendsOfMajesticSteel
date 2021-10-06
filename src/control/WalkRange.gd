@@ -39,18 +39,19 @@ func get_move_range() -> Array:
 func get_walk_path(start: Vector2, end: Vector2) -> Array:
 	var result := []
 
-	if _visible_move_range.has(end):
+	if _true_move_range.has(start) and _visible_move_range.has(end):
 		var true_end := _visible_move_range[end] as Vector2
-		if (start != true_end) and _true_move_range.has(start) \
-				and _true_move_range.has(true_end):
+		if (start != true_end) and _true_move_range.has(true_end):
 			var end_point := _walk_path_point(true_end)
 			if end_point > -1:
 				var start_point := _walk_path_point(start)
 				assert(start_point > -1)
 
-				result = _walk_grid.get_point_path(start_point, end_point)
+				var new_path := _walk_grid.get_point_path(
+						start_point, end_point)
+				result = Array(new_path)
 				result.pop_front() # Remove starting cell
-			assert(result.size() > 0)
+				assert(result.size() > 0)
 
 	return result
 
