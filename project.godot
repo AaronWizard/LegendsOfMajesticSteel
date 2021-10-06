@@ -536,7 +536,7 @@ click={
 [rendering]
 
 2d/snapping/use_gpu_pixel_snap=true
-environment/default_clear_color=Color( 0.133333, 0.137255, 0.137255, 1 )
+environment/default_clear_color=Color( 0.0627451, 0.0627451, 0.0627451, 1 )
 environment/default_environment="res://default_env.tres"
 quality/dynamic_fonts/use_oversampling=false
 quality/2d/use_pixel_snap=true

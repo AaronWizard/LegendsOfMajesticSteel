@@ -7,5 +7,5 @@ font_path = "res://assets/fonts/MinimalPixel v2.ttf"
 [resource]
 size = 14
 outline_size = 1
-outline_color = Color( 0.133333, 0.137255, 0.137255, 1 )
+outline_color = Color( 0.0627451, 0.0627451, 0.0627451, 1 )
 font_data = SubResource( 1 )
