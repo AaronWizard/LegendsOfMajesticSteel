@@ -83,7 +83,8 @@ func _sort_scored_actions(action_a: AIScoredAction, action_b: AIScoredAction) \
 
 
 func _queue_move_action(actor: Actor, target_cell: Vector2) -> void:
-	var path := actor.walk_range.get_walk_path(actor.origin_cell, target_cell)
+	var path := actor.walk_range.get_walk_path(
+			actor.origin_cell, target_cell, false)
 	assert(not path.empty())
 	var action := {
 		type = ActionType.MOVE,
