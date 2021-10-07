@@ -29,7 +29,7 @@ Mightiest Steel is an in-development Strategy RPG that will emphasize rapid game
 
 * Built using Godot 3.3.4: https://godotengine.org/
 * Graphics made using Aseprite: https://www.aseprite.org/
- * Tiles designed using Tilesetter: https://www.tilesetter.org/
+* Tiles designed using Tilesetter: https://www.tilesetter.org/
 * Sound effects made using ChipTone: https://sfbgames.itch.io/chiptone
 * Music made using FamiStudio: https://famistudio.org/
 * Main font is "MinimalPixel Font" by Mounir Tohami: https://mounirtohami.itch.io/minimalpixel-font
