@@ -69,7 +69,7 @@ material = SubResource( 4 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
-color = Color( 0.133333, 0.137255, 0.137255, 1 )
+color = Color( 0.0627451, 0.0627451, 0.0627451, 1 )
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
