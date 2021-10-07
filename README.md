@@ -34,3 +34,9 @@ Mightiest Steel is an in-development Strategy RPG that will emphasize rapid game
 * Music made using FamiStudio: https://famistudio.org/
 * Main font is "MinimalPixel Font" by Mounir Tohami: https://mounirtohami.itch.io/minimalpixel-font
 * Special font is "Psygnotic" by Constance Taylor and Rachel Holland: https://www.dafont.com/psygnotic.font
+
+## Licensing
+
+The source code and data files are under the MIT Licence.
+
+All rights reserved on the graphical and audio assets.
