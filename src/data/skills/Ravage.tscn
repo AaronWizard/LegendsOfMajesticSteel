@@ -13,7 +13,7 @@
 
 [sub_resource type="Resource" id=1]
 script = ExtResource( 3 )
-min_dist = 0
+min_dist = 1
 max_dist = 2
 
 [node name="Ravage" type="Node"]
