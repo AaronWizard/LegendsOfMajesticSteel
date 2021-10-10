@@ -59,6 +59,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/ui/battle/ActorDetailsPanel.gd"
 }, {
+"base": "SkillAOE",
+"class": "ActorLineAOE",
+"language": "GDScript",
+"path": "res://src/core/skills/aoe/ActorLineAOE.gd"
+}, {
 "base": "ActorActionState",
 "class": "ActorMoveState",
 "language": "GDScript",
@@ -173,11 +178,6 @@ _global_script_classes=[ {
 "class": "GameState",
 "language": "GDScript",
 "path": "res://src/state/states/GameState.gd"
-}, {
-"base": "SkillAOE",
-"class": "LineAOE",
-"language": "GDScript",
-"path": "res://src/core/skills/aoe/LineAOE.gd"
 }, {
 "base": "Node2D",
 "class": "Map",
@@ -425,6 +425,7 @@ _global_script_class_icons={
 "ActorActionState": "",
 "ActorDefinition": "",
 "ActorDetailsPanel": "",
+"ActorLineAOE": "",
 "ActorMoveState": "",
 "ActorSkillState": "",
 "ActorStartTurnState": "",
@@ -448,7 +449,6 @@ _global_script_class_icons={
 "GameCamera": "",
 "GameOverState": "",
 "GameState": "",
-"LineAOE": "",
 "Map": "res://assets/editor/map.png",
 "MapAnimation": "",
 "MapAnimationEffect": "res://assets/editor/mapanim_effect.png",

@@ -6,7 +6,7 @@
 [ext_resource path="res://src/core/skills/effects/SkillEffectGroup.gd" type="Script" id=4]
 [ext_resource path="res://src/core/skills/effects/MoveSelfToTargetEffect.gd" type="Script" id=5]
 [ext_resource path="res://src/core/skills/effects/AoeEffect.gd" type="Script" id=6]
-[ext_resource path="res://src/core/skills/aoe/LineAOE.gd" type="Script" id=7]
+[ext_resource path="res://src/core/skills/aoe/ActorLineAOE.gd" type="Script" id=7]
 [ext_resource path="res://src/core/skills/effects/AttackTargetedActorEffect.gd" type="Script" id=8]
 
 [sub_resource type="Resource" id=1]
@@ -17,13 +17,15 @@ include_diagonals = true
 
 [sub_resource type="Resource" id=2]
 script = ExtResource( 7 )
+include_start = false
+include_end = false
 
 [node name="Lunge" type="Node"]
 script = ExtResource( 1 )
 icon = ExtResource( 3 )
 skill_name = "Lunge"
 range_type = SubResource( 1 )
-target_type = 4
+target_type = 5
 use_action_pose = true
 
 [node name="SkillEffectGroup" type="Node" parent="."]

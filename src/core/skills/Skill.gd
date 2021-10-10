@@ -2,7 +2,7 @@ tool
 class_name Skill, "res://assets/editor/skill.png"
 extends Node
 
-enum TargetType { ANY, ANY_ACTOR, ENEMY, ALLY, EMPTY_CELL }
+enum TargetType { ANY, ANY_ACTOR, ENEMY, ALLY, EMPTY_CELL, ENTERABLE_CELL }
 
 export var icon: Texture
 export var skill_name := "Skill"
@@ -90,28 +90,31 @@ func _is_valid_target(target_cell: Vector2, source_actor: Actor, map: Map) \
 		-> bool:
 	var result := false
 
-	var actor_on_target := map.get_actor_on_cell(target_cell)
+	if target_type == TargetType.ENTERABLE_CELL:
+		result = map.actor_can_enter_cell(source_actor, target_cell)
+	else:
+		var actor_on_target := map.get_actor_on_cell(target_cell)
 
-	match target_type:
-		TargetType.ANY_ACTOR:
-			result = actor_on_target != null
-		TargetType.EMPTY_CELL:
-			result = actor_on_target == null
-		TargetType.ENEMY, TargetType.ALLY:
-			if actor_on_target:
-				match target_type:
-					TargetType.ENEMY:
-						result = actor_on_target.faction \
-								!= source_actor.faction
-					_:
-						assert(target_type == TargetType.ALLY)
-						result = actor_on_target.faction \
-								== source_actor.faction
-			else:
-				result = false
-		_:
-			assert(target_type == TargetType.ANY)
-			result = true
+		match target_type:
+			TargetType.ANY_ACTOR:
+				result = actor_on_target != null
+			TargetType.EMPTY_CELL:
+				result = actor_on_target == null
+			TargetType.ENEMY, TargetType.ALLY:
+				if actor_on_target:
+					match target_type:
+						TargetType.ENEMY:
+							result = actor_on_target.faction \
+									!= source_actor.faction
+						_:
+							assert(target_type == TargetType.ALLY)
+							result = actor_on_target.faction \
+									== source_actor.faction
+				else:
+					result = false
+			_:
+				assert(target_type == TargetType.ANY)
+				result = true
 
 	return result
 
