@@ -1,11 +1,16 @@
+tool
 class_name AoeEffect, "res://assets/editor/aoe_effect.png"
 extends SkillEffectWrapper
 
 enum TargetType { ALL_CELLS, ALL_ACTORS, ENEMIES, ALLIES }
+enum ChildEffectSourceCellType {
+		EFFECT_SOURCE_CELL, EFFECT_TARGET_CELL, AOE_TARGET_CELL }
 
 export var aoe: Resource
 export(TargetType) var target_type := TargetType.ALL_CELLS
-export var source_is_aoe_target := true
+export(ChildEffectSourceCellType) var child_effect_source_cell \
+		:= ChildEffectSourceCellType.AOE_TARGET_CELL
+
 
 
 func get_aoe(target_cell: Vector2, source_cell: Vector2,
@@ -20,7 +25,8 @@ func get_aoe(target_cell: Vector2, source_cell: Vector2,
 	var targets := _get_targets_from_base(base_aoe, source_actor.faction, map)
 	for t in targets:
 		var aoe_target_cell := t as Vector2
-		var aoe_source_cell := _get_aoe_source_cell(target_cell, source_cell)
+		var aoe_source_cell := _get_aoe_source_cell(
+				aoe_target_cell, target_cell, source_cell)
 		var child_aoe := _child_aoe(aoe_target_cell,
 				aoe_source_cell, source_actor, map)
 		for c in child_aoe:
@@ -37,7 +43,8 @@ func predict_damage(target_cell: Vector2, source_cell: Vector2,
 	var targets := _get_targets(target_cell, source_cell, source_actor, map)
 	for t in targets:
 		var aoe_target_cell := t as Vector2
-		var aoe_source_cell := _get_aoe_source_cell(target_cell, source_cell)
+		var aoe_source_cell := _get_aoe_source_cell(
+				aoe_target_cell, target_cell, source_cell)
 		var child_damages := _predict_child_damage(
 				aoe_target_cell, aoe_source_cell, source_actor, map)
 		for a in child_damages:
@@ -57,7 +64,8 @@ func predict_conditions(target_cell: Vector2, source_cell: Vector2,
 	var targets := _get_targets(target_cell, source_cell, source_actor, map)
 	for t in targets:
 		var aoe_target_cell := t as Vector2
-		var aoe_source_cell := _get_aoe_source_cell(target_cell, source_cell)
+		var aoe_source_cell := _get_aoe_source_cell(
+				aoe_target_cell, target_cell, source_cell)
 		var child_conditions := _predict_child_conditions(
 				aoe_target_cell, aoe_source_cell, source_actor, map)
 		for a in child_conditions:
@@ -88,7 +96,7 @@ func _run_self(target_cell: Vector2, source_cell: Vector2,
 			var index := i as int
 			var aoe_target_cell := targets[index] as Vector2
 			var aoe_source_cell := _get_aoe_source_cell(
-					target_cell, source_cell)
+					aoe_target_cell, target_cell, source_cell)
 			var child_effect := get_child(index) as SkillEffect
 
 			child_effect.run(aoe_target_cell, aoe_source_cell,
@@ -142,9 +150,14 @@ func _get_targets(target_cell: Vector2, source_cell: Vector2,
 	return result
 
 
-func _get_aoe_source_cell(effect_target_cell: Vector2,
+func _get_aoe_source_cell(aoe_target_cell: Vector2, effect_target_cell: Vector2,
 		effect_source_cell: Vector2) -> Vector2:
-	var result := effect_source_cell
-	if source_is_aoe_target:
-		result = effect_target_cell
+	var result: Vector2
+	match child_effect_source_cell:
+		ChildEffectSourceCellType.EFFECT_SOURCE_CELL:
+			result = effect_source_cell
+		ChildEffectSourceCellType.EFFECT_TARGET_CELL:
+			result = effect_target_cell
+		_:
+			result = aoe_target_cell
 	return result
