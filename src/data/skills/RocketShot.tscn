@@ -66,6 +66,7 @@ map_anim_scene = ExtResource( 11 )
 script = ExtResource( 8 )
 aoe = SubResource( 2 )
 target_type = 1
+child_effect_source_cell = 1
 
 [node name="AttackTargetedActorEffect" type="Node" parent="AnimateAttackEffect/SkillEffectGroup/SkillEffectGroup/ActorDamage"]
 script = ExtResource( 12 )
