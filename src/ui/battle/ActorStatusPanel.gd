@@ -3,12 +3,15 @@ extends PanelContainer
 
 signal portrait_pressed
 
-onready var _portrait_button := $VBoxContainer/HBoxContainer/PortraitButton as Button
-onready var _portrait := $VBoxContainer/HBoxContainer/PortraitButton/Portrait as TextureRect
+onready var _portrait_button := $VBoxContainer/HBoxContainer/PortraitButton \
+		as Button
+onready var _portrait := $VBoxContainer/HBoxContainer/PortraitButton/Portrait \
+		as TextureRect
 
-onready var _name := $VBoxContainer/Name as Label
+onready var _name := $VBoxContainer/NameMargin/Name as Label
 
-onready var _stats := $VBoxContainer/HBoxContainer/Stats as Container
+onready var _stats := $VBoxContainer/HBoxContainer/StatsMargin/Stats \
+		as Container
 
 onready var _attack := _stats.get_node("Attack") as Label
 
