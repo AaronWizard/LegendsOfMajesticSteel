@@ -17,12 +17,12 @@ func get_aoe(target_cell: Vector2, _source_cell: Vector2, _source_actor: Actor,
 func predict_damage(target_cell: Vector2, _source_cell: Vector2,
 		source_actor: Actor, map: Map) -> Dictionary:
 	var result := {}
-	
+
 	var actor := map.get_actor_on_cell(target_cell)
 	if actor:
 		var damage := actor.stats.damage_from_attack(source_actor.stats.attack)
 		result[actor] = -damage
-		
+
 	return result
 
 
