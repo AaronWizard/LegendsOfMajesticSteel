@@ -1,16 +1,22 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://src/core/skills/Skill.gd" type="Script" id=1]
 [ext_resource path="res://src/core/skills/ranges/DiamondRange.gd" type="Script" id=2]
 [ext_resource path="res://assets/graphics/ui/icons/actions/skills/lunge.png" type="Texture" id=3]
 [ext_resource path="res://src/core/skills/effects/SkillEffectGroup.gd" type="Script" id=4]
 [ext_resource path="res://src/core/skills/effects/MoveSelfToTargetEffect.gd" type="Script" id=5]
+[ext_resource path="res://src/core/skills/effects/AoeEffect.gd" type="Script" id=6]
+[ext_resource path="res://src/core/skills/aoe/LineAOE.gd" type="Script" id=7]
+[ext_resource path="res://src/core/skills/effects/AttackTargetedActorEffect.gd" type="Script" id=8]
 
 [sub_resource type="Resource" id=1]
 script = ExtResource( 2 )
 min_dist = 2
-max_dist = 2
+max_dist = 3
 include_diagonals = true
+
+[sub_resource type="Resource" id=2]
+script = ExtResource( 7 )
 
 [node name="Lunge" type="Node"]
 script = ExtResource( 1 )
@@ -25,4 +31,12 @@ script = ExtResource( 4 )
 
 [node name="MoveSelfToTargetEffect" type="Node" parent="SkillEffectGroup"]
 script = ExtResource( 5 )
-speed = 6.0
+speed = 2.0
+
+[node name="AoeEffect" type="Node" parent="SkillEffectGroup"]
+script = ExtResource( 6 )
+aoe = SubResource( 2 )
+target_type = 2
+
+[node name="AttackTargetedActorEffect" type="Node" parent="SkillEffectGroup/AoeEffect"]
+script = ExtResource( 8 )
