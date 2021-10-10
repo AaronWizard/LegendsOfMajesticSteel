@@ -1,0 +1,28 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://src/core/skills/Skill.gd" type="Script" id=1]
+[ext_resource path="res://src/core/skills/ranges/DiamondRange.gd" type="Script" id=2]
+[ext_resource path="res://assets/graphics/ui/icons/actions/skills/lunge.png" type="Texture" id=3]
+[ext_resource path="res://src/core/skills/effects/SkillEffectGroup.gd" type="Script" id=4]
+[ext_resource path="res://src/core/skills/effects/MoveSelfToTargetEffect.gd" type="Script" id=5]
+
+[sub_resource type="Resource" id=1]
+script = ExtResource( 2 )
+min_dist = 2
+max_dist = 2
+include_diagonals = true
+
+[node name="Lunge" type="Node"]
+script = ExtResource( 1 )
+icon = ExtResource( 3 )
+skill_name = "Lunge"
+range_type = SubResource( 1 )
+target_type = 4
+use_action_pose = true
+
+[node name="SkillEffectGroup" type="Node" parent="."]
+script = ExtResource( 4 )
+
+[node name="MoveSelfToTargetEffect" type="Node" parent="SkillEffectGroup"]
+script = ExtResource( 5 )
+speed = 6.0

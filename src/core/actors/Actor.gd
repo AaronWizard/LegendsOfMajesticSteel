@@ -281,7 +281,7 @@ func move_step(target_cell: Vector2) -> void:
 	set_origin_cell(target_cell)
 	set_cell_offset(-diff)
 
-	_set_facing(diff)
+	set_facing(diff)
 
 	set_pose(Pose.WALK)
 
@@ -302,7 +302,7 @@ func animate_attack(direction: Vector2, reduce_lunge := false,
 	var real_direction := direction.normalized()
 
 	set_pose(Pose.ACTION)
-	_set_facing(real_direction)
+	set_facing(real_direction)
 
 	var hit_pos := real_direction
 	if reduce_lunge:
@@ -376,6 +376,14 @@ func play_hit_sound() -> void:
 	_hit_sound.play()
 
 
+func set_facing(direction: Vector2) -> void:
+	if direction.x < 0:
+		_sprite.flip_h = true
+	elif direction.x > 0:
+		_sprite.flip_h = false
+	# else change nothing
+
+
 func _randomize_idle_start() -> void:
 	if not Engine.editor_hint:
 		assert(_anim.current_animation == "actor_idle")
@@ -387,14 +395,6 @@ func _clear_skills() -> void:
 	for s in $Skills.get_children():
 		var skill := s as Node
 		skill.queue_free()
-
-
-func _set_facing(direction: Vector2) -> void:
-	if direction.x < 0:
-		_sprite.flip_h = true
-	elif direction.x > 0:
-		_sprite.flip_h = false
-	# else change nothing
 
 
 func _animate_staminabar(change: int) -> void:
