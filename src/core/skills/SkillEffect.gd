@@ -3,6 +3,8 @@ extends Node
 
 signal finished
 
+export var delay := 0.0 # In seconds
+
 var running: bool setget , get_is_running
 
 var _running := false
@@ -40,6 +42,10 @@ func run(target_cell: Vector2, source_cell: Vector2,
 func _run_main(target_cell: Vector2, source_cell: Vector2,
 		source_actor: Actor, map: Map) -> void:
 	var run_state
+
+	if delay > 0:
+		yield(get_tree().create_timer(delay), "timeout")
+
 	# warning-ignore:void_assignment
 	run_state = _run_self(target_cell, source_cell, source_actor, map)
 	if run_state is GDScriptFunctionState:

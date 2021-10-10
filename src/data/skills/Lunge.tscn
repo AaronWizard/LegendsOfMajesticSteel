@@ -24,6 +24,7 @@ include_end = false
 script = ExtResource( 1 )
 icon = ExtResource( 3 )
 skill_name = "Lunge"
+energy_cost = 2
 range_type = SubResource( 1 )
 target_type = 5
 use_action_pose = true
@@ -33,12 +34,14 @@ script = ExtResource( 4 )
 
 [node name="MoveSelfToTargetEffect" type="Node" parent="SkillEffectGroup"]
 script = ExtResource( 5 )
-speed = 2.0
+speed = 8.0
 
 [node name="AoeEffect" type="Node" parent="SkillEffectGroup"]
 script = ExtResource( 6 )
 aoe = SubResource( 2 )
 target_type = 2
+child_effect_delay_sort_type = 0
+child_effect_delay_speed = 8.0
 
 [node name="AttackTargetedActorEffect" type="Node" parent="SkillEffectGroup/AoeEffect"]
 script = ExtResource( 8 )

@@ -5,12 +5,16 @@ extends SkillEffectWrapper
 enum TargetType { ALL_CELLS, ALL_ACTORS, ENEMIES, ALLIES }
 enum ChildEffectSourceCellType {
 		EFFECT_SOURCE_CELL, EFFECT_TARGET_CELL, AOE_TARGET_CELL }
+enum ChildEffectDelaySortType { FROM_EFFECT_SOURCE, FROM_EFFECT_TARGET }
 
 export var aoe: Resource
 export(TargetType) var target_type := TargetType.ALL_CELLS
 export(ChildEffectSourceCellType) var child_effect_source_cell \
 		:= ChildEffectSourceCellType.AOE_TARGET_CELL
 
+export(ChildEffectDelaySortType) var child_effect_delay_sort_type \
+		:= ChildEffectDelaySortType.FROM_EFFECT_TARGET
+export var child_effect_delay_speed := 0.0 # Tiles per second
 
 
 func get_aoe(target_cell: Vector2, source_cell: Vector2,
@@ -99,6 +103,10 @@ func _run_self(target_cell: Vector2, source_cell: Vector2,
 					aoe_target_cell, target_cell, source_cell)
 			var child_effect := get_child(index) as SkillEffect
 
+			var delay := _get_delay(
+					aoe_target_cell, target_cell, source_cell, map)
+			child_effect.delay = delay
+
 			child_effect.run(aoe_target_cell, aoe_source_cell,
 					source_actor, map)
 			assert(child_effect.running)
@@ -160,4 +168,29 @@ func _get_aoe_source_cell(aoe_target_cell: Vector2, effect_target_cell: Vector2,
 			result = effect_target_cell
 		_:
 			result = aoe_target_cell
+	return result
+
+
+func _get_delay(aoe_target_cell: Vector2, effect_target_cell: Vector2,
+		effect_source_cell: Vector2, map: Map) -> float:
+	var result := 0.0
+
+	if child_effect_delay_speed > 0:
+		var start: Vector2
+		match child_effect_delay_sort_type:
+			ChildEffectDelaySortType.FROM_EFFECT_SOURCE:
+				start = effect_source_cell
+			_:
+				start = effect_target_cell
+		var end: Vector2
+		match target_type:
+			TargetType.ALL_CELLS:
+				end = aoe_target_cell
+			_:
+				var actor := map.get_actor_on_cell(aoe_target_cell)
+				assert(actor != null)
+				end = actor.center_cell
+		var dist := end.distance_to(start)
+		result = dist / child_effect_delay_speed
+
 	return result
