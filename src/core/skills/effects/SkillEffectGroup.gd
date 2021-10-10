@@ -1,3 +1,4 @@
+tool
 class_name SkillEffectGroup, "res://assets/editor/skilleffectgroup.png"
 extends SkillEffect
 

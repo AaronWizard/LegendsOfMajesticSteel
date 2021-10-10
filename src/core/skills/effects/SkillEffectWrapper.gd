@@ -1,5 +1,19 @@
+tool
 class_name SkillEffectWrapper
 extends SkillEffect
+
+
+func _get_configuration_warning() -> String:
+	var result := ""
+
+	if get_child_count() == 0:
+		result = "SkillEffectWrapper need to have a child SkillEffect"
+	elif get_child_count() > 1:
+		result = "SkillEffectWrapper can only have one child SkillEffect"
+	elif not get_child(0) is SkillEffect:
+		result = "First child is not a SkillEffect"
+
+	return result
 
 
 func _child_aoe(target_cell: Vector2, source_cell: Vector2, source_actor: Actor,
