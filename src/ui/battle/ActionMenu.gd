@@ -23,8 +23,6 @@ onready var _skills_button := _actions.get_node("Skill") as Control
 
 onready var _animation := $AnimationPlayer as AnimationPlayer
 
-onready var _close_sound := $CloseSound as AudioStreamPlayer
-
 
 func get_is_open() -> bool:
 	return _is_open
@@ -43,13 +41,14 @@ func clear_skills() -> void:
 
 func open() -> void:
 	_is_open = true
+	StandardSounds.play_select()
 	_animation.play("open_action_menu")
 
 
 func close(with_sound := true) -> void:
 	_is_open = false
 	if with_sound:
-		_close_sound.play()
+		StandardSounds.play_cancel()
 	_animation.play("close_menu")
 
 
@@ -59,7 +58,7 @@ func _set_skills(skills: Array, energy: int) -> void:
 		var index := i as int
 		var skill := skills[index] as Skill
 		if energy >= skill.energy_cost:
-			var button := Constants.create_sound_button()
+			var button := SoundButton.new()
 			button.icon = skill.icon
 			# warning-ignore:return_value_discarded
 			button.connect("pressed", self, "emit_signal",
@@ -87,6 +86,7 @@ func _on_Attack_pressed() -> void:
 
 func _on_Skill_pressed() -> void:
 	if not _animation.is_playing():
+		StandardSounds.play_select()
 		_animation.play("open_skills_menu")
 
 

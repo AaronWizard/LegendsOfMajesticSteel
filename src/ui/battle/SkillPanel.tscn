@@ -2,9 +2,9 @@
 
 [ext_resource path="res://src/ui/battle/SkillPanel.gd" type="Script" id=1]
 [ext_resource path="res://resources/visual/gui/theme_standard.tres" type="Theme" id=2]
+[ext_resource path="res://src/ui/SoundButton.gd" type="Script" id=3]
 [ext_resource path="res://assets/graphics/ui/icons/actions/attack.png" type="Texture" id=9]
 [ext_resource path="res://assets/graphics/ui/icons/actions/cancel.png" type="Texture" id=10]
-[ext_resource path="res://src/ui/SoundButton.tscn" type="PackedScene" id=11]
 
 [node name="SkillPanel" type="PanelContainer"]
 margin_right = 109.0
@@ -49,13 +49,17 @@ margin_bottom = 16.0
 size_flags_horizontal = 3
 text = "No valid targets"
 
-[node name="Cancel" parent="HBoxContainer" instance=ExtResource( 11 )]
+[node name="Cancel" type="Button" parent="HBoxContainer"]
 margin_left = 79.0
 margin_right = 103.0
 margin_bottom = 24.0
 size_flags_horizontal = 0
 size_flags_vertical = 8
 icon = ExtResource( 10 )
+script = ExtResource( 3 )
+__meta__ = {
+"_editor_description_": ""
+}
 sound_type = 1
 
 [connection signal="pressed" from="HBoxContainer/Cancel" to="." method="_on_Cancel_pressed"]

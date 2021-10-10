@@ -1,8 +1,6 @@
 class_name PlayerPickActorState
 extends PickActorState
 
-onready var _pick_sound := $PickSound as AudioStreamPlayer
-
 
 func end() -> void:
 	_game.interface.mouse.dragging_enabled = false
@@ -49,6 +47,6 @@ func _mouse_click(_position: Vector2) -> void:
 	for a in _actors:
 		var actor := a as Actor
 		if actor.on_cell(target_cell):
-			_pick_sound.play()
+			StandardSounds.play_select()
 			_pick_actor(actor)
 			break

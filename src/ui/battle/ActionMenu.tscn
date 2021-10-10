@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://src/ui/battle/ActionMenu.gd" type="Script" id=1]
 [ext_resource path="res://src/ui/RadialContainer.gd" type="Script" id=2]
@@ -6,9 +6,7 @@
 [ext_resource path="res://assets/graphics/ui/icons/actions/skill.png" type="Texture" id=4]
 [ext_resource path="res://assets/graphics/ui/icons/actions/attack.png" type="Texture" id=5]
 [ext_resource path="res://resources/visual/gui/theme_standard.tres" type="Theme" id=6]
-[ext_resource path="res://src/ui/SoundButton.tscn" type="PackedScene" id=7]
-[ext_resource path="res://assets/sounds/ui_cancel.wav" type="AudioStream" id=8]
-[ext_resource path="res://assets/sounds/ui_select.wav" type="AudioStream" id=9]
+[ext_resource path="res://src/ui/SoundButton.gd" type="Script" id=7]
 
 [sub_resource type="Animation" id=1]
 resource_name = "close_menu"
@@ -208,20 +206,6 @@ tracks/5/keys = {
 "update": 1,
 "values": [ false ]
 }
-tracks/6/type = "method"
-tracks/6/path = NodePath("OpenSound")
-tracks/6/interp = 1
-tracks/6/loop_wrap = true
-tracks/6/imported = false
-tracks/6/enabled = true
-tracks/6/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"values": [ {
-"args": [ 0.0 ],
-"method": "play"
-} ]
-}
 
 [sub_resource type="Animation" id=3]
 length = 0.1
@@ -396,7 +380,6 @@ __meta__ = {
 }
 
 [node name="Actions" type="Container" parent="Container"]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 28.0
@@ -411,20 +394,27 @@ __meta__ = {
 }
 base_rotation = 90.0
 
-[node name="Wait" parent="Container/Actions" instance=ExtResource( 7 )]
+[node name="Wait" type="Button" parent="Container/Actions"]
 margin_right = 24.0
 margin_bottom = 24.0
+rect_min_size = Vector2( 24, 24 )
 icon = ExtResource( 3 )
+script = ExtResource( 7 )
+sound_type = 1
 
-[node name="Attack" parent="Container/Actions" instance=ExtResource( 7 )]
+[node name="Attack" type="Button" parent="Container/Actions"]
 margin_right = 24.0
 margin_bottom = 24.0
+rect_min_size = Vector2( 24, 24 )
 icon = ExtResource( 5 )
+script = ExtResource( 7 )
 
-[node name="Skill" parent="Container/Actions" instance=ExtResource( 7 )]
+[node name="Skill" type="Button" parent="Container/Actions"]
 margin_right = 24.0
 margin_bottom = 24.0
+rect_min_size = Vector2( 24, 24 )
 icon = ExtResource( 4 )
+script = ExtResource( 7 )
 
 [node name="Skills" type="Container" parent="Container"]
 visible = false
@@ -443,12 +433,6 @@ anims/close_menu = SubResource( 1 )
 anims/open_action_menu = SubResource( 2 )
 anims/open_skills_menu = SubResource( 3 )
 anims/start = SubResource( 4 )
-
-[node name="OpenSound" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 9 )
-
-[node name="CloseSound" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 8 )
 
 [connection signal="pressed" from="Container/Actions/Wait" to="." method="_on_Wait_pressed"]
 [connection signal="pressed" from="Container/Actions/Attack" to="." method="_on_Attack_pressed"]

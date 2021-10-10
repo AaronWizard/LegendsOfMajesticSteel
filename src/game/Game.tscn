@@ -6,12 +6,12 @@
 [ext_resource path="res://src/state/states/pickaction/AIPickActorActionState.gd" type="Script" id=4]
 [ext_resource path="res://src/state/StateMachine.gd" type="Script" id=5]
 [ext_resource path="res://src/state/states/NextTurnState.gd" type="Script" id=6]
-[ext_resource path="res://src/state/states/pickactor/PlayerPickActorState.tscn" type="PackedScene" id=7]
+[ext_resource path="res://src/state/states/pickactor/PlayerPickActorState.gd" type="Script" id=7]
 [ext_resource path="res://src/state/states/pickaction/PlayerActorMoveState.gd" type="Script" id=8]
 [ext_resource path="res://src/state/states/doaction/ActorMoveState.gd" type="Script" id=9]
 [ext_resource path="res://src/ui/VictoryText.tscn" type="PackedScene" id=10]
 [ext_resource path="res://src/state/states/VictoryState.gd" type="Script" id=11]
-[ext_resource path="res://src/state/states/pickaction/PlayerActorTargetState.tscn" type="PackedScene" id=12]
+[ext_resource path="res://src/state/states/pickaction/PlayerActorTargetState.gd" type="Script" id=12]
 [ext_resource path="res://src/state/states/doaction/ActorSkillState.gd" type="Script" id=13]
 [ext_resource path="res://src/game/TurnManager.gd" type="Script" id=14]
 [ext_resource path="res://src/state/states/pickactor/AIPickActorState.gd" type="Script" id=15]
@@ -46,7 +46,11 @@ ai_pick_actor_state_path = NodePath("../AIPickActorState")
 victory_state_path = NodePath("../VictoryState")
 game_over_state_path = NodePath("../GameOverState")
 
-[node name="PlayerPickActorState" parent="StateMachine" instance=ExtResource( 7 )]
+[node name="PlayerPickActorState" type="Node" parent="StateMachine"]
+script = ExtResource( 7 )
+__meta__ = {
+"_editor_description_": ""
+}
 turn_start_state_path = NodePath("../ActorStartTurnState")
 
 [node name="AIPickActorState" type="Node" parent="StateMachine"]
@@ -65,7 +69,11 @@ skill_state_path = NodePath("../ActorSkillState")
 wait_state_path = NodePath("../ActorWaitState")
 player_target_state_path = NodePath("../PlayerActorTargetState")
 
-[node name="PlayerActorTargetState" parent="StateMachine" instance=ExtResource( 12 )]
+[node name="PlayerActorTargetState" type="Node" parent="StateMachine"]
+script = ExtResource( 12 )
+__meta__ = {
+"_editor_description_": ""
+}
 move_state_path = NodePath("../ActorMoveState")
 skill_state_path = NodePath("../ActorSkillState")
 wait_state_path = NodePath("../ActorWaitState")

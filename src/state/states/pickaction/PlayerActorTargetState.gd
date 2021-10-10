@@ -11,8 +11,6 @@ var _skill_target: Vector2
 
 var _predicted_damage_actors: Array
 
-onready var _pick_target_sound := $PickTargetSound as AudioStreamPlayer
-
 onready var _player_move_state := get_node(player_move_state_path) as State
 
 
@@ -72,7 +70,7 @@ func _mouse_click(_position: Vector2) -> void:
 
 func _set_target(target_cell: Vector2) -> void:
 	if target_cell in _targetting_data.valid_targets:
-		_pick_target_sound.play()
+		StandardSounds.play_select()
 
 		_game.interface.map_highlights.target_cursor_visible = true
 		_game.interface.map_highlights.target_cursor_cell = target_cell
@@ -88,7 +86,7 @@ func _set_target(target_cell: Vector2) -> void:
 
 func _confirm_target(target_cell: Vector2) -> void:
 	if _skill_target == target_cell:
-		_pick_target_sound.play()
+		StandardSounds.play_select()
 
 		_do_skill(_skill, target_cell)
 	else:
