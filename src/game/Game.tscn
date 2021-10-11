@@ -67,6 +67,7 @@ script = ExtResource( 8 )
 move_state_path = NodePath("../ActorMoveState")
 skill_state_path = NodePath("../ActorSkillState")
 wait_state_path = NodePath("../ActorWaitState")
+pick_actor_state_path = NodePath("../PlayerPickActorState")
 player_target_state_path = NodePath("../PlayerActorTargetState")
 
 [node name="PlayerActorTargetState" type="Node" parent="StateMachine"]
@@ -77,6 +78,7 @@ __meta__ = {
 move_state_path = NodePath("../ActorMoveState")
 skill_state_path = NodePath("../ActorSkillState")
 wait_state_path = NodePath("../ActorWaitState")
+pick_actor_state_path = NodePath("../PlayerPickActorState")
 player_move_state_path = NodePath("../PlayerActorMoveState")
 
 [node name="AIPickActorActionState" type="Node" parent="StateMachine"]

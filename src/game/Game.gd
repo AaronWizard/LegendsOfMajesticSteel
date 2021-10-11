@@ -93,6 +93,11 @@ func start_turn(actor: Actor) -> void:
 	_interface.set_current_actor(actor)
 
 
+func cancel_turn() -> void:
+	_current_actor = null
+	_interface.clear_current_actor()
+
+
 func end_turn() -> void:
 	_current_actor.turn_status.end_turn()
 	_current_actor = null

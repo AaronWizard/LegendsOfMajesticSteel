@@ -1,5 +1,5 @@
 class_name PlayerActorMoveState
-extends PickActorActionState
+extends PlayerPickActorActionState
 
 export var player_target_state_path: NodePath
 
@@ -8,10 +8,8 @@ var _other_actor: Actor
 onready var _player_target_state := get_node(player_target_state_path) as State
 
 
-func start(_data: Dictionary) -> void:
-	_game.interface.mouse.dragging_enabled = true
-	# warning-ignore:return_value_discarded
-	_game.interface.mouse.connect("click", self, "_mouse_click")
+func start(data: Dictionary) -> void:
+	.start(data)
 
 	# warning-ignore:return_value_discarded
 	_game.interface.gui.connect("wait_started", self, "_wait_started")
@@ -23,8 +21,7 @@ func start(_data: Dictionary) -> void:
 
 
 func end() -> void:
-	_game.interface.mouse.dragging_enabled = false
-	_game.interface.mouse.disconnect("click", self, "_mouse_click")
+	.end()
 
 	_game.interface.gui.close_action_menu(false)
 	_game.interface.gui.disconnect("wait_started", self, "_wait_started")

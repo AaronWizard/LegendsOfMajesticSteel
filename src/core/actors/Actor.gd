@@ -295,6 +295,12 @@ func move_step(target_cell: Vector2) -> void:
 	reset_pose()
 
 
+func move_path(path: Array) -> void:
+	for c in path:
+		var cell := c as Vector2
+		yield(move_step(cell), "completed")
+
+
 func animate_attack(direction: Vector2, reduce_lunge := false,
 		play_sound := true) -> void:
 	_animating = true

@@ -1,5 +1,5 @@
 class_name PlayerActorTargetState
-extends PickActorActionState
+extends PlayerPickActorActionState
 
 export var player_move_state_path: NodePath
 
@@ -15,9 +15,7 @@ onready var _player_move_state := get_node(player_move_state_path) as State
 
 
 func start(data: Dictionary) -> void:
-	_game.interface.mouse.dragging_enabled = true
-	# warning-ignore:return_value_discarded
-	_game.interface.mouse.connect("click", self, "_mouse_click")
+	.start(data)
 
 	var skill_index = data.skill_index as int
 	_skill = _game.current_actor.skills[skill_index] as Skill
@@ -37,8 +35,7 @@ func start(data: Dictionary) -> void:
 
 
 func end() -> void:
-	_game.interface.mouse.dragging_enabled = false
-	_game.interface.mouse.disconnect("click", self, "_mouse_click")
+	.end()
 
 	_game.interface.gui.disconnect("skill_cleared", self, "_skill_cleared")
 
@@ -56,16 +53,16 @@ func end() -> void:
 	_have_target = false
 
 
-func _skill_cleared() -> void:
-	emit_signal("state_change_requested", _player_move_state)
-
-
 func _mouse_click(_position: Vector2) -> void:
 	var target_cell := _game.interface.current_map.get_mouse_cell()
 	if _have_target:
 		_confirm_target(target_cell)
 	else:
 		_set_target(target_cell)
+
+
+func _skill_cleared() -> void:
+	emit_signal("state_change_requested", _player_move_state)
 
 
 func _set_target(target_cell: Vector2) -> void:
