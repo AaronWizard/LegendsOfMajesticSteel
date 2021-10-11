@@ -24,6 +24,7 @@ func set_current_actor(actor: Actor) -> void:
 func clear_current_actor() -> void:
 	map_highlights.moves_visible = false
 	map_highlights.clear_moves()
+	camera.stop_following_actor()
 	gui.current_actor = null
 
 

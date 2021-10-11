@@ -6,7 +6,7 @@ signal drag(relative)
 
 const _MIN_DRAG_DISTANCE_SQRD := 3 * 3
 
-export var dragging_enabled := false
+export var dragging_enabled := false setget set_dragging_enabled
 
 var _mouse_down := false
 var _first_mouse_down_pos: Vector2
@@ -39,3 +39,9 @@ func _mouse_move(event: InputEventMouseMotion) -> void:
 					_first_mouse_down_pos) > _MIN_DRAG_DISTANCE_SQRD
 		if _dragging:
 			emit_signal("drag", event.relative)
+
+
+func set_dragging_enabled(value: bool) -> void:
+	dragging_enabled = value
+	if not dragging_enabled:
+		_dragging = false
