@@ -1,7 +1,6 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://src/ui/battle/SkillPanel.gd" type="Script" id=1]
-[ext_resource path="res://resources/visual/gui/theme_standard.tres" type="Theme" id=2]
 [ext_resource path="res://src/ui/SoundButton.gd" type="Script" id=3]
 [ext_resource path="res://assets/graphics/ui/icons/actions/attack.png" type="Texture" id=9]
 [ext_resource path="res://assets/graphics/ui/icons/actions/cancel.png" type="Texture" id=10]
@@ -9,7 +8,6 @@
 [node name="SkillPanel" type="PanelContainer"]
 margin_right = 109.0
 margin_bottom = 30.0
-theme = ExtResource( 2 )
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false

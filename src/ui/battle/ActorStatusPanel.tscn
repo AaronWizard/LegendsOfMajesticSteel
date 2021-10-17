@@ -1,7 +1,6 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://src/ui/battle/ActorStatusPanel.gd" type="Script" id=1]
-[ext_resource path="res://resources/visual/gui/theme_standard.tres" type="Theme" id=2]
 [ext_resource path="res://assets/graphics/ui/staminabar_background.png" type="Texture" id=3]
 [ext_resource path="res://assets/graphics/ui/staminabar_fill_front.png" type="Texture" id=4]
 [ext_resource path="res://assets/graphics/ui/icons/stats/defence.png" type="Texture" id=5]
@@ -15,7 +14,6 @@ margin_bottom = 32.0
 rect_min_size = Vector2( 76, 32 )
 mouse_filter = 2
 size_flags_horizontal = 0
-theme = ExtResource( 2 )
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_group_": true,
@@ -24,10 +22,10 @@ __meta__ = {
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 anchor_right = 1.0
-anchor_bottom = 0.969
+anchor_bottom = 1.0
 margin_left = 29.0
 margin_top = 1.0
-margin_bottom = -0.00800133
+margin_bottom = -1.0
 rect_min_size = Vector2( 47, 30 )
 __meta__ = {
 "_edit_group_": true,
@@ -134,9 +132,9 @@ margin_right = 32.0
 rect_min_size = Vector2( 32, 32 )
 size_flags_horizontal = 4
 size_flags_vertical = 4
-theme = ExtResource( 2 )
 script = ExtResource( 8 )
 __meta__ = {
+"_edit_use_anchors_": false,
 "_editor_description_": ""
 }
 

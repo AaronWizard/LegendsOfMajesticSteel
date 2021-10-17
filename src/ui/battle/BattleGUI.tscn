@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://src/ui/battle/BattleGUI.gd" type="Script" id=1]
 [ext_resource path="res://src/ui/battle/SkillPanel.tscn" type="PackedScene" id=2]
@@ -8,7 +8,6 @@
 [ext_resource path="res://src/ui/battle/ActorDetailsPanel.tscn" type="PackedScene" id=6]
 [ext_resource path="res://assets/graphics/ui/icons/actions/cancel.png" type="Texture" id=7]
 [ext_resource path="res://src/ui/SoundButton.gd" type="Script" id=8]
-[ext_resource path="res://resources/visual/gui/theme_standard.tres" type="Theme" id=9]
 
 [node name="BattleGUI" type="CanvasLayer"]
 script = ExtResource( 1 )
@@ -37,7 +36,6 @@ margin_left = 75.0
 margin_top = -30.0
 margin_right = 99.0
 margin_bottom = -6.0
-theme = ExtResource( 9 )
 icon = ExtResource( 7 )
 script = ExtResource( 8 )
 __meta__ = {
