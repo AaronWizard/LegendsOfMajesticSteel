@@ -39,6 +39,7 @@ func _position_player_turn_camera() -> void:
 
 	var center_cell := TileGeometry.center_cell_of_cells(cells)
 	center_cell *= Constants.TILE_SIZE
+	center_cell += Constants.TILE_HALF_SIZE_V
 	_game.interface.camera.move_to_position(center_cell)
 
 

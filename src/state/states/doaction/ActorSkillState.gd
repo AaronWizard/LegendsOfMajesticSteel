@@ -11,7 +11,9 @@ func start(data: Dictionary) -> void:
 	_target = data.target as Vector2
 	assert(_target)
 
-	_game.interface.camera.move_to_position(_target * Constants.TILE_SIZE)
+	var target_pos \
+			:= (_target * Constants.TILE_SIZE) + Constants.TILE_HALF_SIZE_V
+	_game.interface.camera.move_to_position(target_pos)
 
 	.start(data)
 
