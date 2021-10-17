@@ -49,6 +49,7 @@ var portrait: Texture setget , get_portrait
 
 var turn_status: ActorTurnStatus setget , get_turn_status
 var stats: Stats setget , get_stats
+var attack_skill: Node setget , get_attack
 var skills: Array setget , get_skills
 
 var walk_range: WalkRange
@@ -95,6 +96,7 @@ func _ready() -> void:
 
 	if not Engine.editor_hint:
 		set_actor_definition(actor_definition)
+
 		_stamina_bar.max_stamina = get_stats().max_stamina
 		_condition_icons.update_icons(get_stats())
 
@@ -163,6 +165,10 @@ func set_actor_definition(value: Resource) -> void:
 
 		if not Engine.editor_hint:
 			get_stats().init_from_def(ad)
+
+			var new_attack_skill := ad.attack_skill.instance()
+			$Attack.add_child(new_attack_skill)
+
 			for s in ad.skills:
 				var skill_scene := s as PackedScene
 				var skill := skill_scene.instance() as Node
@@ -189,6 +195,13 @@ func get_stats() -> Stats:
 	var result: Stats = null
 	if $Stats:
 		result = $Stats as Stats
+	return result
+
+
+func get_attack() -> Node:
+	var result: Node = null
+	if $Attack:
+		result = $Attack.get_child(0)
 	return result
 
 
@@ -398,6 +411,9 @@ func _randomize_idle_start() -> void:
 
 
 func _clear_skills() -> void:
+	for a in $Attack.get_children():
+		var attack := a as Node
+		attack.queue_free()
 	for s in $Skills.get_children():
 		var skill := s as Node
 		skill.queue_free()
