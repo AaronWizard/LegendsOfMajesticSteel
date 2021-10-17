@@ -30,7 +30,7 @@ onready var _skill_panel := $SkillPanel as SkillPanel
 
 onready var _action_menu_region := $ActionMenuRegion as Control
 
-onready var _action_menu := $ActionMenu as ActionMenu
+onready var _action_menu := $ActionMenu as ActionMenuOld
 
 
 func _ready() -> void:

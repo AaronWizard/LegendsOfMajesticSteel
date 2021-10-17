@@ -1,4 +1,4 @@
-class_name ActionMenu
+class_name ActionMenuOld
 extends Node2D
 
 signal attack_pressed
