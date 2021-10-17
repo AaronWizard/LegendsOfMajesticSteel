@@ -12,6 +12,9 @@ func start(_data: Dictionary) -> void:
 	var faction := _get_faction()
 	_actors = _game.get_active_actors(faction)
 	assert(_actors.size() > 0)
+
+	_game.interface.gui.can_cancel = _actors.size() > 1
+
 	if _actors.size() == 1:
 		call_deferred("_pick_actor", _actors[0])
 	else:

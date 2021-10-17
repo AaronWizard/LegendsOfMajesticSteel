@@ -8,6 +8,8 @@ signal wait_started
 
 signal turn_cancelled
 
+var can_cancel := false
+
 var current_actor: Actor = null setget set_current_actor
 var other_actor: Actor = null setget set_other_actor
 
@@ -57,7 +59,7 @@ func set_current_actor(value: Actor) -> void:
 	else:
 		_action_menu.clear_skills()
 
-	_cancel_turn_button.visible = (current_actor != null) \
+	_cancel_turn_button.visible = can_cancel and (current_actor != null) \
 			and (current_actor.faction == Actor.Faction.PLAYER)
 
 
