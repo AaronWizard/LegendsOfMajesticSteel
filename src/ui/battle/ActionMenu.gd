@@ -11,26 +11,27 @@ const _BUTTON_MARGIN := 4
 
 var is_open: bool setget , get_is_open
 
-onready var _standard_actions := $StandardActions as Node2D
 onready var _skills := $Skills as Node2D
 
-onready var _attack_button := $StandardActions/AttackPos/Attack as Button
+onready var _attack_button := $AttackPos/Attack as Button
+onready var _wait_button := $WaitPos/Wait as Control
 
-onready var _attack_pos := $StandardActions/AttackPos as Node2D
-onready var _wait_pos := $StandardActions/WaitPos as Node2D
+onready var _attack_pos := $AttackPos as Node2D
+onready var _wait_pos := $WaitPos as Node2D
 
-onready var _attack_pos_end := $StandardActions/AttackPosEnd as Node2D
-onready var _wait_pos_end := $StandardActions/WaitPosEnd as Node2D
-onready var _standard_actions_up_end := $StandardActionsUpEnd as Node2D
+onready var _attack_pos_end := $AttackPosEnd as Node2D
+onready var _wait_pos_end := $WaitPosEnd as Node2D
 onready var _skills_end := $SkillsEnd as Node2D
 
 onready var _tween := $Tween as Tween
 
 var _is_open := false
+var _have_attack := false
 
 
 func _ready() -> void:
-	_standard_actions.visible = false
+	_attack_button.visible = false
+	_wait_button.visible = false
 	_skills.visible = false
 
 
@@ -48,7 +49,8 @@ func open() -> void:
 	_is_open = true
 	StandardSounds.play_select()
 
-	_standard_actions.visible = true
+	_attack_button.visible = _have_attack
+	_wait_button.visible = true
 	_skills.visible = true
 	_animate_opening()
 
@@ -61,7 +63,8 @@ func close(with_sound: bool) -> void:
 	_animate_closing()
 
 	yield(_tween, "tween_all_completed")
-	_standard_actions.visible = false
+	_attack_button.visible = false
+	_wait_button.visible = false
 	_skills.visible = false
 
 
@@ -73,7 +76,8 @@ func clear_skills() -> void:
 
 
 func _set_attack(attack_skill: Skill) -> void:
-	_attack_button.visible = attack_skill != null
+	_have_attack = attack_skill != null
+	_attack_button.visible = _have_attack
 	if attack_skill:
 		_attack_button.icon = attack_skill.icon
 
@@ -133,8 +137,6 @@ func _animate_opening() -> void:
 	_queue_animate_pos(_wait_pos, Vector2.ZERO, _wait_pos_end.position)
 
 	if _skills.get_child_count() > 0:
-		_queue_animate_pos(_standard_actions,
-				Vector2.ZERO, _standard_actions_up_end.position)
 		_queue_animate_pos(_skills, Vector2.ZERO, _skills_end.position)
 
 	for i in range(_skills.get_child_count()):
@@ -152,8 +154,6 @@ func _animate_closing() -> void:
 	_queue_animate_pos(_wait_pos, _wait_pos_end.position, Vector2.ZERO)
 
 	if _skills.get_child_count() > 0:
-		_queue_animate_pos(_standard_actions,
-				_standard_actions_up_end.position, Vector2.ZERO)
 		_queue_animate_pos(_skills, _skills_end.position, Vector2.ZERO)
 
 	for s in _skills.get_children():

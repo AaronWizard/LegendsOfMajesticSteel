@@ -16,10 +16,10 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -48.0
-margin_top = -40.0
+margin_top = -12.0
 margin_right = 48.0
 margin_bottom = 40.0
-rect_min_size = Vector2( 96, 80 )
+rect_min_size = Vector2( 96, 52 )
 mouse_filter = 2
 __meta__ = {
 "_edit_use_anchors_": false
@@ -27,17 +27,12 @@ __meta__ = {
 
 [node name="Skills" type="Node2D" parent="."]
 
-[node name="StandardActions" type="Node2D" parent="."]
+[node name="WaitPos" type="Node2D" parent="."]
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="WaitPos" type="Node2D" parent="StandardActions"]
-__meta__ = {
-"_edit_group_": true
-}
-
-[node name="Wait" type="Button" parent="StandardActions/WaitPos"]
+[node name="Wait" type="Button" parent="WaitPos"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -54,12 +49,12 @@ __meta__ = {
 }
 sound_type = 1
 
-[node name="AttackPos" type="Node2D" parent="StandardActions"]
+[node name="AttackPos" type="Node2D" parent="."]
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="Attack" type="Button" parent="StandardActions/AttackPos"]
+[node name="Attack" type="Button" parent="AttackPos"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -74,22 +69,15 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="AttackPosEnd" type="Position2D" parent="StandardActions"]
+[node name="AttackPosEnd" type="Position2D" parent="."]
 position = Vector2( -36, 0 )
 __meta__ = {
 "_edit_group_": true,
 "_gizmo_extents_": 12.0
 }
 
-[node name="WaitPosEnd" type="Position2D" parent="StandardActions"]
+[node name="WaitPosEnd" type="Position2D" parent="."]
 position = Vector2( 36, 0 )
-__meta__ = {
-"_edit_group_": true,
-"_gizmo_extents_": 12.0
-}
-
-[node name="StandardActionsUpEnd" type="Position2D" parent="."]
-position = Vector2( 0, -28 )
 __meta__ = {
 "_edit_group_": true,
 "_gizmo_extents_": 12.0
@@ -104,5 +92,5 @@ __meta__ = {
 
 [node name="Tween" type="Tween" parent="."]
 
-[connection signal="pressed" from="StandardActions/WaitPos/Wait" to="." method="_on_Wait_pressed"]
-[connection signal="pressed" from="StandardActions/AttackPos/Attack" to="." method="_on_Attack_pressed"]
+[connection signal="pressed" from="WaitPos/Wait" to="." method="_on_Wait_pressed"]
+[connection signal="pressed" from="AttackPos/Attack" to="." method="_on_Attack_pressed"]
