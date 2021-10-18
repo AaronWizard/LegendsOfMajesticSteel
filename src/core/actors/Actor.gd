@@ -52,6 +52,9 @@ var stats: Stats setget , get_stats
 var attack_skill: Node setget , get_attack
 var skills: Array setget , get_skills
 
+# Includes attack skill. Does not include skills that need more energy.
+var all_active_skills: Array setget , get_all_active_skills
+
 var walk_range: WalkRange
 
 var target_visible: bool setget set_target_visible, get_target_visible
@@ -211,6 +214,21 @@ func get_skills() -> Array:
 	var result := []
 	if $Skills:
 		result = $Skills.get_children()
+	return result
+
+
+# Includes attack skill. Does not include skills that need more energy.
+func get_all_active_skills() -> Array:
+	var result := []
+
+	var attack := get_attack()
+	if attack:
+		result.append(attack)
+	for s in get_skills():
+		var energy_cost := s.energy_cost as int
+		if energy_cost <= get_stats().energy:
+			result.append(s)
+
 	return result
 
 

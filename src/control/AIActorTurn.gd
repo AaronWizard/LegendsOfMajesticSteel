@@ -22,7 +22,7 @@ func pick_action(actor: Actor, map: Map) -> Dictionary:
 func _queue_actions(actor: Actor, map: Map) -> void:
 	var action := _get_best_action(actor, map)
 	if action:
-		var is_skill := action.skill_index > -1
+		var is_skill := action.skill != null
 		var is_move := action.source_cell != actor.origin_cell
 
 		if is_skill and not _active_actors.has(actor.name):
@@ -33,8 +33,7 @@ func _queue_actions(actor: Actor, map: Map) -> void:
 				_queue_move_action(actor, action.source_cell)
 
 			if is_skill:
-				_queue_skill_action(
-						actor, action.skill_index, action.target_cell)
+				_queue_skill_action(action.skill, action.target_cell)
 			else:
 				_queue_wait_action()
 		else:
@@ -52,18 +51,16 @@ func _get_best_action(actor: Actor, map: Map) -> AIScoredAction:
 		var walk_action := AIScoredAction.new_move_action(actor, map, cell)
 		walk_actions.append(walk_action)
 
-		for i in range(actor.skills.size()):
-			var skill_index := i as int
-			var skill := actor.skills[skill_index] as Skill
-			if skill.energy_cost <= actor.stats.energy:
-				var targeting_data := skill.get_targeting_data(
-						cell, actor, map)
-				for t in targeting_data.valid_targets:
-					var target_cell := t as Vector2
-					var skill_action := AIScoredAction.new_skill_action(
-							actor, map, skill_index, targeting_data,
-							target_cell)
-					skill_actions.append(skill_action)
+		for s in actor.all_active_skills:
+			var skill := s as Skill
+
+			var targeting_data := skill.get_targeting_data(cell, actor, map)
+			for t in targeting_data.valid_targets:
+				var target_cell := t as Vector2
+				var skill_action := AIScoredAction.new_skill_action(
+						actor, map, skill, targeting_data,
+						target_cell)
+				skill_actions.append(skill_action)
 
 	var result: AIScoredAction = null
 
@@ -93,9 +90,7 @@ func _queue_move_action(actor: Actor, target_cell: Vector2) -> void:
 	_action_queue.push_back(action)
 
 
-func _queue_skill_action(actor: Actor, skill_index: int, target: Vector2) \
-		-> void:
-	var skill := actor.skills[skill_index] as Skill
+func _queue_skill_action(skill: Skill, target: Vector2) -> void:
 	var action := {
 		type = ActionType.SKILL,
 		skill = skill,
