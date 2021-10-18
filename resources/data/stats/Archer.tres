@@ -1,6 +1,6 @@
 [gd_resource type="Resource" load_steps=4 format=2]
 
-[ext_resource path="res://src/data/skills/RangedAttack.tscn" type="PackedScene" id=1]
+[ext_resource path="res://src/data/skills/attacks/RangedAttack.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/graphics/actors/archer.png" type="Texture" id=2]
 [ext_resource path="res://src/core/actors/ActorDefinition.gd" type="Script" id=3]
 
