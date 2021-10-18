@@ -30,7 +30,7 @@ onready var _skill_panel := $SkillPanel as SkillPanel
 
 onready var _action_menu_region := $ActionMenuRegion as Control
 
-onready var _action_menu := $ActionMenu as ActionMenuOld
+onready var _action_menu := $ActionMenu as ActionMenu
 
 
 func _ready() -> void:
@@ -54,7 +54,7 @@ func set_current_actor(value: Actor) -> void:
 	)
 
 	if current_actor:
-		_action_menu.set_skills(
+		_action_menu.set_actions(current_actor.attack_skill,
 				current_actor.skills, current_actor.stats.energy)
 	else:
 		_action_menu.clear_skills()
@@ -140,11 +140,11 @@ func _on_SkillPanel_cancelled() -> void:
 	emit_signal("skill_cleared")
 
 
-func _on_ActionMenu_attack_pressed() -> void:
+func _on_ActionMenu_attack_selected() -> void:
 	emit_signal("skill_selected", 0)
 
 
-func _on_ActionMenu_wait_pressed() -> void:
+func _on_ActionMenu_wait_selected() -> void:
 	emit_signal("wait_started")
 
 

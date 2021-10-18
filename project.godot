@@ -35,9 +35,9 @@ _global_script_classes=[ {
 "path": "res://src/control/AIScoredAction.gd"
 }, {
 "base": "Node2D",
-"class": "ActionMenuOld",
+"class": "ActionMenu",
 "language": "GDScript",
-"path": "res://src/ui/battle/ActionMenuOld.gd"
+"path": "res://src/ui/battle/ActionMenu.gd"
 }, {
 "base": "TileObject",
 "class": "Actor",
@@ -425,7 +425,7 @@ _global_script_class_icons={
 "AIPickActorActionState": "",
 "AIPickActorState": "",
 "AIScoredAction": "",
-"ActionMenuOld": "",
+"ActionMenu": "",
 "Actor": "res://assets/editor/actor.png",
 "ActorActionState": "",
 "ActorDefinition": "",

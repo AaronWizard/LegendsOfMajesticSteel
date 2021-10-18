@@ -166,8 +166,9 @@ func set_actor_definition(value: Resource) -> void:
 		if not Engine.editor_hint:
 			get_stats().init_from_def(ad)
 
-			var new_attack_skill := ad.attack_skill.instance()
-			$Attack.add_child(new_attack_skill)
+			if ad.attack_skill:
+				var new_attack_skill := ad.attack_skill.instance()
+				$Attack.add_child(new_attack_skill)
 
 			for s in ad.skills:
 				var skill_scene := s as PackedScene
@@ -200,7 +201,8 @@ func get_stats() -> Stats:
 
 func get_attack() -> Node:
 	var result: Node = null
-	if $Attack:
+	if $Attack and $Attack.get_child_count() > 0:
+		assert($Attack.get_child_count() == 1)
 		result = $Attack.get_child(0)
 	return result
 

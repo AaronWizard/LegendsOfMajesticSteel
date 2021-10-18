@@ -4,10 +4,10 @@
 [ext_resource path="res://src/ui/battle/SkillPanel.tscn" type="PackedScene" id=2]
 [ext_resource path="res://src/ui/battle/TurnQueuePanel.tscn" type="PackedScene" id=3]
 [ext_resource path="res://src/ui/battle/ActorStatusPanel.tscn" type="PackedScene" id=4]
-[ext_resource path="res://src/ui/battle/ActionMenuOld.tscn" type="PackedScene" id=5]
 [ext_resource path="res://src/ui/battle/ActorDetailsPanel.tscn" type="PackedScene" id=6]
 [ext_resource path="res://assets/graphics/ui/icons/actions/cancel.png" type="Texture" id=7]
 [ext_resource path="res://src/ui/SoundButton.gd" type="Script" id=8]
+[ext_resource path="res://src/ui/battle/ActionMenu.tscn" type="PackedScene" id=9]
 
 [node name="BattleGUI" type="CanvasLayer"]
 script = ExtResource( 1 )
@@ -65,16 +65,16 @@ margin_bottom = 54.0
 [node name="ActionMenuRegion" type="ReferenceRect" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 44.0
-margin_top = 66.0
-margin_right = -44.0
-margin_bottom = -77.0
+margin_left = 50.0
+margin_top = 64.0
+margin_right = -50.0
+margin_bottom = -76.0
 mouse_filter = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ActionMenu" parent="." instance=ExtResource( 5 )]
+[node name="ActionMenu" parent="." instance=ExtResource( 9 )]
 
 [node name="ActorDetails" parent="." instance=ExtResource( 6 )]
 anchor_left = 0.5
@@ -90,6 +90,6 @@ margin_bottom = 66.5
 [connection signal="pressed" from="CancelTurn" to="." method="_on_CancelTurn_pressed"]
 [connection signal="portrait_pressed" from="OtherActorStatus" to="." method="_on_OtherActorStatus_portrait_pressed"]
 [connection signal="cancelled" from="SkillPanel" to="." method="_on_SkillPanel_cancelled"]
-[connection signal="attack_pressed" from="ActionMenu" to="." method="_on_ActionMenu_attack_pressed"]
+[connection signal="attack_selected" from="ActionMenu" to="." method="_on_ActionMenu_attack_selected"]
 [connection signal="skill_selected" from="ActionMenu" to="." method="_on_ActionMenu_skill_selected"]
-[connection signal="wait_pressed" from="ActionMenu" to="." method="_on_ActionMenu_wait_pressed"]
+[connection signal="wait_selected" from="ActionMenu" to="." method="_on_ActionMenu_wait_selected"]
