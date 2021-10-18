@@ -1,10 +1,11 @@
 class_name BattleGUI
 extends CanvasLayer
 
+signal attack_selected
 signal skill_selected(skill_index)
-signal skill_cleared
+signal wait_selected
 
-signal wait_started
+signal skill_cleared
 
 signal turn_cancelled
 
@@ -141,11 +142,11 @@ func _on_SkillPanel_cancelled() -> void:
 
 
 func _on_ActionMenu_attack_selected() -> void:
-	emit_signal("skill_selected", 0)
+	emit_signal("attack_selected")
 
 
 func _on_ActionMenu_wait_selected() -> void:
-	emit_signal("wait_started")
+	emit_signal("wait_selected")
 
 
 func _on_ActionMenu_skill_selected(skill_index: int) -> void:
