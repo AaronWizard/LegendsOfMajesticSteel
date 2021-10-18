@@ -7,6 +7,7 @@ signal wait_selected
 
 const _ANIM_TIME := 0.15
 const _BUTTON_WIDTH := Constants.TILE_SIZE
+const _BUTTON_MARGIN := 4
 
 var is_open: bool setget , get_is_open
 
@@ -56,6 +57,7 @@ func close(with_sound: bool) -> void:
 	_is_open = false
 	if with_sound:
 		StandardSounds.play_cancel()
+
 	_animate_closing()
 
 	yield(_tween, "tween_all_completed")
@@ -90,23 +92,30 @@ func _set_skills(skills: Array, current_energy: int) -> void:
 		var icon := TextureRect.new()
 		icon.texture = skill.icon
 		button.add_child(icon) # If button is disabled, avoid icon tinting
-		icon.set_anchors_preset(Control.PRESET_WIDE)
+		icon.margin_left = _BUTTON_MARGIN
+		icon.margin_top = _BUTTON_MARGIN
+		icon.margin_right = -_BUTTON_MARGIN
+		icon.margin_bottom = -_BUTTON_MARGIN
 
 		button.disabled = skill.energy_cost > current_energy
 		if button.disabled:
 			var cost_diff := skill.energy_cost - current_energy
 			var label := Label.new()
+
 			label.text = str(cost_diff)
 			label.align = Label.ALIGN_RIGHT
 			button.add_child(label)
-			label.set_anchors_preset(Control.PRESET_BOTTOM_RIGHT, true)
 
 			label.rect_size = Vector2.ZERO
+			label.set_anchors_preset(Control.PRESET_BOTTOM_RIGHT)
+			label.margin_left = -label.rect_size.x
+			label.margin_top = -label.rect_size.y
+			label.margin_right = 0
+			label.margin_bottom = 0
 
 		var skill_button_pos := Node2D.new()
 		skill_button_pos.add_child(button)
 
-		button.set_anchors_preset(Control.PRESET_CENTER, true)
 		# warning-ignore:integer_division
 		button.margin_left = -_BUTTON_WIDTH / 2
 		# warning-ignore:integer_division
