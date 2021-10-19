@@ -96,11 +96,11 @@ func get_action_menu_open() -> bool:
 
 
 func open_action_menu() -> void:
-	_action_menu.open()
+	yield(_action_menu.open(), "completed")
 
 
 func close_action_menu(with_sound := true) -> void:
-	_action_menu.close(with_sound)
+	yield(_action_menu.close(with_sound), "completed")
 
 
 func show_skill_panel(skill: Skill, no_valid_targets: bool) -> void:

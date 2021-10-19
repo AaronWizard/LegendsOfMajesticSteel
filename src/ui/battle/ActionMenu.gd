@@ -53,6 +53,7 @@ func open() -> void:
 	_wait_button.visible = true
 	_skills.visible = true
 	_animate_opening()
+	yield(_tween, "tween_all_completed")
 
 
 func close(with_sound: bool) -> void:
@@ -61,7 +62,6 @@ func close(with_sound: bool) -> void:
 		StandardSounds.play_cancel()
 
 	_animate_closing()
-
 	yield(_tween, "tween_all_completed")
 	_attack_button.visible = false
 	_wait_button.visible = false
@@ -77,7 +77,6 @@ func clear_skills() -> void:
 
 func _set_attack(attack_skill: Skill) -> void:
 	_have_attack = attack_skill != null
-	_attack_button.visible = _have_attack
 	if attack_skill:
 		_attack_button.icon = attack_skill.icon
 
