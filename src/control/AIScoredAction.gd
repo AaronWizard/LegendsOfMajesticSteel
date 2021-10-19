@@ -10,7 +10,7 @@ const _RANDOM_RANGE := 0.15
 
 var score: float
 
-var skill_index: int
+var skill: Skill
 var targeting_data: TargetingData
 var source_cell: Vector2
 var target_cell: Vector2
@@ -20,13 +20,12 @@ var _map: Map
 
 
 static func new_skill_action(new_actor: Actor, new_map: Map,
-		new_skill_index: int, new_targeting_data: TargetingData,
+		new_skill: Skill, new_targeting_data: TargetingData,
 		new_target_cell: Vector2) -> AIScoredAction:
 	var instance = load("res://src/control/AIScoredAction.gd").new(
-		new_actor, new_map, new_skill_index, new_targeting_data,
+		new_actor, new_map, new_skill, new_targeting_data,
 		new_targeting_data.source_cell, new_target_cell
 	) as AIScoredAction
-	assert(instance.skill_index > -1)
 	assert(instance.targeting_data.valid_targets.has(instance.target_cell))
 	return instance
 
@@ -34,18 +33,18 @@ static func new_skill_action(new_actor: Actor, new_map: Map,
 static func new_move_action(new_actor: Actor, new_map: Map,
 		new_source_cell: Vector2) -> AIScoredAction:
 	var instance = load("res://src/control/AIScoredAction.gd").new(
-		new_actor, new_map, -1, null, new_source_cell, Vector2.ZERO
+		new_actor, new_map, null, null, new_source_cell, Vector2.ZERO
 	) as AIScoredAction
 	return instance
 
 
-func _init(new_actor: Actor, new_map: Map, new_skill_index: int,
+func _init(new_actor: Actor, new_map: Map, new_skill: Skill,
 		new_targeting_data: TargetingData, new_source_cell: Vector2,
 		new_target_cell: Vector2) -> void:
 	_actor = new_actor
 	_map = new_map
 
-	skill_index = new_skill_index
+	skill = new_skill
 	targeting_data = new_targeting_data
 	source_cell = new_source_cell
 	target_cell = new_target_cell
@@ -61,7 +60,7 @@ func _init(new_actor: Actor, new_map: Map, new_skill_index: int,
 func _calculate_score() -> void:
 	score = 0
 
-	if skill_index > -1:
+	if skill:
 		_score_skill_source_cell()
 		_score_damage()
 		_score_energy()
@@ -147,7 +146,6 @@ func _score_conditions() -> void:
 
 
 func _score_energy() -> void:
-	var skill := _actor.skills[skill_index] as Skill
 	var energy_cost := skill.energy_cost
 	var current_energy := _actor.stats.energy
 

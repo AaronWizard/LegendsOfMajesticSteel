@@ -1,7 +1,7 @@
 [gd_resource type="Resource" load_steps=5 format=2]
 
 [ext_resource path="res://assets/graphics/actors/warrior_maiden.png" type="Texture" id=1]
-[ext_resource path="res://src/data/skills/MeleeAttack.tscn" type="PackedScene" id=2]
+[ext_resource path="res://src/data/skills/attacks/MeleeAttack.tscn" type="PackedScene" id=2]
 [ext_resource path="res://src/core/actors/ActorDefinition.gd" type="Script" id=3]
 [ext_resource path="res://src/data/skills/ShineStrike.tscn" type="PackedScene" id=4]
 
@@ -13,4 +13,5 @@ max_stamina = 30
 max_energy = 6
 attack = 4
 move = 4
-skills = [ ExtResource( 2 ), ExtResource( 4 ) ]
+attack_skill = ExtResource( 2 )
+skills = [ ExtResource( 4 ) ]

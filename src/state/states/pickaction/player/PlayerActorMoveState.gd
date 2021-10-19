@@ -12,9 +12,11 @@ func start(data: Dictionary) -> void:
 	.start(data)
 
 	# warning-ignore:return_value_discarded
-	_game.interface.gui.connect("wait_started", self, "_wait_started")
+	_game.interface.gui.connect("attack_selected", self, "_attack_selected")
 	# warning-ignore:return_value_discarded
 	_game.interface.gui.connect("skill_selected", self, "_skill_selected")
+	# warning-ignore:return_value_discarded
+	_game.interface.gui.connect("wait_selected", self, "_wait_selected")
 
 	# warning-ignore:return_value_discarded
 	get_tree().connect("screen_resized", self, "_screen_resized")
@@ -23,9 +25,9 @@ func start(data: Dictionary) -> void:
 func end() -> void:
 	.end()
 
-	_game.interface.gui.close_action_menu(false)
-	_game.interface.gui.disconnect("wait_started", self, "_wait_started")
+	_game.interface.gui.disconnect("attack_selected", self, "_attack_selected")
 	_game.interface.gui.disconnect("skill_selected", self, "_skill_selected")
+	_game.interface.gui.disconnect("wait_selected", self, "_wait_selected")
 
 	get_tree().disconnect("screen_resized", self, "_screen_resized")
 	_game.interface.clear_other_actor()
@@ -49,11 +51,11 @@ func _mouse_click(_position: Vector2) -> void:
 
 func _toggle_action_menu() -> void:
 	if not _game.interface.gui.action_menu_open:
-		_game.interface.gui.open_action_menu()
-		_position_action_menu()
 		_game.interface.mouse.dragging_enabled = false
+		_position_action_menu()
+		yield(_game.interface.gui.open_action_menu(), "completed")
 	else:
-		_game.interface.gui.close_action_menu()
+		yield(_game.interface.gui.close_action_menu(), "completed")
 		_game.interface.mouse.dragging_enabled = true
 
 
@@ -69,15 +71,27 @@ func _player_other_actor_clicked(target_cell: Vector2) -> void:
 		_game.interface.clear_other_actor()
 
 
-func _wait_started() -> void:
+func _wait_selected() -> void:
+	yield(_game.interface.gui.close_action_menu(false), "completed")
 	_do_wait()
 
 
-func _skill_selected(skill_index: int) -> void:
-	_game.interface.gui.close_action_menu(false)
+func _attack_selected() -> void:
+	yield(_game.interface.gui.close_action_menu(false), "completed")
+	var skill := _game.current_actor.attack_skill as Skill
+	assert(skill != null)
 	emit_signal(
 		"state_change_requested",
-		_player_target_state, { skill_index = skill_index }
+		_player_target_state, { skill = skill }
+	)
+
+
+func _skill_selected(skill_index: int) -> void:
+	yield(_game.interface.gui.close_action_menu(false), "completed")
+	var skill := _game.current_actor.skills[skill_index] as Skill
+	emit_signal(
+		"state_change_requested",
+		_player_target_state, { skill = skill }
 	)
 
 

@@ -13,7 +13,7 @@ export var max_energy := 0
 export var attack := 1
 export var move := 4
 
-# First skill is actor's standard attack
+export var attack_skill: PackedScene = null
 export(Array, PackedScene) var skills := []
 
 

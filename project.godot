@@ -264,11 +264,6 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/core/skills/effects/PushAttackTargetEffect.gd"
 }, {
-"base": "Container",
-"class": "RadialContainer",
-"language": "GDScript",
-"path": "res://src/ui/RadialContainer.gd"
-}, {
 "base": "ColorRect",
 "class": "ScreenTransition",
 "language": "GDScript",
@@ -471,7 +466,6 @@ _global_script_class_icons={
 "Projectile": "",
 "ProjectileEffect": "res://assets/editor/projectile_effect.png",
 "PushAttackTargetEffect": "res://assets/editor/pushattack_effect.png",
-"RadialContainer": "",
 "ScreenTransition": "",
 "SignalWaiter": "",
 "Skill": "res://assets/editor/skill.png",

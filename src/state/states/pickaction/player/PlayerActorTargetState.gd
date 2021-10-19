@@ -17,8 +17,7 @@ onready var _player_move_state := get_node(player_move_state_path) as State
 func start(data: Dictionary) -> void:
 	.start(data)
 
-	var skill_index = data.skill_index as int
-	_skill = _game.current_actor.skills[skill_index] as Skill
+	_skill = data.skill as Skill
 	_targetting_data = _skill.get_targeting_data(
 			_game.current_actor.origin_cell, _game.current_actor, _game.map)
 

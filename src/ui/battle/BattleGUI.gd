@@ -1,10 +1,11 @@
 class_name BattleGUI
 extends CanvasLayer
 
+signal attack_selected
 signal skill_selected(skill_index)
-signal skill_cleared
+signal wait_selected
 
-signal wait_started
+signal skill_cleared
 
 signal turn_cancelled
 
@@ -54,7 +55,7 @@ func set_current_actor(value: Actor) -> void:
 	)
 
 	if current_actor:
-		_action_menu.set_skills(
+		_action_menu.set_actions(current_actor.attack_skill,
 				current_actor.skills, current_actor.stats.energy)
 	else:
 		_action_menu.clear_skills()
@@ -95,11 +96,11 @@ func get_action_menu_open() -> bool:
 
 
 func open_action_menu() -> void:
-	_action_menu.open()
+	yield(_action_menu.open(), "completed")
 
 
 func close_action_menu(with_sound := true) -> void:
-	_action_menu.close(with_sound)
+	yield(_action_menu.close(with_sound), "completed")
 
 
 func show_skill_panel(skill: Skill, no_valid_targets: bool) -> void:
@@ -140,12 +141,12 @@ func _on_SkillPanel_cancelled() -> void:
 	emit_signal("skill_cleared")
 
 
-func _on_ActionMenu_attack_pressed() -> void:
-	emit_signal("skill_selected", 0)
+func _on_ActionMenu_attack_selected() -> void:
+	emit_signal("attack_selected")
 
 
-func _on_ActionMenu_wait_pressed() -> void:
-	emit_signal("wait_started")
+func _on_ActionMenu_wait_selected() -> void:
+	emit_signal("wait_selected")
 
 
 func _on_ActionMenu_skill_selected(skill_index: int) -> void:
