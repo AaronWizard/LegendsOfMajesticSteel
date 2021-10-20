@@ -57,7 +57,7 @@ _global_script_classes=[ {
 "base": "PopupPanel",
 "class": "ActorDetailsPanel",
 "language": "GDScript",
-"path": "res://src/ui/battle/ActorDetailsPanel.gd"
+"path": "res://src/ui/battle/actordetails/ActorDetailsPanel.gd"
 }, {
 "base": "SkillAOE",
 "class": "ActorLineAOE",
