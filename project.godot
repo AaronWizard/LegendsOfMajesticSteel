@@ -299,7 +299,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/core/skills/effects/SkillEffectWrapper.gd"
 }, {
-"base": "PanelContainer",
+"base": "Control",
 "class": "SkillPanel",
 "language": "GDScript",
 "path": "res://src/ui/battle/SkillPanel.gd"

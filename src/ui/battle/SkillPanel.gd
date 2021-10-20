@@ -1,13 +1,15 @@
 class_name SkillPanel
-extends PanelContainer
+extends Control
 
 signal cancelled
 
 
-onready var _icon := $HBoxContainer/Icon as TextureRect
-onready var _name := $HBoxContainer/VBoxContainer/Name as Label
-onready var _no_valid_targets := $HBoxContainer/VBoxContainer/NoValidTargets \
-		as Control
+onready var _icon := $PanelContainer/MarginContainer/HBoxContainer/Icon \
+		as TextureRect
+onready var _name := $PanelContainer/MarginContainer/HBoxContainer/ \
+		VBoxContainer/Name as Label
+onready var _no_valid_targets := $PanelContainer/MarginContainer/ \
+		HBoxContainer/VBoxContainer/NoValidTargets as Control
 
 
 func set_skill(skill: Skill, no_valid_targets: bool) -> void:
