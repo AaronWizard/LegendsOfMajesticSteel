@@ -1,11 +1,11 @@
 [gd_scene load_steps=7 format=2]
 
-[ext_resource path="res://src/ui/battle/actordetails/ActorDetailsPanel.gd" type="Script" id=1]
-[ext_resource path="res://assets/graphics/ui/icons/stats/defence.png" type="Texture" id=3]
-[ext_resource path="res://assets/graphics/ui/icons/stats/attack.png" type="Texture" id=4]
-[ext_resource path="res://assets/graphics/ui/icons/stats/move.png" type="Texture" id=5]
-[ext_resource path="res://src/ui/SoundButton.gd" type="Script" id=6]
-[ext_resource path="res://assets/graphics/ui/icons/stats/energy.png" type="Texture" id=7]
+[ext_resource path="res://src/ui/battle/actordetails/ActorDetailsPanelOld.gd" type="Script" id=1]
+[ext_resource path="res://src/ui/SoundButton.gd" type="Script" id=2]
+[ext_resource path="res://assets/graphics/ui/icons/stats/attack.png" type="Texture" id=3]
+[ext_resource path="res://assets/graphics/ui/icons/stats/move.png" type="Texture" id=4]
+[ext_resource path="res://assets/graphics/ui/icons/stats/defence.png" type="Texture" id=5]
+[ext_resource path="res://assets/graphics/ui/icons/stats/energy.png" type="Texture" id=6]
 
 [node name="ActorDetailsPanel" type="PopupPanel"]
 margin_right = 100.0
@@ -62,7 +62,7 @@ columns = 5
 [node name="StaminaIcon" type="TextureRect" parent="Container/Header/VBoxContainer/Resources"]
 margin_right = 8.0
 margin_bottom = 8.0
-texture = ExtResource( 3 )
+texture = ExtResource( 5 )
 
 [node name="StaminaLabel" type="Label" parent="Container/Header/VBoxContainer/Resources"]
 margin_left = 9.0
@@ -92,7 +92,7 @@ text = "10"
 margin_top = 9.0
 margin_right = 8.0
 margin_bottom = 17.0
-texture = ExtResource( 7 )
+texture = ExtResource( 6 )
 
 [node name="EnergyLabel" type="Label" parent="Container/Header/VBoxContainer/Resources"]
 margin_left = 9.0
@@ -136,7 +136,7 @@ __meta__ = {
 [node name="AttackIcon" type="TextureRect" parent="Container/Stats"]
 margin_right = 8.0
 margin_bottom = 8.0
-texture = ExtResource( 4 )
+texture = ExtResource( 3 )
 
 [node name="AttackLabel" type="Label" parent="Container/Stats"]
 margin_left = 9.0
@@ -160,7 +160,7 @@ text = "(+10)"
 margin_top = 9.0
 margin_right = 8.0
 margin_bottom = 17.0
-texture = ExtResource( 5 )
+texture = ExtResource( 4 )
 
 [node name="MoveLabel" type="Label" parent="Container/Stats"]
 margin_left = 9.0
@@ -220,7 +220,7 @@ margin_bottom = 129.0
 rect_min_size = Vector2( 24, 24 )
 size_flags_horizontal = 8
 text = "OK"
-script = ExtResource( 6 )
+script = ExtResource( 2 )
 sound_type = 1
 
 [connection signal="pressed" from="Container/OK" to="." method="_on_OK_pressed"]
