@@ -13,14 +13,14 @@ atlas = ExtResource( 1 )
 region = Rect2( 0, 0, 24, 24 )
 
 [node name="ActorDetailsPanel" type="PanelContainer"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -58.0
-margin_top = -82.0
-margin_right = 58.0
-margin_bottom = 83.0
+anchor_left = 0.497222
+anchor_top = 0.502778
+anchor_right = 0.497222
+anchor_bottom = 0.502778
+margin_left = -57.5
+margin_top = -82.5
+margin_right = 57.5
+margin_bottom = 82.5
 __meta__ = {
 "_edit_group_": true,
 "_edit_use_anchors_": false
@@ -29,14 +29,14 @@ __meta__ = {
 [node name="MainContainer" type="VBoxContainer" parent="."]
 margin_left = 3.0
 margin_top = 3.0
-margin_right = 113.0
+margin_right = 112.0
 margin_bottom = 162.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Header" type="HBoxContainer" parent="MainContainer"]
-margin_right = 110.0
+margin_right = 109.0
 margin_bottom = 26.0
 
 [node name="PortraitMargin" type="MarginContainer" parent="MainContainer/Header"]
@@ -70,19 +70,19 @@ __meta__ = {
 
 [node name="HeaderInfoMargin" type="MarginContainer" parent="MainContainer/Header"]
 margin_left = 28.0
-margin_right = 110.0
+margin_right = 109.0
 margin_bottom = 26.0
 size_flags_horizontal = 3
 custom_constants/margin_top = 1
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MainContainer/Header/HeaderInfoMargin"]
 margin_top = 1.0
-margin_right = 82.0
+margin_right = 81.0
 margin_bottom = 26.0
 size_flags_horizontal = 3
 
 [node name="Name" type="Label" parent="MainContainer/Header/HeaderInfoMargin/VBoxContainer"]
-margin_right = 82.0
+margin_right = 81.0
 margin_bottom = 7.0
 text = "Fighter"
 __meta__ = {
@@ -90,12 +90,10 @@ __meta__ = {
 }
 
 [node name="Stamina" type="HBoxContainer" parent="MainContainer/Header/HeaderInfoMargin/VBoxContainer"]
-margin_left = 8.0
 margin_top = 9.0
-margin_right = 74.0
+margin_right = 81.0
 margin_bottom = 17.0
 rect_min_size = Vector2( 66, 0 )
-size_flags_horizontal = 4
 
 [node name="StaminaIcon" type="TextureRect" parent="MainContainer/Header/HeaderInfoMargin/VBoxContainer/Stamina"]
 margin_right = 8.0
@@ -132,55 +130,54 @@ align = 2
 
 [node name="Stats" type="HBoxContainer" parent="MainContainer"]
 margin_top = 28.0
-margin_right = 110.0
+margin_right = 109.0
 margin_bottom = 45.0
 alignment = 1
 
 [node name="AttackInfo" type="VBoxContainer" parent="MainContainer/Stats"]
-margin_right = 54.0
+margin_right = 53.0
 margin_bottom = 17.0
 size_flags_horizontal = 3
 
 [node name="AttackHeader" type="HBoxContainer" parent="MainContainer/Stats/AttackInfo"]
-margin_right = 54.0
+margin_right = 53.0
 margin_bottom = 8.0
 alignment = 1
 
 [node name="AttackIcon" type="TextureRect" parent="MainContainer/Stats/AttackInfo/AttackHeader"]
-margin_left = 11.0
-margin_right = 19.0
+margin_left = 10.0
+margin_right = 18.0
 margin_bottom = 8.0
 texture = ExtResource( 4 )
 
 [node name="AttackLabel" type="Label" parent="MainContainer/Stats/AttackInfo/AttackHeader"]
-margin_left = 21.0
-margin_right = 43.0
+margin_left = 20.0
+margin_right = 42.0
 margin_bottom = 7.0
 text = "Attack"
 
 [node name="AttackValues" type="HBoxContainer" parent="MainContainer/Stats/AttackInfo"]
 margin_top = 10.0
-margin_right = 54.0
+margin_right = 53.0
 margin_bottom = 17.0
 rect_min_size = Vector2( 32, 0 )
 alignment = 1
 
 [node name="AttackStat" type="Label" parent="MainContainer/Stats/AttackInfo/AttackValues"]
-margin_left = 23.0
-margin_right = 31.0
+margin_left = 12.0
+margin_right = 20.0
 margin_bottom = 7.0
 text = "99"
 
 [node name="AttackMod" type="Label" parent="MainContainer/Stats/AttackInfo/AttackValues"]
-visible = false
-margin_left = 12.0
-margin_right = 30.0
+margin_left = 22.0
+margin_right = 40.0
 margin_bottom = 7.0
 text = "(+99)"
 
 [node name="MoveInfo" type="VBoxContainer" parent="MainContainer/Stats"]
-margin_left = 56.0
-margin_right = 110.0
+margin_left = 55.0
+margin_right = 109.0
 margin_bottom = 17.0
 size_flags_horizontal = 3
 
@@ -209,59 +206,73 @@ rect_min_size = Vector2( 32, 0 )
 alignment = 1
 
 [node name="MoveStat" type="Label" parent="MainContainer/Stats/MoveInfo/MoveValues"]
-margin_left = 23.0
-margin_right = 31.0
+margin_left = 13.0
+margin_right = 21.0
 margin_bottom = 7.0
 text = "99"
 
 [node name="MoveMod" type="Label" parent="MainContainer/Stats/MoveInfo/MoveValues"]
-visible = false
-margin_left = 12.0
-margin_right = 30.0
+margin_left = 23.0
+margin_right = 41.0
 margin_bottom = 7.0
 text = "(+99)"
 
 [node name="TabContainer" type="TabContainer" parent="MainContainer"]
 margin_top = 47.0
-margin_right = 110.0
+margin_right = 109.0
 margin_bottom = 133.0
 rect_min_size = Vector2( 102, 86 )
 
 [node name="Skills" type="VBoxContainer" parent="MainContainer/TabContainer"]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 3.0
-margin_top = 20.0
+margin_top = 16.0
 margin_right = -3.0
 margin_bottom = -3.0
 
-[node name="Skills" type="HBoxContainer" parent="MainContainer/TabContainer/Skills"]
-margin_right = 96.0
+[node name="MarginContainer" type="CenterContainer" parent="MainContainer/TabContainer/Skills"]
+visible = false
+margin_right = 103.0
+margin_bottom = 67.0
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="MainContainer/TabContainer/Skills/MarginContainer"]
+margin_left = 34.0
+margin_top = 30.0
+margin_right = 68.0
+margin_bottom = 37.0
+text = "No Skills"
+
+[node name="Skills" type="VBoxContainer" parent="MainContainer/TabContainer/Skills"]
+margin_right = 103.0
+margin_bottom = 67.0
+size_flags_vertical = 3
+
+[node name="Skills" type="HBoxContainer" parent="MainContainer/TabContainer/Skills/Skills"]
+margin_right = 103.0
 margin_bottom = 24.0
 custom_constants/separation = 0
-alignment = 1
 
-[node name="SkullButton" type="Button" parent="MainContainer/TabContainer/Skills/Skills"]
+[node name="SkullButton" type="Button" parent="MainContainer/TabContainer/Skills/Skills/Skills"]
 margin_right = 24.0
 margin_bottom = 24.0
 rect_min_size = Vector2( 24, 24 )
 icon = ExtResource( 2 )
 script = ExtResource( 6 )
 
-[node name="EnergyCost" type="Label" parent="MainContainer/TabContainer/Skills/Skills/SkullButton"]
+[node name="Cooldown" type="Label" parent="MainContainer/TabContainer/Skills/Skills/Skills/SkullButton"]
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_top = -7.0
-rect_min_size = Vector2( 16, 0 )
 text = "99"
 align = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="SkullButton2" type="Button" parent="MainContainer/TabContainer/Skills/Skills"]
+[node name="SkullButton2" type="Button" parent="MainContainer/TabContainer/Skills/Skills/Skills"]
 margin_left = 24.0
 margin_right = 48.0
 margin_bottom = 24.0
@@ -269,19 +280,18 @@ rect_min_size = Vector2( 24, 24 )
 icon = ExtResource( 2 )
 script = ExtResource( 6 )
 
-[node name="EnergyCost" type="Label" parent="MainContainer/TabContainer/Skills/Skills/SkullButton2"]
+[node name="Cooldown" type="Label" parent="MainContainer/TabContainer/Skills/Skills/Skills/SkullButton2"]
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_top = -7.0
-rect_min_size = Vector2( 16, 0 )
 text = "99"
 align = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="SkullButton3" type="Button" parent="MainContainer/TabContainer/Skills/Skills"]
+[node name="SkullButton3" type="Button" parent="MainContainer/TabContainer/Skills/Skills/Skills"]
 margin_left = 48.0
 margin_right = 72.0
 margin_bottom = 24.0
@@ -289,19 +299,18 @@ rect_min_size = Vector2( 24, 24 )
 icon = ExtResource( 2 )
 script = ExtResource( 6 )
 
-[node name="EnergyCost" type="Label" parent="MainContainer/TabContainer/Skills/Skills/SkullButton3"]
+[node name="Cooldown" type="Label" parent="MainContainer/TabContainer/Skills/Skills/Skills/SkullButton3"]
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_top = -7.0
-rect_min_size = Vector2( 16, 0 )
 text = "99"
 align = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="SkullButton4" type="Button" parent="MainContainer/TabContainer/Skills/Skills"]
+[node name="SkullButton4" type="Button" parent="MainContainer/TabContainer/Skills/Skills/Skills"]
 margin_left = 72.0
 margin_right = 96.0
 margin_bottom = 24.0
@@ -309,49 +318,49 @@ rect_min_size = Vector2( 24, 24 )
 icon = ExtResource( 2 )
 script = ExtResource( 6 )
 
-[node name="EnergyCost" type="Label" parent="MainContainer/TabContainer/Skills/Skills/SkullButton4"]
+[node name="Cooldown" type="Label" parent="MainContainer/TabContainer/Skills/Skills/Skills/SkullButton4"]
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_top = -7.0
-rect_min_size = Vector2( 16, 0 )
 text = "99"
 align = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="SkillInfoMargin" type="MarginContainer" parent="MainContainer/TabContainer/Skills"]
+[node name="SkillInfoMargin" type="MarginContainer" parent="MainContainer/TabContainer/Skills/Skills"]
 margin_top = 26.0
-margin_right = 96.0
+margin_right = 103.0
 margin_bottom = 63.0
 custom_constants/margin_right = 1
 custom_constants/margin_left = 1
 custom_constants/margin_bottom = 1
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MainContainer/TabContainer/Skills/SkillInfoMargin"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MainContainer/TabContainer/Skills/Skills/SkillInfoMargin"]
 margin_left = 1.0
-margin_right = 95.0
+margin_right = 102.0
 margin_bottom = 36.0
 
-[node name="SkillName" type="Label" parent="MainContainer/TabContainer/Skills/SkillInfoMargin/VBoxContainer"]
-margin_right = 94.0
+[node name="SkillName" type="Label" parent="MainContainer/TabContainer/Skills/Skills/SkillInfoMargin/VBoxContainer"]
+margin_right = 101.0
 margin_bottom = 7.0
 text = "Skill Name"
 clip_text = true
 
-[node name="SkillDescription" type="Label" parent="MainContainer/TabContainer/Skills/SkillInfoMargin/VBoxContainer"]
+[node name="SkillDescription" type="Label" parent="MainContainer/TabContainer/Skills/Skills/SkillInfoMargin/VBoxContainer"]
 margin_top = 9.0
-margin_right = 94.0
+margin_right = 101.0
 margin_bottom = 36.0
 text = "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
 autowrap = true
 
 [node name="Conditions" type="MarginContainer" parent="MainContainer/TabContainer"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 3.0
-margin_top = 20.0
+margin_top = 16.0
 margin_right = -3.0
 margin_bottom = -3.0
 custom_constants/margin_right = 1
@@ -362,322 +371,339 @@ custom_constants/margin_bottom = 1
 [node name="ScrollContainer" type="ScrollContainer" parent="MainContainer/TabContainer/Conditions"]
 margin_left = 1.0
 margin_top = 1.0
-margin_right = 103.0
-margin_bottom = 62.0
+margin_right = 102.0
+margin_bottom = 66.0
 scroll_horizontal_enabled = false
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MainContainer/TabContainer/Conditions/ScrollContainer"]
-margin_right = 96.0
-margin_bottom = 107.0
+[node name="ConditionList" type="VBoxContainer" parent="MainContainer/TabContainer/Conditions/ScrollContainer"]
+margin_right = 95.0
+margin_bottom = 131.0
 
-[node name="NoConditions" type="Label" parent="MainContainer/TabContainer/Conditions/ScrollContainer/VBoxContainer"]
-margin_right = 96.0
-margin_bottom = 7.0
-text = "No Conditions"
+[node name="Condition" type="VBoxContainer" parent="MainContainer/TabContainer/Conditions/ScrollContainer/ConditionList"]
+margin_right = 95.0
+margin_bottom = 17.0
 
-[node name="ConditionsGrid" type="GridContainer" parent="MainContainer/TabContainer/Conditions/ScrollContainer/VBoxContainer"]
-margin_top = 9.0
-margin_right = 96.0
-margin_bottom = 107.0
-columns = 4
+[node name="ConditionDescription" type="HBoxContainer" parent="MainContainer/TabContainer/Conditions/ScrollContainer/ConditionList/Condition"]
+margin_right = 95.0
+margin_bottom = 8.0
 
-[node name="ConditionIcon" type="TextureRect" parent="MainContainer/TabContainer/Conditions/ScrollContainer/VBoxContainer/ConditionsGrid"]
+[node name="Icon" type="TextureRect" parent="MainContainer/TabContainer/Conditions/ScrollContainer/ConditionList/Condition/ConditionDescription"]
 margin_right = 8.0
 margin_bottom = 8.0
 texture = ExtResource( 7 )
 
-[node name="ConditionName" type="Label" parent="MainContainer/TabContainer/Conditions/ScrollContainer/VBoxContainer/ConditionsGrid"]
-margin_left = 9.0
-margin_right = 43.0
+[node name="Name" type="Label" parent="MainContainer/TabContainer/Conditions/ScrollContainer/ConditionList/Condition/ConditionDescription"]
+margin_left = 10.0
+margin_right = 95.0
 margin_bottom = 7.0
-text = "Attack Up"
+text = "Fire of the Ultimate Sun"
 
-[node name="ConditionMagnitude" type="Label" parent="MainContainer/TabContainer/Conditions/ScrollContainer/VBoxContainer/ConditionsGrid"]
-margin_left = 44.0
-margin_right = 60.0
-margin_bottom = 7.0
-text = "100%"
-
-[node name="RoundsLeft" type="Label" parent="MainContainer/TabContainer/Conditions/ScrollContainer/VBoxContainer/ConditionsGrid"]
-margin_left = 61.0
-margin_right = 96.0
-margin_bottom = 7.0
-text = "99 Rounds"
-
-[node name="ConditionIcon2" type="TextureRect" parent="MainContainer/TabContainer/Conditions/ScrollContainer/VBoxContainer/ConditionsGrid"]
-margin_top = 9.0
-margin_right = 8.0
+[node name="ConditionValues" type="HBoxContainer" parent="MainContainer/TabContainer/Conditions/ScrollContainer/ConditionList/Condition"]
+margin_top = 10.0
+margin_right = 95.0
 margin_bottom = 17.0
-texture = ExtResource( 7 )
+alignment = 2
 
-[node name="ConditionName2" type="Label" parent="MainContainer/TabContainer/Conditions/ScrollContainer/VBoxContainer/ConditionsGrid"]
-margin_left = 9.0
-margin_top = 9.0
-margin_right = 43.0
-margin_bottom = 16.0
-text = "Attack Up"
+[node name="Magnitude" type="Label" parent="MainContainer/TabContainer/Conditions/ScrollContainer/ConditionList/Condition/ConditionValues"]
+margin_left = 34.0
+margin_right = 53.0
+margin_bottom = 7.0
+text = "-100%"
 
-[node name="ConditionMagnitude2" type="Label" parent="MainContainer/TabContainer/Conditions/ScrollContainer/VBoxContainer/ConditionsGrid"]
-margin_left = 44.0
-margin_top = 9.0
-margin_right = 60.0
-margin_bottom = 16.0
-text = "100%"
+[node name="Comma" type="Label" parent="MainContainer/TabContainer/Conditions/ScrollContainer/ConditionList/Condition/ConditionValues"]
+margin_left = 55.0
+margin_right = 58.0
+margin_bottom = 7.0
+text = ","
+align = 2
 
-[node name="RoundsLeft2" type="Label" parent="MainContainer/TabContainer/Conditions/ScrollContainer/VBoxContainer/ConditionsGrid"]
-margin_left = 61.0
-margin_top = 9.0
-margin_right = 96.0
-margin_bottom = 16.0
+[node name="RoundsLeft2" type="Label" parent="MainContainer/TabContainer/Conditions/ScrollContainer/ConditionList/Condition/ConditionValues"]
+margin_left = 60.0
+margin_right = 95.0
+margin_bottom = 7.0
 text = "99 Rounds"
+align = 2
 
-[node name="ConditionIcon3" type="TextureRect" parent="MainContainer/TabContainer/Conditions/ScrollContainer/VBoxContainer/ConditionsGrid"]
-margin_top = 18.0
+[node name="Condition2" type="VBoxContainer" parent="MainContainer/TabContainer/Conditions/ScrollContainer/ConditionList"]
+margin_top = 19.0
+margin_right = 95.0
+margin_bottom = 36.0
+
+[node name="ConditionDescription" type="HBoxContainer" parent="MainContainer/TabContainer/Conditions/ScrollContainer/ConditionList/Condition2"]
+margin_right = 95.0
+margin_bottom = 8.0
+
+[node name="Icon" type="TextureRect" parent="MainContainer/TabContainer/Conditions/ScrollContainer/ConditionList/Condition2/ConditionDescription"]
 margin_right = 8.0
-margin_bottom = 26.0
+margin_bottom = 8.0
 texture = ExtResource( 7 )
 
-[node name="ConditionName3" type="Label" parent="MainContainer/TabContainer/Conditions/ScrollContainer/VBoxContainer/ConditionsGrid"]
-margin_left = 9.0
-margin_top = 18.0
-margin_right = 43.0
-margin_bottom = 25.0
-text = "Attack Up"
+[node name="Name" type="Label" parent="MainContainer/TabContainer/Conditions/ScrollContainer/ConditionList/Condition2/ConditionDescription"]
+margin_left = 10.0
+margin_right = 95.0
+margin_bottom = 7.0
+text = "Fire of the Ultimate Sun"
 
-[node name="ConditionMagnitude3" type="Label" parent="MainContainer/TabContainer/Conditions/ScrollContainer/VBoxContainer/ConditionsGrid"]
-margin_left = 44.0
-margin_top = 18.0
-margin_right = 60.0
-margin_bottom = 25.0
-text = "100%"
+[node name="ConditionValues" type="HBoxContainer" parent="MainContainer/TabContainer/Conditions/ScrollContainer/ConditionList/Condition2"]
+margin_top = 10.0
+margin_right = 95.0
+margin_bottom = 17.0
+alignment = 2
 
-[node name="RoundsLeft3" type="Label" parent="MainContainer/TabContainer/Conditions/ScrollContainer/VBoxContainer/ConditionsGrid"]
-margin_left = 61.0
-margin_top = 18.0
-margin_right = 96.0
-margin_bottom = 25.0
+[node name="Magnitude" type="Label" parent="MainContainer/TabContainer/Conditions/ScrollContainer/ConditionList/Condition2/ConditionValues"]
+margin_left = 34.0
+margin_right = 53.0
+margin_bottom = 7.0
+text = "-100%"
+
+[node name="Comma" type="Label" parent="MainContainer/TabContainer/Conditions/ScrollContainer/ConditionList/Condition2/ConditionValues"]
+margin_left = 55.0
+margin_right = 58.0
+margin_bottom = 7.0
+text = ","
+align = 2
+
+[node name="RoundsLeft2" type="Label" parent="MainContainer/TabContainer/Conditions/ScrollContainer/ConditionList/Condition2/ConditionValues"]
+margin_left = 60.0
+margin_right = 95.0
+margin_bottom = 7.0
 text = "99 Rounds"
+align = 2
 
-[node name="ConditionIcon4" type="TextureRect" parent="MainContainer/TabContainer/Conditions/ScrollContainer/VBoxContainer/ConditionsGrid"]
-margin_top = 27.0
+[node name="Condition3" type="VBoxContainer" parent="MainContainer/TabContainer/Conditions/ScrollContainer/ConditionList"]
+margin_top = 38.0
+margin_right = 95.0
+margin_bottom = 55.0
+
+[node name="ConditionDescription" type="HBoxContainer" parent="MainContainer/TabContainer/Conditions/ScrollContainer/ConditionList/Condition3"]
+margin_right = 95.0
+margin_bottom = 8.0
+
+[node name="Icon" type="TextureRect" parent="MainContainer/TabContainer/Conditions/ScrollContainer/ConditionList/Condition3/ConditionDescription"]
 margin_right = 8.0
-margin_bottom = 35.0
+margin_bottom = 8.0
 texture = ExtResource( 7 )
 
-[node name="ConditionName4" type="Label" parent="MainContainer/TabContainer/Conditions/ScrollContainer/VBoxContainer/ConditionsGrid"]
-margin_left = 9.0
-margin_top = 27.0
-margin_right = 43.0
-margin_bottom = 34.0
-text = "Attack Up"
+[node name="Name" type="Label" parent="MainContainer/TabContainer/Conditions/ScrollContainer/ConditionList/Condition3/ConditionDescription"]
+margin_left = 10.0
+margin_right = 95.0
+margin_bottom = 7.0
+text = "Fire of the Ultimate Sun"
 
-[node name="ConditionMagnitude4" type="Label" parent="MainContainer/TabContainer/Conditions/ScrollContainer/VBoxContainer/ConditionsGrid"]
-margin_left = 44.0
-margin_top = 27.0
-margin_right = 60.0
-margin_bottom = 34.0
-text = "100%"
+[node name="ConditionValues" type="HBoxContainer" parent="MainContainer/TabContainer/Conditions/ScrollContainer/ConditionList/Condition3"]
+margin_top = 10.0
+margin_right = 95.0
+margin_bottom = 17.0
+alignment = 2
 
-[node name="RoundsLeft4" type="Label" parent="MainContainer/TabContainer/Conditions/ScrollContainer/VBoxContainer/ConditionsGrid"]
-margin_left = 61.0
-margin_top = 27.0
-margin_right = 96.0
-margin_bottom = 34.0
+[node name="Magnitude" type="Label" parent="MainContainer/TabContainer/Conditions/ScrollContainer/ConditionList/Condition3/ConditionValues"]
+margin_left = 34.0
+margin_right = 53.0
+margin_bottom = 7.0
+text = "-100%"
+
+[node name="Comma" type="Label" parent="MainContainer/TabContainer/Conditions/ScrollContainer/ConditionList/Condition3/ConditionValues"]
+margin_left = 55.0
+margin_right = 58.0
+margin_bottom = 7.0
+text = ","
+align = 2
+
+[node name="RoundsLeft2" type="Label" parent="MainContainer/TabContainer/Conditions/ScrollContainer/ConditionList/Condition3/ConditionValues"]
+margin_left = 60.0
+margin_right = 95.0
+margin_bottom = 7.0
 text = "99 Rounds"
+align = 2
 
-[node name="ConditionIcon5" type="TextureRect" parent="MainContainer/TabContainer/Conditions/ScrollContainer/VBoxContainer/ConditionsGrid"]
-margin_top = 36.0
+[node name="Condition4" type="VBoxContainer" parent="MainContainer/TabContainer/Conditions/ScrollContainer/ConditionList"]
+margin_top = 57.0
+margin_right = 95.0
+margin_bottom = 74.0
+
+[node name="ConditionDescription" type="HBoxContainer" parent="MainContainer/TabContainer/Conditions/ScrollContainer/ConditionList/Condition4"]
+margin_right = 95.0
+margin_bottom = 8.0
+
+[node name="Icon" type="TextureRect" parent="MainContainer/TabContainer/Conditions/ScrollContainer/ConditionList/Condition4/ConditionDescription"]
 margin_right = 8.0
-margin_bottom = 44.0
+margin_bottom = 8.0
 texture = ExtResource( 7 )
 
-[node name="ConditionName5" type="Label" parent="MainContainer/TabContainer/Conditions/ScrollContainer/VBoxContainer/ConditionsGrid"]
-margin_left = 9.0
-margin_top = 36.0
-margin_right = 43.0
-margin_bottom = 43.0
-text = "Attack Up"
+[node name="Name" type="Label" parent="MainContainer/TabContainer/Conditions/ScrollContainer/ConditionList/Condition4/ConditionDescription"]
+margin_left = 10.0
+margin_right = 95.0
+margin_bottom = 7.0
+text = "Fire of the Ultimate Sun"
 
-[node name="ConditionMagnitude5" type="Label" parent="MainContainer/TabContainer/Conditions/ScrollContainer/VBoxContainer/ConditionsGrid"]
-margin_left = 44.0
-margin_top = 36.0
-margin_right = 60.0
-margin_bottom = 43.0
-text = "100%"
+[node name="ConditionValues" type="HBoxContainer" parent="MainContainer/TabContainer/Conditions/ScrollContainer/ConditionList/Condition4"]
+margin_top = 10.0
+margin_right = 95.0
+margin_bottom = 17.0
+alignment = 2
 
-[node name="RoundsLeft5" type="Label" parent="MainContainer/TabContainer/Conditions/ScrollContainer/VBoxContainer/ConditionsGrid"]
-margin_left = 61.0
-margin_top = 36.0
-margin_right = 96.0
-margin_bottom = 43.0
+[node name="Magnitude" type="Label" parent="MainContainer/TabContainer/Conditions/ScrollContainer/ConditionList/Condition4/ConditionValues"]
+margin_left = 34.0
+margin_right = 53.0
+margin_bottom = 7.0
+text = "-100%"
+
+[node name="Comma" type="Label" parent="MainContainer/TabContainer/Conditions/ScrollContainer/ConditionList/Condition4/ConditionValues"]
+margin_left = 55.0
+margin_right = 58.0
+margin_bottom = 7.0
+text = ","
+align = 2
+
+[node name="RoundsLeft2" type="Label" parent="MainContainer/TabContainer/Conditions/ScrollContainer/ConditionList/Condition4/ConditionValues"]
+margin_left = 60.0
+margin_right = 95.0
+margin_bottom = 7.0
 text = "99 Rounds"
+align = 2
 
-[node name="ConditionIcon6" type="TextureRect" parent="MainContainer/TabContainer/Conditions/ScrollContainer/VBoxContainer/ConditionsGrid"]
-margin_top = 45.0
+[node name="Condition5" type="VBoxContainer" parent="MainContainer/TabContainer/Conditions/ScrollContainer/ConditionList"]
+margin_top = 76.0
+margin_right = 95.0
+margin_bottom = 93.0
+
+[node name="ConditionDescription" type="HBoxContainer" parent="MainContainer/TabContainer/Conditions/ScrollContainer/ConditionList/Condition5"]
+margin_right = 95.0
+margin_bottom = 8.0
+
+[node name="Icon" type="TextureRect" parent="MainContainer/TabContainer/Conditions/ScrollContainer/ConditionList/Condition5/ConditionDescription"]
 margin_right = 8.0
-margin_bottom = 53.0
+margin_bottom = 8.0
 texture = ExtResource( 7 )
 
-[node name="ConditionName6" type="Label" parent="MainContainer/TabContainer/Conditions/ScrollContainer/VBoxContainer/ConditionsGrid"]
-margin_left = 9.0
-margin_top = 45.0
-margin_right = 43.0
-margin_bottom = 52.0
-text = "Attack Up"
+[node name="Name" type="Label" parent="MainContainer/TabContainer/Conditions/ScrollContainer/ConditionList/Condition5/ConditionDescription"]
+margin_left = 10.0
+margin_right = 95.0
+margin_bottom = 7.0
+text = "Fire of the Ultimate Sun"
 
-[node name="ConditionMagnitude6" type="Label" parent="MainContainer/TabContainer/Conditions/ScrollContainer/VBoxContainer/ConditionsGrid"]
-margin_left = 44.0
-margin_top = 45.0
-margin_right = 60.0
-margin_bottom = 52.0
-text = "100%"
+[node name="ConditionValues" type="HBoxContainer" parent="MainContainer/TabContainer/Conditions/ScrollContainer/ConditionList/Condition5"]
+margin_top = 10.0
+margin_right = 95.0
+margin_bottom = 17.0
+alignment = 2
 
-[node name="RoundsLeft6" type="Label" parent="MainContainer/TabContainer/Conditions/ScrollContainer/VBoxContainer/ConditionsGrid"]
-margin_left = 61.0
-margin_top = 45.0
-margin_right = 96.0
-margin_bottom = 52.0
+[node name="Magnitude" type="Label" parent="MainContainer/TabContainer/Conditions/ScrollContainer/ConditionList/Condition5/ConditionValues"]
+margin_left = 34.0
+margin_right = 53.0
+margin_bottom = 7.0
+text = "-100%"
+
+[node name="Comma" type="Label" parent="MainContainer/TabContainer/Conditions/ScrollContainer/ConditionList/Condition5/ConditionValues"]
+margin_left = 55.0
+margin_right = 58.0
+margin_bottom = 7.0
+text = ","
+align = 2
+
+[node name="RoundsLeft2" type="Label" parent="MainContainer/TabContainer/Conditions/ScrollContainer/ConditionList/Condition5/ConditionValues"]
+margin_left = 60.0
+margin_right = 95.0
+margin_bottom = 7.0
 text = "99 Rounds"
+align = 2
 
-[node name="ConditionIcon7" type="TextureRect" parent="MainContainer/TabContainer/Conditions/ScrollContainer/VBoxContainer/ConditionsGrid"]
-margin_top = 54.0
+[node name="Condition6" type="VBoxContainer" parent="MainContainer/TabContainer/Conditions/ScrollContainer/ConditionList"]
+margin_top = 95.0
+margin_right = 95.0
+margin_bottom = 112.0
+
+[node name="ConditionDescription" type="HBoxContainer" parent="MainContainer/TabContainer/Conditions/ScrollContainer/ConditionList/Condition6"]
+margin_right = 95.0
+margin_bottom = 8.0
+
+[node name="Icon" type="TextureRect" parent="MainContainer/TabContainer/Conditions/ScrollContainer/ConditionList/Condition6/ConditionDescription"]
 margin_right = 8.0
-margin_bottom = 62.0
+margin_bottom = 8.0
 texture = ExtResource( 7 )
 
-[node name="ConditionName7" type="Label" parent="MainContainer/TabContainer/Conditions/ScrollContainer/VBoxContainer/ConditionsGrid"]
-margin_left = 9.0
-margin_top = 54.0
-margin_right = 43.0
-margin_bottom = 61.0
-text = "Attack Up"
+[node name="Name" type="Label" parent="MainContainer/TabContainer/Conditions/ScrollContainer/ConditionList/Condition6/ConditionDescription"]
+margin_left = 10.0
+margin_right = 95.0
+margin_bottom = 7.0
+text = "Fire of the Ultimate Sun"
 
-[node name="ConditionMagnitude7" type="Label" parent="MainContainer/TabContainer/Conditions/ScrollContainer/VBoxContainer/ConditionsGrid"]
-margin_left = 44.0
-margin_top = 54.0
-margin_right = 60.0
-margin_bottom = 61.0
-text = "100%"
+[node name="ConditionValues" type="HBoxContainer" parent="MainContainer/TabContainer/Conditions/ScrollContainer/ConditionList/Condition6"]
+margin_top = 10.0
+margin_right = 95.0
+margin_bottom = 17.0
+alignment = 2
 
-[node name="RoundsLeft7" type="Label" parent="MainContainer/TabContainer/Conditions/ScrollContainer/VBoxContainer/ConditionsGrid"]
-margin_left = 61.0
-margin_top = 54.0
-margin_right = 96.0
-margin_bottom = 61.0
+[node name="Magnitude" type="Label" parent="MainContainer/TabContainer/Conditions/ScrollContainer/ConditionList/Condition6/ConditionValues"]
+margin_left = 34.0
+margin_right = 53.0
+margin_bottom = 7.0
+text = "-100%"
+
+[node name="Comma" type="Label" parent="MainContainer/TabContainer/Conditions/ScrollContainer/ConditionList/Condition6/ConditionValues"]
+margin_left = 55.0
+margin_right = 58.0
+margin_bottom = 7.0
+text = ","
+align = 2
+
+[node name="RoundsLeft2" type="Label" parent="MainContainer/TabContainer/Conditions/ScrollContainer/ConditionList/Condition6/ConditionValues"]
+margin_left = 60.0
+margin_right = 95.0
+margin_bottom = 7.0
 text = "99 Rounds"
+align = 2
 
-[node name="ConditionIcon8" type="TextureRect" parent="MainContainer/TabContainer/Conditions/ScrollContainer/VBoxContainer/ConditionsGrid"]
-margin_top = 63.0
+[node name="Condition7" type="VBoxContainer" parent="MainContainer/TabContainer/Conditions/ScrollContainer/ConditionList"]
+margin_top = 114.0
+margin_right = 95.0
+margin_bottom = 131.0
+
+[node name="ConditionDescription" type="HBoxContainer" parent="MainContainer/TabContainer/Conditions/ScrollContainer/ConditionList/Condition7"]
+margin_right = 95.0
+margin_bottom = 8.0
+
+[node name="Icon" type="TextureRect" parent="MainContainer/TabContainer/Conditions/ScrollContainer/ConditionList/Condition7/ConditionDescription"]
 margin_right = 8.0
-margin_bottom = 71.0
+margin_bottom = 8.0
 texture = ExtResource( 7 )
 
-[node name="ConditionName8" type="Label" parent="MainContainer/TabContainer/Conditions/ScrollContainer/VBoxContainer/ConditionsGrid"]
-margin_left = 9.0
-margin_top = 63.0
-margin_right = 43.0
-margin_bottom = 70.0
-text = "Attack Up"
+[node name="Name" type="Label" parent="MainContainer/TabContainer/Conditions/ScrollContainer/ConditionList/Condition7/ConditionDescription"]
+margin_left = 10.0
+margin_right = 95.0
+margin_bottom = 7.0
+text = "Fire of the Ultimate Sun"
 
-[node name="ConditionMagnitude8" type="Label" parent="MainContainer/TabContainer/Conditions/ScrollContainer/VBoxContainer/ConditionsGrid"]
-margin_left = 44.0
-margin_top = 63.0
-margin_right = 60.0
-margin_bottom = 70.0
-text = "100%"
+[node name="ConditionValues" type="HBoxContainer" parent="MainContainer/TabContainer/Conditions/ScrollContainer/ConditionList/Condition7"]
+margin_top = 10.0
+margin_right = 95.0
+margin_bottom = 17.0
+alignment = 2
 
-[node name="RoundsLeft8" type="Label" parent="MainContainer/TabContainer/Conditions/ScrollContainer/VBoxContainer/ConditionsGrid"]
-margin_left = 61.0
-margin_top = 63.0
-margin_right = 96.0
-margin_bottom = 70.0
+[node name="Magnitude" type="Label" parent="MainContainer/TabContainer/Conditions/ScrollContainer/ConditionList/Condition7/ConditionValues"]
+margin_left = 34.0
+margin_right = 53.0
+margin_bottom = 7.0
+text = "-100%"
+
+[node name="Comma" type="Label" parent="MainContainer/TabContainer/Conditions/ScrollContainer/ConditionList/Condition7/ConditionValues"]
+margin_left = 55.0
+margin_right = 58.0
+margin_bottom = 7.0
+text = ","
+align = 2
+
+[node name="RoundsLeft2" type="Label" parent="MainContainer/TabContainer/Conditions/ScrollContainer/ConditionList/Condition7/ConditionValues"]
+margin_left = 60.0
+margin_right = 95.0
+margin_bottom = 7.0
 text = "99 Rounds"
-
-[node name="ConditionIcon9" type="TextureRect" parent="MainContainer/TabContainer/Conditions/ScrollContainer/VBoxContainer/ConditionsGrid"]
-margin_top = 72.0
-margin_right = 8.0
-margin_bottom = 80.0
-texture = ExtResource( 7 )
-
-[node name="ConditionName9" type="Label" parent="MainContainer/TabContainer/Conditions/ScrollContainer/VBoxContainer/ConditionsGrid"]
-margin_left = 9.0
-margin_top = 72.0
-margin_right = 43.0
-margin_bottom = 79.0
-text = "Attack Up"
-
-[node name="ConditionMagnitude9" type="Label" parent="MainContainer/TabContainer/Conditions/ScrollContainer/VBoxContainer/ConditionsGrid"]
-margin_left = 44.0
-margin_top = 72.0
-margin_right = 60.0
-margin_bottom = 79.0
-text = "100%"
-
-[node name="RoundsLeft9" type="Label" parent="MainContainer/TabContainer/Conditions/ScrollContainer/VBoxContainer/ConditionsGrid"]
-margin_left = 61.0
-margin_top = 72.0
-margin_right = 96.0
-margin_bottom = 79.0
-text = "99 Rounds"
-
-[node name="ConditionIcon10" type="TextureRect" parent="MainContainer/TabContainer/Conditions/ScrollContainer/VBoxContainer/ConditionsGrid"]
-margin_top = 81.0
-margin_right = 8.0
-margin_bottom = 89.0
-texture = ExtResource( 7 )
-
-[node name="ConditionName10" type="Label" parent="MainContainer/TabContainer/Conditions/ScrollContainer/VBoxContainer/ConditionsGrid"]
-margin_left = 9.0
-margin_top = 81.0
-margin_right = 43.0
-margin_bottom = 88.0
-text = "Attack Up"
-
-[node name="ConditionMagnitude10" type="Label" parent="MainContainer/TabContainer/Conditions/ScrollContainer/VBoxContainer/ConditionsGrid"]
-margin_left = 44.0
-margin_top = 81.0
-margin_right = 60.0
-margin_bottom = 88.0
-text = "100%"
-
-[node name="RoundsLeft10" type="Label" parent="MainContainer/TabContainer/Conditions/ScrollContainer/VBoxContainer/ConditionsGrid"]
-margin_left = 61.0
-margin_top = 81.0
-margin_right = 96.0
-margin_bottom = 88.0
-text = "99 Rounds"
-
-[node name="ConditionIcon11" type="TextureRect" parent="MainContainer/TabContainer/Conditions/ScrollContainer/VBoxContainer/ConditionsGrid"]
-margin_top = 90.0
-margin_right = 8.0
-margin_bottom = 98.0
-texture = ExtResource( 7 )
-
-[node name="ConditionName11" type="Label" parent="MainContainer/TabContainer/Conditions/ScrollContainer/VBoxContainer/ConditionsGrid"]
-margin_left = 9.0
-margin_top = 90.0
-margin_right = 43.0
-margin_bottom = 97.0
-text = "Attack Up"
-
-[node name="ConditionMagnitude11" type="Label" parent="MainContainer/TabContainer/Conditions/ScrollContainer/VBoxContainer/ConditionsGrid"]
-margin_left = 44.0
-margin_top = 90.0
-margin_right = 60.0
-margin_bottom = 97.0
-text = "100%"
-
-[node name="RoundsLeft11" type="Label" parent="MainContainer/TabContainer/Conditions/ScrollContainer/VBoxContainer/ConditionsGrid"]
-margin_left = 61.0
-margin_top = 90.0
-margin_right = 96.0
-margin_bottom = 97.0
-text = "99 Rounds"
+align = 2
 
 [node name="OK" type="Button" parent="MainContainer"]
-margin_left = 62.0
+margin_left = 61.0
 margin_top = 135.0
-margin_right = 110.0
+margin_right = 109.0
 margin_bottom = 159.0
 rect_min_size = Vector2( 48, 24 )
 size_flags_horizontal = 8

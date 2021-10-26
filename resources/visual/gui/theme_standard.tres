@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=12 format=2]
+[gd_resource type="Theme" load_steps=13 format=2]
 
 [ext_resource path="res://resources/visual/gui/font_standard.tres" type="DynamicFont" id=1]
 [ext_resource path="res://resources/visual/styleboxes/button_stylebox.tres" type="StyleBox" id=2]
@@ -9,7 +9,8 @@
 [ext_resource path="res://resources/visual/styleboxes/scroll_v_grabber_stylebox.tres" type="StyleBox" id=7]
 [ext_resource path="res://resources/visual/styleboxes/button_disabled_stylebox.tres" type="StyleBox" id=8]
 [ext_resource path="res://resources/visual/styleboxes/tab_stylebox.tres" type="StyleBox" id=9]
-[ext_resource path="res://resources/visual/styleboxes/tab_background_stylebox.tres" type="StyleBox" id=10]
+[ext_resource path="res://resources/visual/styleboxes/tab_stylebox_background.tres" type="StyleBox" id=10]
+[ext_resource path="res://resources/visual/styleboxes/tab_stylebox_disabled.tres" type="StyleBox" id=11]
 
 [sub_resource type="StyleBoxEmpty" id=1]
 
@@ -51,7 +52,7 @@ Panel/styles/panel = ExtResource( 4 )
 PanelContainer/styles/panel = ExtResource( 4 )
 PopupPanel/styles/panel = ExtResource( 4 )
 TabContainer/colors/font_color_bg = Color( 0.396078, 0.819608, 0.972549, 1 )
-TabContainer/colors/font_color_disabled = Color( 0.9, 0.9, 0.9, 0.2 )
+TabContainer/colors/font_color_disabled = Color( 0.227451, 0.403922, 0.8, 1 )
 TabContainer/colors/font_color_fg = Color( 0.976471, 0.921569, 0.0588235, 1 )
 TabContainer/constants/hseparation = 0
 TabContainer/constants/label_valign_bg = 0
@@ -67,7 +68,7 @@ TabContainer/icons/menu = null
 TabContainer/icons/menu_highlight = null
 TabContainer/styles/panel = ExtResource( 4 )
 TabContainer/styles/tab_bg = ExtResource( 10 )
-TabContainer/styles/tab_disabled = null
+TabContainer/styles/tab_disabled = ExtResource( 11 )
 TabContainer/styles/tab_fg = ExtResource( 9 )
 VBoxContainer/constants/separation = 2
 VScrollBar/icons/decrement = null
