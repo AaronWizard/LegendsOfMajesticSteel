@@ -25,7 +25,7 @@ onready var _other_actor_status := $OtherActorStatus as ActorStatusPanel
 
 onready var _cancel_turn_button := $CancelTurn as Control
 
-onready var _actor_details := $ActorDetails as ActorDetailsPanel
+onready var _actor_details_popup := $ActorDetailsPopup as Popup
 
 onready var _skill_panel := $SkillPanel as SkillPanel
 
@@ -39,7 +39,7 @@ func _ready() -> void:
 	_cancel_turn_button.visible = false
 	_other_actor_status.visible = false
 	_skill_panel.visible = false
-	_actor_details.visible = false
+	_actor_details_popup.visible = false
 
 	# warning-ignore:return_value_discarded
 	get_tree().get_root().connect("size_changed", self, "_on_size_changed")
@@ -124,8 +124,8 @@ static func _set_actor(actor: Actor, actor_status: ActorStatusPanel,
 
 
 func _show_actor_details(actor: Actor) -> void:
-	_actor_details.set_actor(actor)
-	_actor_details.popup_centered()
+	#_actor_details.set_actor(actor)
+	_actor_details_popup.popup_centered()
 
 
 func _on_CurrentActorStatus_portrait_pressed() -> void:
@@ -158,8 +158,8 @@ func _on_CancelTurn_pressed() -> void:
 
 
 func _on_size_changed() -> void:
-	if _actor_details.visible:
-		_actor_details.anchor_left = 0.5
-		_actor_details.anchor_right = 0.5
-		_actor_details.anchor_top = 0.5
-		_actor_details.anchor_bottom = 0.5
+	if _actor_details_popup.visible:
+		_actor_details_popup.anchor_left = 0.5
+		_actor_details_popup.anchor_right = 0.5
+		_actor_details_popup.anchor_top = 0.5
+		_actor_details_popup.anchor_bottom = 0.5

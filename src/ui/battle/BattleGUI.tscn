@@ -4,7 +4,7 @@
 [ext_resource path="res://src/ui/battle/SkillPanel.tscn" type="PackedScene" id=2]
 [ext_resource path="res://src/ui/battle/TurnQueuePanel.tscn" type="PackedScene" id=3]
 [ext_resource path="res://src/ui/battle/ActorStatusPanel.tscn" type="PackedScene" id=4]
-[ext_resource path="res://src/ui/battle/actordetails/ActorDetailsPanelOld.tscn" type="PackedScene" id=6]
+[ext_resource path="res://src/ui/battle/actordetails/ActorDetailsPanel.tscn" type="PackedScene" id=5]
 [ext_resource path="res://assets/graphics/ui/icons/actions/cancel.png" type="Texture" id=7]
 [ext_resource path="res://src/ui/SoundButton.gd" type="Script" id=8]
 [ext_resource path="res://src/ui/battle/ActionMenu.tscn" type="PackedScene" id=9]
@@ -76,15 +76,24 @@ __meta__ = {
 
 [node name="ActionMenu" parent="." instance=ExtResource( 9 )]
 
-[node name="ActorDetails" parent="." instance=ExtResource( 6 )]
+[node name="ActorDetailsPopup" type="Popup" parent="."]
+visible = true
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -50.0
-margin_top = -66.5
-margin_right = 50.0
-margin_bottom = 66.5
+margin_left = -69.0
+margin_top = -72.0
+margin_right = 69.0
+margin_bottom = 72.0
+rect_min_size = Vector2( 138, 144 )
+popup_exclusive = true
+__meta__ = {
+"_edit_group_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="ActorDetailsPanel" parent="ActorDetailsPopup" instance=ExtResource( 5 )]
 
 [connection signal="portrait_pressed" from="CurrentActorStatus" to="." method="_on_CurrentActorStatus_portrait_pressed"]
 [connection signal="pressed" from="CancelTurn" to="." method="_on_CancelTurn_pressed"]
