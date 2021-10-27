@@ -26,6 +26,8 @@ onready var _other_actor_status := $OtherActorStatus as ActorStatusPanel
 onready var _cancel_turn_button := $CancelTurn as Control
 
 onready var _actor_details_popup := $ActorDetailsPopup as Popup
+onready var _actor_details := $ActorDetailsPopup/ActorDetailsPanel \
+		as ActorDetailsPanel
 
 onready var _skill_panel := $SkillPanel as SkillPanel
 
@@ -124,7 +126,7 @@ static func _set_actor(actor: Actor, actor_status: ActorStatusPanel,
 
 
 func _show_actor_details(actor: Actor) -> void:
-	#_actor_details.set_actor(actor)
+	_actor_details.set_actor(actor)
 	_actor_details_popup.popup_centered()
 
 
@@ -155,6 +157,10 @@ func _on_ActionMenu_skill_selected(skill_index: int) -> void:
 
 func _on_CancelTurn_pressed() -> void:
 	emit_signal("turn_cancelled")
+
+
+func _on_ActorDetailsPanel_closed() -> void:
+	_actor_details_popup.visible = false
 
 
 func _on_size_changed() -> void:

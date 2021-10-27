@@ -1,4 +1,3 @@
-class_name ActorDetailsPanel
 extends PopupPanel
 
 const _STAT_UP_LABEL := " up "

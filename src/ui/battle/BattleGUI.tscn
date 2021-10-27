@@ -102,3 +102,4 @@ __meta__ = {
 [connection signal="attack_selected" from="ActionMenu" to="." method="_on_ActionMenu_attack_selected"]
 [connection signal="skill_selected" from="ActionMenu" to="." method="_on_ActionMenu_skill_selected"]
 [connection signal="wait_selected" from="ActionMenu" to="." method="_on_ActionMenu_wait_selected"]
+[connection signal="closed" from="ActorDetailsPopup/ActorDetailsPanel" to="." method="_on_ActorDetailsPanel_closed"]
