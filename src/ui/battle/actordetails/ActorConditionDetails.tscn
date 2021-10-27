@@ -1,0 +1,57 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://src/ui/battle/actordetails/SingleConditionDetails.tscn" type="PackedScene" id=2]
+
+[node name="ActorConditionDetails" type="MarginContainer"]
+margin_right = 101.0
+margin_bottom = 69.0
+rect_min_size = Vector2( 0, 69 )
+custom_constants/margin_top = 1
+custom_constants/margin_bottom = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+margin_top = 1.0
+margin_right = 101.0
+margin_bottom = 68.0
+scroll_horizontal_enabled = false
+
+[node name="ConditionList" type="VBoxContainer" parent="ScrollContainer"]
+margin_right = 95.0
+margin_bottom = 131.0
+size_flags_horizontal = 3
+
+[node name="Condition" parent="ScrollContainer/ConditionList" instance=ExtResource( 2 )]
+margin_right = 95.0
+
+[node name="Condition2" parent="ScrollContainer/ConditionList" instance=ExtResource( 2 )]
+margin_top = 19.0
+margin_right = 95.0
+margin_bottom = 36.0
+
+[node name="Condition3" parent="ScrollContainer/ConditionList" instance=ExtResource( 2 )]
+margin_top = 38.0
+margin_right = 95.0
+margin_bottom = 55.0
+
+[node name="Condition4" parent="ScrollContainer/ConditionList" instance=ExtResource( 2 )]
+margin_top = 57.0
+margin_right = 95.0
+margin_bottom = 74.0
+
+[node name="Condition5" parent="ScrollContainer/ConditionList" instance=ExtResource( 2 )]
+margin_top = 76.0
+margin_right = 95.0
+margin_bottom = 93.0
+
+[node name="Condition6" parent="ScrollContainer/ConditionList" instance=ExtResource( 2 )]
+margin_top = 95.0
+margin_right = 95.0
+margin_bottom = 112.0
+
+[node name="Condition7" parent="ScrollContainer/ConditionList" instance=ExtResource( 2 )]
+margin_top = 114.0
+margin_right = 95.0
+margin_bottom = 131.0
