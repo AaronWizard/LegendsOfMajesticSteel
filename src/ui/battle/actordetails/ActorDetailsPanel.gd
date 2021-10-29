@@ -37,6 +37,7 @@ func set_actor(actor: Actor) -> void:
 
 func clear() -> void:
 	_portrait.texture = null
+	_skills.clear()
 
 
 func _on_TabContainer_tab_changed(_tab: int) -> void:
