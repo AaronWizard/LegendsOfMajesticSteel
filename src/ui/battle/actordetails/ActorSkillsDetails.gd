@@ -20,7 +20,7 @@ onready var _skill_description := _skill_info.get_node("SkillDescription") \
 		as Label
 
 
-func set_skills(skills: Array, _current_actor_energy: int) -> void:
+func set_skills(skills: Array, current_actor_energy: int) -> void:
 	clear()
 
 	if skills.empty():
@@ -34,12 +34,20 @@ func set_skills(skills: Array, _current_actor_energy: int) -> void:
 			var index := i as int
 			var skill := skills[index] as Skill
 
-			var skill_button := _skill_button_scene.instance() as Button
+			var skill_button := _skill_button_scene.instance() \
+					as ActorSkillDetailsSkillButton
 			_skills.add_child(skill_button)
 
-			skill_button.icon = skill.icon
+			skill_button.button.icon = skill.icon
+
+			var cooldown := skill.energy_cost - current_actor_energy
+			if cooldown > 0:
+				skill_button.cooldown.text = str(cooldown)
+			else:
+				skill_button.cooldown.text = ""
+
 			# warning-ignore:return_value_discarded
-			skill_button.connect("pressed", self, "_skill_pressed", [
+			skill_button.button.connect("pressed", self, "_skill_pressed", [
 				index, skill.skill_name,
 				skill.energy_cost, skill.description
 			])
