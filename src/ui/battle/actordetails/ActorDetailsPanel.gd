@@ -13,6 +13,10 @@ onready var _current_stamina := _stamina_info.get_node("CurrentStamina") \
 		as Label
 onready var _max_stamina := _stamina_info.get_node("MaxStamina") as Label
 
+onready var _stats := $Main/MarginContainer/Stats as Control
+onready var _attack := _stats.get_node("AttackInfo") as ActorStatDetails
+onready var _move := _stats.get_node("MoveInfo") as ActorStatDetails
+
 
 func set_actor(actor: Actor) -> void:
 	clear()
@@ -22,6 +26,9 @@ func set_actor(actor: Actor) -> void:
 
 	_current_stamina.text = str(actor.stats.stamina)
 	_max_stamina.text = str(actor.stats.max_stamina)
+
+	_attack.set_stat_values(actor.stats, StatType.Type.ATTACK)
+	_move.set_stat_values(actor.stats, StatType.Type.MOVE)
 
 
 func clear() -> void:
