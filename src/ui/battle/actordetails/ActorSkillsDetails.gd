@@ -6,17 +6,19 @@ var _skill_button_scene := preload( \
 		)  as PackedScene
 
 onready var _no_skills_info := $NoSkillsInfo as Control
+onready var _skill_info := $SkillInfo as Control
 
-onready var _skills := $SkillInfo/SkillsContainer/Skills as Control
-onready var _current_skill_border := $SkillInfo/SkillsContainer/ \
-		CurrentSkillBorder as Control
+onready var _skills := _skill_info.get_node("SkillsContainer/Skills") as Control
+onready var _current_skill_border := \
+		_skill_info.get_node("SkillsContainer/CurrentSkillBorder") as Control
 
-onready var _skill_info := $SkillInfo/SkillInfoMargin/VBoxContainer as Control
-onready var _skill_name := _skill_info.get_node("HBoxContainer/SkillName") \
+onready var _skill_data := \
+		_skill_info.get_node("SkillInfoMargin/VBoxContainer") as Control
+onready var _skill_name := _skill_data.get_node("HBoxContainer/SkillName") \
 		 as Label
-onready var _energy_cost := _skill_info.get_node("HBoxContainer/EnergyCost") \
+onready var _energy_cost := _skill_data.get_node("HBoxContainer/EnergyCost") \
 		as Label
-onready var _skill_description := _skill_info.get_node("SkillDescription") \
+onready var _skill_description := _skill_data.get_node("SkillDescription") \
 		as Label
 
 
