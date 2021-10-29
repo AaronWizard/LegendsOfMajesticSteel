@@ -13,7 +13,7 @@ onready var _current_stamina := _stamina_info.get_node("CurrentStamina") \
 		as Label
 onready var _max_stamina := _stamina_info.get_node("MaxStamina") as Label
 
-onready var _stats := $Main/MarginContainer/Stats as Control
+onready var _stats := $Main/StatsPanel/MarginContainer/Stats as Control
 onready var _attack := _stats.get_node("AttackInfo") as ActorStatDetails
 onready var _move := _stats.get_node("MoveInfo") as ActorStatDetails
 
@@ -37,6 +37,10 @@ func set_actor(actor: Actor) -> void:
 
 func clear() -> void:
 	_portrait.texture = null
+
+
+func _on_TabContainer_tab_changed(_tab: int) -> void:
+	StandardSounds.play_select()
 
 
 func _on_Close_pressed() -> void:

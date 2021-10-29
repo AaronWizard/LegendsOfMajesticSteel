@@ -15,7 +15,7 @@ region = Rect2( 0, 0, 24, 24 )
 
 [node name="ActorDetailsPanel" type="PanelContainer"]
 margin_right = 138.0
-margin_bottom = 170.0
+margin_bottom = 174.0
 script = ExtResource( 5 )
 __meta__ = {
 "_edit_group_": true,
@@ -26,7 +26,7 @@ __meta__ = {
 margin_left = 3.0
 margin_top = 3.0
 margin_right = 135.0
-margin_bottom = 167.0
+margin_bottom = 171.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -133,33 +133,38 @@ rect_min_size = Vector2( 8, 0 )
 text = "99"
 align = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="Main"]
+[node name="StatsPanel" type="PanelContainer" parent="Main"]
 margin_top = 28.0
 margin_right = 132.0
-margin_bottom = 48.0
-custom_constants/margin_top = 2
-custom_constants/margin_bottom = 1
+margin_bottom = 52.0
 
-[node name="Stats" type="HBoxContainer" parent="Main/MarginContainer"]
-margin_top = 2.0
-margin_right = 132.0
-margin_bottom = 19.0
+[node name="MarginContainer" type="MarginContainer" parent="Main/StatsPanel"]
+margin_left = 3.0
+margin_top = 3.0
+margin_right = 129.0
+margin_bottom = 21.0
+custom_constants/margin_top = 1
+
+[node name="Stats" type="HBoxContainer" parent="Main/StatsPanel/MarginContainer"]
+margin_top = 1.0
+margin_right = 126.0
+margin_bottom = 18.0
 alignment = 1
 
-[node name="AttackInfo" parent="Main/MarginContainer/Stats" instance=ExtResource( 4 )]
-margin_right = 65.0
+[node name="AttackInfo" parent="Main/StatsPanel/MarginContainer/Stats" instance=ExtResource( 4 )]
+margin_right = 62.0
 stat_label = "Attack"
 
-[node name="MoveInfo" parent="Main/MarginContainer/Stats" instance=ExtResource( 4 )]
-margin_left = 67.0
-margin_right = 132.0
+[node name="MoveInfo" parent="Main/StatsPanel/MarginContainer/Stats" instance=ExtResource( 4 )]
+margin_left = 64.0
+margin_right = 126.0
 stat_icon = ExtResource( 8 )
 stat_label = "Move"
 
 [node name="TabContainer" type="TabContainer" parent="Main"]
-margin_top = 50.0
+margin_top = 54.0
 margin_right = 132.0
-margin_bottom = 138.0
+margin_bottom = 142.0
 rect_min_size = Vector2( 102, 86 )
 
 [node name="Skills" parent="Main/TabContainer" instance=ExtResource( 2 )]
@@ -181,9 +186,9 @@ margin_bottom = -3.0
 
 [node name="Close" type="Button" parent="Main"]
 margin_left = 84.0
-margin_top = 140.0
+margin_top = 144.0
 margin_right = 132.0
-margin_bottom = 164.0
+margin_bottom = 168.0
 rect_min_size = Vector2( 48, 24 )
 size_flags_horizontal = 8
 text = "OK"
@@ -193,4 +198,5 @@ __meta__ = {
 }
 sound_type = 1
 
+[connection signal="tab_changed" from="Main/TabContainer" to="." method="_on_TabContainer_tab_changed"]
 [connection signal="pressed" from="Main/Close" to="." method="_on_Close_pressed"]
