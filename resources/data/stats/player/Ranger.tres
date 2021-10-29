@@ -14,4 +14,4 @@ max_energy = 6
 attack = 5
 move = 4
 attack_skill = ExtResource( 1 )
-skills = [ ExtResource( 4 ) ]
+skill0 = ExtResource( 4 )
