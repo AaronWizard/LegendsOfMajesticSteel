@@ -74,6 +74,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/state/states/doaction/ActorSkillState.gd"
 }, {
+"base": "VBoxContainer",
+"class": "ActorSkillsDetails",
+"language": "GDScript",
+"path": "res://src/ui/battle/actordetails/ActorSkillsDetails.gd"
+}, {
 "base": "GameState",
 "class": "ActorStartTurnState",
 "language": "GDScript",
@@ -433,6 +438,7 @@ _global_script_class_icons={
 "ActorLineAOE": "",
 "ActorMoveState": "",
 "ActorSkillState": "",
+"ActorSkillsDetails": "",
 "ActorStartTurnState": "",
 "ActorStatDetails": "",
 "ActorStatusPanel": "",

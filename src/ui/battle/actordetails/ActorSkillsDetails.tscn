@@ -1,27 +1,27 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://assets/graphics/ui/icons/actions/attack.png" type="Texture" id=1]
 [ext_resource path="res://assets/graphics/ui/selected_icon_border.png" type="Texture" id=2]
+[ext_resource path="res://src/ui/battle/actordetails/ActorSkillsDetails.gd" type="Script" id=3]
 
 [node name="ActorSkillsDetails" type="VBoxContainer"]
 margin_right = 126.0
 margin_bottom = 69.0
 rect_min_size = Vector2( 0, 69 )
+script = ExtResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="MarginContainer" type="CenterContainer" parent="."]
+[node name="NoSkillsInfo" type="CenterContainer" parent="."]
 visible = false
 margin_right = 126.0
-margin_bottom = 69.0
+margin_bottom = 7.0
 size_flags_vertical = 3
 
-[node name="Label" type="Label" parent="MarginContainer"]
+[node name="Label" type="Label" parent="NoSkillsInfo"]
 margin_left = 46.0
-margin_top = 31.0
 margin_right = 80.0
-margin_bottom = 38.0
+margin_bottom = 7.0
 text = "No Skills"
 
 [node name="SkillInfo" type="VBoxContainer" parent="."]
@@ -37,93 +37,7 @@ rect_min_size = Vector2( 126, 30 )
 [node name="Skills" type="HBoxContainer" parent="SkillInfo/SkillsContainer"]
 margin_right = 102.0
 margin_bottom = 24.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="SkullButton" type="TextureRect" parent="SkillInfo/SkillsContainer/Skills"]
-margin_right = 30.0
-margin_bottom = 30.0
-rect_min_size = Vector2( 30, 30 )
-texture = ExtResource( 1 )
-stretch_mode = 4
-
-[node name="Cooldown" type="Label" parent="SkillInfo/SkillsContainer/Skills/SkullButton"]
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 3.0
-margin_top = -10.0
-margin_right = -3.0
-margin_bottom = -3.0
-text = "99"
-align = 2
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="SkullButton2" type="TextureRect" parent="SkillInfo/SkillsContainer/Skills"]
-margin_left = 32.0
-margin_right = 62.0
-margin_bottom = 30.0
-rect_min_size = Vector2( 30, 30 )
-texture = ExtResource( 1 )
-stretch_mode = 4
-
-[node name="Cooldown" type="Label" parent="SkillInfo/SkillsContainer/Skills/SkullButton2"]
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 3.0
-margin_top = -10.0
-margin_right = -3.0
-margin_bottom = -3.0
-text = "99"
-align = 2
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="SkullButton3" type="TextureRect" parent="SkillInfo/SkillsContainer/Skills"]
-margin_left = 64.0
-margin_right = 94.0
-margin_bottom = 30.0
-rect_min_size = Vector2( 30, 30 )
-texture = ExtResource( 1 )
-stretch_mode = 4
-
-[node name="Cooldown" type="Label" parent="SkillInfo/SkillsContainer/Skills/SkullButton3"]
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 3.0
-margin_top = -10.0
-margin_right = -3.0
-margin_bottom = -3.0
-text = "99"
-align = 2
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="SkullButton4" type="TextureRect" parent="SkillInfo/SkillsContainer/Skills"]
-margin_left = 96.0
-margin_right = 126.0
-margin_bottom = 30.0
-rect_min_size = Vector2( 30, 30 )
-texture = ExtResource( 1 )
-stretch_mode = 4
-
-[node name="Cooldown" type="Label" parent="SkillInfo/SkillsContainer/Skills/SkullButton4"]
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 3.0
-margin_top = -10.0
-margin_right = -3.0
-margin_bottom = -3.0
-text = "99"
-align = 2
+rect_min_size = Vector2( 0, 30 )
 __meta__ = {
 "_edit_use_anchors_": false
 }

@@ -17,6 +17,8 @@ onready var _stats := $Main/MarginContainer/Stats as Control
 onready var _attack := _stats.get_node("AttackInfo") as ActorStatDetails
 onready var _move := _stats.get_node("MoveInfo") as ActorStatDetails
 
+onready var _skills := $Main/TabContainer/Skills as ActorSkillsDetails
+
 
 func set_actor(actor: Actor) -> void:
 	clear()
@@ -29,6 +31,8 @@ func set_actor(actor: Actor) -> void:
 
 	_attack.set_stat_values(actor.stats, StatType.Type.ATTACK)
 	_move.set_stat_values(actor.stats, StatType.Type.MOVE)
+
+	_skills.set_skills(actor.skills, actor.stats.energy)
 
 
 func clear() -> void:
