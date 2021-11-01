@@ -49,6 +49,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/state/states/doaction/ActorActionState.gd"
 }, {
+"base": "TabContainer",
+"class": "ActorConditionDetails",
+"language": "GDScript",
+"path": "res://src/ui/battle/actordetails/ActorConditionDetails.gd"
+}, {
 "base": "Resource",
 "class": "ActorDefinition",
 "language": "GDScript",
@@ -289,6 +294,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/game/SignalWaiter.gd"
 }, {
+"base": "VBoxContainer",
+"class": "SingleConditionDetails",
+"language": "GDScript",
+"path": "res://src/ui/battle/actordetails/SingleConditionDetails.gd"
+}, {
 "base": "Node",
 "class": "Skill",
 "language": "GDScript",
@@ -438,6 +448,7 @@ _global_script_class_icons={
 "ActionMenu": "",
 "Actor": "res://assets/editor/actor.png",
 "ActorActionState": "",
+"ActorConditionDetails": "",
 "ActorDefinition": "",
 "ActorDetailsPanel": "",
 "ActorLineAOE": "",
@@ -486,6 +497,7 @@ _global_script_class_icons={
 "PushAttackTargetEffect": "res://assets/editor/pushattack_effect.png",
 "ScreenTransition": "",
 "SignalWaiter": "",
+"SingleConditionDetails": "",
 "Skill": "res://assets/editor/skill.png",
 "SkillAOE": "res://assets/editor/skill_aoe.png",
 "SkillEffect": "",

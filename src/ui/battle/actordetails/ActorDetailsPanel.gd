@@ -18,6 +18,8 @@ onready var _attack := _stats.get_node("AttackInfo") as ActorStatDetails
 onready var _move := _stats.get_node("MoveInfo") as ActorStatDetails
 
 onready var _skills := $Main/TabContainer/Skills as ActorSkillsDetails
+onready var _conditions := $Main/TabContainer/Conditions \
+		as ActorConditionDetails
 
 
 func set_actor(actor: Actor) -> void:
@@ -33,11 +35,13 @@ func set_actor(actor: Actor) -> void:
 	_move.set_stat_values(actor.stats, StatType.Type.MOVE)
 
 	_skills.set_skills(actor.skills, actor.stats.energy)
+	_conditions.set_conditions(actor)
 
 
 func clear() -> void:
 	_portrait.texture = null
 	_skills.clear()
+	_conditions.clear()
 
 
 func _on_TabContainer_tab_changed(_tab: int) -> void:
