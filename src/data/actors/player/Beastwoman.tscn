@@ -21,7 +21,7 @@ shader_param/dissolve = 0.0
 shader_param/dissolve_texture = SubResource( 2 )
 
 [node name="Beastwoman" instance=ExtResource( 1 )]
-character_name = "Vera"
+character_name = "Urbarra"
 actor_definition = ExtResource( 3 )
 faction = 0
 
