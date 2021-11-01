@@ -1,5 +1,5 @@
 class_name ActorSkillsDetails
-extends VBoxContainer
+extends TabContainer
 
 var _skill_button_scene := preload( \
 		"res://src/ui/battle/actordetails/ActorSkillDetailsSkillButton.tscn" \
@@ -26,11 +26,9 @@ func set_skills(skills: Array, current_actor_energy: int) -> void:
 	clear()
 
 	if skills.empty():
-		_skill_info.visible = false
-		_no_skills_info.visible = true
+		current_tab = _no_skills_info.get_index()
 	else:
-		_no_skills_info.visible = false
-		_skill_info.visible = true
+		current_tab = _skill_info.get_index()
 
 		for i in range(skills.size()):
 			var index := i as int

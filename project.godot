@@ -84,7 +84,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/state/states/doaction/ActorSkillState.gd"
 }, {
-"base": "VBoxContainer",
+"base": "TabContainer",
 "class": "ActorSkillsDetails",
 "language": "GDScript",
 "path": "res://src/ui/battle/actordetails/ActorSkillsDetails.gd"

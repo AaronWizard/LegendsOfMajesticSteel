@@ -1,33 +1,27 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://assets/graphics/ui/selected_icon_border.png" type="Texture" id=2]
 [ext_resource path="res://src/ui/battle/actordetails/ActorSkillsDetails.gd" type="Script" id=3]
 
-[node name="ActorSkillsDetails" type="VBoxContainer"]
+[sub_resource type="StyleBoxEmpty" id=1]
+
+[sub_resource type="Theme" id=2]
+TabContainer/styles/panel = SubResource( 1 )
+
+[node name="ActorSkillsDetails" type="TabContainer"]
 margin_right = 126.0
 margin_bottom = 69.0
 rect_min_size = Vector2( 126, 69 )
-custom_constants/separation = 0
+theme = SubResource( 2 )
+tabs_visible = false
 script = ExtResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="NoSkillsInfo" type="CenterContainer" parent="."]
-visible = false
-margin_right = 126.0
-margin_bottom = 7.0
-size_flags_vertical = 3
-
-[node name="Label" type="Label" parent="NoSkillsInfo"]
-margin_left = 46.0
-margin_right = 80.0
-margin_bottom = 7.0
-text = "No Skills"
-
 [node name="SkillInfo" type="VBoxContainer" parent="."]
-margin_right = 126.0
-margin_bottom = 69.0
+anchor_right = 1.0
+anchor_bottom = 1.0
 size_flags_vertical = 3
 
 [node name="SkillsContainer" type="Control" parent="SkillInfo"]
@@ -93,3 +87,16 @@ margin_right = 124.0
 margin_bottom = 36.0
 text = "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
 autowrap = true
+
+[node name="NoSkillsInfo" type="CenterContainer" parent="."]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="NoSkillsInfo"]
+margin_left = 46.0
+margin_top = 31.0
+margin_right = 80.0
+margin_bottom = 38.0
+text = "No Skills"
