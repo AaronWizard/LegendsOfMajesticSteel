@@ -1,0 +1,102 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://assets/graphics/ui/selected_icon_border.png" type="Texture" id=2]
+[ext_resource path="res://src/ui/battle/actordetails/ActorSkillsDetails.gd" type="Script" id=3]
+
+[sub_resource type="StyleBoxEmpty" id=1]
+
+[sub_resource type="Theme" id=2]
+TabContainer/styles/panel = SubResource( 1 )
+
+[node name="ActorSkillsDetails" type="TabContainer"]
+margin_right = 126.0
+margin_bottom = 69.0
+rect_min_size = Vector2( 126, 69 )
+theme = SubResource( 2 )
+tabs_visible = false
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SkillInfo" type="VBoxContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_vertical = 3
+
+[node name="SkillsContainer" type="Control" parent="SkillInfo"]
+margin_right = 126.0
+margin_bottom = 30.0
+rect_min_size = Vector2( 126, 30 )
+
+[node name="Skills" type="HBoxContainer" parent="SkillInfo/SkillsContainer"]
+margin_right = 102.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 0, 30 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CurrentSkillBorder" type="TextureRect" parent="SkillInfo/SkillsContainer"]
+margin_right = 30.0
+margin_bottom = 30.0
+texture = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SkillInfoMargin" type="MarginContainer" parent="SkillInfo"]
+margin_top = 32.0
+margin_right = 126.0
+margin_bottom = 69.0
+custom_constants/margin_right = 1
+custom_constants/margin_left = 1
+custom_constants/margin_bottom = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SkillInfo/SkillInfoMargin"]
+margin_left = 1.0
+margin_right = 125.0
+margin_bottom = 36.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="SkillInfo/SkillInfoMargin/VBoxContainer"]
+margin_right = 124.0
+margin_bottom = 7.0
+
+[node name="SkillName" type="Label" parent="SkillInfo/SkillInfoMargin/VBoxContainer/HBoxContainer"]
+margin_right = 85.0
+margin_bottom = 7.0
+size_flags_horizontal = 3
+text = "Skill Name"
+clip_text = true
+
+[node name="EnergyLabel" type="Label" parent="SkillInfo/SkillInfoMargin/VBoxContainer/HBoxContainer"]
+margin_left = 87.0
+margin_right = 114.0
+margin_bottom = 7.0
+text = "Energy:"
+
+[node name="EnergyCost" type="Label" parent="SkillInfo/SkillInfoMargin/VBoxContainer/HBoxContainer"]
+margin_left = 116.0
+margin_right = 124.0
+margin_bottom = 7.0
+text = "99"
+
+[node name="SkillDescription" type="Label" parent="SkillInfo/SkillInfoMargin/VBoxContainer"]
+margin_top = 9.0
+margin_right = 124.0
+margin_bottom = 36.0
+text = "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
+autowrap = true
+
+[node name="NoSkillsInfo" type="CenterContainer" parent="."]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="NoSkillsInfo"]
+margin_left = 46.0
+margin_top = 31.0
+margin_right = 80.0
+margin_bottom = 38.0
+text = "No Skills"

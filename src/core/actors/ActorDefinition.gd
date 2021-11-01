@@ -14,7 +14,13 @@ export var attack := 1
 export var move := 4
 
 export var attack_skill: PackedScene = null
-export(Array, PackedScene) var skills := []
+
+export var skill0: PackedScene = null
+export var skill1: PackedScene = null
+export var skill2: PackedScene = null
+export var skill3: PackedScene = null
+
+var skills: Array setget , get_skills
 
 
 func get_portrait() -> Texture:
@@ -44,3 +50,19 @@ func _get_portrait_from_sprite() -> Texture:
 			result.region.size.y = Constants.TILE_SIZE
 
 	return result
+
+
+func get_skills() -> Array:
+	var result := []
+
+	_check_skill(result, skill0)
+	_check_skill(result, skill1)
+	_check_skill(result, skill2)
+	_check_skill(result, skill3)
+
+	return result
+
+
+func _check_skill(output_skills: Array, skill_scene: PackedScene) -> void:
+	if skill_scene:
+		output_skills.append(skill_scene)
