@@ -18,7 +18,7 @@ shader_param/dissolve = 0.0
 shader_param/dissolve_texture = SubResource( 2 )
 
 [node name="Ranger" instance=ExtResource( 3 )]
-character_name = "Ordan"
+character_name = "Oren"
 actor_definition = ExtResource( 4 )
 faction = 0
 
