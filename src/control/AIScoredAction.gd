@@ -63,7 +63,6 @@ func _calculate_score() -> void:
 	if skill:
 		_score_skill_source_cell()
 		_score_damage()
-		_score_energy()
 		_score_conditions()
 	else:
 		_score_move_cell()
@@ -143,13 +142,3 @@ func _score_conditions() -> void:
 					modifier_score *= -1
 
 				score += modifier_score * _STAT_MOD_WEIGHT
-
-
-func _score_energy() -> void:
-	var energy_cost := skill.energy_cost
-	var current_energy := _actor.stats.energy
-
-	if energy_cost > 0:
-		assert(energy_cost <= current_energy)
-		var energy_score := float(energy_cost) / float(current_energy)
-		score -= energy_score

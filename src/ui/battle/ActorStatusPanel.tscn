@@ -1,11 +1,10 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://src/ui/battle/ActorStatusPanel.gd" type="Script" id=1]
 [ext_resource path="res://assets/graphics/ui/staminabar_background.png" type="Texture" id=3]
 [ext_resource path="res://assets/graphics/ui/staminabar_fill_front.png" type="Texture" id=4]
 [ext_resource path="res://assets/graphics/ui/icons/stats/defence.png" type="Texture" id=5]
 [ext_resource path="res://assets/graphics/ui/icons/stats/attack.png" type="Texture" id=6]
-[ext_resource path="res://assets/graphics/ui/icons/stats/energy.png" type="Texture" id=7]
 [ext_resource path="res://src/ui/SoundButton.gd" type="Script" id=8]
 
 [node name="ActorStatusPanel" type="Control"]
@@ -112,19 +111,6 @@ margin_right = 16.0
 margin_bottom = 7.0
 rect_min_size = Vector2( 8, 0 )
 text = "5"
-
-[node name="EnergyIcon" type="TextureRect" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer2"]
-margin_left = 16.0
-margin_right = 24.0
-margin_bottom = 8.0
-texture = ExtResource( 7 )
-
-[node name="CurrentEnergy" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer2"]
-margin_left = 24.0
-margin_right = 32.0
-margin_bottom = 7.0
-rect_min_size = Vector2( 8, 0 )
-text = "20"
 
 [node name="PortraitButton" type="Button" parent="."]
 anchor_bottom = 1.0

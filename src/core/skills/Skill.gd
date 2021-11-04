@@ -7,12 +7,17 @@ enum TargetType { ANY, ANY_ACTOR, ENEMY, ALLY, EMPTY_CELL, ENTERABLE_CELL }
 export var icon: Texture
 export var skill_name := "Skill"
 export var description := "Skill description"
-export var energy_cost := 0
+
+export var max_cooldown := 1
 
 export var range_type: Resource
 export(TargetType) var target_type := TargetType.ANY
 
 export var use_action_pose := false
+
+var is_attack := false
+
+var current_cooldown := 0
 
 
 func _get_configuration_warning() -> String:
@@ -30,6 +35,15 @@ func _get_configuration_warning() -> String:
 				break
 
 	return result
+
+
+func start_battle() -> void:
+	current_cooldown = max_cooldown
+
+
+func charge() -> void:
+	if current_cooldown > 0:
+		current_cooldown -= 1
 
 
 func get_targeting_data(source_cell: Vector2, source_actor: Actor, map: Map) \
@@ -70,11 +84,15 @@ func run(source_actor: Actor, map: Map, target: Vector2) -> void:
 	if use_action_pose:
 		source_actor.pose = Actor.Pose.ACTION
 
-	source_actor.stats.spend_energy(energy_cost)
 	_get_effect().run(target, source_actor.origin_cell, source_actor, map)
 	yield(_get_effect(), "finished")
 
 	source_actor.reset_pose()
+
+	if is_attack:
+		source_actor.charge_skills()
+	else:
+		current_cooldown = max_cooldown
 
 
 func _get_range(source_cell: Vector2, source_actor: Actor, map: Map) -> Array:

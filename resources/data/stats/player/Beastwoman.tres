@@ -10,7 +10,6 @@ script = ExtResource( 1 )
 sprite = ExtResource( 2 )
 rect_size = Vector2( 1, 1 )
 max_stamina = 25
-max_energy = 6
 attack = 6
 move = 5
 attack_skill = ExtResource( 3 )

@@ -31,7 +31,7 @@ script = ExtResource( 1 )
 icon = ExtResource( 4 )
 skill_name = "Rocket Shot"
 description = "Launch an explosive rocket"
-energy_cost = 3
+max_cooldown = 4
 range_type = SubResource( 1 )
 
 [node name="AnimateAttackEffect" type="Node" parent="."]

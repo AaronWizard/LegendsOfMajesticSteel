@@ -35,10 +35,10 @@ func _ready() -> void:
 	_skills.visible = false
 
 
-func set_actions(attack_skill: Skill, skills: Array, current_energy: int) \
+func set_actions(attack_skill: Skill, skills: Array) \
 		-> void:
 	_set_attack(attack_skill)
-	_set_skills(skills, current_energy)
+	_set_skills(skills)
 
 
 func get_is_open() -> bool:
@@ -81,7 +81,7 @@ func _set_attack(attack_skill: Skill) -> void:
 		_attack_button.icon = attack_skill.icon
 
 
-func _set_skills(skills: Array, current_energy: int) -> void:
+func _set_skills(skills: Array) -> void:
 	clear_skills()
 
 	for i in range(skills.size()):
@@ -100,12 +100,11 @@ func _set_skills(skills: Array, current_energy: int) -> void:
 		icon.margin_right = -_BUTTON_MARGIN
 		icon.margin_bottom = -_BUTTON_MARGIN
 
-		button.disabled = skill.energy_cost > current_energy
+		button.disabled = skill.current_cooldown > 0
 		if button.disabled:
-			var cost_diff := skill.energy_cost - current_energy
 			var label := Label.new()
 
-			label.text = str(cost_diff)
+			label.text = str(skill.current_cooldown)
 			label.align = Label.ALIGN_RIGHT
 			button.add_child(label)
 

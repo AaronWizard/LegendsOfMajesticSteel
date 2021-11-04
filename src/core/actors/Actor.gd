@@ -171,11 +171,13 @@ func set_actor_definition(value: Resource) -> void:
 
 			if ad.attack_skill:
 				var new_attack_skill := ad.attack_skill.instance()
+				new_attack_skill.is_attack = true
 				$Attack.add_child(new_attack_skill)
 
 			for s in ad.skills:
 				var skill_scene := s as PackedScene
 				var skill := skill_scene.instance() as Node
+				skill.is_attack = false
 				$Skills.add_child(skill)
 	else:
 		set_rect_size(Vector2.ONE)
@@ -217,6 +219,11 @@ func get_skills() -> Array:
 	return result
 
 
+func charge_skills() -> void:
+	for s in get_skills():
+		s.charge()
+
+
 # Includes attack skill. Does not include skills that need more energy.
 func get_all_active_skills() -> Array:
 	var result := []
@@ -225,8 +232,7 @@ func get_all_active_skills() -> Array:
 	if attack:
 		result.append(attack)
 	for s in get_skills():
-		var energy_cost := s.energy_cost as int
-		if energy_cost <= get_stats().energy:
+		if s.current_cooldown == 0:
 			result.append(s)
 
 	return result
@@ -265,8 +271,12 @@ func get_stamina_modifier() -> int:
 
 func start_battle() -> void:
 	get_stats().start_battle()
+
+	for s in get_skills():
+		s.start_battle()
+
 	_stamina_bar.reset()
-	get_turn_status().start_round()
+	get_turn_status().start_battle()
 
 
 func set_pose(value: int) -> void:
@@ -473,7 +483,9 @@ func _on_StaminaBar_animation_finished() -> void:
 	_stamina_bar.visible = false
 
 
-func _on_TurnStatus_round_started() -> void:
+func _on_TurnStatus_round_started(first_round: bool) -> void:
+	if not first_round:
+		charge_skills()
 	_wait_icon.visible = false
 	get_stats().start_round()
 
@@ -490,6 +502,8 @@ func _on_Stats_damaged(amount: int, direction: Vector2,
 		standard_hit_anim: bool) -> void:
 	_animating = true
 	if get_stats().is_alive:
+		charge_skills()
+
 		_animate_staminabar(-amount)
 		if standard_hit_anim:
 			yield(_animate_hit(direction), "completed")

@@ -63,19 +63,19 @@ margin_right = 124.0
 margin_bottom = 7.0
 
 [node name="SkillName" type="Label" parent="SkillInfo/SkillInfoMargin/VBoxContainer/HBoxContainer"]
-margin_right = 85.0
+margin_right = 77.0
 margin_bottom = 7.0
 size_flags_horizontal = 3
 text = "Skill Name"
 clip_text = true
 
-[node name="EnergyLabel" type="Label" parent="SkillInfo/SkillInfoMargin/VBoxContainer/HBoxContainer"]
-margin_left = 87.0
+[node name="CooldownLabel" type="Label" parent="SkillInfo/SkillInfoMargin/VBoxContainer/HBoxContainer"]
+margin_left = 79.0
 margin_right = 114.0
 margin_bottom = 7.0
-text = "Energy:"
+text = "Cooldown:"
 
-[node name="EnergyCost" type="Label" parent="SkillInfo/SkillInfoMargin/VBoxContainer/HBoxContainer"]
+[node name="Cooldown" type="Label" parent="SkillInfo/SkillInfoMargin/VBoxContainer/HBoxContainer"]
 margin_left = 116.0
 margin_right = 124.0
 margin_bottom = 7.0

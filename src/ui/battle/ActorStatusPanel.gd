@@ -16,11 +16,6 @@ onready var _stamina_bar := $PanelContainer/MarginContainer/VBoxContainer/ \
 onready var _current_stamina := $PanelContainer/MarginContainer/VBoxContainer/ \
 		HBoxContainer/CurrentStamina as Label
 
-onready var _energy_icon := $PanelContainer/MarginContainer/VBoxContainer/ \
-		HBoxContainer2/EnergyIcon as Control
-onready var _current_energy := $PanelContainer/MarginContainer/VBoxContainer/ \
-		HBoxContainer2/CurrentEnergy as Label
-
 
 func set_actor(actor: Actor, portrait_clickable: bool) -> void:
 	clear()
@@ -34,10 +29,7 @@ func set_actor(actor: Actor, portrait_clickable: bool) -> void:
 	_stamina_bar.max_value = actor.stats.max_stamina
 	_stamina_bar.value = actor.stats.stamina
 
-	_set_energy_visible(actor.stats.max_energy > 0)
-
 	_current_stamina.text = str(actor.stats.stamina)
-	_current_energy.text = str(actor.stats.energy)
 
 
 func clear() -> void:
@@ -46,14 +38,7 @@ func clear() -> void:
 	_name.text = ""
 
 	_stamina_bar.value = 0
-
 	_current_stamina.text = ""
-	_current_energy.text = ""
-
-
-func _set_energy_visible(visible: bool) -> void:
-	_energy_icon.visible = visible
-	_current_energy.visible = visible
 
 
 func _on_PortraitButton_pressed() -> void:

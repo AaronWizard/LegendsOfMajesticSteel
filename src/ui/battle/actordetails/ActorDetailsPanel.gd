@@ -34,7 +34,7 @@ func set_actor(actor: Actor) -> void:
 	_attack.set_stat_values(actor.stats, StatType.Type.ATTACK)
 	_move.set_stat_values(actor.stats, StatType.Type.MOVE)
 
-	_skills.set_skills(actor.skills, actor.stats.energy)
+	_skills.set_skills(actor.skills)
 	_conditions.set_conditions(actor)
 
 

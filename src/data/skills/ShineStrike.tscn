@@ -21,7 +21,7 @@ script = ExtResource( 1 )
 icon = ExtResource( 3 )
 skill_name = "Shine Strike"
 description = "A sweep of searing light"
-energy_cost = 3
+max_cooldown = 4
 range_type = ExtResource( 2 )
 
 [node name="AnimateAttackEffect" type="Node" parent="."]
