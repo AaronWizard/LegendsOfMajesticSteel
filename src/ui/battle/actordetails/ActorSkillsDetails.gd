@@ -1,5 +1,5 @@
 class_name ActorSkillsDetails
-extends Control
+extends ReferenceRect
 
 var _skill_button_scene := preload( \
 		"res://src/ui/battle/actordetails/ActorSkillDetailsSkillButton.tscn" \

@@ -8,15 +8,12 @@
 [sub_resource type="Theme" id=2]
 TabContainer/styles/panel = SubResource( 1 )
 
-[node name="ActorSkillsDetails" type="Control"]
+[node name="ActorSkillsDetails" type="ReferenceRect"]
 margin_right = 96.0
 margin_bottom = 24.0
 rect_min_size = Vector2( 96, 24 )
 theme = SubResource( 2 )
 script = ExtResource( 3 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="TabContainer" type="TabContainer" parent="."]
 anchor_right = 1.0
@@ -49,4 +46,11 @@ margin_bottom = 15.0
 text = "No Skills"
 
 [node name="SkillDetails" parent="." instance=ExtResource( 1 )]
-visible = false
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -64.0
+margin_top = -1.0
+margin_right = 64.0
+margin_bottom = 75.0

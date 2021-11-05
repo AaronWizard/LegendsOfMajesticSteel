@@ -3,25 +3,37 @@ extends Control
 
 signal cancelled
 
+onready var _skill_button := $Skill as Button
 
-onready var _icon := $PanelContainer/MarginContainer/HBoxContainer/Icon \
-		as TextureRect
-onready var _name := $PanelContainer/MarginContainer/HBoxContainer/ \
-		VBoxContainer/Name as Label
+onready var _name := $PanelContainer/MarginContainer/VBoxContainer/Name as Label
 onready var _no_valid_targets := $PanelContainer/MarginContainer/ \
-		HBoxContainer/VBoxContainer/NoValidTargets as Control
+		VBoxContainer/NoValidTargets as Control
+
+onready var _details := $SkillDetails as SkillDetails
+
+var _skill: Skill = null
+
+
+func _ready() -> void:
+	_details.visible = false
 
 
 func set_skill(skill: Skill, no_valid_targets: bool) -> void:
-	_icon.texture = skill.icon
+	_skill_button.icon = skill.icon
 	_name.text = skill.skill_name
 	_no_valid_targets.visible = no_valid_targets
+	_skill = skill
 
 
 func clear() -> void:
-	_icon.texture = null
+	_skill_button.icon = null
 	_name.text = ""
 	_no_valid_targets.visible = false
+	_skill = null
+
+
+func _on_Skill_pressed() -> void:
+	_details.show_skill(_skill, false)
 
 
 func _on_Cancel_pressed() -> void:
