@@ -1,5 +1,4 @@
 class_name ActorSkillDetailsSkillButton
-extends CenterContainer
+extends SoundButton
 
-onready var button := $SoundButton as Button
-onready var cooldown := $SoundButton/Cooldown as Label
+onready var cooldown := $Cooldown as Label

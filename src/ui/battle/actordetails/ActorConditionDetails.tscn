@@ -8,9 +8,9 @@
 TabContainer/styles/panel = SubResource( 1 )
 
 [node name="ActorConditionDetails" type="TabContainer"]
-margin_right = 132.0
-margin_bottom = 75.0
-rect_min_size = Vector2( 126, 69 )
+margin_right = 75.0
+margin_bottom = 48.0
+rect_min_size = Vector2( 0, 48 )
 theme = SubResource( 2 )
 tabs_visible = false
 script = ExtResource( 1 )
@@ -26,26 +26,24 @@ custom_constants/margin_bottom = 1
 
 [node name="Scroll" type="ScrollContainer" parent="ConditionsContainer"]
 margin_top = 1.0
-margin_right = 132.0
-margin_bottom = 74.0
-rect_min_size = Vector2( 126, 67 )
+margin_right = 75.0
+margin_bottom = 47.0
 size_flags_vertical = 3
 scroll_horizontal_enabled = false
 
 [node name="ConditionList" type="VBoxContainer" parent="ConditionsContainer/Scroll"]
-margin_right = 132.0
+margin_right = 75.0
 size_flags_horizontal = 3
 
 [node name="NoConditionsContainer" type="CenterContainer" parent="."]
 visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
-rect_min_size = Vector2( 126, 67 )
 size_flags_vertical = 3
 
 [node name="Label" type="Label" parent="NoConditionsContainer"]
-margin_left = 42.0
-margin_top = 34.0
-margin_right = 90.0
-margin_bottom = 41.0
+margin_left = 13.0
+margin_top = 20.0
+margin_right = 61.0
+margin_bottom = 27.0
 text = "No Conditions"

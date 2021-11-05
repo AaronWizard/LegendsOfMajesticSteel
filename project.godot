@@ -74,7 +74,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/state/states/doaction/ActorMoveState.gd"
 }, {
-"base": "CenterContainer",
+"base": "SoundButton",
 "class": "ActorSkillDetailsSkillButton",
 "language": "GDScript",
 "path": "res://src/ui/battle/actordetails/ActorSkillDetailsSkillButton.gd"
@@ -84,7 +84,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/state/states/doaction/ActorSkillState.gd"
 }, {
-"base": "TabContainer",
+"base": "Control",
 "class": "ActorSkillsDetails",
 "language": "GDScript",
 "path": "res://src/ui/battle/actordetails/ActorSkillsDetails.gd"
@@ -309,6 +309,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/core/skills/SkillAOE.gd"
 }, {
+"base": "PopupPanel",
+"class": "SkillDetails",
+"language": "GDScript",
+"path": "res://src/ui/battle/SkillDetails.gd"
+}, {
 "base": "Node",
 "class": "SkillEffect",
 "language": "GDScript",
@@ -500,6 +505,7 @@ _global_script_class_icons={
 "SingleConditionDetails": "",
 "Skill": "res://assets/editor/skill.png",
 "SkillAOE": "res://assets/editor/skill_aoe.png",
+"SkillDetails": "",
 "SkillEffect": "",
 "SkillEffectGroup": "res://assets/editor/skilleffectgroup.png",
 "SkillEffectWrapper": "",

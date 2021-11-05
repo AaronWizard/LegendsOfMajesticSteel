@@ -17,8 +17,8 @@ onready var _stats := $Main/StatsPanel/MarginContainer/Stats as Control
 onready var _attack := _stats.get_node("AttackInfo") as ActorStatDetails
 onready var _move := _stats.get_node("MoveInfo") as ActorStatDetails
 
-onready var _skills := $Main/TabContainer/Skills as ActorSkillsDetails
-onready var _conditions := $Main/TabContainer/Conditions \
+onready var _skills := $Main/SkillsContainer/Skills as ActorSkillsDetails
+onready var _conditions := $Main/ConditionsContainer/Conditions \
 		as ActorConditionDetails
 
 
