@@ -13,6 +13,7 @@ const _NO_SKILLS_INDEX := 1
 onready var _tabs := $TabContainer as TabContainer
 onready var _skills := _tabs.get_node("Skills")
 
+onready var _skill_popup_position := $SkillDetailsPosition as Position2D
 onready var _skill_popup := $SkillDetails as SkillDetails
 
 
@@ -55,4 +56,5 @@ func clear() -> void:
 
 
 func _skill_pressed(skill: Skill) -> void:
+	_skill_popup.set_position(_skill_popup_position.global_position)
 	_skill_popup.show_skill(skill)

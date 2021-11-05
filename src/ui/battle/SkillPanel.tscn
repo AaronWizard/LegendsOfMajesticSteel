@@ -76,11 +76,12 @@ __meta__ = {
 }
 sound_type = 1
 
+[node name="DetailsPosition" type="Position2D" parent="."]
+position = Vector2( -42, 0 )
+
 [node name="SkillDetails" parent="." instance=ExtResource( 2 )]
-anchor_left = 1.0
-anchor_right = 1.0
-margin_left = -151.0
-margin_right = -23.0
+margin_left = -42.0
+margin_right = 86.0
 
 [connection signal="pressed" from="Skill" to="." method="_on_Skill_pressed"]
 [connection signal="pressed" from="Cancel" to="." method="_on_Cancel_pressed"]

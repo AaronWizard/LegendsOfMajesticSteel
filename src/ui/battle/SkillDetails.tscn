@@ -107,7 +107,7 @@ margin_bottom = 47.0
 scroll_horizontal_enabled = false
 
 [node name="Description" type="Label" parent="VBoxContainer/MarginContainer/ScrollContainer"]
-margin_right = 121.0
+margin_right = 115.0
 margin_bottom = 47.0
 size_flags_horizontal = 3
 text = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s."
