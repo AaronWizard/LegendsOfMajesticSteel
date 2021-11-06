@@ -20,10 +20,11 @@ Mightiest Steel is an in-development Strategy RPG that will emphasize rapid game
 * Click and drag to pan the view.
 * On your turn, heroes that can act will be highlighted. Click a highlighted hero to start their actions.
 * When a hero is active, their movement range is highlighted. Click within this range to position the hero.
-* To take an action, click on the hero. You will have the option to attack, end the hero's turn, or - if the hero has enough energy - perform a special action. Click on the hero to cancel the action menu and return to positioning mode.
-* Actions require a target. When attacking or doing a special action, the action's target range will be highlighted. Click within this range to select a target. Click the target again to start the action.
-* Characters with special actions - heroes and foes alike - gain one point of energy each round. They also get one point of energy every time they attack or are attacked. Crush your enemies and see them driven before you!
+* To take an action, click on the hero. You will have the option to attack, perform a special skill if possible, or end the hero's turn. Click on the hero to cancel the action menu and return to positioning mode.
+* Attacks and skills require a target. When attacking or doing a skill, the target range will be highlighted. Click within this range to select a target. Click the target again to start the attack or skill.
+* Skills have a cooldown. A skill will recharge each round. Skills will also recharge when characters - heroes and foes alike, attack or get attacked. Crush your enemies and see them driven before you!
 * During a hero's turn you may click on another character to see their movement range.
+* It is possible to cancel a hero's turn before committing to an action. This will reset the hero's position and allow you to select a different hero.
 
 ## Credits
 
