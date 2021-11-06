@@ -52,6 +52,7 @@ text = "No Skills"
 position = Vector2( -16, 24 )
 
 [node name="SkillDetails" parent="." instance=ExtResource( 1 )]
+visible = false
 margin_left = -16.0
 margin_top = 24.0
 margin_right = 112.0

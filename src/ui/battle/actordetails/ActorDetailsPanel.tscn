@@ -15,7 +15,7 @@ region = Rect2( 0, 0, 24, 24 )
 
 [node name="ActorDetailsPanel" type="PanelContainer"]
 margin_right = 108.0
-margin_bottom = 172.0
+margin_bottom = 148.0
 script = ExtResource( 5 )
 __meta__ = {
 "_edit_group_": true,
@@ -26,7 +26,7 @@ __meta__ = {
 margin_left = 3.0
 margin_top = 3.0
 margin_right = 105.0
-margin_bottom = 169.0
+margin_bottom = 145.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -175,19 +175,19 @@ margin_bottom = 27.0
 [node name="ConditionsContainer" type="PanelContainer" parent="Main"]
 margin_top = 86.0
 margin_right = 102.0
-margin_bottom = 140.0
+margin_bottom = 116.0
 
 [node name="Conditions" parent="Main/ConditionsContainer" instance=ExtResource( 7 )]
 margin_left = 3.0
 margin_top = 3.0
 margin_right = 99.0
-margin_bottom = 51.0
+margin_bottom = 27.0
 
 [node name="Close" type="Button" parent="Main"]
 margin_left = 54.0
-margin_top = 142.0
+margin_top = 118.0
 margin_right = 102.0
-margin_bottom = 166.0
+margin_bottom = 142.0
 rect_min_size = Vector2( 48, 24 )
 size_flags_horizontal = 8
 text = "OK"
