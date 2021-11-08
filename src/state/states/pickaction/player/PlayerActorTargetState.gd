@@ -96,7 +96,7 @@ func _show_predicted_damage( \
 	for a in predicted_damage:
 		var other_actor := a as Actor
 		var damage := predicted_damage[a] as int
-		other_actor.stamina_modifier = damage
+		other_actor.stamina_bar_modifier = damage
 
 	_predicted_damage_actors = predicted_damage.keys()
 
@@ -104,5 +104,5 @@ func _show_predicted_damage( \
 func _clear_predicted_damage() -> void:
 	for a in _predicted_damage_actors:
 		var other_actor := a as Actor
-		other_actor.stamina_modifier = 0
+		other_actor.stamina_bar_modifier = 0
 	_predicted_damage_actors.clear()

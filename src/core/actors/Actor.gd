@@ -58,7 +58,7 @@ var all_active_skills: Array setget , get_all_active_skills
 var walk_range: WalkRange
 
 var target_visible: bool setget set_target_visible, get_target_visible
-var stamina_modifier: int setget set_stamina_modifier, get_stamina_modifier
+var stamina_bar_modifier: int setget set_stamina_bar_modifier, get_stamina_bar_modifier
 
 var pose: int = Pose.IDLE setget set_pose
 
@@ -252,7 +252,7 @@ func get_target_visible() -> bool:
 	return result
 
 
-func set_stamina_modifier(value: int) -> void:
+func set_stamina_bar_modifier(value: int) -> void:
 	if _stamina_bar:
 		assert(not _stamina_bar_animating)
 		_stamina_bar.modifier = value
@@ -262,7 +262,7 @@ func set_stamina_modifier(value: int) -> void:
 			_stamina_bar.visible = false
 
 
-func get_stamina_modifier() -> int:
+func get_stamina_bar_modifier() -> int:
 	var result := 0
 	if _stamina_bar and not Engine.editor_hint:
 		result = int(_stamina_bar.modifier)
