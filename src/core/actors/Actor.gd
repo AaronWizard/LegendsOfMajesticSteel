@@ -58,7 +58,8 @@ var all_active_skills: Array setget , get_all_active_skills
 var walk_range: WalkRange
 
 var target_visible: bool setget set_target_visible, get_target_visible
-var stamina_bar_modifier: int setget set_stamina_bar_modifier, get_stamina_bar_modifier
+var stamina_bar_modifier: int setget set_stamina_bar_modifier, \
+		get_stamina_bar_modifier
 
 var pose: int = Pose.IDLE setget set_pose
 
