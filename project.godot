@@ -147,12 +147,12 @@ _global_script_classes=[ {
 "base": "Reference",
 "class": "Condition",
 "language": "GDScript",
-"path": "res://src/conditions/Condition.gd"
+"path": "res://src/core/conditions/Condition.gd"
 }, {
 "base": "Resource",
 "class": "ConditionEffect",
 "language": "GDScript",
-"path": "res://src/conditions/ConditionEffect.gd"
+"path": "res://src/core/conditions/ConditionEffect.gd"
 }, {
 "base": "Node2D",
 "class": "ConditionIcons",
@@ -357,7 +357,7 @@ _global_script_classes=[ {
 "base": "Resource",
 "class": "StatModifier",
 "language": "GDScript",
-"path": "res://src/core/actors/StatModifier.gd"
+"path": "res://src/core/conditions/StatModifier.gd"
 }, {
 "base": "Reference",
 "class": "StatType",
