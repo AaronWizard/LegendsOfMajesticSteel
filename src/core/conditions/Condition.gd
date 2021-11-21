@@ -2,19 +2,19 @@ class_name Condition
 
 signal finished
 
-var effect: ConditionEffect
+var effect: ConditionDefinition
 
 var rounds_left := 1
 
 var stat_modifiers: Array setget , get_stat_modifiers
 
-func _init(new_effect: ConditionEffect) -> void:
+func _init(new_effect: ConditionDefinition) -> void:
 	effect = new_effect
 	rounds_left = effect.max_rounds
 
 
 func start_round() -> void:
-	if effect.time_type == ConditionEffect.TimeType.ROUNDS:
+	if effect.time_type == ConditionDefinition.TimeType.ROUNDS:
 		if rounds_left == 0:
 			emit_signal("finished")
 		else:

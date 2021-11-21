@@ -158,7 +158,7 @@ func get_condition_stat_mods() -> Dictionary:
 				modifier_data = result[modifier.type]
 
 			var md_key: int
-			if condition.effect.time_type == ConditionEffect.TimeType.ROUNDS:
+			if condition.effect.time_type == ConditionDefinition.TimeType.ROUNDS:
 				md_key = condition.rounds_left
 			else:
 				md_key = -1

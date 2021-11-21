@@ -18,7 +18,7 @@ func predict_conditions(target_cell: Vector2, _source_cell: Vector2,
 
 	var actor := map.get_actor_on_cell(target_cell)
 	if actor:
-		var effect := condition_effect as ConditionEffect
+		var effect := condition_effect as ConditionDefinition
 		result[actor] = [effect]
 
 	return result
@@ -28,5 +28,5 @@ func _run_self(target_cell: Vector2, _source_cell: Vector2,
 		_source_actor: Actor, map: Map) -> void:
 	var actor := map.get_actor_on_cell(target_cell)
 	if actor:
-		var ce := condition_effect as ConditionEffect
+		var ce := condition_effect as ConditionDefinition
 		actor.stats.add_condition(Condition.new(ce))

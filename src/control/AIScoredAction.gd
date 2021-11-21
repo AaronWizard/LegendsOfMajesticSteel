@@ -128,7 +128,7 @@ func _score_conditions() -> void:
 		var conditions := predicted_conditions[other_actor] as Array
 
 		for c in conditions:
-			var condition := c as ConditionEffect
+			var condition := c as ConditionDefinition
 
 			for m in condition.stat_modifiers:
 				var modifier := m as StatModifier

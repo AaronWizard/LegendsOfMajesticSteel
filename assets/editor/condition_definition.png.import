@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/condition_effect.png-09fc5d7eecdf1000db50400522e6cc93.stex"
+path="res://.import/condition_definition.png-e9828e3adc3fc7f5ca3d159614d0225f.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/editor/condition_effect.png"
-dest_files=[ "res://.import/condition_effect.png-09fc5d7eecdf1000db50400522e6cc93.stex" ]
+source_file="res://assets/editor/condition_definition.png"
+dest_files=[ "res://.import/condition_definition.png-e9828e3adc3fc7f5ca3d159614d0225f.stex" ]
 
 [params]
 
@@ -28,6 +28,7 @@ process/fix_alpha_border=true
 process/premult_alpha=false
 process/HDR_as_SRGB=false
 process/invert_color=false
+process/normal_map_invert_y=false
 stream=false
 size_limit=0
 detect_3d=false

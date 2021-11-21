@@ -150,7 +150,7 @@ _global_script_classes=[ {
 "path": "res://src/core/conditions/Condition.gd"
 }, {
 "base": "Resource",
-"class": "ConditionEffect",
+"class": "ConditionDefinition",
 "language": "GDScript",
 "path": "res://src/core/conditions/ConditionEffect.gd"
 }, {
@@ -473,7 +473,7 @@ _global_script_class_icons={
 "BattleGUI": "",
 "BattleInterface": "",
 "Condition": "",
-"ConditionEffect": "res://assets/editor/condition_effect.png",
+"ConditionDefinition": "res://assets/editor/condition_definition.png",
 "ConditionIcons": "",
 "Constants": "",
 "DiamondAOE": "",

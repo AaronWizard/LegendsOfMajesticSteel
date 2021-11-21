@@ -11,5 +11,5 @@ value = 50
 [resource]
 script = ExtResource( 1 )
 time_type = 1
-max_rounds = 1
+max_rounds = null
 stat_modifiers = [ SubResource( 1 ) ]
