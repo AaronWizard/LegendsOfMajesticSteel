@@ -5,5 +5,7 @@
 [resource]
 script = ExtResource( 1 )
 tile_names = [ "forest" ]
-move_cost = 2
-is_defensive = true
+move_type = 1
+push_type = 1
+blocks_attack = false
+self_defence_type = 1

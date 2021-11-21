@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" load_steps=8 format=2]
+[gd_resource type="TileSet" load_steps=9 format=2]
 
 [ext_resource path="res://resources/visual/animatedtextures/water_animation.tres" type="Texture" id=1]
 [ext_resource path="res://assets/graphics/terrain/mountains.png" type="Texture" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://src/core/maps/TerrainTileSet.gd" type="Script" id=5]
 [ext_resource path="res://resources/data/tileproperties/forest.tres" type="Resource" id=6]
 [ext_resource path="res://resources/data/tileproperties/barrier.tres" type="Resource" id=7]
+[ext_resource path="res://resources/data/tileproperties/water.tres" type="Resource" id=8]
 
 [resource]
 0/name = "grass"
@@ -102,4 +103,4 @@
 3/shapes = [  ]
 3/z_index = 0
 script = ExtResource( 5 )
-tile_properties = [ ExtResource( 7 ), ExtResource( 6 ) ]
+tile_properties = [ ExtResource( 7 ), ExtResource( 6 ), ExtResource( 8 ) ]

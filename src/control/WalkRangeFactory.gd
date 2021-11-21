@@ -13,7 +13,7 @@ static func create_walk_range(actor: Actor, map: Map) -> WalkRange:
 
 	var result := WalkRange.new(
 			origin_cell, true_move_range, visible_move_range, walk_grid)
-	
+
 	return result
 
 

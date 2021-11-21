@@ -7,6 +7,9 @@ signal actor_removed(actor)
 
 enum Decal { BLOOD_SPLATTER = 0 }
 
+const MOVE_COST_CLEAR := 1
+const MOVE_COST_ROUGH := 2
+
 const _COVER_EFFECT := preload("res://resources/data/conditions/Cover.tres")
 
 var _cover_condition := Condition.new(_COVER_EFFECT)
@@ -75,19 +78,18 @@ func get_tile_properties(cell: Vector2) -> TileProperties:
 
 
 func get_cell_move_cost(cell: Vector2, actor: Actor) -> int:
-	var result := 1
+	var result := MOVE_COST_CLEAR
 
 	for c in actor.get_covered_cells_at_cell(cell):
 		var covered := c as Vector2
 		var properties := get_tile_properties(covered)
-		if properties and (properties.move_cost > result):
-			result = properties.move_cost
+		if properties:
+			assert(not properties.blocks_move())
+			if properties.move_is_rough():
+				result = MOVE_COST_ROUGH
+				break
 
 	return result
-
-
-func on_defensive_terrain(actor: Actor) -> bool:
-	return is_defensive_terrain_at_cell(actor, actor.origin_cell)
 
 
 func is_defensive_terrain_at_cell(actor: Actor, cell: Vector2) -> bool:
@@ -97,7 +99,7 @@ func is_defensive_terrain_at_cell(actor: Actor, cell: Vector2) -> bool:
 	for c in actor.get_covered_cells_at_cell(cell):
 		var covered := c as Vector2
 		var properties := get_tile_properties(covered)
-		if properties and properties.is_defensive:
+		if properties and properties.is_self_cover():
 			defensive_tiles += 1
 		else:
 			clear_tiles += 1
@@ -166,7 +168,7 @@ func actor_can_enter_cell(actor: Actor, cell: Vector2,
 		if result:
 			var properties := get_tile_properties(covered)
 			if properties:
-				result = !properties.blocks_move
+				result = not properties.blocks_move()
 
 	return result
 
@@ -186,7 +188,7 @@ func reset_actor_virtual_origins() -> void:
 func update_terrain_effects() -> void:
 	for a in get_actors():
 		var actor := a as Actor
-		if on_defensive_terrain(actor):
+		if _on_defensive_terrain(actor):
 			actor.stats.add_condition(_cover_condition)
 		else:
 			actor.stats.remove_condition(_cover_condition)
@@ -201,3 +203,7 @@ func _actor_dying(actor: Actor) -> void:
 		var cell := c as Vector2
 		add_decal(Decal.BLOOD_SPLATTER, cell)
 	emit_signal("actor_dying", actor)
+
+
+func _on_defensive_terrain(actor: Actor) -> bool:
+	return is_defensive_terrain_at_cell(actor, actor.origin_cell)

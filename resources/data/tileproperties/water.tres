@@ -4,8 +4,8 @@
 
 [resource]
 script = ExtResource( 1 )
-tile_names = [ "mountain" ]
+tile_names = [ "water" ]
 move_type = 2
-push_type = 2
-blocks_attack = true
+push_type = 0
+blocks_attack = false
 self_defence_type = 0
