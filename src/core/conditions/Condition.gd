@@ -16,10 +16,9 @@ func _init(new_definition: ConditionDefinition) -> void:
 
 func start_round() -> void:
 	if definition.time_type == ConditionDefinition.TimeType.ROUNDS:
-		if rounds_left == 0:
+		rounds_left -= 1
+		if rounds_left <= 0:
 			emit_signal("finished")
-		else:
-			rounds_left -= 1
 
 
 # { StatType.Type: StatModifier }
