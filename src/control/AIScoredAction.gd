@@ -130,7 +130,7 @@ func _score_conditions() -> void:
 		for c in conditions:
 			var condition := c as ConditionDefinition
 
-			for m in condition.stat_modifiers:
+			for m in condition.get_grouped_stat_modifiers().values():
 				var modifier := m as StatModifier
 
 				var current_stat := other_actor.stats.get_stat(modifier.type)

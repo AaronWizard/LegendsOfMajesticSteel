@@ -45,12 +45,9 @@ func get_stat(stat_type: int) -> int:
 
 	for c in _conditions:
 		var condition := c as Condition
-		var modifiers := condition.get_stat_modifiers_by_type(stat_type)
-
-		for m in modifiers:
-			var modifier := m as StatModifier
-			if modifier.type == stat_type:
-				add += modifier.value
+		if condition.stat_modifiers.has(stat_type):
+			var modifier := condition.stat_modifiers[stat_type] as StatModifier
+			add += modifier.value
 
 	return base + add
 
@@ -136,10 +133,13 @@ func get_is_alive() -> bool:
 	return stamina > 0
 
 
-# Keys are stat type IDs
-# Values are dictionaries.
-# Keys of inner dictionaries are ints representing the number of rounds left.
-# Values of inner dictionaries are ints representing the total stat mod.
+# {
+#   StatType.Type:
+#   {
+#     # Rounds left: stat mod
+#     int: int
+#   }
+# }
 # Stat mods with the same number of rounds left are combined.
 # Perminant stat mods have a key of -1
 func get_condition_stat_mods() -> Dictionary:
@@ -147,7 +147,7 @@ func get_condition_stat_mods() -> Dictionary:
 
 	for c in _conditions:
 		var condition := c as Condition
-		for m in condition.get_stat_modifiers():
+		for m in condition.stat_modifiers.values():
 			var modifier := m as StatModifier
 
 			var modifier_data: Dictionary
@@ -158,7 +158,8 @@ func get_condition_stat_mods() -> Dictionary:
 				modifier_data = result[modifier.type]
 
 			var md_key: int
-			if condition.effect.time_type == ConditionDefinition.TimeType.ROUNDS:
+			if condition.definition.time_type \
+					== ConditionDefinition.TimeType.ROUNDS:
 				md_key = condition.rounds_left
 			else:
 				md_key = -1
