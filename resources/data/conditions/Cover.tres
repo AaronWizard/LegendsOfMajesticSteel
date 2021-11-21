@@ -1,6 +1,6 @@
 [gd_resource type="Resource" load_steps=4 format=2]
 
-[ext_resource path="res://src/core/conditions/ConditionEffect.gd" type="Script" id=1]
+[ext_resource path="res://src/core/conditions/ConditionDefinition.gd" type="Script" id=1]
 [ext_resource path="res://src/core/conditions/StatModifier.gd" type="Script" id=2]
 
 [sub_resource type="Resource" id=1]
@@ -11,5 +11,5 @@ value = 50
 [resource]
 script = ExtResource( 1 )
 time_type = 1
-max_rounds = null
+max_rounds = 1
 stat_modifiers = [ SubResource( 1 ) ]

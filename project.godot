@@ -152,7 +152,7 @@ _global_script_classes=[ {
 "base": "Resource",
 "class": "ConditionDefinition",
 "language": "GDScript",
-"path": "res://src/core/conditions/ConditionEffect.gd"
+"path": "res://src/core/conditions/ConditionDefinition.gd"
 }, {
 "base": "Node2D",
 "class": "ConditionIcons",
