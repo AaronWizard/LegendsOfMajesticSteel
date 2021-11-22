@@ -37,7 +37,7 @@ func _ready() -> void:
 func _get_configuration_warning() -> String:
 	var result := ""
 
-	if not (_ground.tile_set is TerrainTileSet):
+	if $Ground and not (($Ground as TileMap).tile_set is TerrainTileSet):
 		result = "Ground tile set needs to be a TerrainTileSet"
 
 	return result
@@ -86,6 +86,21 @@ func get_cell_move_cost(cell: Vector2, actor: Actor) -> int:
 		if properties:
 			assert(not properties.blocks_move())
 			if properties.move_is_rough():
+				result = MOVE_COST_ROUGH
+				break
+
+	return result
+
+
+func get_cell_push_cost(cell: Vector2, actor: Actor) -> int:
+	var result := MOVE_COST_CLEAR
+
+	for c in actor.get_covered_cells_at_cell(cell):
+		var covered := c as Vector2
+		var properties := get_tile_properties(covered)
+		if properties:
+			assert(not properties.blocks_push())
+			if properties.push_is_rough():
 				result = MOVE_COST_ROUGH
 				break
 
@@ -158,17 +173,47 @@ func actor_can_enter_cell(actor: Actor, cell: Vector2,
 		var covered := c as Vector2
 		if not get_rect().has_point(covered):
 			result = false
-
-		if result:
+			break
+		else:
 			var other_actor := get_actor_on_cell(covered)
-			if other_actor and (other_actor != actor):
-				result = ignore_allied_actors \
-						and (other_actor.faction == actor.faction)
+			var is_blocking_actor := \
+					(other_actor != null) and (other_actor != actor) \
+					and (not ignore_allied_actors \
+						or (other_actor.faction != actor.faction))
+			if is_blocking_actor:
+				result = false
+				break
+			else:
+				var properties := get_tile_properties(covered)
+				if properties and properties.blocks_move():
+					result = false
+					break
 
-		if result:
-			var properties := get_tile_properties(covered)
-			if properties:
-				result = not properties.blocks_move()
+	return result
+
+
+func actor_can_be_pushed_into_cell(actor: Actor, cell: Vector2) -> bool:
+	var result := true
+
+	var cells := actor.get_covered_cells_at_cell(cell)
+	for c in cells:
+		var covered := c as Vector2
+		if not get_rect().has_point(covered):
+			result = false
+			break
+		else:
+			var other_actor := get_actor_on_cell(covered)
+			var is_blocking_actor := \
+					(other_actor != null) and (other_actor != actor)
+
+			if is_blocking_actor:
+				result = false
+				break
+			else:
+				var properties := get_tile_properties(covered)
+				if properties and properties.blocks_push():
+					result = false
+					break
 
 	return result
 

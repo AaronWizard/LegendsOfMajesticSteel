@@ -119,6 +119,12 @@ func take_damage(base_damage: int, direction: Vector2,
 	emit_signal("damaged", damage, direction, standard_hit_anim)
 
 
+func instant_kill(direction: Vector2, standard_hit_anim := true) -> void:
+	var old_stamina := stamina
+	stamina = 0
+	emit_signal("damaged", old_stamina, direction, standard_hit_anim)
+
+
 # Heal stamina by a percentage of max_stamina
 func heal(heal_power: float, overflow: bool) -> void:
 	var regained_stamina := int(ceil(get_max_stamina() * heal_power))

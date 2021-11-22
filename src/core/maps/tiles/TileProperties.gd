@@ -36,5 +36,13 @@ func move_is_rough() -> bool:
 	return move_type == MoveType.ROUGH
 
 
+func blocks_push() -> bool:
+	return push_type == PushType.BLOCK
+
+
+func push_is_rough() -> bool:
+	return push_type == PushType.ROUGH
+
+
 func is_self_cover() -> bool:
 	return self_defence_type == DefenceType.COVER
