@@ -30,11 +30,13 @@ func clear_current_actor() -> void:
 
 func set_other_actor(actor: Actor) -> void:
 	map_highlights.set_other_moves(actor.walk_range.get_visible_move_range())
+	map_highlights.set_other_targets(actor.threatened_tiles)
 	gui.other_actor = actor
 
 
 func clear_other_actor() -> void:
 	map_highlights.clear_other_moves()
+	map_highlights.clear_other_targets()
 	gui.other_actor = null
 
 

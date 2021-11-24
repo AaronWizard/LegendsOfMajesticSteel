@@ -45,5 +45,5 @@ func _finish() -> void:
 		yield(get_tree().create_timer(_POST_TURN_WAIT_TIME), "timeout")
 		emit_signal("state_change_requested", _next_turn_state)
 	else:
-		_game.refresh_walk_ranges(false)
+		_game.refresh_ranges(false)
 		emit_signal("state_change_requested", _turn_start_state)

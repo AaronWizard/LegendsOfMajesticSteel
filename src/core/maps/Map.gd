@@ -148,6 +148,7 @@ func get_actor_on_cell(cell: Vector2) -> Actor:
 		var actor := a as Actor
 		if actor.on_cell(cell):
 			result = actor
+			break
 
 	return result
 

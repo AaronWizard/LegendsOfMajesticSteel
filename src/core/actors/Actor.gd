@@ -56,6 +56,7 @@ var skills: Array setget , get_skills
 var all_active_skills: Array setget , get_all_active_skills
 
 var walk_range: WalkRange
+var threatened_tiles := []
 
 var target_visible: bool setget set_target_visible, get_target_visible
 var stamina_bar_modifier: int setget set_stamina_bar_modifier, \
@@ -234,6 +235,26 @@ func get_all_active_skills() -> Array:
 		result.append(attack)
 	for s in get_skills():
 		if s.current_cooldown == 0:
+			result.append(s)
+
+	return result
+
+
+# Includes attack skill. Includes skills that will be charged next round if
+# actor acts next round.
+func get_next_turn_skills() -> Array:
+	var result := []
+
+	var attack := get_attack()
+	if attack:
+		result.append(attack)
+
+	for s in get_skills():
+		var current_cooldown := s.current_cooldown as int
+		var skill_ready_now := current_cooldown == 0
+		var skill_ready_next_turn := get_turn_status().round_finished \
+				and (current_cooldown == 1)
+		if skill_ready_now or skill_ready_next_turn:
 			result.append(s)
 
 	return result

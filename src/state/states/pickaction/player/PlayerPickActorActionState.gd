@@ -41,5 +41,5 @@ func _turn_cancelled() -> void:
 		_game.interface.mouse.disconnect("click", self, "_mouse_click")
 		yield(actor.move_path(path), "completed")
 
-	_game.refresh_walk_ranges(true)
+	_game.refresh_ranges(true)
 	emit_signal("state_change_requested", pick_actor_state)

@@ -27,7 +27,7 @@ func _next_turn() -> void:
 
 
 func _start_next_turn() -> void:
-	_game.refresh_walk_ranges(true)
+	_game.refresh_ranges(true)
 
 	var faction := _game.turn_manager.next_faction()
 	match faction:

@@ -9,7 +9,6 @@ enum Tiles {
 }
 
 var moves_visible: bool setget set_moves_visible, get_moves_visible
-var targets_visible: bool setget set_targets_visible, get_targets_visible
 
 var target_cursor_visible: bool setget set_target_cursor_visible, \
 		get_target_cursor_visible
@@ -22,6 +21,8 @@ onready var _moves := $Moves as TileMap
 onready var _other_moves := $OtherMoves as TileMap
 
 onready var _targets := $Targets as TileMap
+onready var _other_targets := $OtherTargets as TileMap
+
 onready var _aoe := $AOE as TileMap
 onready var _target_cursor := $TargetCursor as TargetCursor
 
@@ -33,15 +34,6 @@ func set_moves_visible(value: bool) -> void:
 
 func get_moves_visible() -> bool:
 	return _moves.visible
-
-
-func set_targets_visible(value: bool) -> void:
-	_targets.visible = value
-#	_aoe.visible = value
-
-
-func get_targets_visible() -> bool:
-	return _targets.visible
 
 
 func set_target_cursor_visible(value: bool) -> void:
@@ -80,8 +72,16 @@ func set_targets(cells: Array) -> void:
 	_set_cells(_targets, Tiles.TARGET, cells)
 
 
+func set_other_targets(cells: Array) -> void:
+	_set_cells(_other_targets, Tiles.TARGET, cells)
+
+
 func clear_targets() -> void:
 	_targets.clear()
+
+
+func clear_other_targets() -> void:
+	_other_targets.clear()
 
 
 func set_aoe(cells: Array) -> void:

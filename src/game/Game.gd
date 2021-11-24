@@ -55,11 +55,9 @@ func get_turn_manager() -> TurnManager:
 	return _turn_manager
 
 
-func refresh_walk_ranges(turn_start: bool) -> void:
-	for a in _map.get_actors():
-		var actor := a as Actor
-		if turn_start or actor != _current_actor:
-			actor.walk_range = WalkRangeFactory.create_walk_range(actor, _map)
+func refresh_ranges(turn_start: bool) -> void:
+	_refresh_walk_ranges(turn_start)
+	_refresh_enemy_threat_ranges()
 
 
 func get_active_actors(faction: int) -> Array:
@@ -156,6 +154,39 @@ func _start_battle() -> void:
 	BackgroundMusic.start(_MUSIC)
 
 	_state_machine.change_state(_next_turn_state)
+
+
+func _refresh_walk_ranges(turn_start: bool) -> void:
+	for a in _map.get_actors():
+		var actor := a as Actor
+		if turn_start or actor != _current_actor:
+			actor.walk_range = WalkRangeFactory.create_walk_range(actor, _map)
+
+
+func _refresh_enemy_threat_ranges() -> void:
+	for a in _map.get_actors_by_faction(Actor.Faction.ENEMY):
+		var actor := a as Actor
+		assert(actor.walk_range != null)
+
+		var skills := actor.get_next_turn_skills()
+
+		var threatened_cells := {}
+
+		for c in actor.walk_range.get_move_range():
+			var cell := c as Vector2
+			for s in skills:
+				var skill := s as Skill
+				var targetting_data := skill.get_targeting_data(
+						cell, actor, get_map())
+				for t in targetting_data.target_range:
+					var target_cell := t as Vector2
+					threatened_cells[target_cell] = true
+					var aoe := targetting_data.get_aoe(target_cell)
+					for e in aoe:
+						var aoe_cell := e as Vector2
+						threatened_cells[aoe_cell] = true
+
+		actor.threatened_tiles = threatened_cells.keys()
 
 
 func _on_map_actor_dying(actor: Actor) -> void:
