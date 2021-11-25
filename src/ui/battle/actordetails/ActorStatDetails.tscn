@@ -1,12 +1,14 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://assets/graphics/ui/icons/stats/attack.png" type="Texture" id=1]
 [ext_resource path="res://src/ui/battle/actordetails/ActorStatDetails.gd" type="Script" id=2]
+[ext_resource path="res://resources/visual/gui/theme_standard.tres" type="Theme" id=3]
 
 [node name="ActorStatDetails" type="VBoxContainer"]
 margin_right = 32.0
 margin_bottom = 17.0
 size_flags_horizontal = 3
+theme = ExtResource( 3 )
 script = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false

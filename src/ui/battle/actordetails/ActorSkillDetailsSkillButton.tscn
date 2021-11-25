@@ -1,11 +1,13 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
+[ext_resource path="res://resources/visual/gui/theme_standard.tres" type="Theme" id=1]
 [ext_resource path="res://src/ui/battle/actordetails/ActorSkillDetailsSkillButton.gd" type="Script" id=3]
 
 [node name="ActorSkillDetailsSkillButton" type="Button"]
 margin_right = 24.0
 margin_bottom = 24.0
 rect_min_size = Vector2( 24, 24 )
+theme = ExtResource( 1 )
 script = ExtResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false

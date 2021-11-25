@@ -1,12 +1,14 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://src/ui/battle/TurnQueue.gd" type="Script" id=1]
 [ext_resource path="res://assets/graphics/ui/icons/turnqueue/current_turn_cursor.png" type="Texture" id=2]
+[ext_resource path="res://resources/visual/gui/theme_standard.tres" type="Theme" id=3]
 
 [node name="TurnQueue" type="ReferenceRect"]
 margin_right = 8.0
 margin_bottom = 8.0
 rect_min_size = Vector2( 8, 8 )
+theme = ExtResource( 3 )
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_group_": true,
