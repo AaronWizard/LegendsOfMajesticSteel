@@ -30,11 +30,12 @@ const _REACT_FRAME := 1
 const _ACTION_FRAME := 2
 
 signal animation_finished
-
 signal attack_hit
 
 signal dying
 signal died
+
+signal origin_cell_changed
 
 enum Faction { PLAYER, ENEMY }
 enum Pose { IDLE, WALK, ACTION, REACT, DEATH }
@@ -113,6 +114,7 @@ func _ready() -> void:
 func set_origin_cell(value: Vector2) -> void:
 	.set_origin_cell(value)
 	_using_virtual_origin = false
+	emit_signal("origin_cell_changed")
 
 
 # Override
@@ -151,11 +153,13 @@ func set_rect_size(value: Vector2) -> void:
 func set_virtual_origin_cell(value: Vector2) -> void:
 	virtual_origin_cell = value
 	_using_virtual_origin = true
+	emit_signal("origin_cell_changed")
 
 
 func reset_virtual_origin() -> void:
 	virtual_origin_cell = Vector2.ZERO
 	_using_virtual_origin = false
+	emit_signal("origin_cell_changed")
 
 
 func set_actor_definition(value: Resource) -> void:
