@@ -1,5 +1,6 @@
 # Mightiest Steel
-### 2021, AaronWizard
+
+2021, AaronWizard
 
 ---
 
@@ -28,13 +29,13 @@ Mightiest Steel is an in-development Strategy RPG that will emphasize rapid game
 
 ## Credits
 
-* Built using Godot 3.3.4: https://godotengine.org/
-* Graphics made using Aseprite: https://www.aseprite.org/
-* Tiles designed using Tilesetter: https://www.tilesetter.org/
-* Sound effects made using ChipTone: https://sfbgames.itch.io/chiptone
-* Music made using FamiStudio: https://famistudio.org/
-* Main font is "MinimalPixel Font" by Mounir Tohami: https://mounirtohami.itch.io/minimalpixel-font
-* Special font is "Psygnotic" by Constance Taylor and Rachel Holland: https://www.dafont.com/psygnotic.font
+* Built using Godot 3.4: <https://godotengine.org/>
+* Graphics made using Aseprite: <https://www.aseprite.org/>
+* Tiles designed using Tilesetter: <https://www.tilesetter.org/>
+* Sound effects made using ChipTone: <https://sfbgames.itch.io/chiptone>
+* Music made using FamiStudio: <https://famistudio.org/>
+* Main font is "MinimalPixel Font" by Mounir Tohami: <https://mounirtohami.itch.io/minimalpixel-font>
+* Special font is "Psygnotic" by Constance Taylor and Rachel Holland: <https://www.dafont.com/psygnotic.font>
 
 ## Licensing
 
