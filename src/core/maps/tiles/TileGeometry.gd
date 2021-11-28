@@ -17,7 +17,7 @@ static func cells_in_range_rect(source_rect: Rect2,
 		var rect_cells := get_rect_cells(source_rect)
 		result.append_array(rect_cells)
 
-	for r in range(min_dist, max_dist + 1):
+	for r in range(start, max_dist + 1):
 		var range_index := r as int
 
 		var north_side := get_rect_side_cells(
