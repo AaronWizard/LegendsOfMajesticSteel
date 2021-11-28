@@ -7,47 +7,30 @@ func _get_configuration_warning() -> String:
 	var result := ""
 
 	if get_child_count() == 0:
-		result = "SkillEffectWrapper need to have a child SkillEffect"
+		result = "SkillEffectWrapper needs to have a child SkillEffect"
 	elif get_child_count() > 1:
 		result = "SkillEffectWrapper can only have one child SkillEffect"
-	elif not get_child(0) is SkillEffect:
-		result = "First child is not a SkillEffect"
+	elif not (get_child(0) is SkillEffect):
+		result = "Child is not a SkillEffect"
 
 	return result
 
 
-func _child_aoe(target_cell: Vector2, source_cell: Vector2, source_actor: Actor,
-		map: Map) -> Array:
-	var result := []
-	if _child_effect():
-		result = _child_effect().get_aoe(
-				target_cell, source_cell, source_actor, map)
-	return result
+func get_target_info(target_cell: Vector2, source_cell: Vector2,
+		source_actor: Actor, map: Map) -> TargetingData.TargetInfo:
+	return _get_child_target_info(target_cell, source_cell, source_actor, map)
 
 
-func _predict_child_damage(target_cell: Vector2, source_cell: Vector2,
-		source_actor: Actor, map: Map) -> Dictionary:
-	var result := {}
-	if _child_effect():
-		result = _child_effect().predict_damage(
-				target_cell, source_cell, source_actor, map)
-	return result
-
-
-func _predict_child_conditions(target_cell: Vector2, source_cell: Vector2,
-		source_actor: Actor, map: Map) -> Dictionary:
-	var result := {}
-	if _child_effect():
-		result = _child_effect().predict_conditions(
-				target_cell, source_cell, source_actor, map)
-	return result
+func _get_child_target_info(target_cell: Vector2, source_cell: Vector2,
+		source_actor: Actor, map: Map) -> TargetingData.TargetInfo:
+	return _child_effect().get_target_info(
+			target_cell, source_cell, source_actor, map)
 
 
 func _run_child_effect(target_cell: Vector2, source_cell: Vector2,
 		source_actor: Actor, map: Map) -> void:
-	if _child_effect():
-		_child_effect().run(target_cell, source_cell, source_actor, map)
-		yield(_child_effect(), "finished")
+	_child_effect().run(target_cell, source_cell, source_actor, map)
+	yield(_child_effect(), "finished")
 
 
 func _child_effect() -> SkillEffect:

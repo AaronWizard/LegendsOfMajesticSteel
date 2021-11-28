@@ -6,22 +6,6 @@ export var reduce_lunge := false
 export var default_sound := true
 
 
-func get_aoe(target_cell: Vector2, source_cell: Vector2, source_actor: Actor,
-		map: Map) -> Array:
-	return _child_aoe(target_cell, source_cell, source_actor, map)
-
-
-func predict_damage(target_cell: Vector2, source_cell: Vector2,
-		source_actor: Actor, map: Map) -> Dictionary:
-	return _predict_child_damage(target_cell, source_cell, source_actor, map)
-
-
-func predict_conditions(target_cell: Vector2, source_cell: Vector2,
-		source_actor: Actor, map: Map) -> Dictionary:
-	return _predict_child_conditions(target_cell, source_cell,
-			source_actor, map)
-
-
 func _run_self(target_cell: Vector2, source_cell: Vector2,
 		source_actor: Actor, map: Map):
 	var direction: Vector2

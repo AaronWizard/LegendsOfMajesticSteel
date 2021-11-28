@@ -78,36 +78,25 @@ export var max_distance := 1
 export var block_damages_allies_only := true
 
 
-func get_aoe(target_cell: Vector2, source_cell: Vector2,
-		source_actor: Actor, map: Map) -> Array:
+func get_target_info(target_cell: Vector2, source_cell: Vector2,
+		source_actor: Actor, map: Map) -> TargetingData.TargetInfo:
+	var result :=  TargetingData.TargetInfo.new()
+
 	var push_data := _PushData.new(max_distance, block_damages_allies_only,
 			target_cell, source_cell, map)
+
+	# AOE
 
 	var visible_end_cell := push_data.end_cell
 	if not push_data.blocking_actors.empty():
 		visible_end_cell += push_data.direction
 
-	var result := TileGeometry.get_thick_line(push_data.actor.origin_cell,
+	var push_aoe := TileGeometry.get_thick_line(push_data.actor.origin_cell,
 			visible_end_cell, push_data.actor.rect_size)
+	for c in push_aoe:
+		result.aoe[c] = true
 
-	push_data.actor.virtual_origin_cell = push_data.end_cell
-
-	var landing_aoe := _child_aoe(push_data.end_cell, source_cell,
-			source_actor, map)
-	for c in landing_aoe:
-		var cell := c as Vector2
-		if result.find(cell) == -1:
-			result.append(cell)
-
-	return result
-
-
-func predict_damage(target_cell: Vector2, source_cell: Vector2,
-		source_actor: Actor, map: Map) -> Dictionary:
-	var result := {}
-
-	var push_data := _PushData.new(max_distance, block_damages_allies_only,
-			target_cell, source_cell, map)
+	# Damage
 
 	var damage: int
 	if push_data.is_instakill:
@@ -121,37 +110,24 @@ func predict_damage(target_cell: Vector2, source_cell: Vector2,
 		if push_data.hit_wall:
 			attack *= 2
 		damage = push_data.actor.stats.damage_from_attack(attack)
-	result[push_data.actor] = -damage
+
+	result.predicted_damage[push_data.actor] = -damage
 
 	for a in push_data.blocking_actors:
 		var blocking_actor := a as Actor
 		var other_damage := blocking_actor.stats.damage_from_attack(
 				source_actor.stats.attack)
-		assert(not result.has(blocking_actor))
-		result[blocking_actor] = -other_damage
+		assert(not result.predicted_damage.has(blocking_actor))
+		result.predicted_damage[blocking_actor] = -other_damage
+
+	# After push
 
 	push_data.actor.virtual_origin_cell = push_data.end_cell
-
-	var landing_damage := _predict_child_damage(push_data.end_cell, source_cell,
+	var landing_info := _get_child_target_info(push_data.end_cell, source_cell,
 			source_actor, map)
-	for a in landing_damage:
-		var actor := a as Actor
-		var a_damage := landing_damage[actor] as int
-		if not result.has(actor):
-			result[actor] = 0
-		result[actor] += a_damage
+	result.add(landing_info)
 
 	return result
-
-
-func predict_conditions(target_cell: Vector2, source_cell: Vector2,
-		source_actor: Actor, map: Map) -> Dictionary:
-	var push_data := _PushData.new(max_distance, block_damages_allies_only,
-			target_cell, source_cell, map)
-	push_data.actor.virtual_origin_cell = push_data.end_cell
-
-	return _predict_child_conditions(push_data.end_cell, source_cell,
-			source_actor, map)
 
 
 func _run_self(target_cell: Vector2, source_cell: Vector2,

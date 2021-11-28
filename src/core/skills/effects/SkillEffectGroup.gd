@@ -18,47 +18,14 @@ func _get_configuration_warning() -> String:
 	return result
 
 
-func get_aoe(target_cell: Vector2, source_cell: Vector2, source_actor: Actor,
-		map: Map) -> Array:
-	var result := {}
+func get_target_info(target_cell: Vector2, source_cell: Vector2,
+		source_actor: Actor, map: Map) -> TargetingData.TargetInfo:
+	var result := TargetingData.TargetInfo.new()
 	for e in get_children():
 		var effect := e as SkillEffect
-		var aoe := effect.get_aoe(target_cell, source_cell, source_actor, map)
-		for c in aoe:
-			var cell := c as Vector2
-			result[cell] = true
-	return result.keys()
-
-
-func predict_damage(target_cell: Vector2, source_cell: Vector2,
-		source_actor: Actor, map: Map) -> Dictionary:
-	var result := {}
-	for e in get_children():
-		var effect := e as SkillEffect
-		var effect_damages := effect.predict_damage(
+		var e_info := effect.get_target_info(
 				target_cell, source_cell, source_actor, map)
-		for a in effect_damages:
-			var actor := a as Actor
-			var damage := effect_damages[actor] as int
-			if not result.has(actor):
-				result[actor] = 0
-			result[actor] += damage
-	return result
-
-
-func predict_conditions(target_cell: Vector2, source_cell: Vector2,
-		source_actor: Actor, map: Map) -> Dictionary:
-	var result := {}
-	for e in get_children():
-		var effect := e as SkillEffect
-		var effect_conditions := effect.predict_conditions(
-				target_cell, source_cell, source_actor, map)
-		for a in effect_conditions:
-			var actor := a as Actor
-			var conditions := effect_conditions[actor] as Array
-			if not result.has(actor):
-				result[actor] = []
-			(result[actor] as Array).append_array(conditions)
+		result.add(e_info)
 	return result
 
 

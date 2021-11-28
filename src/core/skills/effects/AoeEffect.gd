@@ -17,67 +17,23 @@ export(ChildEffectDelaySortType) var child_effect_delay_sort_type \
 export var child_effect_delay_speed := 0.0 # Tiles per second
 
 
-func get_aoe(target_cell: Vector2, source_cell: Vector2,
-		source_actor: Actor, map: Map) -> Array:
-	var result := {}
+func get_target_info(target_cell: Vector2, source_cell: Vector2,
+		source_actor: Actor, map: Map) -> TargetingData.TargetInfo:
+	var result :=  TargetingData.TargetInfo.new()
 
 	var base_aoe := _get_base_aoe(target_cell, source_cell, source_actor, map)
 	for b in base_aoe:
-		var b_cell := b as Vector2
-		result[b_cell] = true
+		result.aoe[b] = true
 
 	var targets := _get_targets_from_base(base_aoe, source_actor.faction, map)
+
 	for t in targets:
 		var aoe_target_cell := t as Vector2
 		var aoe_source_cell := _get_aoe_source_cell(
 				aoe_target_cell, target_cell, source_cell)
-		var child_aoe := _child_aoe(aoe_target_cell,
-				aoe_source_cell, source_actor, map)
-		for c in child_aoe:
-			var c_cell := c as Vector2
-			result[c_cell] = true
-
-	return result.keys()
-
-
-func predict_damage(target_cell: Vector2, source_cell: Vector2,
-		source_actor: Actor, map: Map) -> Dictionary:
-	var result := {}
-
-	var targets := _get_targets(target_cell, source_cell, source_actor, map)
-	for t in targets:
-		var aoe_target_cell := t as Vector2
-		var aoe_source_cell := _get_aoe_source_cell(
-				aoe_target_cell, target_cell, source_cell)
-		var child_damages := _predict_child_damage(
+		var child_target_info := _get_child_target_info(
 				aoe_target_cell, aoe_source_cell, source_actor, map)
-		for a in child_damages:
-			var actor := a as Actor
-			var damage := child_damages[actor] as int
-			if not result.has(actor):
-				result[actor] = 0
-			result[actor] += damage
-
-	return result
-
-
-func predict_conditions(target_cell: Vector2, source_cell: Vector2,
-		source_actor: Actor, map: Map) -> Dictionary:
-	var result := {}
-
-	var targets := _get_targets(target_cell, source_cell, source_actor, map)
-	for t in targets:
-		var aoe_target_cell := t as Vector2
-		var aoe_source_cell := _get_aoe_source_cell(
-				aoe_target_cell, target_cell, source_cell)
-		var child_conditions := _predict_child_conditions(
-				aoe_target_cell, aoe_source_cell, source_actor, map)
-		for a in child_conditions:
-			var actor := a as Actor
-			var conditions := child_conditions[actor] as Array
-			if not result.has(actor):
-				result[actor] = []
-			(result[actor] as Array).append_array(conditions)
+		result.add(child_target_info)
 
 	return result
 

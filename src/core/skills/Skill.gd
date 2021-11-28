@@ -51,33 +51,24 @@ func get_targeting_data(source_cell: Vector2, source_actor: Actor, map: Map) \
 	var target_range := _get_range(source_cell, source_actor, map)
 
 	var valid_targets := []
-	var aoe_by_target := {}
-	var predicted_damage_by_target := {}
-	var predicted_conditions_by_target := {}
+	var infos_by_target := {}
 
 	for c in target_range:
 		var target_cell := c as Vector2
 		if _is_valid_target(target_cell, source_actor, map):
 			valid_targets.append(target_cell)
 
-			var aoe := _get_aoe(target_cell, source_cell, source_actor, map)
-			aoe_by_target[target_cell] = aoe
+			if source_cell != source_actor.origin_cell:
+				source_actor.virtual_origin_cell = source_cell
 
-			var predicted_damages := _predict_damages(target_cell, source_cell,
-					source_actor, map)
-			if predicted_damages.size() > 0:
-				predicted_damage_by_target[target_cell] = predicted_damages
+			var target_info := _get_effect().get_target_info(target_cell,
+					source_cell, source_actor, map)
+			infos_by_target[target_cell] = target_info
 
-			var predicted_conditions := _predict_conditions(
-					target_cell, source_cell, source_actor, map)
-			if predicted_conditions.size() > 0:
-				predicted_conditions_by_target[target_cell] \
-						= predicted_conditions
+			map.reset_actor_virtual_origins()
 
 	return TargetingData.new(
-			source_cell, target_range, valid_targets,
-			aoe_by_target, predicted_damage_by_target,
-			predicted_conditions_by_target)
+			source_cell, target_range, valid_targets, infos_by_target)
 
 
 func run(source_actor: Actor, map: Map, target: Vector2) -> void:
@@ -139,35 +130,3 @@ func _is_valid_target(target_cell: Vector2, source_actor: Actor, map: Map) \
 
 func _get_effect() -> SkillEffect:
 	return get_child(0) as SkillEffect
-
-
-# Assumes target_cell is in range
-func _get_aoe(target_cell: Vector2, source_cell: Vector2, source_actor: Actor,
-		map: Map) -> Array:
-	if source_cell != source_actor.origin_cell:
-		source_actor.virtual_origin_cell = source_cell
-	var result := _get_effect().get_aoe(
-			target_cell, source_cell, source_actor, map)
-	map.reset_actor_virtual_origins()
-	return result
-
-
-# Keys are actors. Values are damage amounts.
-func _predict_damages(target_cell: Vector2, source_cell: Vector2,
-		source_actor: Actor, map: Map) -> Dictionary:
-	if source_cell != source_actor.origin_cell:
-		source_actor.virtual_origin_cell = source_cell
-	var result := _get_effect().predict_damage(
-			target_cell, source_cell, source_actor, map)
-	map.reset_actor_virtual_origins()
-	return result
-
-
-func _predict_conditions(target_cell: Vector2, source_cell: Vector2,
-		source_actor: Actor, map: Map) -> Dictionary:
-	if source_cell != source_actor.origin_cell:
-		source_actor.virtual_origin_cell = source_cell
-	var result := _get_effect().predict_conditions(
-			target_cell, source_cell, source_actor, map)
-	map.reset_actor_virtual_origins()
-	return result

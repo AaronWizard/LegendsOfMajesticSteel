@@ -2,24 +2,19 @@ class_name AddConditionToTargetEffect, \
 		"res://assets/editor/add_condition_effect.png"
 extends SkillEffect
 
-
 export var condition_effect: Resource
 
 
-func get_aoe(target_cell: Vector2, _source_cell: Vector2, _source_actor: Actor,
-		map: Map) -> Array:
-	var actor := map.get_actor_on_cell(target_cell)
-	return actor.covered_cells
-
-
-func predict_conditions(target_cell: Vector2, _source_cell: Vector2,
-		_source_actor: Actor, map: Map) -> Dictionary:
-	var result := {}
+func get_target_info(target_cell: Vector2, _source_cell: Vector2,
+		_source_actor: Actor, map: Map) -> TargetingData.TargetInfo:
+	var result := TargetingData.TargetInfo.new()
 
 	var actor := map.get_actor_on_cell(target_cell)
 	if actor:
+		for c in actor.covered_cells:
+			result.aoe[c] = true
 		var effect := condition_effect as ConditionDefinition
-		result[actor] = [effect]
+		result.predicted_conditions[actor] = [effect]
 
 	return result
 

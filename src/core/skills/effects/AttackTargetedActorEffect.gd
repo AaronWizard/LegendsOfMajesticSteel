@@ -5,23 +5,17 @@ extends SkillEffect
 export var use_direction := true
 
 
-func get_aoe(target_cell: Vector2, _source_cell: Vector2, _source_actor: Actor,
-		map: Map) -> Array:
-	var result := []
-	var actor := map.get_actor_on_cell(target_cell)
-	if actor:
-		result = actor.covered_cells
-	return result
-
-
-func predict_damage(target_cell: Vector2, _source_cell: Vector2,
-		source_actor: Actor, map: Map) -> Dictionary:
-	var result := {}
+func get_target_info(target_cell: Vector2, _source_cell: Vector2,
+		source_actor: Actor, map: Map) -> TargetingData.TargetInfo:
+	var result := TargetingData.TargetInfo.new()
 
 	var actor := map.get_actor_on_cell(target_cell)
 	if actor:
+		for c in actor.covered_cells:
+			result.aoe[c] = true
+
 		var damage := actor.stats.damage_from_attack(source_actor.stats.attack)
-		result[actor] = -damage
+		result.predicted_damage[actor] = -damage
 
 	return result
 

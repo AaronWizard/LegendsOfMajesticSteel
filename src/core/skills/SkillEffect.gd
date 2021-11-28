@@ -10,23 +10,9 @@ var running: bool setget , get_is_running
 var _running := false
 
 
-# Array of Vector2
-func get_aoe(_target_cell: Vector2, _source_cell: Vector2,
-		_source_actor: Actor, _map: Map) -> Array:
-	return []
-
-
-# Keys are actors, values are ints
-# Negative values are damage, positive values are healing
-func predict_damage(_target_cell: Vector2, _source_cell: Vector2,
-		_source_actor: Actor, _map: Map) -> Dictionary:
-	return {}
-
-
-# Keys are actors, values arrays of condition effects
-func predict_conditions(_target_cell: Vector2, _source_cell: Vector2,
-		_source_actor: Actor, _map: Map) -> Dictionary:
-	return {}
+func get_target_info(_target_cell: Vector2, _source_cell: Vector2,
+		_source_actor: Actor, _map: Map) -> TargetingData.TargetInfo:
+	return TargetingData.TargetInfo.new()
 
 
 func get_is_running() -> bool:
