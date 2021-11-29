@@ -78,15 +78,15 @@ static func get_line(start: Vector2, end: Vector2, include_ends := true) \
 	return result
 
 
-static func get_thick_line(start: Vector2, end: Vector2, size: Vector2) \
+static func get_thick_line(start: Vector2, end: Vector2, size: int) \
 		-> Array:
 	var result: Array
-	var start_cells := get_rect_cells(Rect2(start, size))
+	var start_cells := get_rect_cells(Rect2(start, Vector2(size, size)))
 
 	if start == end:
 		result = start_cells
 	else:
-		var end_cells := get_rect_cells(Rect2(end, size))
+		var end_cells := get_rect_cells(Rect2(end, Vector2(size, size)))
 		assert(start_cells.size() == end_cells.size())
 
 		var all_cells := {}

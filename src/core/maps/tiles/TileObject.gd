@@ -9,8 +9,8 @@ export var origin_cell: Vector2 setget set_origin_cell, get_origin_cell
 # Offset is in cells
 export var cell_offset: Vector2 setget set_cell_offset, get_cell_offset
 
-# Rect size is in cells
-export var rect_size := Vector2.ONE setget set_rect_size
+# Object covers size x size cells
+export var size := 1 setget set_size
 
 var cell_rect: Rect2 setget , get_cell_rect
 var covered_cells: Array setget , get_covered_cells
@@ -27,7 +27,7 @@ var _covered_cells := {}
 
 
 func _ready() -> void:
-	set_rect_size(rect_size)
+	set_size(size)
 
 	var new_cell := \
 			position.snapped(Constants.TILE_SIZE_V) / Constants.TILE_SIZE_V
@@ -36,7 +36,7 @@ func _ready() -> void:
 
 func _draw() -> void:
 	if Engine.editor_hint:
-		var rect := Rect2(Vector2.ZERO, Constants.TILE_SIZE_V * rect_size)
+		var rect := Rect2(Vector2.ZERO, Constants.TILE_SIZE_V * size)
 		draw_rect(rect, Color.magenta, false)
 
 
@@ -60,20 +60,19 @@ func get_cell_offset() -> Vector2:
 	return result
 
 
-func set_rect_size(value: Vector2) -> void:
-	assert(value.x >= 1)
-	assert(value.y >= 1)
-
-	rect_size = value
+func set_size(value: int) -> void:
+	assert(value >= 1)
+	size = value
 
 	_covered_cells.clear()
-	var cells := TileGeometry.get_rect_cells(Rect2(Vector2.ZERO, rect_size))
+	var cells := TileGeometry.get_rect_cells(
+			Rect2(Vector2.ZERO, Vector2(size, size)))
 	for c in cells:
 		var covered := c as Vector2
 		_covered_cells[covered] = true
 
 	if _center:
-		_center.position = rect_size * (Constants.TILE_SIZE_V / 2)
+		_center.position = size * (Constants.TILE_SIZE_V / 2)
 
 	update()
 
@@ -83,7 +82,7 @@ func get_cell_rect() -> Rect2:
 
 
 func get_cell_rect_at_cell(cell: Vector2) -> Rect2:
-	return Rect2(cell, rect_size)
+	return Rect2(cell, Vector2(size, size))
 
 
 func get_center_cell() -> Vector2:
@@ -135,4 +134,4 @@ func get_covered_cells_at_cell(cell: Vector2) -> Array:
 func copy(other: TileObject) -> void:
 	set_origin_cell(other.origin_cell)
 	set_cell_offset(other.cell_offset)
-	set_rect_size(other.rect_size)
+	set_size(other.size)

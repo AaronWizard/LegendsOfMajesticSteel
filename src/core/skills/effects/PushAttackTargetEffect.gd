@@ -92,7 +92,7 @@ func get_target_info(target_cell: Vector2, source_cell: Vector2,
 		visible_end_cell += push_data.direction
 
 	var push_aoe := TileGeometry.get_thick_line(push_data.actor.origin_cell,
-			visible_end_cell, push_data.actor.rect_size)
+			visible_end_cell, push_data.actor.size)
 	for c in push_aoe:
 		result.aoe[c] = true
 

@@ -6,7 +6,7 @@ const SPRITE_FRAME_COUNT := 3
 export var sprite: Texture
 export var portrait: Texture setget , get_portrait
 
-export var rect_size := Vector2.ONE
+export var size := 1
 
 export var max_stamina := 1
 export var attack := 1

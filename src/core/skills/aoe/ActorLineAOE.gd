@@ -7,7 +7,7 @@ export var include_end := true
 func get_aoe(target_cell: Vector2, source_cell: Vector2, source_actor: Actor,
 		_map: Map) -> Array:
 	var result := TileGeometry.get_thick_line(
-			source_cell, target_cell, source_actor.rect_size)
+			source_cell, target_cell, source_actor.size)
 	if not include_start:
 		_remove_cells_from_result(result, source_actor.covered_cells)
 	if not include_end:

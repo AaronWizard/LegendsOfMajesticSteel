@@ -126,26 +126,24 @@ func get_origin_cell() -> Vector2:
 
 
 # Override
-func set_rect_size(value: Vector2) -> void:
-	.set_rect_size(value)
+func set_size(value: int) -> void:
+	.set_size(value)
 
 	if _stamina_bar:
 		_stamina_bar.position = Vector2(
-			0, (-rect_size.y * Constants.TILE_SIZE_V.y) / 2
+			0, (-size * Constants.TILE_SIZE_V.y) / 2
 		)
 	if _condition_icons:
-		_condition_icons.position = (rect_size.y * Constants.TILE_SIZE_V) / -2
+		_condition_icons.position = (size * Constants.TILE_SIZE_V) / -2
 
 	if _target_cursor:
-		_target_cursor.rect_size = rect_size
+		_target_cursor.rect_size = Vector2(size, size)
 	if _wait_icon:
-		_wait_icon.position = rect_size * Constants.TILE_SIZE_V
+		_wait_icon.position = size * Constants.TILE_SIZE_V
 	if _blood_splatter:
-		var pixel_rect_size := \
-				(rect_size * Constants.TILE_SIZE_V) + Vector2(8, 8)
+		var pixel_rect_size := (size * Constants.TILE_SIZE_V) + Vector2(8, 8)
 		_blood_splatter.amount = int(max(pixel_rect_size.x, pixel_rect_size.y))
-		_blood_splatter.lifetime \
-				= _AnimationTimes.BLOOD * max(rect_size.x, rect_size.y)
+		_blood_splatter.lifetime = _AnimationTimes.BLOOD * size
 		_blood_splatter.visibility_rect = Rect2(
 				-pixel_rect_size / 2, pixel_rect_size)
 
@@ -168,7 +166,7 @@ func set_actor_definition(value: Resource) -> void:
 	_clear_skills()
 	if actor_definition:
 		var ad := actor_definition as ActorDefinition
-		set_rect_size(ad.rect_size)
+		set_size(ad.size)
 		if _sprite:
 			_sprite.texture = ad.sprite
 
@@ -186,7 +184,7 @@ func set_actor_definition(value: Resource) -> void:
 				skill.is_attack = false
 				$Skills.add_child(skill)
 	else:
-		set_rect_size(Vector2.ONE)
+		set_size(1)
 		if _sprite:
 			_sprite.texture \
 					= preload("res://assets/graphics/actors/fighter.png")
