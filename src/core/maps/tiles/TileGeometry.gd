@@ -1,5 +1,6 @@
 class_name TileGeometry
 
+
 static func cells_in_range(cell: Vector2, min_dist: int, max_dist: int) \
 		-> Array:
 	return cells_in_range_rect(Rect2(cell, Vector2.ONE), min_dist, max_dist)
@@ -62,7 +63,7 @@ static func get_line(start: Vector2, end: Vector2, include_ends := true) \
 	if start == end:
 		result.append(start)
 	else:
-		var line_size := get_diagonal_distance(end, start) as float
+		var line_size := _get_diagonal_distance(end, start) as float
 		for i in range(line_size + 1):
 			var weight := i / line_size
 			var x = lerp(start.x, end.x, weight)
@@ -99,16 +100,6 @@ static func get_thick_line(start: Vector2, end: Vector2, size: int) \
 		result = all_cells.keys()
 
 	return result
-
-
-static func get_diagonal_distance(start: Vector2, end: Vector2) -> int:
-	var dx := end.x - start.x
-	var dy := end.y - start.y
-
-	dx = abs(dx)
-	dy = abs(dy)
-
-	return int(max(dx, dy))
 
 
 static func get_rect_cells(rect: Rect2) -> Array:
@@ -190,3 +181,8 @@ static func center_cell_of_cells(cells: Array) -> Vector2:
 
 	var result := rect.position + (rect.size / 2.0)
 	return result
+
+
+static func _get_diagonal_distance(start: Vector2, end: Vector2) -> int:
+	var diff := (end - start).abs()
+	return int(max(diff.x, diff.y))
