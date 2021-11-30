@@ -18,8 +18,8 @@ shader_param/dissolve = 0.0
 shader_param/dissolve_texture = SubResource( 2 )
 
 [node name="WarSkeleton" instance=ExtResource( 2 )]
-rect_size = Vector2( 2, 2 )
-character_name = "War Skeleton"
+size = 2
+character_name = "War Skel"
 actor_definition = ExtResource( 4 )
 
 [node name="Center" parent="." index="0"]
@@ -40,8 +40,8 @@ amount = 56
 lifetime = 0.6
 visibility_rect = Rect2( -28, -28, 56, 56 )
 
-[node name="WaitIcon" parent="." index="4"]
+[node name="WaitIcon" parent="." index="5"]
 position = Vector2( 48, 48 )
 
-[node name="TargetCursor" parent="." index="5"]
+[node name="TargetCursor" parent="." index="6"]
 rect_size = Vector2( 2, 2 )

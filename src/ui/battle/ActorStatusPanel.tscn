@@ -54,6 +54,7 @@ margin_right = 40.0
 margin_bottom = 7.0
 size_flags_vertical = 0
 text = "Test"
+clip_text = true
 
 [node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer"]
 margin_top = 7.0
