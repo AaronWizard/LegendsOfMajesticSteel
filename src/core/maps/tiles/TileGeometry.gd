@@ -11,7 +11,7 @@ static func cells_in_range(cell: Vector2, min_dist: int, max_dist: int) \
 	return cells_in_range_rect(cell, 1, min_dist, max_dist)
 
 
-static func cells_in_range_rect(source_position: Vector2, source_size: int,
+static func cells_in_range_rect(source_cell: Vector2, source_size: int,
 		min_dist: int, max_dist: int, include_diagonals := true) -> Array:
 	assert(max_dist >= min_dist)
 	assert(max_dist >= 1)
@@ -22,10 +22,16 @@ static func cells_in_range_rect(source_position: Vector2, source_size: int,
 
 	# Source corners
 
-	var corner_nw := source_position
-	var corner_ne := source_position + Vector2(source_size - 1, 0)
-	var corner_se := source_position + Vector2(source_size - 1, source_size - 1)
-	var corner_sw := source_position + Vector2(0, source_size - 1)
+	var corner_nw := source_cell
+	var corner_ne := source_cell + Vector2(source_size - 1, 0)
+	var corner_se := source_cell + Vector2(source_size - 1, source_size - 1)
+	var corner_sw := source_cell + Vector2(0, source_size - 1)
+
+	assert((source_size > 1) or (
+			(corner_nw == corner_ne)
+			and (corner_nw == corner_se)
+			and (corner_nw == corner_sw)
+		))
 
 	# Side quadrants
 
@@ -34,10 +40,10 @@ static func cells_in_range_rect(source_position: Vector2, source_size: int,
 	var quadrant_s_pos := corner_sw + Vector2(0, max(1, min_dist))
 	var quadrant_w_pos := corner_nw + Vector2(-max_dist, 0)
 
-	var quadrant_n_size = Vector2(source_size, max_dist - min_dist + 1)
-	var quadrant_e_size = Vector2(max_dist - min_dist + 1, source_size)
-	var quadrant_s_size = Vector2(source_size, max_dist - min_dist + 1)
-	var quadrant_w_size = Vector2(max_dist - min_dist + 1, source_size)
+	var quadrant_n_size = Vector2(source_size, max_dist - max(min_dist, 1) + 1)
+	var quadrant_e_size = Vector2(max_dist - max(min_dist, 1) + 1, source_size)
+	var quadrant_s_size = Vector2(source_size, max_dist - max(min_dist, 1) + 1)
+	var quadrant_w_size = Vector2(max_dist - max(min_dist, 1) + 1, source_size)
 
 	var quadrant_rect_n := Rect2(quadrant_n_pos, quadrant_n_size)
 	var quadrant_rect_e := Rect2(quadrant_e_pos, quadrant_e_size)
@@ -46,7 +52,7 @@ static func cells_in_range_rect(source_position: Vector2, source_size: int,
 
 	if min_dist == 0:
 		var self_rect := Rect2(
-			source_position, Vector2(source_size, source_size))
+			source_cell, Vector2(source_size, source_size))
 		result.append_array(get_rect_cells(self_rect))
 
 	result.append_array(get_rect_cells(quadrant_rect_n))
@@ -74,10 +80,14 @@ static func cells_in_range_rect(source_position: Vector2, source_size: int,
 		var flood_start_se := corner_se + Vector2(1, 1)
 		var flood_start_sw := corner_sw + Vector2(-1, 1)
 
-		result.append_array(_flood_fill(corner_nw, flood_start_nw, min_dist, max_dist, quadrant_rect_nw))
-		result.append_array(_flood_fill(corner_ne, flood_start_ne, min_dist, max_dist, quadrant_rect_ne))
-		result.append_array(_flood_fill(corner_se, flood_start_se, min_dist, max_dist, quadrant_rect_se))
-		result.append_array(_flood_fill(corner_sw, flood_start_sw, min_dist, max_dist, quadrant_rect_sw))
+		result.append_array(_flood_fill(corner_nw, flood_start_nw, min_dist,
+				max_dist, quadrant_rect_nw))
+		result.append_array(_flood_fill(corner_ne, flood_start_ne, min_dist,
+				max_dist, quadrant_rect_ne))
+		result.append_array(_flood_fill(corner_se, flood_start_se, min_dist,
+				max_dist, quadrant_rect_se))
+		result.append_array(_flood_fill(corner_sw, flood_start_sw, min_dist,
+				max_dist, quadrant_rect_sw))
 
 	return result
 
