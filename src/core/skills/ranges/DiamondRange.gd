@@ -9,5 +9,5 @@ export var include_diagonals := true
 
 func get_range(source_cell: Vector2, source_actor: Actor, _map: Map) -> Array:
 	return TileGeometry.cells_in_range_rect(
-			source_actor.get_cell_rect_at_cell(source_cell),
+			source_cell, source_actor.size,
 			min_dist, max_dist, include_diagonals)

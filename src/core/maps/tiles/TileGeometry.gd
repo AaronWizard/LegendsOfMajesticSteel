@@ -1,58 +1,83 @@
 class_name TileGeometry
 
 
+static func manhattan_distance(start: Vector2, end: Vector2) -> int:
+	var diff := (end - start).abs()
+	return int(diff.x + diff.y)
+
+
 static func cells_in_range(cell: Vector2, min_dist: int, max_dist: int) \
 		-> Array:
-	return cells_in_range_rect(Rect2(cell, Vector2.ONE), min_dist, max_dist)
+	return cells_in_range_rect(cell, 1, min_dist, max_dist)
 
 
-static func cells_in_range_rect(source_rect: Rect2,
+static func cells_in_range_rect(source_position: Vector2, source_size: int,
 		min_dist: int, max_dist: int, include_diagonals := true) -> Array:
 	assert(max_dist >= min_dist)
+	assert(max_dist >= 1)
+	assert(min_dist >= 0)
+	assert(source_size >= 1)
 
 	var result := []
 
-	var start := min_dist
-	if start < 1:
-		start = 1
-		var rect_cells := get_rect_cells(source_rect)
-		result.append_array(rect_cells)
+	# Source corners
 
-	for r in range(start, max_dist + 1):
-		var range_index := r as int
+	var corner_nw := source_position
+	var corner_ne := source_position + Vector2(source_size - 1, 0)
+	var corner_se := source_position + Vector2(source_size - 1, source_size - 1)
+	var corner_sw := source_position + Vector2(0, source_size - 1)
 
-		var north_side := get_rect_side_cells(
-				source_rect, Directions.Type.NORTH, range_index)
-		var east_side := get_rect_side_cells(
-				source_rect, Directions.Type.EAST, range_index)
-		var south_side := get_rect_side_cells(
-				source_rect, Directions.Type.SOUTH, range_index)
-		var west_side := get_rect_side_cells(
-				source_rect, Directions.Type.WEST, range_index)
+	# Side quadrants
 
-		var ne_side := []
-		var se_side := []
-		var sw_side := []
-		var nw_side := []
+	var quadrant_n_pos := corner_nw + Vector2(0, -max_dist)
+	var quadrant_e_pos := corner_ne + Vector2(max(1, min_dist), 0)
+	var quadrant_s_pos := corner_sw + Vector2(0, max(1, min_dist))
+	var quadrant_w_pos := corner_nw + Vector2(-max_dist, 0)
 
-		if include_diagonals:
-			ne_side = get_line(north_side.back() as Vector2, \
-					east_side.front() as Vector2, false)
-			se_side = get_line(east_side.back() as Vector2, \
-					south_side.front() as Vector2, false)
-			sw_side = get_line(south_side.back() as Vector2, \
-					west_side.front() as Vector2, false)
-			nw_side = get_line(west_side.back() as Vector2, \
-					north_side.front() as Vector2, false)
+	var quadrant_n_size = Vector2(source_size, max_dist - min_dist + 1)
+	var quadrant_e_size = Vector2(max_dist - min_dist + 1, source_size)
+	var quadrant_s_size = Vector2(source_size, max_dist - min_dist + 1)
+	var quadrant_w_size = Vector2(max_dist - min_dist + 1, source_size)
 
-		result.append_array(north_side)
-		result.append_array(ne_side)
-		result.append_array(east_side)
-		result.append_array(se_side)
-		result.append_array(south_side)
-		result.append_array(sw_side)
-		result.append_array(west_side)
-		result.append_array(nw_side)
+	var quadrant_rect_n := Rect2(quadrant_n_pos, quadrant_n_size)
+	var quadrant_rect_e := Rect2(quadrant_e_pos, quadrant_e_size)
+	var quadrant_rect_s := Rect2(quadrant_s_pos, quadrant_s_size)
+	var quadrant_rect_w := Rect2(quadrant_w_pos, quadrant_w_size)
+
+	if min_dist == 0:
+		var self_rect := Rect2(
+			source_position, Vector2(source_size, source_size))
+		result.append_array(get_rect_cells(self_rect))
+
+	result.append_array(get_rect_cells(quadrant_rect_n))
+	result.append_array(get_rect_cells(quadrant_rect_e))
+	result.append_array(get_rect_cells(quadrant_rect_s))
+	result.append_array(get_rect_cells(quadrant_rect_w))
+
+	if include_diagonals and (max_dist > 1):
+		var quadrant_nw_pos := corner_nw + Vector2(-max_dist, -max_dist)
+		var quadrant_ne_pos := corner_ne + Vector2(1, -max_dist)
+		var quadrant_se_pos := corner_se + Vector2(1, 1)
+		var quadrant_sw_pos := corner_sw + Vector2(-max_dist, 1)
+
+		var quadrant_rect_nw := Rect2(
+				quadrant_nw_pos, Vector2(max_dist, max_dist))
+		var quadrant_rect_ne := Rect2(
+				quadrant_ne_pos, Vector2(max_dist, max_dist))
+		var quadrant_rect_se := Rect2(
+				quadrant_se_pos, Vector2(max_dist, max_dist))
+		var quadrant_rect_sw := Rect2(
+				quadrant_sw_pos, Vector2(max_dist, max_dist))
+
+		var flood_start_nw := corner_nw + Vector2(-1, -1)
+		var flood_start_ne := corner_ne + Vector2(1, -1)
+		var flood_start_se := corner_se + Vector2(1, 1)
+		var flood_start_sw := corner_sw + Vector2(-1, 1)
+
+		result.append_array(_flood_fill(corner_nw, flood_start_nw, min_dist, max_dist, quadrant_rect_nw))
+		result.append_array(_flood_fill(corner_ne, flood_start_ne, min_dist, max_dist, quadrant_rect_ne))
+		result.append_array(_flood_fill(corner_se, flood_start_se, min_dist, max_dist, quadrant_rect_se))
+		result.append_array(_flood_fill(corner_sw, flood_start_sw, min_dist, max_dist, quadrant_rect_sw))
 
 	return result
 
@@ -181,6 +206,32 @@ static func center_cell_of_cells(cells: Array) -> Vector2:
 
 	var result := rect.position + (rect.size / 2.0)
 	return result
+
+
+static func _flood_fill(origin: Vector2, start: Vector2,
+		min_dist: int, max_dist: int, bounds: Rect2) -> Array:
+	var result := {}
+
+	var stack := [start]
+	var visited := {}
+
+	while not stack.empty():
+		var current := stack.pop_back() as Vector2
+
+		if not visited.has(current) and bounds.has_point(current) \
+				and (manhattan_distance(origin, current) <= max_dist):
+			visited[current] = true
+			if manhattan_distance(origin, current) >= min_dist:
+				result[current] = true
+
+			for d in Directions.get_all_vectors():
+				var dir := d as Vector2
+				var adj := current + dir
+
+				if not visited.has(adj):
+					stack.push_back(adj)
+
+	return result.keys()
 
 
 static func _get_diagonal_distance(start: Vector2, end: Vector2) -> int:
