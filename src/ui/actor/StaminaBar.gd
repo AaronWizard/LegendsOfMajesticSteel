@@ -13,7 +13,7 @@ var _current_value: float
 
 onready var _stamina_front := $Background/StaminaFront as Range
 onready var _stamina_back := $Background/StaminaBack as Range
-onready var _modifier_text := $ModifierText as Label
+onready var _modifier_text := $ModifierTextPos/ModifierText as Label
 
 onready var _tween := $Tween as Tween
 

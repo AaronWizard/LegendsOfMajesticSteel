@@ -49,7 +49,10 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ModifierText" type="Label" parent="."]
+[node name="ModifierTextPos" type="Node2D" parent="."]
+z_index = 1
+
+[node name="ModifierText" type="Label" parent="ModifierTextPos"]
 visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
