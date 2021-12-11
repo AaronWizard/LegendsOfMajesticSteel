@@ -18,6 +18,10 @@ var _current_actor: Actor
 
 var _walk_ranges := {} # Keys are actors, values are WalkRanges
 
+# Keys are actors, values are Dictionaries whose keys are the enum
+# TargetingData.ThreatRange
+var _threat_ranges := {}
+
 onready var _screen_transition := $CanvasLayer/ScreenTransition \
 		as ScreenTransition
 
@@ -57,7 +61,16 @@ func get_turn_manager() -> TurnManager:
 
 
 func refresh_ranges(turn_start: bool) -> void:
-	_refresh_walk_ranges(turn_start)
+	_threat_ranges.clear()
+
+	if turn_start:
+		_walk_ranges.clear()
+	else:
+		for a in _walk_ranges.keys():
+			var actor := a as Actor
+			if actor != _current_actor:
+				# warning-ignore:return_value_discarded
+				_walk_ranges.erase(actor)
 	#_refresh_enemy_threat_ranges()
 
 
@@ -82,6 +95,12 @@ func get_walk_range(actor: Actor) -> WalkRange:
 	return _walk_ranges[actor]
 
 
+func get_threat_range(actor: Actor) -> Dictionary:
+	if not _threat_ranges.has(actor):
+		_threat_ranges[actor] = _get_threat_range(actor)
+	return _threat_ranges[actor]
+
+
 func player_won() -> bool:
 	var result := false
 	var enemies := _map.get_actors_by_faction(Actor.Faction.ENEMY)
@@ -104,8 +123,7 @@ func start_turn(actor: Actor) -> void:
 
 
 func cancel_turn() -> void:
-	_current_actor = null
-	_walk_ranges.clear()
+	_clear_turn_data()
 
 	_interface.clear_current_actor()
 
@@ -113,17 +131,21 @@ func cancel_turn() -> void:
 func end_turn() -> void:
 	_current_actor.turn_status.end_turn()
 
-	_current_actor = null
-	_walk_ranges.clear()
+	_clear_turn_data()
 
 	_interface.clear_current_actor()
 	_turn_manager.advance_turn()
 	_interface.gui.turn_queue.next_turn()
 
 
-func _load_map(map_file: PackedScene) -> void:
+func _clear_turn_data() -> void:
 	_current_actor = null
 	_walk_ranges.clear()
+	_threat_ranges.clear()
+
+
+func _load_map(map_file: PackedScene) -> void:
+	_clear_turn_data()
 
 	if _map != null:
 		_map.disconnect("actor_dying", self, "_on_map_actor_dying")
@@ -176,41 +198,37 @@ func _start_battle() -> void:
 	_state_machine.change_state(_next_turn_state)
 
 
-func _refresh_walk_ranges(turn_start: bool) -> void:
-	if turn_start:
-		_walk_ranges.clear()
-	else:
-		for a in _walk_ranges.keys():
-			var actor := a as Actor
-			if actor != _current_actor:
-				# warning-ignore:return_value_discarded
-				_walk_ranges.erase(actor)
+func _get_threat_range(actor: Actor) -> Dictionary:
+	var walk_range := get_walk_range(actor)
+	var skills := actor.get_next_turn_skills()
 
+	var all_targets := {}
+	var all_valid_targets := {}
+	var all_aoe := {}
 
-#func _refresh_enemy_threat_ranges() -> void:
-#	for a in _map.get_actors_by_faction(Actor.Faction.ENEMY):
-#		var actor := a as Actor
-#		assert(actor.walk_range != null)
-#
-#		var skills := actor.get_next_turn_skills()
-#
-#		var threatened_cells := {}
-#
-#		for c in actor.walk_range.get_move_range():
-#			var cell := c as Vector2
-#			for s in skills:
-#				var skill := s as Skill
-#				var targetting_data := skill.get_targeting_data(
-#						cell, actor, get_map())
-#				for t in targetting_data.target_range:
-#					var target_cell := t as Vector2
-#					threatened_cells[target_cell] = true
-#					var aoe := targetting_data.get_aoe(target_cell)
-#					for e in aoe:
-#						var aoe_cell := e as Vector2
-#						threatened_cells[aoe_cell] = true
-#
-#		actor.threatened_tiles = threatened_cells.keys()
+	for c in walk_range.get_move_range():
+		var cell := c as Vector2
+		for s in skills:
+			var skill := s as Skill
+			var targetting_data := skill.get_targeting_data(
+					cell, actor, get_map())
+			for t in targetting_data.target_range:
+				var target_cell := t as Vector2
+				all_targets[target_cell] = true
+			for t in targetting_data.valid_targets:
+				var target_cell := t as Vector2
+				all_valid_targets[target_cell] = true
+
+				var skill_aoe := targetting_data.get_aoe(target_cell)
+				for e in skill_aoe:
+					var aoe_cell := e as Vector2
+					all_aoe[aoe_cell] = true
+
+	return {
+		TargetingData.ThreatRange.TARGETS: all_targets.keys(),
+		TargetingData.ThreatRange.VALID_TARGETS: all_valid_targets.keys(),
+		TargetingData.ThreatRange.AOE: all_aoe.keys()
+	}
 
 
 func _on_map_actor_dying(actor: Actor) -> void:

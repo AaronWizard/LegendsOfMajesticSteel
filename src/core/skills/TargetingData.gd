@@ -1,5 +1,12 @@
 class_name TargetingData
 
+enum ThreatRange {
+	TARGETS,
+	VALID_TARGETS,
+	AOE
+}
+
+
 class TargetInfo:
 	# Keys are Vector2s, values are value true
 	var aoe := {}

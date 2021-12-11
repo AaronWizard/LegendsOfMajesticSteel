@@ -56,8 +56,6 @@ var skills: Array setget , get_skills
 # Includes attack skill. Does not include skills that need more energy.
 var all_active_skills: Array setget , get_all_active_skills
 
-var threatened_tiles := []
-
 var target_visible: bool setget set_target_visible, get_target_visible
 var stamina_bar_modifier: int setget set_stamina_bar_modifier, \
 		get_stamina_bar_modifier

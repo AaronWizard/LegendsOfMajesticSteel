@@ -65,8 +65,10 @@ func _player_other_actor_clicked(target_cell: Vector2) -> void:
 	if (other_actor != null) and (other_actor != _game.current_actor) \
 			and (other_actor != _other_actor):
 		_other_actor = other_actor
-		_game.interface.set_other_actor(other_actor,
-				_game.get_walk_range(other_actor).get_visible_move_range())
+		_game.interface.set_other_actor(
+				other_actor,
+				_game.get_walk_range(other_actor).get_visible_move_range(),
+				_game.get_threat_range(other_actor))
 	else:
 		_other_actor = null
 		_game.interface.clear_other_actor()
