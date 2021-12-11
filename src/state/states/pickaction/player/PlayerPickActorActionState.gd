@@ -28,14 +28,16 @@ func _mouse_click(_position: Vector2) -> void:
 
 
 func _turn_cancelled() -> void:
+	var walk_range := _game.get_current_walk_range()
+	var path := walk_range.get_walk_path(
+			_game.current_actor.origin_cell,
+			walk_range.origin_cell,
+			false
+	)
+
 	var actor := _game.current_actor
 	_game.cancel_turn()
 
-	var path := actor.walk_range.get_walk_path(
-			actor.origin_cell,
-			actor.walk_range.origin_cell,
-			false
-	)
 	if path.size() > 0:
 		_game.interface.mouse.dragging_enabled = false
 		_game.interface.mouse.disconnect("click", self, "_mouse_click")

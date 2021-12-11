@@ -16,6 +16,8 @@ var actor_ai := AIActorTurn.new()
 var _map: Map
 var _current_actor: Actor
 
+var _walk_ranges := {} # Keys are actors, values are WalkRanges
+
 onready var _screen_transition := $CanvasLayer/ScreenTransition \
 		as ScreenTransition
 
@@ -33,7 +35,6 @@ func _ready() -> void:
 	if OS.is_debug_build():
 		print("Random seed: %d" % seed_number)
 
-	_current_actor = null
 	_load_map(start_map_file)
 	_position_camera_start()
 	_start_battle()
@@ -57,7 +58,7 @@ func get_turn_manager() -> TurnManager:
 
 func refresh_ranges(turn_start: bool) -> void:
 	_refresh_walk_ranges(turn_start)
-	_refresh_enemy_threat_ranges()
+	#_refresh_enemy_threat_ranges()
 
 
 func get_active_actors(faction: int) -> Array:
@@ -69,6 +70,16 @@ func get_active_actors(faction: int) -> Array:
 			result.append(actor)
 
 	return result
+
+
+func get_current_walk_range() -> WalkRange:
+	return get_walk_range(_current_actor)
+
+
+func get_walk_range(actor: Actor) -> WalkRange:
+	if not _walk_ranges.has(actor):
+		_walk_ranges[actor] = WalkRangeFactory.create_walk_range(actor, _map)
+	return _walk_ranges[actor]
 
 
 func player_won() -> bool:
@@ -88,23 +99,32 @@ func player_lost() -> bool:
 func start_turn(actor: Actor) -> void:
 	assert(actor.stats.is_alive)
 	_current_actor = actor
-	_interface.set_current_actor(actor)
+	_interface.set_current_actor(
+			actor, get_current_walk_range().get_visible_move_range())
 
 
 func cancel_turn() -> void:
 	_current_actor = null
+	_walk_ranges.clear()
+
 	_interface.clear_current_actor()
 
 
 func end_turn() -> void:
 	_current_actor.turn_status.end_turn()
+
 	_current_actor = null
+	_walk_ranges.clear()
+
 	_interface.clear_current_actor()
 	_turn_manager.advance_turn()
 	_interface.gui.turn_queue.next_turn()
 
 
 func _load_map(map_file: PackedScene) -> void:
+	_current_actor = null
+	_walk_ranges.clear()
+
 	if _map != null:
 		_map.disconnect("actor_dying", self, "_on_map_actor_dying")
 		_map_container.remove_child(_map)
@@ -157,36 +177,40 @@ func _start_battle() -> void:
 
 
 func _refresh_walk_ranges(turn_start: bool) -> void:
-	for a in _map.get_actors():
-		var actor := a as Actor
-		if turn_start or actor != _current_actor:
-			actor.walk_range = WalkRangeFactory.create_walk_range(actor, _map)
+	if turn_start:
+		_walk_ranges.clear()
+	else:
+		for a in _walk_ranges.keys():
+			var actor := a as Actor
+			if actor != _current_actor:
+				# warning-ignore:return_value_discarded
+				_walk_ranges.erase(actor)
 
 
-func _refresh_enemy_threat_ranges() -> void:
-	for a in _map.get_actors_by_faction(Actor.Faction.ENEMY):
-		var actor := a as Actor
-		assert(actor.walk_range != null)
-
-		var skills := actor.get_next_turn_skills()
-
-		var threatened_cells := {}
-
-		for c in actor.walk_range.get_move_range():
-			var cell := c as Vector2
-			for s in skills:
-				var skill := s as Skill
-				var targetting_data := skill.get_targeting_data(
-						cell, actor, get_map())
-				for t in targetting_data.target_range:
-					var target_cell := t as Vector2
-					threatened_cells[target_cell] = true
-					var aoe := targetting_data.get_aoe(target_cell)
-					for e in aoe:
-						var aoe_cell := e as Vector2
-						threatened_cells[aoe_cell] = true
-
-		actor.threatened_tiles = threatened_cells.keys()
+#func _refresh_enemy_threat_ranges() -> void:
+#	for a in _map.get_actors_by_faction(Actor.Faction.ENEMY):
+#		var actor := a as Actor
+#		assert(actor.walk_range != null)
+#
+#		var skills := actor.get_next_turn_skills()
+#
+#		var threatened_cells := {}
+#
+#		for c in actor.walk_range.get_move_range():
+#			var cell := c as Vector2
+#			for s in skills:
+#				var skill := s as Skill
+#				var targetting_data := skill.get_targeting_data(
+#						cell, actor, get_map())
+#				for t in targetting_data.target_range:
+#					var target_cell := t as Vector2
+#					threatened_cells[target_cell] = true
+#					var aoe := targetting_data.get_aoe(target_cell)
+#					for e in aoe:
+#						var aoe_cell := e as Vector2
+#						threatened_cells[aoe_cell] = true
+#
+#		actor.threatened_tiles = threatened_cells.keys()
 
 
 func _on_map_actor_dying(actor: Actor) -> void:

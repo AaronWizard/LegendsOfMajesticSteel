@@ -41,7 +41,7 @@ func _mouse_click(_position: Vector2) -> void:
 	if _game.current_actor.on_cell(target_cell):
 		_toggle_action_menu()
 	elif not _game.interface.gui.action_menu_open:
-		var path := _game.current_actor.walk_range.get_walk_path(
+		var path := _game.get_current_walk_range().get_walk_path(
 				_game.current_actor.origin_cell, target_cell, true)
 		if path.size() > 0:
 			_do_move(path)
@@ -65,7 +65,8 @@ func _player_other_actor_clicked(target_cell: Vector2) -> void:
 	if (other_actor != null) and (other_actor != _game.current_actor) \
 			and (other_actor != _other_actor):
 		_other_actor = other_actor
-		_game.interface.set_other_actor(other_actor)
+		_game.interface.set_other_actor(other_actor,
+				_game.get_walk_range(other_actor).get_visible_move_range())
 	else:
 		_other_actor = null
 		_game.interface.clear_other_actor()
