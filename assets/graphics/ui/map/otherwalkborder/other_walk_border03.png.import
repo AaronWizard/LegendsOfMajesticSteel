@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/other_walk05.png-648bec6828ac53669c85abe3b2bb150c.stex"
+path="res://.import/other_walk_border03.png-dbb652108d326df9285c5e241135cf3b.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/graphics/ui/map/other_walk05.png"
-dest_files=[ "res://.import/other_walk05.png-648bec6828ac53669c85abe3b2bb150c.stex" ]
+source_file="res://assets/graphics/ui/map/otherwalkborder/other_walk_border03.png"
+dest_files=[ "res://.import/other_walk_border03.png-dbb652108d326df9285c5e241135cf3b.stex" ]
 
 [params]
 
