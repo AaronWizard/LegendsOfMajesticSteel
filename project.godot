@@ -342,7 +342,7 @@ _global_script_classes=[ {
 "base": "Button",
 "class": "SoundButton",
 "language": "GDScript",
-"path": "res://src/ui/SoundButton.gd"
+"path": "res://src/ui/controlswithsound/SoundButton.gd"
 }, {
 "base": "SkillEffect",
 "class": "SoundEffect",

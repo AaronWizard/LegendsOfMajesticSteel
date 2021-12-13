@@ -7,7 +7,7 @@
 [ext_resource path="res://src/ui/battle/actordetails/ActorDetailsPanel.tscn" type="PackedScene" id=5]
 [ext_resource path="res://resources/visual/gui/theme_standard.tres" type="Theme" id=6]
 [ext_resource path="res://assets/graphics/ui/icons/actions/cancel.png" type="Texture" id=7]
-[ext_resource path="res://src/ui/SoundButton.gd" type="Script" id=8]
+[ext_resource path="res://src/ui/controlswithsound/SoundButton.gd" type="Script" id=8]
 [ext_resource path="res://src/ui/battle/ActionMenu.tscn" type="PackedScene" id=9]
 
 [node name="BattleGUI" type="CanvasLayer"]

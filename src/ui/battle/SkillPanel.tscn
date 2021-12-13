@@ -2,7 +2,7 @@
 
 [ext_resource path="res://src/ui/battle/SkillPanel.gd" type="Script" id=1]
 [ext_resource path="res://src/ui/battle/SkillDetails.tscn" type="PackedScene" id=2]
-[ext_resource path="res://src/ui/SoundButton.gd" type="Script" id=3]
+[ext_resource path="res://src/ui/controlswithsound/SoundButton.gd" type="Script" id=3]
 [ext_resource path="res://resources/visual/gui/theme_standard.tres" type="Theme" id=4]
 [ext_resource path="res://assets/graphics/ui/icons/actions/cancel.png" type="Texture" id=10]
 
