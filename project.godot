@@ -424,6 +424,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/ui/battle/TurnQueuePanel.gd"
 }, {
+"base": "Reference",
+"class": "UISoundTypes",
+"language": "GDScript",
+"path": "res://src/ui/controlswithsound/UISoundTypes.gd"
+}, {
 "base": "State",
 "class": "VictoryState",
 "language": "GDScript",
@@ -528,6 +533,7 @@ _global_script_class_icons={
 "TurnManager": "",
 "TurnQueue": "",
 "TurnQueuePanel": "",
+"UISoundTypes": "",
 "VictoryState": "",
 "VictoryText": "",
 "WalkRange": "",
