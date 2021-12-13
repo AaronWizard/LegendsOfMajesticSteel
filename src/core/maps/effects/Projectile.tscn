@@ -22,5 +22,6 @@ origin_cell = Vector2( 1, 0 )
 
 [node name="StartSound" type="AudioStreamPlayer" parent="."]
 autoplay = true
+bus = "Sounds"
 
 [connection signal="tween_all_completed" from="Tween" to="." method="_on_Tween_tween_all_completed"]
