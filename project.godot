@@ -344,6 +344,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/ui/controlswithsound/SoundButton.gd"
 }, {
+"base": "CheckButton",
+"class": "SoundCheckButton",
+"language": "GDScript",
+"path": "res://src/ui/controlswithsound/SoundCheckButton.gd"
+}, {
 "base": "SkillEffect",
 "class": "SoundEffect",
 "language": "GDScript",
@@ -517,6 +522,7 @@ _global_script_class_icons={
 "SkillPanel": "",
 "SkillRange": "res://assets/editor/skill_range.png",
 "SoundButton": "",
+"SoundCheckButton": "",
 "SoundEffect": "res://assets/editor/sound_effect.png",
 "StaminaBar": "",
 "StatModifier": "",
