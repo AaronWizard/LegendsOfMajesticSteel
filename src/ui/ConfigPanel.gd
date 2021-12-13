@@ -14,10 +14,12 @@ func _on_FullscreenToggle_toggled(button_pressed: bool) -> void:
 
 func _on_SoundVolume_value_changed(value: float) -> void:
 	var volume := linear2db(value)
-	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Sounds"), volume)
+	AudioServer.set_bus_volume_db(
+			AudioServer.get_bus_index(Constants.SOUND_BUS), volume)
 	StandardSounds.play_select()
 
 
 func _on_MusicVolume_value_changed(value: float) -> void:
 	var volume := linear2db(value)
-	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Music"), volume)
+	AudioServer.set_bus_volume_db(
+			AudioServer.get_bus_index(Constants.MUSIC_BUS), volume)

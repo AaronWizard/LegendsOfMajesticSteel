@@ -8,7 +8,7 @@ func _run_self(_target_cell: Vector2, _source_cell: Vector2,
 		_source_actor: Actor, map: Map):
 	var stream_player := AudioStreamPlayer.new()
 	stream_player.stream = stream
-	stream_player.bus = "Sounds"
+	stream_player.bus = Constants.SOUND_BUS
 
 	map.add_child(stream_player)
 
