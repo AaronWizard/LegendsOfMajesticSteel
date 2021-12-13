@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=18 format=2]
+[gd_resource type="Theme" load_steps=22 format=2]
 
 [ext_resource path="res://resources/visual/gui/font_standard.tres" type="DynamicFont" id=1]
 [ext_resource path="res://resources/visual/styleboxes/button_stylebox.tres" type="StyleBox" id=2]
@@ -12,6 +12,8 @@
 [ext_resource path="res://resources/visual/styleboxes/tab_stylebox_background.tres" type="StyleBox" id=10]
 [ext_resource path="res://resources/visual/styleboxes/tab_stylebox_disabled.tres" type="StyleBox" id=11]
 [ext_resource path="res://assets/graphics/ui/ui_theme.png" type="Texture" id=12]
+[ext_resource path="res://resources/visual/atlastextures/hslider_grabber_atlas.tres" type="Texture" id=13]
+[ext_resource path="res://resources/visual/atlastextures/hslider_grabber_disabled_atlas.tres" type="Texture" id=14]
 
 [sub_resource type="StyleBoxEmpty" id=1]
 
@@ -30,6 +32,10 @@ region = Rect2( 25, 20, 10, 5 )
 [sub_resource type="AtlasTexture" id=5]
 atlas = ExtResource( 12 )
 region = Rect2( 25, 26, 10, 5 )
+
+[sub_resource type="StyleBoxEmpty" id=6]
+
+[sub_resource type="StyleBoxEmpty" id=7]
 
 [resource]
 default_font = ExtResource( 1 )
@@ -62,6 +68,12 @@ HScrollBar/styles/grabber_highlight = ExtResource( 6 )
 HScrollBar/styles/grabber_pressed = ExtResource( 6 )
 HScrollBar/styles/scroll = ExtResource( 5 )
 HScrollBar/styles/scroll_focus = ExtResource( 5 )
+HSlider/icons/grabber = ExtResource( 13 )
+HSlider/icons/grabber_disabled = ExtResource( 14 )
+HSlider/icons/grabber_highlight = ExtResource( 13 )
+HSlider/styles/grabber_area = SubResource( 6 )
+HSlider/styles/grabber_area_highlight = SubResource( 7 )
+HSlider/styles/slider = ExtResource( 5 )
 Label/colors/font_color = Color( 0.976471, 0.921569, 0.0588235, 1 )
 Label/colors/font_color_shadow = Color( 0, 0, 0, 0 )
 Label/colors/font_outline_modulate = Color( 1, 1, 1, 1 )
