@@ -72,8 +72,9 @@ func set_targets(cells: Array) -> void:
 	_set_cells(_targets, Tiles.TARGET, cells)
 
 
-func set_other_targets(cells: Array) -> void:
-	_set_cells(_other_targets, Tiles.TARGET, cells)
+func set_other_targets(target_range: Array, aoe: Array) -> void:
+	_set_cells(_other_targets, Tiles.AOE, aoe)
+	_set_cells(_other_targets, Tiles.TARGET, target_range, false)
 
 
 func clear_targets() -> void:
@@ -92,12 +93,14 @@ func clear_aoe() -> void:
 	_aoe.clear()
 
 
-func _set_cells(tilemap: TileMap, tile: int, cells: Array) -> void:
+func _set_cells(tilemap: TileMap, tile: int, cells: Array,
+		clear_first := true) -> void:
 	var region_set := false
 	var start := Vector2()
 	var end := Vector2()
 
-	tilemap.clear()
+	if clear_first:
+		tilemap.clear()
 
 	for c in cells:
 		var cell: Vector2 = c
