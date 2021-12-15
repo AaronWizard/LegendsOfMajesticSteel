@@ -1,4 +1,4 @@
-extends PanelContainer
+extends PopupPanel
 
 
 onready var _video_options_container := $VBoxContainer/VideoOptions as Node
@@ -33,3 +33,7 @@ func _on_SoundVolume_value_changed(value: float) -> void:
 
 func _on_MusicVolume_value_changed(value: float) -> void:
 	Config.music_volume = value
+
+
+func _on_OK_pressed() -> void:
+	visible = false
