@@ -556,6 +556,7 @@ config/windows_native_icon="res://icons/icon.ico"
 
 [autoload]
 
+Config="*res://src/game/Config.gd"
 StandardSounds="*res://src/audio/StandardSounds.tscn"
 BackgroundMusic="*res://src/audio/BackgroundMusic.tscn"
 PixelMouse="*res://src/ui/PixelMouse.tscn"
@@ -566,6 +567,7 @@ window/size/width=180
 window/size/height=180
 window/size/test_width=1280
 window/size/test_height=720
+window/handheld/orientation="sensor"
 window/stretch/mode="viewport"
 window/stretch/aspect="expand"
 
