@@ -22,28 +22,28 @@ func _ready() -> void:
 
 func set_resolution(value: Vector2) -> void:
 	resolution = value
-	_set_window_properties()
 	_save_single_setting(_CONFIG_RESOLUTION, resolution)
+	_set_window_properties()
 
 
 func set_fullscreen(value: bool) -> void:
 	fullscreen = value
-	_set_window_properties()
 	_save_single_setting(_CONFIG_FULLSCREEN, fullscreen)
+	_set_window_properties()
 
 
 # Volume is value from 0 to 1
 func set_sound_volume(value: float) -> void:
 	sound_volume = value
-	_set_volume(value, Constants.SOUND_BUS)
 	_save_single_setting(_CONFIG_SOUND_VOLUME, sound_volume)
+	_set_volume(value, Constants.SOUND_BUS)
 
 
 # Volume is value from 0 to 1
 func set_music_volume(value: float) -> void:
 	music_volume = value
-	_set_volume(value, Constants.MUSIC_BUS)
 	_save_single_setting(_CONFIG_MUSIC_VOLUME, music_volume)
+	_set_volume(value, Constants.MUSIC_BUS)
 
 
 func _load() -> void:
@@ -76,9 +76,7 @@ func _load() -> void:
 
 func _on_screen_resized() -> void:
 	resolution = OS.window_size
-	fullscreen = OS.window_fullscreen
 	_save_single_setting(_CONFIG_RESOLUTION, resolution)
-	_save_single_setting(_CONFIG_FULLSCREEN, fullscreen)
 
 
 func _save_single_setting(key: String, value) -> void:
