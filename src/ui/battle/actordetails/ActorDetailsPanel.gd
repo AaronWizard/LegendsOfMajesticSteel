@@ -1,7 +1,5 @@
 class_name ActorDetailsPanel
-extends PanelContainer
-
-signal closed
+extends PopupPanel
 
 onready var _portrait := $Main/Header/PortraitMargin/PortraitBorder/Portrait \
 		as TextureRect
@@ -49,4 +47,4 @@ func _on_TabContainer_tab_changed(_tab: int) -> void:
 
 
 func _on_Close_pressed() -> void:
-	emit_signal("closed")
+	visible = false

@@ -59,7 +59,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/core/actors/ActorDefinition.gd"
 }, {
-"base": "PanelContainer",
+"base": "PopupPanel",
 "class": "ActorDetailsPanel",
 "language": "GDScript",
 "path": "res://src/ui/battle/actordetails/ActorDetailsPanel.gd"

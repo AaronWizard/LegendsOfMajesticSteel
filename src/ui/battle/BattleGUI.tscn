@@ -78,21 +78,15 @@ __meta__ = {
 
 [node name="ActionMenu" parent="." instance=ExtResource( 9 )]
 
-[node name="ActorDetailsPopup" type="Popup" parent="."]
-visible = true
-margin_right = 108.0
-margin_bottom = 147.0
-popup_exclusive = true
-__meta__ = {
-"_edit_group_": true,
-"_edit_use_anchors_": false
-}
-
-[node name="ActorDetailsPanel" parent="ActorDetailsPopup" instance=ExtResource( 5 )]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_right = 0.0
-margin_bottom = 0.0
+[node name="ActorDetailsPanel" parent="." instance=ExtResource( 5 )]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -54.0
+margin_top = -74.0
+margin_right = 54.0
+margin_bottom = 74.0
 
 [connection signal="portrait_pressed" from="CurrentActorStatus" to="." method="_on_CurrentActorStatus_portrait_pressed"]
 [connection signal="pressed" from="CancelTurn" to="." method="_on_CancelTurn_pressed"]
@@ -101,4 +95,3 @@ margin_bottom = 0.0
 [connection signal="attack_selected" from="ActionMenu" to="." method="_on_ActionMenu_attack_selected"]
 [connection signal="skill_selected" from="ActionMenu" to="." method="_on_ActionMenu_skill_selected"]
 [connection signal="wait_selected" from="ActionMenu" to="." method="_on_ActionMenu_wait_selected"]
-[connection signal="closed" from="ActorDetailsPopup/ActorDetailsPanel" to="." method="_on_ActorDetailsPanel_closed"]

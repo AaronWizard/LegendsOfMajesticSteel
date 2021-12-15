@@ -14,14 +14,15 @@
 atlas = ExtResource( 1 )
 region = Rect2( 0, 0, 24, 24 )
 
-[node name="ActorDetailsPanel" type="PanelContainer"]
+[node name="ActorDetailsPanel" type="PopupPanel"]
+visible = true
 margin_right = 108.0
 margin_bottom = 148.0
 theme = ExtResource( 9 )
+popup_exclusive = true
 script = ExtResource( 5 )
 __meta__ = {
-"_edit_group_": true,
-"_edit_use_anchors_": false
+"_edit_group_": true
 }
 
 [node name="Main" type="VBoxContainer" parent="."]
