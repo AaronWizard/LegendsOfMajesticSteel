@@ -58,7 +58,7 @@ script = ExtResource( 1 )
 [node name="Sprite" type="Sprite" parent="Center/Offset" index="0"]
 material = SubResource( 3 )
 texture = ExtResource( 2 )
-hframes = 3
+hframes = 2
 
 [node name="StaminaBar" parent="Center/Offset/Sprite" index="0" instance=ExtResource( 16 )]
 visible = false

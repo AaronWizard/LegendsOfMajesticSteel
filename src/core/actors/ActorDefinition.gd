@@ -1,7 +1,7 @@
 class_name ActorDefinition
 extends Resource
 
-const SPRITE_FRAME_COUNT := 3
+const SPRITE_FRAME_COUNT := 2
 
 export var sprite: Texture
 export var portrait: Texture setget , get_portrait
