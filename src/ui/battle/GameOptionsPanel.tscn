@@ -1,12 +1,13 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://src/ui/controlswithsound/SoundButton.gd" type="Script" id=1]
 [ext_resource path="res://src/ui/ConfigPanel.tscn" type="PackedScene" id=2]
 [ext_resource path="res://src/ui/battle/GameOptionsPanel.gd" type="Script" id=3]
+[ext_resource path="res://src/ui/YesNoDialog.tscn" type="PackedScene" id=4]
 
 [node name="GameOptionsPanel" type="PopupPanel"]
 visible = true
-margin_right = 84.0
+margin_right = 110.0
 margin_bottom = 110.0
 popup_exclusive = true
 script = ExtResource( 3 )
@@ -27,7 +28,7 @@ __meta__ = {
 }
 
 [node name="Options" type="Button" parent="VBoxContainer"]
-margin_right = 78.0
+margin_right = 104.0
 margin_bottom = 24.0
 rect_min_size = Vector2( 48, 24 )
 text = "Options"
@@ -35,7 +36,7 @@ script = ExtResource( 1 )
 
 [node name="MainMenu" type="Button" parent="VBoxContainer"]
 margin_top = 26.0
-margin_right = 78.0
+margin_right = 104.0
 margin_bottom = 50.0
 rect_min_size = Vector2( 48, 24 )
 text = "To Main Menu"
@@ -43,7 +44,7 @@ script = ExtResource( 1 )
 
 [node name="Quit" type="Button" parent="VBoxContainer"]
 margin_top = 52.0
-margin_right = 78.0
+margin_right = 104.0
 margin_bottom = 76.0
 rect_min_size = Vector2( 48, 24 )
 text = "Quit"
@@ -51,7 +52,7 @@ script = ExtResource( 1 )
 
 [node name="Back" type="Button" parent="VBoxContainer"]
 margin_top = 78.0
-margin_right = 78.0
+margin_right = 104.0
 margin_bottom = 102.0
 rect_min_size = Vector2( 48, 24 )
 text = "Back to Game"
@@ -59,11 +60,17 @@ script = ExtResource( 1 )
 sound_type = 1
 
 [node name="ConfigPanel" parent="." instance=ExtResource( 2 )]
-visible = false
 margin_left = 3.0
 margin_top = 3.0
 margin_right = 81.0
 margin_bottom = 107.0
+
+[node name="YesNoDialog" parent="." instance=ExtResource( 4 )]
+visible = true
+margin_left = 3.0
+margin_top = 3.0
+margin_right = 107.0
+margin_bottom = 56.0
 
 [connection signal="pressed" from="VBoxContainer/Options" to="." method="_on_Options_pressed"]
 [connection signal="pressed" from="VBoxContainer/MainMenu" to="." method="_on_MainMenu_pressed"]
