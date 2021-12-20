@@ -5,8 +5,6 @@ signal attack_selected
 signal skill_selected(skill_index)
 signal wait_selected
 
-const _THEME := preload("res://resources/visual/gui/theme_standard.tres")
-
 const _ANIM_TIME := 0.15
 const _BUTTON_WIDTH := Constants.TILE_SIZE
 const _BUTTON_MARGIN := 4
@@ -91,7 +89,6 @@ func _set_skills(skills: Array) -> void:
 		var skill := skills[index] as Skill
 
 		var button := SoundButton.new()
-		button.theme = _THEME
 
 		# warning-ignore:return_value_discarded
 		button.connect("pressed", self, "_on_Skill_pressed", [index])

@@ -1,14 +1,13 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://assets/graphics/ui/icons/actions/attack.png" type="Texture" id=1]
 [ext_resource path="res://src/ui/battle/SkillDetails.gd" type="Script" id=2]
-[ext_resource path="res://resources/visual/gui/theme_standard.tres" type="Theme" id=3]
 
 [node name="SkillDetails" type="PopupPanel"]
+visible = true
 margin_right = 128.0
 margin_bottom = 76.0
 rect_min_size = Vector2( 128, 76 )
-theme = ExtResource( 3 )
 script = ExtResource( 2 )
 __meta__ = {
 "_edit_group_": true,
@@ -16,10 +15,10 @@ __meta__ = {
 }
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
-margin_left = 4.0
-margin_top = 4.0
-margin_right = 144.0
-margin_bottom = 72.0
+margin_left = 3.0
+margin_top = 3.0
+margin_right = 125.0
+margin_bottom = 73.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -108,7 +107,7 @@ margin_bottom = 47.0
 scroll_horizontal_enabled = false
 
 [node name="Description" type="Label" parent="VBoxContainer/MarginContainer/ScrollContainer"]
-margin_right = 121.0
+margin_right = 115.0
 margin_bottom = 47.0
 size_flags_horizontal = 3
 text = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s."

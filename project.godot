@@ -571,6 +571,11 @@ window/handheld/orientation="sensor"
 window/stretch/mode="viewport"
 window/stretch/aspect="expand"
 
+[gui]
+
+theme/custom="res://resources/visual/gui/theme_standard.tres"
+theme/custom_font="res://resources/visual/gui/font_standard.tres"
+
 [importer_defaults]
 
 texture={

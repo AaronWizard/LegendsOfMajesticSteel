@@ -1,16 +1,14 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://src/ui/battle/SkillPanel.gd" type="Script" id=1]
 [ext_resource path="res://src/ui/battle/SkillDetails.tscn" type="PackedScene" id=2]
 [ext_resource path="res://src/ui/controlswithsound/SoundButton.gd" type="Script" id=3]
-[ext_resource path="res://resources/visual/gui/theme_standard.tres" type="Theme" id=4]
 [ext_resource path="res://assets/graphics/ui/icons/actions/cancel.png" type="Texture" id=10]
 
 [node name="SkillPanel" type="Control"]
 margin_right = 109.0
 margin_bottom = 24.0
 rect_min_size = Vector2( 109, 24 )
-theme = ExtResource( 4 )
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
