@@ -11,6 +11,7 @@ onready var _config_panel := $ConfigPanel as Popup
 
 func _ready() -> void:
 	_quit_button.visible = OS.get_name() != "HTML5"
+
 	_screen_transition.fade_in()
 	yield(_screen_transition, "faded_in")
 	BackgroundMusic.start(preload("res://assets/music/start.mp3"))

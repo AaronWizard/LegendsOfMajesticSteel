@@ -16,6 +16,7 @@ onready var _music_volume := _sound_options.get_node("MusicVolume") as Slider
 
 func _ready() -> void:
 	_video_options_container.visible = OS.get_name() != "HTML5"
+	rect_size = Vector2.ZERO
 
 	_fullscreen_toggle.pressed = Config.fullscreen
 	_sound_volume.value = Config.sound_volume

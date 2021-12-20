@@ -5,8 +5,15 @@ const _MAIN_SCENE_PATH := "res://src/Main.tscn"
 const _MAIN_MENU_CONFIRM := "Are you sure you want to return to the main menu?"
 const _QUIT_CONFIRM := "Are you sure you want to quit?"
 
+onready var _quit := $VBoxContainer/Quit as CanvasItem
+
 onready var _config_panel := $ConfigPanel as Popup
 onready var _yes_no_panel := $YesNoDialog as YesNoDialog
+
+
+func _ready() -> void:
+	_quit.visible = OS.get_name() != "HTML5"
+	rect_size = Vector2.ZERO
 
 
 func _on_Options_pressed() -> void:
