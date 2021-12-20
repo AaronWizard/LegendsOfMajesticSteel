@@ -22,16 +22,15 @@ onready var turn_queue := $TurnQueuePanel as TurnQueuePanel
 
 onready var _current_actor_status := $CurrentActorStatus as ActorStatusPanel
 onready var _other_actor_status := $OtherActorStatus as ActorStatusPanel
-
 onready var _cancel_turn_button := $CancelTurn as Control
 
 onready var _actor_details := $ActorDetailsPanel as ActorDetailsPanel
 
+onready var _action_menu_region := $ActionMenuRegion as Control
+onready var _action_menu := $ActionMenu as ActionMenu
 onready var _skill_panel := $SkillPanel as SkillPanel
 
-onready var _action_menu_region := $ActionMenuRegion as Control
-
-onready var _action_menu := $ActionMenu as ActionMenu
+onready var _options_panel := $GameOptionsPanel as Popup
 
 
 func _ready() -> void:
@@ -165,4 +164,4 @@ func _on_size_changed() -> void:
 
 
 func _on_OptionsButton_pressed() -> void:
-	pass # Replace with function body.
+	_options_panel.popup_centered()

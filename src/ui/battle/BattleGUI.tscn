@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://src/ui/battle/BattleGUI.gd" type="Script" id=1]
 [ext_resource path="res://src/ui/battle/SkillPanel.tscn" type="PackedScene" id=2]
@@ -9,6 +9,7 @@
 [ext_resource path="res://assets/graphics/ui/icons/actions/cancel.png" type="Texture" id=7]
 [ext_resource path="res://src/ui/controlswithsound/SoundButton.gd" type="Script" id=8]
 [ext_resource path="res://src/ui/battle/ActionMenu.tscn" type="PackedScene" id=9]
+[ext_resource path="res://src/ui/battle/GameOptionsPanel.tscn" type="PackedScene" id=10]
 
 [node name="BattleGUI" type="CanvasLayer"]
 script = ExtResource( 1 )
@@ -99,6 +100,9 @@ margin_left = -54.0
 margin_top = -74.0
 margin_right = 54.0
 margin_bottom = 74.0
+
+[node name="GameOptionsPanel" parent="." instance=ExtResource( 10 )]
+visible = false
 
 [connection signal="portrait_pressed" from="CurrentActorStatus" to="." method="_on_CurrentActorStatus_portrait_pressed"]
 [connection signal="pressed" from="CancelTurn" to="." method="_on_CancelTurn_pressed"]
