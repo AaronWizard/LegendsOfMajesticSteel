@@ -162,3 +162,7 @@ func _on_size_changed() -> void:
 		_actor_details.anchor_right = 0.5
 		_actor_details.anchor_top = 0.5
 		_actor_details.anchor_bottom = 0.5
+
+
+func _on_OptionsButton_pressed() -> void:
+	pass # Replace with function body.
