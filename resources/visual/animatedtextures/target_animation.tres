@@ -1,21 +1,23 @@
-[gd_resource type="AnimatedTexture" load_steps=5 format=2]
+[gd_resource type="AnimatedTexture" load_steps=7 format=2]
 
-[ext_resource path="res://assets/graphics/ui/map/target00.png" type="Texture" id=1]
-[ext_resource path="res://assets/graphics/ui/map/target03.png" type="Texture" id=2]
-[ext_resource path="res://assets/graphics/ui/map/target02.png" type="Texture" id=3]
-[ext_resource path="res://assets/graphics/ui/map/target01.png" type="Texture" id=4]
+[ext_resource path="res://assets/graphics/ui/map/targetborder/target05.png" type="Texture" id=1]
+[ext_resource path="res://assets/graphics/ui/map/targetborder/target02.png" type="Texture" id=2]
+[ext_resource path="res://assets/graphics/ui/map/targetborder/target01.png" type="Texture" id=3]
+[ext_resource path="res://assets/graphics/ui/map/targetborder/target04.png" type="Texture" id=4]
+[ext_resource path="res://assets/graphics/ui/map/targetborder/target00.png" type="Texture" id=5]
+[ext_resource path="res://assets/graphics/ui/map/targetborder/target03.png" type="Texture" id=6]
 
 [resource]
 frames = 6
 fps = 9.0
-frame_0/texture = ExtResource( 1 )
-frame_1/texture = ExtResource( 4 )
+frame_0/texture = ExtResource( 5 )
+frame_1/texture = ExtResource( 3 )
 frame_1/delay_sec = 0.0
-frame_2/texture = ExtResource( 3 )
+frame_2/texture = ExtResource( 2 )
 frame_2/delay_sec = 0.0
-frame_3/texture = ExtResource( 2 )
+frame_3/texture = ExtResource( 6 )
 frame_3/delay_sec = 0.0
-frame_4/texture = ExtResource( 3 )
+frame_4/texture = ExtResource( 4 )
 frame_4/delay_sec = 0.0
-frame_5/texture = ExtResource( 4 )
+frame_5/texture = ExtResource( 1 )
 frame_5/delay_sec = 0.0
