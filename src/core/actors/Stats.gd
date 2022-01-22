@@ -29,6 +29,7 @@ func init_from_def(def: ActorDefinition) -> void:
 	set_base_stat(StatType.Type.MAX_STAMINA, def.max_stamina)
 	set_base_stat(StatType.Type.ATTACK, def.attack)
 	set_base_stat(StatType.Type.MOVE, def.move)
+	set_base_stat(StatType.Type.AGILITY, def.agility)
 
 
 func set_base_stat(stat_type: int, value: int) -> void:

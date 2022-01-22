@@ -11,6 +11,7 @@ export var size := 1
 export var max_stamina := 1
 export var attack := 1
 export var move := 4
+export var agility := 1
 
 export var attack_skill: PackedScene = null
 
