@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://assets/graphics/actors/fighter.png" type="Texture" id=1]
 [ext_resource path="res://src/ui/battle/actordetails/ActorSkillsDetails.tscn" type="PackedScene" id=2]
@@ -8,31 +8,34 @@
 [ext_resource path="res://src/ui/controlswithsound/SoundButton.gd" type="Script" id=6]
 [ext_resource path="res://src/ui/battle/actordetails/ActorConditionDetails.tscn" type="PackedScene" id=7]
 [ext_resource path="res://assets/graphics/ui/icons/stats/move.png" type="Texture" id=8]
+[ext_resource path="res://assets/graphics/ui/icons/stats/agility.png" type="Texture" id=9]
 
 [sub_resource type="AtlasTexture" id=1]
 atlas = ExtResource( 1 )
 region = Rect2( 0, 0, 24, 24 )
 
 [node name="ActorDetailsPanel" type="PopupPanel"]
-margin_right = 108.0
+visible = true
+margin_right = 112.0
 margin_bottom = 148.0
 popup_exclusive = true
 script = ExtResource( 5 )
 __meta__ = {
-"_edit_group_": true
+"_edit_group_": true,
+"_edit_use_anchors_": false
 }
 
 [node name="Main" type="VBoxContainer" parent="."]
 margin_left = 3.0
 margin_top = 3.0
-margin_right = 105.0
+margin_right = 109.0
 margin_bottom = 145.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Header" type="HBoxContainer" parent="Main"]
-margin_right = 102.0
+margin_right = 106.0
 margin_bottom = 26.0
 
 [node name="PortraitMargin" type="MarginContainer" parent="Main/Header"]
@@ -66,7 +69,7 @@ __meta__ = {
 
 [node name="HeaderInfoMargin" type="MarginContainer" parent="Main/Header"]
 margin_left = 28.0
-margin_right = 102.0
+margin_right = 106.0
 margin_bottom = 26.0
 size_flags_horizontal = 3
 custom_constants/margin_right = 1
@@ -74,12 +77,12 @@ custom_constants/margin_top = 1
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Main/Header/HeaderInfoMargin"]
 margin_top = 1.0
-margin_right = 73.0
+margin_right = 77.0
 margin_bottom = 26.0
 size_flags_horizontal = 3
 
 [node name="Name" type="Label" parent="Main/Header/HeaderInfoMargin/VBoxContainer"]
-margin_right = 73.0
+margin_right = 77.0
 margin_bottom = 7.0
 text = "Fighter"
 clip_text = true
@@ -89,7 +92,7 @@ __meta__ = {
 
 [node name="Stamina" type="HBoxContainer" parent="Main/Header/HeaderInfoMargin/VBoxContainer"]
 margin_top = 9.0
-margin_right = 73.0
+margin_right = 77.0
 margin_bottom = 25.0
 rect_min_size = Vector2( 66, 0 )
 size_flags_vertical = 3
@@ -135,58 +138,63 @@ align = 2
 
 [node name="StatsPanel" type="PanelContainer" parent="Main"]
 margin_top = 28.0
-margin_right = 102.0
+margin_right = 106.0
 margin_bottom = 52.0
 
 [node name="MarginContainer" type="MarginContainer" parent="Main/StatsPanel"]
 margin_left = 3.0
 margin_top = 3.0
-margin_right = 99.0
+margin_right = 103.0
 margin_bottom = 21.0
 custom_constants/margin_top = 1
 
 [node name="Stats" type="HBoxContainer" parent="Main/StatsPanel/MarginContainer"]
 margin_top = 1.0
-margin_right = 96.0
+margin_right = 100.0
 margin_bottom = 18.0
 alignment = 1
 
 [node name="AttackInfo" parent="Main/StatsPanel/MarginContainer/Stats" instance=ExtResource( 4 )]
-margin_right = 47.0
 stat_label = "Attack"
 
 [node name="MoveInfo" parent="Main/StatsPanel/MarginContainer/Stats" instance=ExtResource( 4 )]
-margin_left = 49.0
-margin_right = 96.0
+margin_left = 34.0
+margin_right = 66.0
 stat_icon = ExtResource( 8 )
 stat_label = "Move"
 
+[node name="AgilityInfo" parent="Main/StatsPanel/MarginContainer/Stats" instance=ExtResource( 4 )]
+margin_left = 68.0
+margin_right = 100.0
+stat_icon = ExtResource( 9 )
+stat_label = "Agility"
+
 [node name="SkillsContainer" type="PanelContainer" parent="Main"]
 margin_top = 54.0
-margin_right = 102.0
+margin_right = 106.0
 margin_bottom = 84.0
 
 [node name="Skills" parent="Main/SkillsContainer" instance=ExtResource( 2 )]
 margin_left = 3.0
 margin_top = 3.0
-margin_right = 99.0
+margin_right = 103.0
 margin_bottom = 27.0
 
 [node name="ConditionsContainer" type="PanelContainer" parent="Main"]
 margin_top = 86.0
-margin_right = 102.0
+margin_right = 106.0
 margin_bottom = 116.0
 
 [node name="Conditions" parent="Main/ConditionsContainer" instance=ExtResource( 7 )]
 margin_left = 3.0
 margin_top = 3.0
-margin_right = 99.0
+margin_right = 103.0
 margin_bottom = 27.0
 
 [node name="Close" type="Button" parent="Main"]
-margin_left = 54.0
+margin_left = 58.0
 margin_top = 118.0
-margin_right = 102.0
+margin_right = 106.0
 margin_bottom = 142.0
 rect_min_size = Vector2( 48, 24 )
 size_flags_horizontal = 8
