@@ -135,7 +135,7 @@ func end_turn() -> void:
 
 	_interface.clear_current_actor()
 	_turn_manager.advance_turn()
-	_interface.gui.turn_queue.next_turn()
+	#_interface.gui.turn_queue.next_turn()
 
 
 func _clear_turn_data() -> void:
@@ -187,7 +187,7 @@ func _start_battle() -> void:
 	actor_ai.reset()
 
 	_turn_manager.roll_initiative(_map.get_actors())
-	_interface.gui.turn_queue.set_queue(_turn_manager.turn_order)
+	#_interface.gui.turn_queue.set_queue(_turn_manager.turn_order)
 
 	_screen_transition.fade_in()
 	yield(_screen_transition, "faded_in")
@@ -232,8 +232,9 @@ func _get_threat_range(actor: Actor) -> Dictionary:
 
 
 func _on_map_actor_dying(actor: Actor) -> void:
-	var turn_index := _turn_manager.remove_actor(actor)
-	_interface.gui.turn_queue.remove_icon(turn_index)
+	pass
+	#var turn_index := _turn_manager.remove_actor(actor)
+	#_interface.gui.turn_queue.remove_icon(turn_index)
 
 
 func _on_TurnManager_round_started() -> void:

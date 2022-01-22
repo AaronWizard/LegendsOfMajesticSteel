@@ -419,16 +419,6 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/game/TurnManager.gd"
 }, {
-"base": "ReferenceRect",
-"class": "TurnQueue",
-"language": "GDScript",
-"path": "res://src/ui/battle/TurnQueue.gd"
-}, {
-"base": "ReferenceRect",
-"class": "TurnQueuePanel",
-"language": "GDScript",
-"path": "res://src/ui/battle/TurnQueuePanel.gd"
-}, {
 "base": "Reference",
 "class": "UISoundTypes",
 "language": "GDScript",
@@ -542,8 +532,6 @@ _global_script_class_icons={
 "TileObject": "",
 "TileProperties": "res://assets/editor/tile_properties.png",
 "TurnManager": "",
-"TurnQueue": "",
-"TurnQueuePanel": "",
 "UISoundTypes": "",
 "VictoryState": "",
 "VictoryText": "",
