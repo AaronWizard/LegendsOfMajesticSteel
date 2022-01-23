@@ -6,7 +6,7 @@ signal round_started
 var ordered_actors: Array setget , get_ordered_actors
 
 var _actors := []
-var _turn_index := 0
+var _turn_index := -1
 
 
 func roll_initiative(actors: Array) -> void:
@@ -17,7 +17,7 @@ func roll_initiative(actors: Array) -> void:
 
 func clear() -> void:
 	_actors.clear()
-	_turn_index = 0
+	_turn_index = -1
 
 
 func get_ordered_actors() -> Array:
@@ -25,13 +25,11 @@ func get_ordered_actors() -> Array:
 
 
 func next_actor() -> Actor:
-	return _actors[_turn_index] as Actor
-
-
-func advance_turn() -> void:
 	_turn_index = (_turn_index + 1) % _actors.size()
 	if _turn_index == 0:
 		emit_signal("round_started")
+
+	return _actors[_turn_index] as Actor
 
 
 func remove_actor(actor: Actor) -> int:

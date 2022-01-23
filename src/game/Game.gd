@@ -127,11 +127,9 @@ func start_turn() -> void:
 
 func end_turn() -> void:
 	_current_actor.turn_status.end_turn()
-
 	_clear_turn_data()
 
 	_interface.clear_current_actor()
-	_turn_manager.advance_turn()
 	#_interface.gui.turn_queue.next_turn()
 
 
