@@ -28,7 +28,6 @@ func _start_turn() -> void:
 
 
 func _start_next_turn() -> void:
-	_game.refresh_ranges(true)
 	_game.start_turn()
 	assert(_game.current_actor.stats.is_alive)
 

@@ -118,6 +118,9 @@ func player_lost() -> bool:
 func start_turn() -> void:
 	_current_actor = _turn_manager.next_actor()
 	assert(_current_actor.stats.is_alive)
+
+	refresh_ranges(true)
+
 	_interface.set_current_actor(
 		_current_actor, get_current_walk_range().get_visible_move_range())
 
