@@ -48,7 +48,8 @@ export(Faction) var faction := Faction.ENEMY
 
 var portrait: Texture setget , get_portrait
 
-var turn_status: ActorTurnStatus setget , get_turn_status
+var round_finished := false
+
 var stats: Stats setget , get_stats
 var attack_skill: Node setget , get_attack
 var skills: Array setget , get_skills
@@ -187,13 +188,6 @@ func set_target_visible(new_value: bool) -> void:
 	_target_cursor.visible = new_value
 
 
-func get_turn_status() -> ActorTurnStatus:
-	var result: ActorTurnStatus = null
-	if $TurnStatus:
-		result = $TurnStatus as ActorTurnStatus
-	return result
-
-
 func get_stats() -> Stats:
 	var result: Stats = null
 	if $Stats:
@@ -247,8 +241,7 @@ func get_next_turn_skills() -> Array:
 	for s in get_skills():
 		var current_cooldown := s.current_cooldown as int
 		var skill_ready_now := current_cooldown == 0
-		var skill_ready_next_turn := get_turn_status().round_finished \
-				and (current_cooldown == 1)
+		var skill_ready_next_turn := round_finished and (current_cooldown == 1)
 		if skill_ready_now or skill_ready_next_turn:
 			result.append(s)
 
@@ -293,6 +286,13 @@ func start_battle() -> void:
 		s.start_battle()
 
 	_stamina_bar.reset()
+
+
+func start_round(first_round: bool) -> void:
+	if not first_round:
+		charge_skills()
+	get_stats().start_round()
+	round_finished = false
 
 
 func set_pose(value: int) -> void:
@@ -497,16 +497,6 @@ func _animate_hit(direction: Vector2) -> void:
 func _on_StaminaBar_animation_finished() -> void:
 	_stamina_bar_animating = false
 	_stamina_bar.visible = false
-
-
-func _on_TurnStatus_round_started(first_round: bool) -> void:
-	if not first_round:
-		charge_skills()
-	get_stats().start_round()
-
-
-func _on_TurnStatus_round_finished() -> void:
-	pass
 
 
 func _on_Stats_conditions_changed() -> void:

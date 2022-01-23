@@ -79,7 +79,7 @@ func get_active_actors(faction: int) -> Array:
 
 	for a in _map.get_actors_by_faction(faction):
 		var actor := a as Actor
-		if not actor.turn_status.round_finished:
+		if not actor.round_finished:
 			result.append(actor)
 
 	return result
@@ -126,7 +126,7 @@ func start_turn() -> void:
 
 
 func end_turn() -> void:
-	_current_actor.turn_status.end_turn()
+	_current_actor.round_finished = true
 	_clear_turn_data()
 
 	_interface.clear_current_actor()
@@ -235,4 +235,4 @@ func _on_map_actor_dying(actor: Actor) -> void:
 func _on_TurnManager_round_started(is_first_round: bool) -> void:
 	for a in _map.get_actors():
 		var actor := a as Actor
-		actor.turn_status.start_round(is_first_round)
+		actor.start_round(is_first_round)
