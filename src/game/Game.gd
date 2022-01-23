@@ -71,7 +71,6 @@ func refresh_ranges(turn_start: bool) -> void:
 			if actor != _current_actor:
 				# warning-ignore:return_value_discarded
 				_walk_ranges.erase(actor)
-	#_refresh_enemy_threat_ranges()
 
 
 func get_active_actors(faction: int) -> Array:
@@ -119,6 +118,7 @@ func start_turn() -> void:
 	if _current_actor:
 		_current_actor.round_finished = true
 		_clear_turn_data()
+		_interface.gui.turn_queue.next_turn()
 
 	_current_actor = _turn_manager.next_actor()
 	assert(_current_actor.stats.is_alive)
@@ -127,8 +127,6 @@ func start_turn() -> void:
 
 	_interface.set_current_actor(
 		_current_actor, get_current_walk_range().get_visible_move_range())
-
-	#_interface.gui.turn_queue.next_turn()
 
 
 func _clear_turn_data() -> void:
@@ -181,7 +179,7 @@ func _start_battle() -> void:
 	actor_ai.reset()
 
 	_turn_manager.roll_initiative(_map.get_actors())
-	#_interface.gui.turn_queue.set_queue(_turn_manager.turn_order)
+	_interface.gui.turn_queue.set_actors(_turn_manager.ordered_actors)
 
 	_screen_transition.fade_in()
 	yield(_screen_transition, "faded_in")
@@ -226,8 +224,8 @@ func _get_threat_range(actor: Actor) -> Dictionary:
 
 
 func _on_map_actor_dying(actor: Actor) -> void:
-	var _index := _turn_manager.remove_actor(actor)
-	#_interface.gui.turn_queue.remove_icon(turn_index)
+	var index := _turn_manager.remove_actor(actor)
+	_interface.gui.turn_queue.remove_icon(index)
 
 
 func _on_TurnManager_round_started(is_first_round: bool) -> void:

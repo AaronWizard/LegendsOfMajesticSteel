@@ -22,7 +22,7 @@ func clear() -> void:
 
 
 func get_ordered_actors() -> Array:
-	return ordered_actors.duplicate()
+	return _actors.duplicate()
 
 
 func next_actor() -> Actor:

@@ -1,7 +1,8 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://src/ui/battle/BattleGUI.gd" type="Script" id=1]
 [ext_resource path="res://src/ui/battle/SkillPanel.tscn" type="PackedScene" id=2]
+[ext_resource path="res://src/ui/battle/TurnQueue.tscn" type="PackedScene" id=3]
 [ext_resource path="res://src/ui/battle/ActorStatusPanel.tscn" type="PackedScene" id=4]
 [ext_resource path="res://src/ui/battle/actordetails/ActorDetailsPanel.tscn" type="PackedScene" id=5]
 [ext_resource path="res://assets/graphics/ui/icons/options.png" type="Texture" id=6]
@@ -11,6 +12,8 @@
 
 [node name="BattleGUI" type="CanvasLayer"]
 script = ExtResource( 1 )
+
+[node name="TurnQueue" parent="." instance=ExtResource( 3 )]
 
 [node name="CurrentActorStatus" parent="." instance=ExtResource( 4 )]
 anchor_top = 1.0
