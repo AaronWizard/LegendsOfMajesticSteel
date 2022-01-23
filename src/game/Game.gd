@@ -116,6 +116,10 @@ func player_lost() -> bool:
 
 
 func start_turn() -> void:
+	if _current_actor:
+		_current_actor.round_finished = true
+		_clear_turn_data()
+
 	_current_actor = _turn_manager.next_actor()
 	assert(_current_actor.stats.is_alive)
 
@@ -124,12 +128,6 @@ func start_turn() -> void:
 	_interface.set_current_actor(
 		_current_actor, get_current_walk_range().get_visible_move_range())
 
-
-func end_turn() -> void:
-	_current_actor.round_finished = true
-	_clear_turn_data()
-
-	_interface.clear_current_actor()
 	#_interface.gui.turn_queue.next_turn()
 
 
