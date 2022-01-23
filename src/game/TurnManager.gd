@@ -1,7 +1,7 @@
 class_name TurnManager
 extends Node
 
-signal round_started
+signal round_started(is_first_round)
 
 var ordered_actors: Array setget , get_ordered_actors
 
@@ -13,6 +13,7 @@ func roll_initiative(actors: Array) -> void:
 	clear()
 	_actors = actors.duplicate()
 	_actors.sort_custom(self, "_compare_actors")
+	assert(_turn_index == -1)
 
 
 func clear() -> void:
@@ -25,9 +26,10 @@ func get_ordered_actors() -> Array:
 
 
 func next_actor() -> Actor:
+	var is_first_round := _turn_index == -1
 	_turn_index = (_turn_index + 1) % _actors.size()
 	if _turn_index == 0:
-		emit_signal("round_started")
+		emit_signal("round_started", is_first_round)
 
 	return _actors[_turn_index] as Actor
 

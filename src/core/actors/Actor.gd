@@ -293,7 +293,6 @@ func start_battle() -> void:
 		s.start_battle()
 
 	_stamina_bar.reset()
-	get_turn_status().start_battle()
 
 
 func set_pose(value: int) -> void:

@@ -232,7 +232,7 @@ func _on_map_actor_dying(actor: Actor) -> void:
 	#_interface.gui.turn_queue.remove_icon(turn_index)
 
 
-func _on_TurnManager_round_started() -> void:
+func _on_TurnManager_round_started(is_first_round: bool) -> void:
 	for a in _map.get_actors():
 		var actor := a as Actor
-		actor.turn_status.start_round()
+		actor.turn_status.start_round(is_first_round)
