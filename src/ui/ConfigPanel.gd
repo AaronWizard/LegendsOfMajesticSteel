@@ -29,7 +29,8 @@ func _on_FullscreenToggle_toggled(button_pressed: bool) -> void:
 
 func _on_SoundVolume_value_changed(value: float) -> void:
 	Config.sound_volume = value
-	StandardSounds.play_select()
+	if visible:
+		StandardSounds.play_select()
 
 
 func _on_MusicVolume_value_changed(value: float) -> void:
