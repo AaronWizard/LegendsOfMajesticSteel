@@ -84,7 +84,6 @@ onready var _blood_splatter := $Center/BloodSplatter \
 onready var _stamina_bar := $Center/Offset/Sprite/StaminaBar as StaminaBar
 onready var _condition_icons := $Center/Offset/Sprite/ConditionIcons \
 		as ConditionIcons
-onready var _wait_icon := $WaitIcon as AnimatedSprite
 
 onready var _target_cursor := $TargetCursor as TargetCursor
 
@@ -103,7 +102,6 @@ func _ready() -> void:
 		_stamina_bar.max_stamina = get_stats().max_stamina
 		_condition_icons.update_icons(get_stats())
 
-		_wait_icon.play()
 		_randomize_idle_start()
 
 
@@ -135,8 +133,6 @@ func set_size(value: int) -> void:
 
 	if _target_cursor:
 		_target_cursor.rect_size = Vector2(size, size)
-	if _wait_icon:
-		_wait_icon.position = size * Constants.TILE_SIZE_V
 	if _blood_splatter:
 		var pixel_rect_size := (size * Constants.TILE_SIZE_V) + Vector2(8, 8)
 		_blood_splatter.amount = int(max(pixel_rect_size.x, pixel_rect_size.y))
@@ -507,12 +503,11 @@ func _on_StaminaBar_animation_finished() -> void:
 func _on_TurnStatus_round_started(first_round: bool) -> void:
 	if not first_round:
 		charge_skills()
-	_wait_icon.visible = false
 	get_stats().start_round()
 
 
 func _on_TurnStatus_round_finished() -> void:
-	_wait_icon.visible = true
+	pass
 
 
 func _on_Stats_conditions_changed() -> void:
