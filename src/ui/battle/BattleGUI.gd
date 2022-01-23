@@ -7,10 +7,6 @@ signal wait_selected
 
 signal skill_cleared
 
-signal turn_cancelled
-
-var can_cancel := false
-
 var current_actor: Actor = null setget set_current_actor
 var other_actor: Actor = null setget set_other_actor
 
@@ -20,7 +16,6 @@ var action_menu_open: bool setget , get_action_menu_open
 
 onready var _current_actor_status := $CurrentActorStatus as ActorStatusPanel
 onready var _other_actor_status := $OtherActorStatus as ActorStatusPanel
-onready var _cancel_turn_button := $CancelTurn as Control
 
 onready var _actor_details := $ActorDetailsPanel as ActorDetailsPanel
 
@@ -33,7 +28,6 @@ onready var _options_panel := $GameOptionsPanel as Popup
 
 func _ready() -> void:
 	_current_actor_status.visible = false
-	_cancel_turn_button.visible = false
 	_other_actor_status.visible = false
 	_skill_panel.visible = false
 
@@ -55,9 +49,6 @@ func set_current_actor(value: Actor) -> void:
 				current_actor.attack_skill, current_actor.skills)
 	else:
 		_action_menu.clear_skills()
-
-	_cancel_turn_button.visible = can_cancel and (current_actor != null) \
-			and (current_actor.faction == Actor.Faction.PLAYER)
 
 
 func set_other_actor(value: Actor) -> void:
@@ -147,10 +138,6 @@ func _on_ActionMenu_wait_selected() -> void:
 
 func _on_ActionMenu_skill_selected(skill_index: int) -> void:
 	emit_signal("skill_selected", skill_index)
-
-
-func _on_CancelTurn_pressed() -> void:
-	emit_signal("turn_cancelled")
 
 
 func _on_size_changed() -> void:

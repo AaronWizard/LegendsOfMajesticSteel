@@ -115,17 +115,11 @@ func player_lost() -> bool:
 	return result
 
 
-func start_turn(actor: Actor) -> void:
-	assert(actor.stats.is_alive)
-	_current_actor = actor
+func start_turn() -> void:
+	_current_actor = _turn_manager.next_actor()
+	assert(_current_actor.stats.is_alive)
 	_interface.set_current_actor(
-			actor, get_current_walk_range().get_visible_move_range())
-
-
-func cancel_turn() -> void:
-	_clear_turn_data()
-
-	_interface.clear_current_actor()
+		_current_actor, get_current_walk_range().get_visible_move_range())
 
 
 func end_turn() -> void:
@@ -155,13 +149,14 @@ func _load_map(map_file: PackedScene) -> void:
 		_interface.current_map = null
 		assert(_map_container.get_child_count() == 0)
 
+		_turn_manager.clear()
+
 	var new_map := map_file.instance() as Map
 	assert(new_map != null)
 
 	_map_container.add_child(new_map)
 	_map = new_map
 	_interface.current_map = new_map
-
 	# warning-ignore:return_value_discarded
 	_map.connect("actor_dying", self, "_on_map_actor_dying")
 
@@ -232,8 +227,7 @@ func _get_threat_range(actor: Actor) -> Dictionary:
 
 
 func _on_map_actor_dying(actor: Actor) -> void:
-	pass
-	#var turn_index := _turn_manager.remove_actor(actor)
+	var _index := _turn_manager.remove_actor(actor)
 	#_interface.gui.turn_queue.remove_icon(turn_index)
 
 

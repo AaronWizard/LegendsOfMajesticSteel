@@ -1,11 +1,10 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://src/ui/battle/BattleGUI.gd" type="Script" id=1]
 [ext_resource path="res://src/ui/battle/SkillPanel.tscn" type="PackedScene" id=2]
 [ext_resource path="res://src/ui/battle/ActorStatusPanel.tscn" type="PackedScene" id=4]
 [ext_resource path="res://src/ui/battle/actordetails/ActorDetailsPanel.tscn" type="PackedScene" id=5]
 [ext_resource path="res://assets/graphics/ui/icons/options.png" type="Texture" id=6]
-[ext_resource path="res://assets/graphics/ui/icons/actions/cancel.png" type="Texture" id=7]
 [ext_resource path="res://src/ui/controlswithsound/SoundButton.gd" type="Script" id=8]
 [ext_resource path="res://src/ui/battle/ActionMenu.tscn" type="PackedScene" id=9]
 [ext_resource path="res://src/ui/battle/GameOptionsPanel.tscn" type="PackedScene" id=10]
@@ -21,20 +20,6 @@ margin_top = -33.0
 margin_right = 77.0
 margin_bottom = -1.0
 size_flags_horizontal = 1
-
-[node name="CancelTurn" type="Button" parent="."]
-anchor_top = 1.0
-anchor_bottom = 1.0
-margin_left = 75.0
-margin_top = -29.0
-margin_right = 99.0
-margin_bottom = -5.0
-icon = ExtResource( 7 )
-script = ExtResource( 8 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-sound_type = 1
 
 [node name="OtherActorStatus" parent="." instance=ExtResource( 4 )]
 anchor_left = 1.0
@@ -96,7 +81,6 @@ margin_bottom = 74.0
 visible = false
 
 [connection signal="portrait_pressed" from="CurrentActorStatus" to="." method="_on_CurrentActorStatus_portrait_pressed"]
-[connection signal="pressed" from="CancelTurn" to="." method="_on_CancelTurn_pressed"]
 [connection signal="portrait_pressed" from="OtherActorStatus" to="." method="_on_OtherActorStatus_portrait_pressed"]
 [connection signal="cancelled" from="SkillPanel" to="." method="_on_SkillPanel_cancelled"]
 [connection signal="pressed" from="OptionsButton" to="." method="_on_OptionsButton_pressed"]
