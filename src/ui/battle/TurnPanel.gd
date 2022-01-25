@@ -1,4 +1,4 @@
-class_name TurnQueue
+class_name TurnPanel
 extends ReferenceRect
 
 const ANIM_TIME := 0.4

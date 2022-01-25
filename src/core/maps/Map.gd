@@ -14,9 +14,12 @@ const _COVER_EFFECT := preload("res://resources/data/conditions/Cover.tres")
 
 var _COVER_CONDITION := Condition.new(_COVER_EFFECT)
 
+var turn_queue: TurnQueue setget , get_turn_queue
+
+
 onready var _ground := $Ground as TileMap
 onready var _decals := $Decals as TileMap
-onready var _actors := $Actors as Node
+onready var _actors := $Actors as TurnQueue
 onready var _effects := $Effects as Node
 
 var _actor_positions := {}
@@ -133,6 +136,10 @@ func is_defensive_terrain_at_cell(actor: Actor, cell: Vector2) -> bool:
 
 func add_decal(decal: int, cell: Vector2) -> void:
 	_decals.set_cellv(cell, decal)
+
+
+func get_turn_queue() -> TurnQueue:
+	return _actors
 
 
 func get_actors() -> Array:
