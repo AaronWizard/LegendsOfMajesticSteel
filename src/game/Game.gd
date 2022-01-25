@@ -112,7 +112,7 @@ func start_turn() -> void:
 	if _current_actor:
 		_current_actor.round_finished = true
 		_clear_turn_data()
-		_interface.gui.turn_queue.next_turn()
+		_interface.gui.turn_panel.next_turn()
 
 	_current_actor = _map.turn_queue.next_actor()
 	assert(_current_actor.stats.is_alive)
@@ -170,7 +170,7 @@ func _start_battle() -> void:
 
 	actor_ai.reset()
 
-	_interface.gui.turn_queue.set_actors(_map.get_actors())
+	_interface.gui.turn_panel.set_actors(_map.get_actors())
 
 	_screen_transition.fade_in()
 	yield(_screen_transition, "faded_in")
@@ -215,4 +215,4 @@ func _get_threat_range(actor: Actor) -> Dictionary:
 
 
 func _on_actor_removed(_actor: Actor, turn_index: int) -> void:
-	_interface.gui.turn_queue.remove_icon(turn_index)
+	_interface.gui.turn_panel.remove_icon(turn_index)

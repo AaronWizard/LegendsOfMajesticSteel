@@ -14,7 +14,7 @@ var action_menu_position: Vector2 setget \
 		set_action_menu_pos, get_action_menu_pos
 var action_menu_open: bool setget , get_action_menu_open
 
-onready var turn_queue := $TurnPanel as TurnPanel
+onready var turn_panel := $TurnPanel as TurnPanel
 
 onready var _current_actor_status := $CurrentActorStatus as ActorStatusPanel
 onready var _other_actor_status := $OtherActorStatus as ActorStatusPanel
