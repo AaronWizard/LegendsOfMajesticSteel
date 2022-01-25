@@ -124,4 +124,6 @@ func _try_select_other_actor(other_actor: Actor) -> void:
 
 
 func _on_turn_panel_actor_selected(actor) -> void:
+	_game.interface.camera.smoothing_enabled = true
+	_game.interface.camera.position = actor.center_pixel_pos
 	_try_select_other_actor(actor)
