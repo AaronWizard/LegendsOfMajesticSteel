@@ -56,6 +56,10 @@ func set_current_actor(value: Actor) -> void:
 func set_other_actor(value: Actor) -> void:
 	other_actor = value
 	_set_actor(other_actor, _other_actor_status, true)
+	if other_actor:
+		turn_panel.select_other_actor(other_actor.get_index())
+	else:
+		turn_panel.clear_other_actor()
 
 
 func set_action_menu_pos(value: Vector2) -> void:
@@ -103,7 +107,7 @@ func hide_skill_panel() -> void:
 
 
 static func _set_actor(actor: Actor, actor_status: ActorStatusPanel,
-		portrait_clickable: bool) -> void:
+			portrait_clickable: bool) -> void:
 	actor_status.visible = actor != null
 
 	if actor:

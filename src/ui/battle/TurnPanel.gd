@@ -5,8 +5,14 @@ const ANIM_TIME := 0.4
 
 const _FLAT_ICON_BUTTON := preload("res://src/ui/FlatIconButton.tscn")
 
+signal actor_selected(actor)
+signal actor_deselected
+
 onready var _actors := $Actors as Control
+
 onready var _current_turn_border := $CurrentTurnBorder as Control
+onready var _other_turn_border := $OtherTurnBorder as Control
+
 onready var _tween := $Tween as Tween
 
 var _turn_index := 0
@@ -26,16 +32,20 @@ func clear() -> void:
 	while _actors.get_child_count() > 0:
 		var child := _actors.get_child(0) as Control
 		_actors.remove_child(child)
+		child.disconnect("pressed", self, "_on_actor_icon_pressed")
 		child.queue_free()
 
 		_turn_index = 0
 	# warning-ignore:return_value_discarded
 	_tween.stop_all()
+	_other_turn_border.visible = false
 
 
 func next_turn() -> void:
 	assert(_actors.get_child_count() > 0)
 	_turn_index = (_turn_index + 1) % _actors.get_child_count()
+
+	_other_turn_border.visible = false
 
 	_queue_icon_position_anims()
 	_queue_icon_animation(
@@ -46,6 +56,15 @@ func next_turn() -> void:
 	# warning-ignore:return_value_discarded
 	_tween.start()
 	_update_min_size()
+
+
+func select_other_actor(index: int) -> void:
+	_other_turn_border.visible = true
+	_other_turn_border.rect_position.x = index * Constants.TILE_SIZE
+
+
+func clear_other_actor() -> void:
+	_other_turn_border.visible = false
 
 
 func remove_icon(index: int) -> void:
@@ -99,4 +118,16 @@ func _update_min_size() -> void:
 
 
 func _on_actor_icon_pressed(actor: Actor, index: int) -> void:
-	print(actor.name, "; ", index)
+	var next_pos := index * Constants.TILE_SIZE
+
+	if (index > 0) and ( \
+			not _other_turn_border.visible \
+			or (_other_turn_border.rect_position.x != next_pos)):
+		_other_turn_border.visible = true
+		_other_turn_border.rect_position.x = next_pos
+		StandardSounds.play_select()
+		emit_signal("actor_selected", actor)
+	elif _other_turn_border.visible:
+		StandardSounds.play_cancel()
+		_other_turn_border.visible = false
+		emit_signal("actor_deselected")
