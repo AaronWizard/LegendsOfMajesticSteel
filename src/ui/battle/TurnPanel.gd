@@ -6,7 +6,6 @@ const ANIM_TIME := 0.4
 const _FLAT_ICON_BUTTON := preload("res://src/ui/FlatIconButton.tscn")
 
 signal actor_selected(actor)
-signal actor_deselected
 
 onready var _actors := $Actors as Control
 
@@ -81,7 +80,7 @@ func _add_actor_icon(actor: Actor) -> void:
 	var icon := _FLAT_ICON_BUTTON.instance() as Button
 	icon.icon = actor.portrait
 	# warning-ignore:return_value_discarded
-	icon.connect("pressed", self, "_on_actor_icon_pressed", [actor, index])
+	icon.connect("pressed", self, "_on_actor_icon_pressed", [actor])
 	_actors.add_child(icon)
 
 	assert(icon.rect_size.x == Constants.TILE_SIZE)
@@ -117,17 +116,5 @@ func _update_min_size() -> void:
 	rect_size = Vector2.ZERO # Reset size
 
 
-func _on_actor_icon_pressed(actor: Actor, index: int) -> void:
-	var next_pos := index * Constants.TILE_SIZE
-
-	if (index > 0) and ( \
-			not _other_turn_border.visible \
-			or (_other_turn_border.rect_position.x != next_pos)):
-		_other_turn_border.visible = true
-		_other_turn_border.rect_position.x = next_pos
-		StandardSounds.play_select()
-		emit_signal("actor_selected", actor)
-	elif _other_turn_border.visible:
-		StandardSounds.play_cancel()
-		_other_turn_border.visible = false
-		emit_signal("actor_deselected")
+func _on_actor_icon_pressed(actor: Actor) -> void:
+	emit_signal("actor_selected", actor)

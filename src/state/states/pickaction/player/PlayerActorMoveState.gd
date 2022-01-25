@@ -65,16 +65,7 @@ func _toggle_action_menu() -> void:
 func _player_other_actor_clicked(target_cell: Vector2) -> void:
 	var other_actor := _game.interface.current_map.get_actor_on_cell(
 			target_cell)
-	if (other_actor != null) and (other_actor != _game.current_actor) \
-			and (other_actor != _game.interface.gui.other_actor):
-		StandardSounds.play_select()
-		_game.interface.set_other_actor(
-				other_actor,
-				_game.get_walk_range(other_actor).get_visible_move_range(),
-				_game.get_threat_range(other_actor))
-	else:
-		StandardSounds.play_cancel()
-		_game.interface.clear_other_actor()
+	_try_select_other_actor(other_actor)
 
 
 func _wait_selected() -> void:
@@ -119,5 +110,18 @@ func _screen_resized() -> void:
 		_position_action_menu()
 
 
-func _on_turn_panel_actor_selected(_actor) -> void:
-	pass
+func _try_select_other_actor(other_actor: Actor) -> void:
+	if (other_actor != null) and (other_actor != _game.current_actor) \
+			and (other_actor != _game.interface.gui.other_actor):
+		StandardSounds.play_select()
+		_game.interface.set_other_actor(
+				other_actor,
+				_game.get_walk_range(other_actor).get_visible_move_range(),
+				_game.get_threat_range(other_actor))
+	else:
+		StandardSounds.play_cancel()
+		_game.interface.clear_other_actor()
+
+
+func _on_turn_panel_actor_selected(actor) -> void:
+	_try_select_other_actor(actor)
