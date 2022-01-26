@@ -8,6 +8,7 @@ const _FLAT_ICON_BUTTON := preload("res://src/ui/FlatIconButton.tscn")
 signal turn_advanced
 
 signal actor_selected(actor)
+signal other_actor_cleared
 
 var turn_scroll_pos: int setget , get_turn_scroll_pos
 
@@ -73,6 +74,7 @@ func select_other_actor(index: int) -> void:
 
 func clear_other_actor() -> void:
 	_other_turn_border.visible = false
+	emit_signal("other_actor_cleared")
 
 
 func remove_icon(index: int) -> void:

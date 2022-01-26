@@ -42,4 +42,5 @@ scroll_vertical_enabled = false
 
 [connection signal="resized" from="." to="." method="_on_BorderedTurnPanel_resized"]
 [connection signal="minimum_size_changed" from="CenterContainer/PanelContainer/ScrollContainer/TurnPanel" to="." method="_on_TurnPanel_minimum_size_changed"]
+[connection signal="other_actor_cleared" from="CenterContainer/PanelContainer/ScrollContainer/TurnPanel" to="." method="_on_TurnPanel_other_actor_cleared"]
 [connection signal="turn_advanced" from="CenterContainer/PanelContainer/ScrollContainer/TurnPanel" to="." method="_on_TurnPanel_turn_advanced"]

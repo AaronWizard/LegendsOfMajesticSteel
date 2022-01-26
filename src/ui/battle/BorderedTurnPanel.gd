@@ -32,6 +32,17 @@ func _new_min_size() -> Vector2:
 	return result
 
 
+func _scroll_to_turn_slot() -> void:
+	# warning-ignore:return_value_discarded
+	_tween.interpolate_property(
+			_scroll, "scroll_horizontal",
+			_scroll.scroll_horizontal, _turn_panel.turn_scroll_pos,
+			TurnPanel.ANIM_TIME, Tween.TRANS_QUAD, Tween.EASE_IN_OUT
+	)
+	# warning-ignore:return_value_discarded
+	_tween.start()
+
+
 func _on_BorderedTurnPanel_resized() -> void:
 	_resize_border()
 
@@ -41,11 +52,8 @@ func _on_TurnPanel_minimum_size_changed() -> void:
 
 
 func _on_TurnPanel_turn_advanced() -> void:
-	# warning-ignore:return_value_discarded
-	_tween.interpolate_property(
-			_scroll, "scroll_horizontal",
-			_scroll.scroll_horizontal, _turn_panel.turn_scroll_pos,
-			TurnPanel.ANIM_TIME, Tween.TRANS_QUAD, Tween.EASE_IN_OUT
-	)
-	# warning-ignore:return_value_discarded
-	_tween.start()
+	_scroll_to_turn_slot()
+
+
+func _on_TurnPanel_other_actor_cleared() -> void:
+	_scroll_to_turn_slot()
