@@ -5,7 +5,11 @@ const ANIM_TIME := 0.4
 
 const _FLAT_ICON_BUTTON := preload("res://src/ui/FlatIconButton.tscn")
 
+signal turn_advanced
+
 signal actor_selected(actor)
+
+var turn_scroll_pos: int setget , get_turn_scroll_pos
 
 onready var _actors := $Actors as Control
 
@@ -15,6 +19,10 @@ onready var _other_turn_border := $OtherTurnBorder as Control
 onready var _tween := $Tween as Tween
 
 var _turn_index := 0
+
+
+func get_turn_scroll_pos() -> int:
+	return _turn_index * Constants.TILE_SIZE
 
 
 func set_actors(actors: Array) -> void:
@@ -52,6 +60,7 @@ func next_turn() -> void:
 		_current_turn_border.rect_position,
 		Vector2(_turn_index * Constants.TILE_SIZE, 0)
 	)
+	emit_signal("turn_advanced")
 	# warning-ignore:return_value_discarded
 	_tween.start()
 	_update_min_size()

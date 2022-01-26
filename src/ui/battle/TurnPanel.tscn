@@ -4,11 +4,10 @@
 [ext_resource path="res://src/ui/battle/TurnPanel.gd" type="Script" id=2]
 [ext_resource path="res://assets/graphics/ui/other_turn_border.png" type="Texture" id=3]
 
-[node name="TurnQueue" type="ReferenceRect"]
+[node name="TurnPanel" type="ReferenceRect"]
 margin_right = 24.0
 margin_bottom = 24.0
 rect_min_size = Vector2( 24, 24 )
-editor_only = false
 script = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
