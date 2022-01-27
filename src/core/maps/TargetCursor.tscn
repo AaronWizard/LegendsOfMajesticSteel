@@ -1,7 +1,58 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://assets/graphics/ui/map/target_cursor_corner.png" type="Texture" id=1]
 [ext_resource path="res://src/core/maps/TargetCursor.gd" type="Script" id=2]
+
+[sub_resource type="Animation" id=2]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("CornerNW/SpriteNW:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( -3, -3 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("CornerSW/SpriteSW:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( -3, 3 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("CornerSE/SpriteSE:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 3, 3 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("CornerNE/SpriteNE:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 3, -3 ) ]
+}
 
 [sub_resource type="Animation" id=1]
 resource_name = "cursoranim"
@@ -17,7 +68,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 0.3, 0.6 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 1,
-"values": [ Vector2( 0, 0 ), Vector2( 1, -1 ), Vector2( 0, 0 ) ]
+"values": [ Vector2( -3, 3 ), Vector2( -2, 2 ), Vector2( -3, 3 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("CornerSE/SpriteSE:position")
@@ -29,7 +80,7 @@ tracks/1/keys = {
 "times": PoolRealArray( 0, 0.3, 0.6 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 1,
-"values": [ Vector2( 0, 0 ), Vector2( -1, -1 ), Vector2( 0, 0 ) ]
+"values": [ Vector2( 3, 3 ), Vector2( 2, 2 ), Vector2( 3, 3 ) ]
 }
 tracks/2/type = "value"
 tracks/2/path = NodePath("CornerNW/SpriteNW:position")
@@ -41,7 +92,7 @@ tracks/2/keys = {
 "times": PoolRealArray( 0, 0.3, 0.6 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 1,
-"values": [ Vector2( 0, 0 ), Vector2( 1, 1 ), Vector2( 0, 0 ) ]
+"values": [ Vector2( -3, -3 ), Vector2( -2, -2 ), Vector2( -3, -3 ) ]
 }
 tracks/3/type = "value"
 tracks/3/path = NodePath("CornerNE/SpriteNE:position")
@@ -53,7 +104,7 @@ tracks/3/keys = {
 "times": PoolRealArray( 0, 0.3, 0.6 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 1,
-"values": [ Vector2( 0, 0 ), Vector2( -1, 1 ), Vector2( 0, 0 ) ]
+"values": [ Vector2( 3, -3 ), Vector2( 2, -2 ), Vector2( 3, -3 ) ]
 }
 
 [node name="TargetCursor" type="Node2D"]
@@ -61,20 +112,22 @@ script = ExtResource( 2 )
 
 [node name="CornerNW" type="Position2D" parent="."]
 __meta__ = {
-"_edit_group_": true
+"_edit_lock_": true
 }
 
 [node name="SpriteNW" type="Sprite" parent="CornerNW"]
+position = Vector2( -3, -3 )
 texture = ExtResource( 1 )
 centered = false
 
 [node name="CornerNE" type="Position2D" parent="."]
 position = Vector2( 24, 0 )
 __meta__ = {
-"_edit_group_": true
+"_edit_lock_": true
 }
 
 [node name="SpriteNE" type="Sprite" parent="CornerNE"]
+position = Vector2( 3, -3 )
 texture = ExtResource( 1 )
 centered = false
 offset = Vector2( -8, 0 )
@@ -83,10 +136,11 @@ flip_h = true
 [node name="CornerSE" type="Position2D" parent="."]
 position = Vector2( 24, 24 )
 __meta__ = {
-"_edit_group_": true
+"_edit_lock_": true
 }
 
 [node name="SpriteSE" type="Sprite" parent="CornerSE"]
+position = Vector2( 3, 3 )
 texture = ExtResource( 1 )
 centered = false
 offset = Vector2( -8, -8 )
@@ -96,10 +150,11 @@ flip_v = true
 [node name="CornerSW" type="Position2D" parent="."]
 position = Vector2( 0, 24 )
 __meta__ = {
-"_edit_group_": true
+"_edit_lock_": true
 }
 
 [node name="SpriteSW" type="Sprite" parent="CornerSW"]
+position = Vector2( -3, 3 )
 texture = ExtResource( 1 )
 centered = false
 offset = Vector2( 0, -8 )
@@ -107,4 +162,5 @@ flip_v = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 autoplay = "cursoranim"
+anims/RESET = SubResource( 2 )
 anims/cursoranim = SubResource( 1 )
