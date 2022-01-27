@@ -1,0 +1,27 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://assets/graphics/ui/icons/actions/attack.png" type="Texture" id=1]
+
+[sub_resource type="StyleBoxEmpty" id=2]
+
+[sub_resource type="StyleBoxEmpty" id=3]
+
+[sub_resource type="StyleBoxEmpty" id=4]
+
+[sub_resource type="StyleBoxEmpty" id=5]
+
+[sub_resource type="StyleBoxEmpty" id=1]
+
+[node name="FlatIconButton" type="Button"]
+margin_right = 16.0
+margin_bottom = 16.0
+custom_styles/hover = SubResource( 2 )
+custom_styles/pressed = SubResource( 3 )
+custom_styles/focus = SubResource( 4 )
+custom_styles/disabled = SubResource( 5 )
+custom_styles/normal = SubResource( 1 )
+icon = ExtResource( 1 )
+flat = true
+__meta__ = {
+"_edit_use_anchors_": false
+}

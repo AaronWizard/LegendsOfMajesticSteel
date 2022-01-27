@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://src/game/Game.gd" type="Script" id=1]
 [ext_resource path="res://src/ui/BattleInterface.tscn" type="PackedScene" id=2]
@@ -6,17 +6,14 @@
 [ext_resource path="res://src/state/states/pickaction/ai/AIPickActorActionState.gd" type="Script" id=4]
 [ext_resource path="res://src/state/StateMachine.gd" type="Script" id=5]
 [ext_resource path="res://src/state/states/NextTurnState.gd" type="Script" id=6]
-[ext_resource path="res://src/state/states/pickactor/PlayerPickActorState.gd" type="Script" id=7]
+[ext_resource path="res://src/state/states/ActorStartTurnState.gd" type="Script" id=7]
 [ext_resource path="res://src/state/states/pickaction/player/PlayerActorMoveState.gd" type="Script" id=8]
 [ext_resource path="res://src/state/states/doaction/ActorMoveState.gd" type="Script" id=9]
 [ext_resource path="res://src/ui/VictoryText.tscn" type="PackedScene" id=10]
 [ext_resource path="res://src/state/states/VictoryState.gd" type="Script" id=11]
 [ext_resource path="res://src/state/states/pickaction/player/PlayerActorTargetState.gd" type="Script" id=12]
 [ext_resource path="res://src/state/states/doaction/ActorSkillState.gd" type="Script" id=13]
-[ext_resource path="res://src/game/TurnManager.gd" type="Script" id=14]
-[ext_resource path="res://src/state/states/pickactor/AIPickActorState.gd" type="Script" id=15]
 [ext_resource path="res://src/state/State.gd" type="Script" id=16]
-[ext_resource path="res://src/state/states/ActorStartTurnState.gd" type="Script" id=17]
 [ext_resource path="res://src/state/states/doaction/ActorActionState.gd" type="Script" id=18]
 [ext_resource path="res://src/game/ScreenTransition.tscn" type="PackedScene" id=19]
 [ext_resource path="res://src/state/states/GameOverState.gd" type="Script" id=20]
@@ -29,9 +26,6 @@ start_map_file = ExtResource( 3 )
 
 [node name="BattleInterface" parent="." instance=ExtResource( 2 )]
 
-[node name="TurnManager" type="Node" parent="."]
-script = ExtResource( 14 )
-
 [node name="StateMachine" type="Node" parent="."]
 script = ExtResource( 5 )
 initial_state = NodePath("Loading")
@@ -41,24 +35,12 @@ script = ExtResource( 16 )
 
 [node name="NextTurnState" type="Node" parent="StateMachine"]
 script = ExtResource( 6 )
-player_pick_actor_state_path = NodePath("../PlayerPickActorState")
-ai_pick_actor_state_path = NodePath("../AIPickActorState")
+actor_start_turn_state_path = NodePath("../ActorStartTurnState")
 victory_state_path = NodePath("../VictoryState")
 game_over_state_path = NodePath("../GameOverState")
 
-[node name="PlayerPickActorState" type="Node" parent="StateMachine"]
-script = ExtResource( 7 )
-__meta__ = {
-"_editor_description_": ""
-}
-turn_start_state_path = NodePath("../ActorStartTurnState")
-
-[node name="AIPickActorState" type="Node" parent="StateMachine"]
-script = ExtResource( 15 )
-turn_start_state_path = NodePath("../ActorStartTurnState")
-
 [node name="ActorStartTurnState" type="Node" parent="StateMachine"]
-script = ExtResource( 17 )
+script = ExtResource( 7 )
 player_turn_state_path = NodePath("../PlayerActorMoveState")
 ai_turn_state_path = NodePath("../AIPickActorActionState")
 
@@ -67,7 +49,6 @@ script = ExtResource( 8 )
 move_state_path = NodePath("../ActorMoveState")
 skill_state_path = NodePath("../ActorSkillState")
 wait_state_path = NodePath("../ActorWaitState")
-pick_actor_state_path = NodePath("../PlayerPickActorState")
 player_target_state_path = NodePath("../PlayerActorTargetState")
 
 [node name="PlayerActorTargetState" type="Node" parent="StateMachine"]
@@ -78,7 +59,6 @@ __meta__ = {
 move_state_path = NodePath("../ActorMoveState")
 skill_state_path = NodePath("../ActorSkillState")
 wait_state_path = NodePath("../ActorWaitState")
-pick_actor_state_path = NodePath("../PlayerPickActorState")
 player_move_state_path = NodePath("../PlayerActorMoveState")
 
 [node name="AIPickActorActionState" type="Node" parent="StateMachine"]
@@ -116,5 +96,3 @@ screen_transition_path = NodePath("../../CanvasLayer/ScreenTransition")
 [node name="VictoryText" parent="CanvasLayer" instance=ExtResource( 10 )]
 
 [node name="ScreenTransition" parent="CanvasLayer" instance=ExtResource( 19 )]
-
-[connection signal="round_started" from="TurnManager" to="." method="_on_TurnManager_round_started"]

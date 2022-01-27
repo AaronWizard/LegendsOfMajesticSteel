@@ -7,10 +7,6 @@ signal wait_selected
 
 signal skill_cleared
 
-signal turn_cancelled
-
-var can_cancel := false
-
 var current_actor: Actor = null setget set_current_actor
 var other_actor: Actor = null setget set_other_actor
 
@@ -18,11 +14,10 @@ var action_menu_position: Vector2 setget \
 		set_action_menu_pos, get_action_menu_pos
 var action_menu_open: bool setget , get_action_menu_open
 
-onready var turn_queue := $TurnQueuePanel as TurnQueuePanel
+onready var turn_panel := ($BorderedTurnPanel as BorderedTurnPanel).turn_panel
 
 onready var _current_actor_status := $CurrentActorStatus as ActorStatusPanel
 onready var _other_actor_status := $OtherActorStatus as ActorStatusPanel
-onready var _cancel_turn_button := $CancelTurn as Control
 
 onready var _actor_details := $ActorDetailsPanel as ActorDetailsPanel
 
@@ -35,7 +30,6 @@ onready var _options_panel := $GameOptionsPanel as Popup
 
 func _ready() -> void:
 	_current_actor_status.visible = false
-	_cancel_turn_button.visible = false
 	_other_actor_status.visible = false
 	_skill_panel.visible = false
 
@@ -58,13 +52,14 @@ func set_current_actor(value: Actor) -> void:
 	else:
 		_action_menu.clear_skills()
 
-	_cancel_turn_button.visible = can_cancel and (current_actor != null) \
-			and (current_actor.faction == Actor.Faction.PLAYER)
-
 
 func set_other_actor(value: Actor) -> void:
 	other_actor = value
 	_set_actor(other_actor, _other_actor_status, true)
+	if other_actor:
+		turn_panel.select_other_actor(other_actor.get_index())
+	else:
+		turn_panel.clear_other_actor()
 
 
 func set_action_menu_pos(value: Vector2) -> void:
@@ -112,7 +107,7 @@ func hide_skill_panel() -> void:
 
 
 static func _set_actor(actor: Actor, actor_status: ActorStatusPanel,
-		portrait_clickable: bool) -> void:
+			portrait_clickable: bool) -> void:
 	actor_status.visible = actor != null
 
 	if actor:
@@ -149,10 +144,6 @@ func _on_ActionMenu_wait_selected() -> void:
 
 func _on_ActionMenu_skill_selected(skill_index: int) -> void:
 	emit_signal("skill_selected", skill_index)
-
-
-func _on_CancelTurn_pressed() -> void:
-	emit_signal("turn_cancelled")
 
 
 func _on_size_changed() -> void:

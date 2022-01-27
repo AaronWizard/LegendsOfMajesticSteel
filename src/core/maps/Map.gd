@@ -14,12 +14,13 @@ const _COVER_EFFECT := preload("res://resources/data/conditions/Cover.tres")
 
 var _COVER_CONDITION := Condition.new(_COVER_EFFECT)
 
+var turn_queue: TurnQueue setget , get_turn_queue
+
+
 onready var _ground := $Ground as TileMap
 onready var _decals := $Decals as TileMap
-onready var _actors := $Actors as Node
+onready var _actors := $Actors as TurnQueue
 onready var _effects := $Effects as Node
-
-var _actor_positions := {}
 
 
 func _ready() -> void:
@@ -27,18 +28,11 @@ func _ready() -> void:
 		for a in get_actors():
 			var actor := a as Actor
 			# warning-ignore:return_value_discarded
-			actor.connect("origin_cell_changed", self,
-					"_actor_origin_cell_changed", [actor])
-			# warning-ignore:return_value_discarded
 			actor.connect("dying", self, "_actor_dying", [actor],
 					CONNECT_ONESHOT)
 			# warning-ignore:return_value_discarded
 			actor.connect("died", self, "remove_actor", [actor],
 					CONNECT_ONESHOT)
-
-			for c in actor.covered_cells:
-				var cell := c as Vector2
-				_actor_positions[cell] = actor
 
 		update_terrain_effects()
 
@@ -135,6 +129,10 @@ func add_decal(decal: int, cell: Vector2) -> void:
 	_decals.set_cellv(cell, decal)
 
 
+func get_turn_queue() -> TurnQueue:
+	return _actors
+
+
 func get_actors() -> Array:
 	return _actors.get_children()
 
@@ -153,14 +151,11 @@ func get_actors_by_faction(faction: int) -> Array:
 func get_actor_on_cell(cell: Vector2) -> Actor:
 	var result: Actor = null
 
-	if _actor_positions.has(cell):
-		var actor := _actor_positions[cell] as Actor
-		# Lazy updates to _actor_positions
+	for a in get_actors():
+		var actor := a as Actor
 		if actor.on_cell(cell):
 			result = actor
-		else:
-			# warning-ignore:return_value_discarded
-			_actor_positions.erase(cell)
+			break
 
 	return result
 
@@ -236,11 +231,6 @@ func remove_actor(actor: Actor) -> void:
 	_actors.remove_child(actor)
 	emit_signal("actor_removed", actor)
 
-	for c in actor.covered_cells:
-		var cell := c as Vector2
-		# warning-ignore:return_value_discarded
-		_actor_positions.erase(cell)
-
 
 func reset_actor_virtual_origins() -> void:
 	for a in get_actors():
@@ -259,12 +249,6 @@ func update_terrain_effects() -> void:
 
 func add_effect(effect: Node2D) -> void:
 	_effects.add_child(effect)
-
-
-func _actor_origin_cell_changed(actor: Actor) -> void:
-	for c in actor.covered_cells:
-		var cell := c as Vector2
-		_actor_positions[cell] = actor
 
 
 func _actor_dying(actor: Actor) -> void:

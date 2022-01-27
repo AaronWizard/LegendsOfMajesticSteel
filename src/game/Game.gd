@@ -9,7 +9,6 @@ var map: Map setget , get_map
 var current_actor: Actor setget , get_current_actor
 
 var interface: BattleInterface setget , get_interface
-var turn_manager: TurnManager setget , get_turn_manager
 
 var actor_ai := AIActorTurn.new()
 
@@ -27,7 +26,6 @@ onready var _screen_transition := $CanvasLayer/ScreenTransition \
 
 onready var _map_container := $Map
 onready var _interface := $BattleInterface as BattleInterface
-onready var _turn_manager := $TurnManager as TurnManager
 
 onready var _state_machine := $StateMachine as StateMachine
 onready var _next_turn_state := $StateMachine/NextTurnState as State
@@ -56,10 +54,6 @@ func get_interface() -> BattleInterface:
 	return _interface
 
 
-func get_turn_manager() -> TurnManager:
-	return _turn_manager
-
-
 func refresh_ranges(turn_start: bool) -> void:
 	_threat_ranges.clear()
 
@@ -71,7 +65,6 @@ func refresh_ranges(turn_start: bool) -> void:
 			if actor != _current_actor:
 				# warning-ignore:return_value_discarded
 				_walk_ranges.erase(actor)
-	#_refresh_enemy_threat_ranges()
 
 
 func get_active_actors(faction: int) -> Array:
@@ -79,7 +72,7 @@ func get_active_actors(faction: int) -> Array:
 
 	for a in _map.get_actors_by_faction(faction):
 		var actor := a as Actor
-		if not actor.turn_status.round_finished:
+		if not actor.round_finished:
 			result.append(actor)
 
 	return result
@@ -115,27 +108,19 @@ func player_lost() -> bool:
 	return result
 
 
-func start_turn(actor: Actor) -> void:
-	assert(actor.stats.is_alive)
-	_current_actor = actor
+func start_turn() -> void:
+	if _current_actor:
+		_current_actor.round_finished = true
+		_clear_turn_data()
+		_interface.gui.turn_panel.next_turn()
+
+	_current_actor = _map.turn_queue.next_actor()
+	assert(_current_actor.stats.is_alive)
+
+	refresh_ranges(true)
+
 	_interface.set_current_actor(
-			actor, get_current_walk_range().get_visible_move_range())
-
-
-func cancel_turn() -> void:
-	_clear_turn_data()
-
-	_interface.clear_current_actor()
-
-
-func end_turn() -> void:
-	_current_actor.turn_status.end_turn()
-
-	_clear_turn_data()
-
-	_interface.clear_current_actor()
-	_turn_manager.advance_turn()
-	_interface.gui.turn_queue.next_turn()
+		_current_actor, get_current_walk_range().get_visible_move_range())
 
 
 func _clear_turn_data() -> void:
@@ -148,7 +133,7 @@ func _load_map(map_file: PackedScene) -> void:
 	_clear_turn_data()
 
 	if _map != null:
-		_map.disconnect("actor_dying", self, "_on_map_actor_dying")
+		_map.turn_queue.disconnect("actor_removed", self, "_on_actor_removed")
 		_map_container.remove_child(_map)
 		_map.queue_free()
 		_map = null
@@ -161,9 +146,8 @@ func _load_map(map_file: PackedScene) -> void:
 	_map_container.add_child(new_map)
 	_map = new_map
 	_interface.current_map = new_map
-
 	# warning-ignore:return_value_discarded
-	_map.connect("actor_dying", self, "_on_map_actor_dying")
+	_map.turn_queue.connect("actor_removed", self, "_on_actor_removed")
 
 
 func _position_camera_start() -> void:
@@ -186,8 +170,7 @@ func _start_battle() -> void:
 
 	actor_ai.reset()
 
-	_turn_manager.roll_initiative(_map.get_actors())
-	_interface.gui.turn_queue.set_queue(_turn_manager.turn_order)
+	_interface.gui.turn_panel.set_actors(_map.get_actors())
 
 	_screen_transition.fade_in()
 	yield(_screen_transition, "faded_in")
@@ -231,12 +214,5 @@ func _get_threat_range(actor: Actor) -> Dictionary:
 	}
 
 
-func _on_map_actor_dying(actor: Actor) -> void:
-	var turn_index := _turn_manager.remove_actor(actor)
-	_interface.gui.turn_queue.remove_icon(turn_index)
-
-
-func _on_TurnManager_round_started() -> void:
-	for a in _map.get_actors():
-		var actor := a as Actor
-		actor.turn_status.start_round()
+func _on_actor_removed(_actor: Actor, turn_index: int) -> void:
+	_interface.gui.turn_panel.remove_icon(turn_index)

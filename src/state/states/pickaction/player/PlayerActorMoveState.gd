@@ -3,8 +3,6 @@ extends PlayerPickActorActionState
 
 export var player_target_state_path: NodePath
 
-var _other_actor: Actor
-
 onready var _player_target_state := get_node(player_target_state_path) as State
 
 
@@ -19,6 +17,10 @@ func start(data: Dictionary) -> void:
 	_game.interface.gui.connect("wait_selected", self, "_wait_selected")
 
 	# warning-ignore:return_value_discarded
+	_game.interface.gui.turn_panel.connect("actor_selected", self,
+			"_on_turn_panel_actor_selected")
+
+	# warning-ignore:return_value_discarded
 	get_tree().connect("screen_resized", self, "_screen_resized")
 
 
@@ -29,10 +31,11 @@ func end() -> void:
 	_game.interface.gui.disconnect("skill_selected", self, "_skill_selected")
 	_game.interface.gui.disconnect("wait_selected", self, "_wait_selected")
 
+	_game.interface.gui.turn_panel.disconnect("actor_selected", self,
+			"_on_turn_panel_actor_selected")
+
 	get_tree().disconnect("screen_resized", self, "_screen_resized")
 	_game.interface.clear_other_actor()
-
-	_other_actor = null
 
 
 func _mouse_click(_position: Vector2) -> void:
@@ -62,16 +65,7 @@ func _toggle_action_menu() -> void:
 func _player_other_actor_clicked(target_cell: Vector2) -> void:
 	var other_actor := _game.interface.current_map.get_actor_on_cell(
 			target_cell)
-	if (other_actor != null) and (other_actor != _game.current_actor) \
-			and (other_actor != _other_actor):
-		_other_actor = other_actor
-		_game.interface.set_other_actor(
-				other_actor,
-				_game.get_walk_range(other_actor).get_visible_move_range(),
-				_game.get_threat_range(other_actor))
-	else:
-		_other_actor = null
-		_game.interface.clear_other_actor()
+	_try_select_other_actor(other_actor)
 
 
 func _wait_selected() -> void:
@@ -114,3 +108,22 @@ func _position_action_menu() -> void:
 func _screen_resized() -> void:
 	if _game.interface.gui.action_menu_open:
 		_position_action_menu()
+
+
+func _try_select_other_actor(other_actor: Actor) -> void:
+	if (other_actor != null) and (other_actor != _game.current_actor) \
+			and (other_actor != _game.interface.gui.other_actor):
+		StandardSounds.play_select()
+		_game.interface.set_other_actor(
+				other_actor,
+				_game.get_walk_range(other_actor).get_visible_move_range(),
+				_game.get_threat_range(other_actor))
+	else:
+		StandardSounds.play_cancel()
+		_game.interface.clear_other_actor()
+
+
+func _on_turn_panel_actor_selected(actor) -> void:
+	_game.interface.camera.smoothing_enabled = true
+	_game.interface.camera.position = actor.center_pixel_pos
+	_try_select_other_actor(actor)

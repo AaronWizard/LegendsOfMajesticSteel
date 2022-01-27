@@ -35,8 +35,6 @@ signal attack_hit
 signal dying
 signal died
 
-signal origin_cell_changed
-
 enum Faction { PLAYER, ENEMY }
 enum Pose { IDLE, WALK, ACTION, REACT, DEATH }
 
@@ -48,7 +46,8 @@ export(Faction) var faction := Faction.ENEMY
 
 var portrait: Texture setget , get_portrait
 
-var turn_status: ActorTurnStatus setget , get_turn_status
+var round_finished := false
+
 var stats: Stats setget , get_stats
 var attack_skill: Node setget , get_attack
 var skills: Array setget , get_skills
@@ -84,7 +83,6 @@ onready var _blood_splatter := $Center/BloodSplatter \
 onready var _stamina_bar := $Center/Offset/Sprite/StaminaBar as StaminaBar
 onready var _condition_icons := $Center/Offset/Sprite/ConditionIcons \
 		as ConditionIcons
-onready var _wait_icon := $WaitIcon as AnimatedSprite
 
 onready var _target_cursor := $TargetCursor as TargetCursor
 
@@ -103,7 +101,6 @@ func _ready() -> void:
 		_stamina_bar.max_stamina = get_stats().max_stamina
 		_condition_icons.update_icons(get_stats())
 
-		_wait_icon.play()
 		_randomize_idle_start()
 
 
@@ -111,7 +108,6 @@ func _ready() -> void:
 func set_origin_cell(value: Vector2) -> void:
 	.set_origin_cell(value)
 	_using_virtual_origin = false
-	emit_signal("origin_cell_changed")
 
 
 # Override
@@ -135,8 +131,6 @@ func set_size(value: int) -> void:
 
 	if _target_cursor:
 		_target_cursor.rect_size = Vector2(size, size)
-	if _wait_icon:
-		_wait_icon.position = size * Constants.TILE_SIZE_V
 	if _blood_splatter:
 		var pixel_rect_size := (size * Constants.TILE_SIZE_V) + Vector2(8, 8)
 		_blood_splatter.amount = int(max(pixel_rect_size.x, pixel_rect_size.y))
@@ -148,13 +142,11 @@ func set_size(value: int) -> void:
 func set_virtual_origin_cell(value: Vector2) -> void:
 	virtual_origin_cell = value
 	_using_virtual_origin = true
-	emit_signal("origin_cell_changed")
 
 
 func reset_virtual_origin() -> void:
 	virtual_origin_cell = Vector2.ZERO
 	_using_virtual_origin = false
-	emit_signal("origin_cell_changed")
 
 
 func set_actor_definition(value: Resource) -> void:
@@ -189,13 +181,6 @@ func set_actor_definition(value: Resource) -> void:
 
 func set_target_visible(new_value: bool) -> void:
 	_target_cursor.visible = new_value
-
-
-func get_turn_status() -> ActorTurnStatus:
-	var result: ActorTurnStatus = null
-	if $TurnStatus:
-		result = $TurnStatus as ActorTurnStatus
-	return result
 
 
 func get_stats() -> Stats:
@@ -251,8 +236,7 @@ func get_next_turn_skills() -> Array:
 	for s in get_skills():
 		var current_cooldown := s.current_cooldown as int
 		var skill_ready_now := current_cooldown == 0
-		var skill_ready_next_turn := get_turn_status().round_finished \
-				and (current_cooldown == 1)
+		var skill_ready_next_turn := round_finished and (current_cooldown == 1)
 		if skill_ready_now or skill_ready_next_turn:
 			result.append(s)
 
@@ -297,7 +281,13 @@ func start_battle() -> void:
 		s.start_battle()
 
 	_stamina_bar.reset()
-	get_turn_status().start_battle()
+
+
+func start_round(first_round: bool) -> void:
+	if not first_round:
+		charge_skills()
+	get_stats().start_round()
+	round_finished = false
 
 
 func set_pose(value: int) -> void:
@@ -357,12 +347,6 @@ func move_step(target_cell: Vector2) -> void:
 	)
 
 	reset_pose()
-
-
-func move_path(path: Array) -> void:
-	for c in path:
-		var cell := c as Vector2
-		yield(move_step(cell), "completed")
 
 
 func animate_attack(direction: Vector2, reduce_lunge := false,
@@ -502,17 +486,6 @@ func _animate_hit(direction: Vector2) -> void:
 func _on_StaminaBar_animation_finished() -> void:
 	_stamina_bar_animating = false
 	_stamina_bar.visible = false
-
-
-func _on_TurnStatus_round_started(first_round: bool) -> void:
-	if not first_round:
-		charge_skills()
-	_wait_icon.visible = false
-	get_stats().start_round()
-
-
-func _on_TurnStatus_round_finished() -> void:
-	_wait_icon.visible = true
 
 
 func _on_Stats_conditions_changed() -> void:

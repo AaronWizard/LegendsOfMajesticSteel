@@ -4,5 +4,6 @@ enum Type {
 	MAX_STAMINA,
 	ATTACK,
 	MOVE,
-	DEFENCE
+	DEFENCE,
+	AGILITY
 }

@@ -1,23 +1,24 @@
 class_name NextTurnState
 extends GameState
 
-export var player_pick_actor_state_path: NodePath
-export var ai_pick_actor_state_path: NodePath
+const _AI_PAUSE_TIME := 0.5
+
+export var actor_start_turn_state_path: NodePath
+
+onready var _actor_start_turn_state := get_node(actor_start_turn_state_path) \
+		as State
 
 export var victory_state_path: NodePath
 export var game_over_state_path: NodePath
 
-onready var _player_pick_actor := get_node(player_pick_actor_state_path) \
-		as State
-onready var _ai_pick_actor := get_node(ai_pick_actor_state_path) as State
 onready var _victory_state := get_node(victory_state_path) as State
 onready var _game_over_state := get_node(game_over_state_path) as State
 
 func start(_data: Dictionary) -> void:
-	call_deferred("_next_turn")
+	call_deferred("_start_turn")
 
 
-func _next_turn() -> void:
+func _start_turn() -> void:
 	if _game.player_lost():
 		emit_signal("state_change_requested", _game_over_state)
 	elif _game.player_won():
@@ -27,19 +28,10 @@ func _next_turn() -> void:
 
 
 func _start_next_turn() -> void:
-	_game.refresh_ranges(true)
+	_game.start_turn()
+	assert(_game.current_actor.stats.is_alive)
 
-	var faction := _game.turn_manager.next_faction()
-	match faction:
-		Actor.Faction.PLAYER:
-			assert(_game.get_active_actors(Actor.Faction.PLAYER).size() > 0)
-			_pick_actor(_player_pick_actor)
-		Actor.Faction.ENEMY:
-			assert(_game.get_active_actors(Actor.Faction.ENEMY).size() > 0)
-			_pick_actor(_ai_pick_actor)
-		_:
-			push_error("Invalid faction '%d'" % faction)
+	if _game.current_actor.faction == Actor.Faction.ENEMY:
+		yield(get_tree().create_timer(_AI_PAUSE_TIME), "timeout")
 
-
-func _pick_actor(state: State) -> void:
-	emit_signal("state_change_requested", state)
+	emit_signal("state_change_requested", _actor_start_turn_state)

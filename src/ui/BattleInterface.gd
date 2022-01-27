@@ -28,8 +28,8 @@ func clear_current_actor() -> void:
 	gui.current_actor = null
 
 
-func set_other_actor(actor: Actor, move_range: Array, threat_range: Dictionary) \
-		-> void:
+func set_other_actor(actor: Actor, move_range: Array,
+		threat_range: Dictionary) -> void:
 	map_highlights.set_other_moves(move_range)
 	map_highlights.set_other_targets(
 			threat_range[TargetingData.ThreatRange.TARGETS],

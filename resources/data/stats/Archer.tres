@@ -11,4 +11,5 @@ size = 1
 max_stamina = 4
 attack = 2
 move = 4
+agility = 3
 attack_skill = ExtResource( 1 )

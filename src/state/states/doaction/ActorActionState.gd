@@ -1,7 +1,7 @@
 class_name ActorActionState
 extends GameState
 
-const _POST_TURN_WAIT_TIME := 0.25
+const _POST_TURN_WAIT_TIME := 0.2
 
 export var turn_start_state_path: NodePath
 export var next_turn_state_path: NodePath
@@ -41,7 +41,6 @@ func _finish() -> void:
 	_game.map.update_terrain_effects()
 
 	if not _game.current_actor.stats.is_alive or _ends_turn():
-		_game.end_turn()
 		yield(get_tree().create_timer(_POST_TURN_WAIT_TIME), "timeout")
 		emit_signal("state_change_requested", _next_turn_state)
 	else:
