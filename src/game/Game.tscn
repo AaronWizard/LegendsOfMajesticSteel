@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://src/game/Game.gd" type="Script" id=1]
 [ext_resource path="res://src/ui/BattleInterface.tscn" type="PackedScene" id=2]
@@ -13,6 +13,7 @@
 [ext_resource path="res://src/state/states/VictoryState.gd" type="Script" id=11]
 [ext_resource path="res://src/state/states/pickaction/player/PlayerActorTargetState.gd" type="Script" id=12]
 [ext_resource path="res://src/state/states/doaction/ActorSkillState.gd" type="Script" id=13]
+[ext_resource path="res://src/control/AIActorTurn.gd" type="Script" id=14]
 [ext_resource path="res://src/state/State.gd" type="Script" id=16]
 [ext_resource path="res://src/state/states/doaction/ActorActionState.gd" type="Script" id=18]
 [ext_resource path="res://src/game/ScreenTransition.tscn" type="PackedScene" id=19]
@@ -25,6 +26,9 @@ start_map_file = ExtResource( 3 )
 [node name="Map" type="Node" parent="."]
 
 [node name="BattleInterface" parent="." instance=ExtResource( 2 )]
+
+[node name="AIActorTurn" type="Node" parent="."]
+script = ExtResource( 14 )
 
 [node name="StateMachine" type="Node" parent="."]
 script = ExtResource( 5 )

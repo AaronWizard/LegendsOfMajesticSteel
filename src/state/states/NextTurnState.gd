@@ -1,8 +1,6 @@
 class_name NextTurnState
 extends GameState
 
-const _AI_PAUSE_TIME := 0.5
-
 export var actor_start_turn_state_path: NodePath
 
 onready var _actor_start_turn_state := get_node(actor_start_turn_state_path) \
@@ -30,8 +28,4 @@ func _start_turn() -> void:
 func _start_next_turn() -> void:
 	_game.start_turn()
 	assert(_game.current_actor.stats.is_alive)
-
-	if _game.current_actor.faction == Actor.Faction.ENEMY:
-		yield(get_tree().create_timer(_AI_PAUSE_TIME), "timeout")
-
 	emit_signal("state_change_requested", _actor_start_turn_state)

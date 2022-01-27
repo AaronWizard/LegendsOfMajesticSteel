@@ -1,6 +1,9 @@
 class_name AIActorTurn
+extends Node
 
 enum ActionType { WAIT, MOVE, SKILL }
+
+const _PAUSE_TIME := 0.5
 
 var _active_actors := {}
 var _action_queue := []
@@ -13,6 +16,7 @@ func reset() -> void:
 
 func pick_action(actor: Actor, map: Map, walk_range: WalkRange) -> Dictionary:
 	if _action_queue.empty():
+		yield(get_tree().create_timer(_PAUSE_TIME), "timeout")
 		_queue_actions(actor, map, walk_range)
 
 	var result := _action_queue.pop_front() as Dictionary

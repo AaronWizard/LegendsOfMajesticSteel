@@ -7,8 +7,12 @@ func start(_data: Dictionary) -> void:
 
 
 func _pick_action() -> void:
-	var action := _game.actor_ai.pick_action(
+	var a = _game.actor_ai.pick_action(
 			_game.current_actor, _game.map, _game.get_current_walk_range())
+	if a is GDScriptFunctionState:
+		a = yield(a, "completed")
+	var action := a as Dictionary
+
 	match (action.type as int):
 		AIActorTurn.ActionType.MOVE:
 			_do_move(action.path as Array)

@@ -10,7 +10,7 @@ var current_actor: Actor setget , get_current_actor
 
 var interface: BattleInterface setget , get_interface
 
-var actor_ai := AIActorTurn.new()
+onready var actor_ai := $AIActorTurn as AIActorTurn
 
 var _map: Map
 var _current_actor: Actor
