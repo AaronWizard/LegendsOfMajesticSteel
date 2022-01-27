@@ -35,8 +35,6 @@ signal attack_hit
 signal dying
 signal died
 
-signal origin_cell_changed
-
 enum Faction { PLAYER, ENEMY }
 enum Pose { IDLE, WALK, ACTION, REACT, DEATH }
 
@@ -110,7 +108,6 @@ func _ready() -> void:
 func set_origin_cell(value: Vector2) -> void:
 	.set_origin_cell(value)
 	_using_virtual_origin = false
-	emit_signal("origin_cell_changed")
 
 
 # Override
@@ -145,13 +142,11 @@ func set_size(value: int) -> void:
 func set_virtual_origin_cell(value: Vector2) -> void:
 	virtual_origin_cell = value
 	_using_virtual_origin = true
-	emit_signal("origin_cell_changed")
 
 
 func reset_virtual_origin() -> void:
 	virtual_origin_cell = Vector2.ZERO
 	_using_virtual_origin = false
-	emit_signal("origin_cell_changed")
 
 
 func set_actor_definition(value: Resource) -> void:
@@ -352,12 +347,6 @@ func move_step(target_cell: Vector2) -> void:
 	)
 
 	reset_pose()
-
-
-func move_path(path: Array) -> void:
-	for c in path:
-		var cell := c as Vector2
-		yield(move_step(cell), "completed")
 
 
 func animate_attack(direction: Vector2, reduce_lunge := false,
