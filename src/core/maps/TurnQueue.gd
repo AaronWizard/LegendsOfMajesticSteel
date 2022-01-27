@@ -20,19 +20,21 @@ func _get_configuration_warning() -> String:
 
 
 func _ready() -> void:
-	_turn_index = -1
+	if not Engine.editor_hint:
+		_turn_index = -1
 
-	var actors := get_children()
-	actors.sort_custom(self, "_compare_actors")
-	for a in actors:
-		var actor := a as Node
-		actor.raise()
+		var actors := get_children()
+		actors.sort_custom(self, "_compare_actors")
+		for a in actors:
+			var actor := a as Node
+			actor.raise()
 
 
 func remove_child(node: Node) -> void:
-	var index := node.get_index()
-	.remove_child(node)
-	emit_signal("actor_removed", node, index)
+	if not Engine.editor_hint:
+		var index := node.get_index()
+		.remove_child(node)
+		emit_signal("actor_removed", node, index)
 
 
 func next_actor() -> Actor:
