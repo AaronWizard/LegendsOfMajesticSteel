@@ -25,6 +25,14 @@ func _new_min_size() -> Vector2:
 	return result
 
 
+func _resize_border() -> void:
+	var border := $CenterContainer/PanelContainer as Control
+	var new_min_size := _new_min_size()
+	if border.rect_min_size != new_min_size:
+		border.rect_min_size = new_min_size
+		border.rect_size = Vector2.ZERO
+
+
 func _scroll_to_turn_slot() -> void:
 	# warning-ignore:return_value_discarded
 	_tween.interpolate_property(
@@ -37,32 +45,11 @@ func _scroll_to_turn_slot() -> void:
 
 
 func _on_BorderedTurnPanel_resized() -> void:
-	var border := $CenterContainer/PanelContainer as Control
-	var new_min_size := _new_min_size()
-	if border.rect_min_size != new_min_size:
-		border.rect_min_size = new_min_size
-		border.rect_size = Vector2.ZERO
+	_resize_border()
 
 
 func _on_TurnPanel_minimum_size_changed() -> void:
-	var border := $CenterContainer/PanelContainer as Control
-	var tween := $Tween as Tween
-
-	var new_min_size := _new_min_size()
-	if border.rect_min_size != new_min_size:
-		var old_size := border.rect_size
-
-		border.rect_min_size = new_min_size
-		border.rect_size = Vector2.ZERO
-
-		var new_size := border.rect_size
-
-		border.rect_size = old_size
-		# warning-ignore:return_value_discarded
-		tween.interpolate_property(border, "rect_size",
-			old_size, new_size, TurnPanel.ANIM_TIME)
-		# warning-ignore:return_value_discarded
-		tween.start()
+	_resize_border()
 
 
 func _on_TurnPanel_turn_advanced() -> void:

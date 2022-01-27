@@ -33,7 +33,7 @@ func set_actors(actors: Array) -> void:
 		_add_actor_icon(actor)
 
 		_turn_index = 0
-	_update_min_size()
+	_update_min_size(false)
 
 
 func clear() -> void:
@@ -61,10 +61,11 @@ func next_turn() -> void:
 		_current_turn_border.rect_position,
 		Vector2(_turn_index * Constants.TILE_SIZE, 0)
 	)
+	_update_min_size(true)
+
 	emit_signal("turn_advanced")
 	# warning-ignore:return_value_discarded
 	_tween.start()
-	_update_min_size()
 
 
 func select_other_actor(index: int) -> void:
@@ -119,12 +120,25 @@ func _queue_icon_animation(icon: Control, start: Vector2, end: Vector2) -> void:
 	)
 
 
-func _update_min_size() -> void:
-	rect_min_size = Vector2(
+func _update_min_size(animate: bool) -> void:
+	var min_size := Vector2(
 		_actors.get_child_count() * Constants.TILE_SIZE,
 		Constants.TILE_SIZE
 	)
-	rect_size = Vector2.ZERO # Reset size
+	if animate:
+		# warning-ignore:return_value_discarded
+		_tween.interpolate_property(
+			self, "rect_min_size", rect_min_size, min_size,
+			ANIM_TIME, Tween.TRANS_QUART, Tween.EASE_IN_OUT
+		)
+		# warning-ignore:return_value_discarded
+		_tween.interpolate_property(
+			self, "rect_size", rect_size, min_size,
+			ANIM_TIME, Tween.TRANS_QUART, Tween.EASE_IN_OUT
+		)
+	else:
+		rect_min_size = min_size
+		rect_size = min_size
 
 
 func _on_actor_icon_pressed(actor: Actor) -> void:
