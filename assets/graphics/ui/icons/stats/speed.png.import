@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/agility.png-6a9a4b43f5b0392e38b738e7c9f701aa.stex"
+path="res://.import/speed.png-4295a1585396d5281fe9c201ecb18d9f.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/graphics/ui/icons/stats/agility.png"
-dest_files=[ "res://.import/agility.png-6a9a4b43f5b0392e38b738e7c9f701aa.stex" ]
+source_file="res://assets/graphics/ui/icons/stats/speed.png"
+dest_files=[ "res://.import/speed.png-4295a1585396d5281fe9c201ecb18d9f.stex" ]
 
 [params]
 

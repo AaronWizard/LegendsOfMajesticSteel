@@ -8,7 +8,7 @@
 [ext_resource path="res://src/ui/controlswithsound/SoundButton.gd" type="Script" id=6]
 [ext_resource path="res://src/ui/battle/actordetails/ActorConditionDetails.tscn" type="PackedScene" id=7]
 [ext_resource path="res://assets/graphics/ui/icons/stats/move.png" type="Texture" id=8]
-[ext_resource path="res://assets/graphics/ui/icons/stats/agility.png" type="Texture" id=9]
+[ext_resource path="res://assets/graphics/ui/icons/stats/speed.png" type="Texture" id=9]
 
 [sub_resource type="AtlasTexture" id=1]
 atlas = ExtResource( 1 )
@@ -163,11 +163,11 @@ margin_right = 66.0
 stat_icon = ExtResource( 8 )
 stat_label = "Move"
 
-[node name="AgilityInfo" parent="Main/StatsPanel/MarginContainer/Stats" instance=ExtResource( 4 )]
+[node name="SpeedInfo" parent="Main/StatsPanel/MarginContainer/Stats" instance=ExtResource( 4 )]
 margin_left = 68.0
 margin_right = 100.0
 stat_icon = ExtResource( 9 )
-stat_label = "Agility"
+stat_label = "Speed"
 
 [node name="SkillsContainer" type="PanelContainer" parent="Main"]
 margin_top = 54.0

@@ -5,5 +5,5 @@ enum Type {
 	ATTACK,
 	MOVE,
 	DEFENCE,
-	AGILITY
+	SPEED
 }

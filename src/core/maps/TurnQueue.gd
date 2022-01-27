@@ -52,7 +52,7 @@ func next_actor() -> Actor:
 # - Player actors go first
 # - Actors earlier in the scene tree go first
 static func _compare_actors(a: Actor, b: Actor) -> bool:
-	return (a.stats.agility > b.stats.agility) \
+	return (a.stats.speed > b.stats.speed) \
 		or ((a.faction == Actor.Faction.PLAYER) \
 			and (a.faction != b.faction)) \
 		or (a.get_index() < b.get_index())

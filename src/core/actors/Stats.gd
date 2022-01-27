@@ -19,7 +19,7 @@ var is_alive: bool setget , get_is_alive
 var max_stamina: int setget , get_max_stamina
 var attack: int setget , get_attack
 var move: int setget , get_move
-var agility: int setget , get_agility
+var speed: int setget , get_speed
 
 
 func _ready() -> void:
@@ -30,7 +30,7 @@ func init_from_def(def: ActorDefinition) -> void:
 	set_base_stat(StatType.Type.MAX_STAMINA, def.max_stamina)
 	set_base_stat(StatType.Type.ATTACK, def.attack)
 	set_base_stat(StatType.Type.MOVE, def.move)
-	set_base_stat(StatType.Type.AGILITY, def.agility)
+	set_base_stat(StatType.Type.SPEED, def.speed)
 
 
 func set_base_stat(stat_type: int, value: int) -> void:
@@ -95,8 +95,8 @@ func get_move() -> int:
 	return get_stat(StatType.Type.MOVE)
 
 
-func get_agility() -> int:
-	return get_stat(StatType.Type.AGILITY)
+func get_speed() -> int:
+	return get_stat(StatType.Type.SPEED)
 
 
 func start_battle() -> void:

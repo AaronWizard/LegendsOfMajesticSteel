@@ -14,7 +14,7 @@ onready var _max_stamina := _stamina_info.get_node("MaxStamina") as Label
 onready var _stats := $Main/StatsPanel/MarginContainer/Stats as Control
 onready var _attack := _stats.get_node("AttackInfo") as ActorStatDetails
 onready var _move := _stats.get_node("MoveInfo") as ActorStatDetails
-onready var _agility := _stats.get_node("AgilityInfo") as ActorStatDetails
+onready var _speed := _stats.get_node("SpeedInfo") as ActorStatDetails
 
 onready var _skills := $Main/SkillsContainer/Skills as ActorSkillsDetails
 onready var _conditions := $Main/ConditionsContainer/Conditions \
@@ -45,7 +45,7 @@ func clear() -> void:
 func _set_stat_info(stats: Stats) -> void:
 	_attack.set_stat_values(stats, StatType.Type.ATTACK)
 	_move.set_stat_values(stats, StatType.Type.MOVE)
-	_agility.set_stat_values(stats, StatType.Type.AGILITY)
+	_speed.set_stat_values(stats, StatType.Type.SPEED)
 
 
 func _on_TabContainer_tab_changed(_tab: int) -> void:

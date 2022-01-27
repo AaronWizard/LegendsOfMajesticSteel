@@ -19,7 +19,7 @@ Mightiest Steel is an in-development Strategy RPG that will emphasize rapid game
 ## Instructions
 
 - Click and drag to pan the view.
-- Characters take turns in order of their Agility stat.
+- Characters take turns in order of their Speed stat.
 - On your turn, the current hero's movement range is highlighted. Click within this range to position the hero.
 - To take an action, click on the hero. You will have the option to attack, perform a special skill if possible, or end the hero's turn. Click on the hero to cancel the action menu and return to positioning mode.
 - Attacks and skills require a target. When attacking or doing a skill, the target range will be highlighted. Click within this range to select a target. Click the target again to start the attack or skill.
