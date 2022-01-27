@@ -14,6 +14,7 @@ func start(_data: Dictionary) -> void:
 
 func _start_turn() -> void:
 	assert(_game.current_actor.stats.is_alive)
+	_game.current_actor.target_visible = true
 
 	match _game.current_actor.faction:
 		Actor.Faction.PLAYER:

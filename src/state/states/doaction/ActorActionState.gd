@@ -13,6 +13,7 @@ onready var _next_turn_state := get_node(next_turn_state_path) as State
 func start(_data: Dictionary) -> void:
 	_game.interface.mouse.dragging_enabled = false
 	_game.interface.map_highlights.moves_visible = _show_move_range()
+	_game.current_actor.target_visible = false
 
 	call_deferred("_run_main")
 

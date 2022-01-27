@@ -32,6 +32,8 @@ func start(data: Dictionary) -> void:
 	_game.interface.map_highlights.moves_visible = false
 	_game.interface.map_highlights.clear_other_moves()
 
+	_game.current_actor.target_visible = false
+
 
 func end() -> void:
 	.end()
@@ -50,6 +52,8 @@ func end() -> void:
 	_skill = null
 	_targetting_data = null
 	_have_target = false
+
+	_game.current_actor.target_visible = true
 
 
 func _mouse_click(_position: Vector2) -> void:
