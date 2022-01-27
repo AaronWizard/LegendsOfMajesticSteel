@@ -54,9 +54,12 @@ func set_current_actor(value: Actor) -> void:
 
 
 func set_other_actor(value: Actor) -> void:
+	if other_actor:
+		other_actor.other_target_visible = false
 	other_actor = value
 	_set_actor(other_actor, _other_actor_status, true)
 	if other_actor:
+		other_actor.other_target_visible = true
 		turn_panel.select_other_actor(other_actor.get_index())
 	else:
 		turn_panel.clear_other_actor()

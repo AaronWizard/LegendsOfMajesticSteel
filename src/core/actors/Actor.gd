@@ -56,6 +56,9 @@ var skills: Array setget , get_skills
 var all_active_skills: Array setget , get_all_active_skills
 
 var target_visible: bool setget set_target_visible, get_target_visible
+var other_target_visible: bool setget \
+		set_other_target_visible, get_other_target_visible
+
 var stamina_bar_modifier: int setget set_stamina_bar_modifier, \
 		get_stamina_bar_modifier
 
@@ -85,6 +88,7 @@ onready var _condition_icons := $Center/Offset/Sprite/ConditionIcons \
 		as ConditionIcons
 
 onready var _target_cursor := $TargetCursor as TargetCursor
+onready var _other_target_cursor := $OtherTargetCursor as TargetCursor
 
 onready var _step_sound := $StepSound as AudioStreamPlayer
 onready var _melee_attack_sound := $MeleeAttackSound as AudioStreamPlayer
@@ -131,6 +135,8 @@ func set_size(value: int) -> void:
 
 	if _target_cursor:
 		_target_cursor.rect_size = Vector2(size, size)
+	if _other_target_cursor:
+		_other_target_cursor.rect_size = Vector2(size, size)
 	if _blood_splatter:
 		var pixel_rect_size := (size * Constants.TILE_SIZE_V) + Vector2(8, 8)
 		_blood_splatter.amount = int(max(pixel_rect_size.x, pixel_rect_size.y))
@@ -179,8 +185,26 @@ func set_actor_definition(value: Resource) -> void:
 					= preload("res://assets/graphics/actors/fighter.png")
 
 
+func get_target_visible() -> bool:
+	var result := false
+	if _target_cursor:
+		result = _target_cursor.visible
+	return result
+
+
 func set_target_visible(new_value: bool) -> void:
 	_target_cursor.visible = new_value
+
+
+func get_other_target_visible() -> bool:
+	var result := false
+	if _other_target_cursor:
+		result = _other_target_cursor.visible
+	return result
+
+
+func set_other_target_visible(new_value: bool) -> void:
+	_other_target_cursor.visible = new_value
 
 
 func get_stats() -> Stats:
@@ -247,13 +271,6 @@ func get_portrait() -> Texture:
 	var result: Texture = null
 	if actor_definition:
 		result = (actor_definition as ActorDefinition).portrait
-	return result
-
-
-func get_target_visible() -> bool:
-	var result := false
-	if _target_cursor:
-		result = _target_cursor.visible
 	return result
 
 

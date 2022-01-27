@@ -1,8 +1,9 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://src/core/actors/Actor.gd" type="Script" id=1]
 [ext_resource path="res://assets/graphics/actors/fighter.png" type="Texture" id=2]
 [ext_resource path="res://src/core/actors/Stats.gd" type="Script" id=3]
+[ext_resource path="res://src/core/maps/OtherTargetCursor.tscn" type="PackedScene" id=4]
 [ext_resource path="res://src/core/maps/TargetCursor.tscn" type="PackedScene" id=5]
 [ext_resource path="res://resources/visual/shaders/dissolve_shader.shader" type="Shader" id=6]
 [ext_resource path="res://src/core/maps/tiles/TileObject.tscn" type="PackedScene" id=7]
@@ -83,27 +84,31 @@ script = ExtResource( 3 )
 visible = false
 z_index = 1
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="5"]
+[node name="OtherTargetCursor" parent="." index="5" instance=ExtResource( 4 )]
+visible = false
+z_index = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="6"]
 autoplay = "actor_idle"
 anims/actor_death = ExtResource( 9 )
 anims/actor_idle = ExtResource( 13 )
 anims/actor_shake = ExtResource( 17 )
 
-[node name="Tween" type="Tween" parent="." index="6"]
+[node name="Tween" type="Tween" parent="." index="7"]
 
-[node name="StepSound" type="AudioStreamPlayer" parent="." index="7"]
+[node name="StepSound" type="AudioStreamPlayer" parent="." index="8"]
 stream = ExtResource( 10 )
 bus = "Sounds"
 
-[node name="MeleeAttackSound" type="AudioStreamPlayer" parent="." index="8"]
+[node name="MeleeAttackSound" type="AudioStreamPlayer" parent="." index="9"]
 stream = ExtResource( 14 )
 bus = "Sounds"
 
-[node name="HitSound" type="AudioStreamPlayer" parent="." index="9"]
+[node name="HitSound" type="AudioStreamPlayer" parent="." index="10"]
 stream = ExtResource( 8 )
 bus = "Sounds"
 
-[node name="DeathSound" type="AudioStreamPlayer" parent="." index="10"]
+[node name="DeathSound" type="AudioStreamPlayer" parent="." index="11"]
 stream = ExtResource( 12 )
 bus = "Sounds"
 
