@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://src/core/actors/Actor.gd" type="Script" id=1]
 [ext_resource path="res://assets/graphics/actors/fighter.png" type="Texture" id=2]
@@ -32,17 +32,6 @@ shader = ExtResource( 6 )
 shader_param/dissolve = 0.0
 shader_param/dissolve_texture = SubResource( 2 )
 
-[sub_resource type="ParticlesMaterial" id=4]
-flag_disable_z = true
-direction = Vector3( 0, 0, 0 )
-spread = 180.0
-gravity = Vector3( 0, 0, 0 )
-initial_velocity = 64.0
-initial_velocity_random = 1.0
-orbit_velocity = 0.0
-orbit_velocity_random = 0.0
-color = Color( 1, 0.129412, 0.32549, 1 )
-
 [node name="Actor" instance=ExtResource( 7 )]
 script = ExtResource( 1 )
 
@@ -61,14 +50,18 @@ position = Vector2( -12, -12 )
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="Center/Offset" index="1"]
 
-[node name="BloodSplatter" type="Particles2D" parent="Center" index="1"]
+[node name="BloodSplatter" type="CPUParticles2D" parent="Center" index="1"]
 emitting = false
-amount = 32
+amount = 48
 lifetime = 0.3
 one_shot = true
 explosiveness = 1.0
-visibility_rect = Rect2( -16, -16, 32, 32 )
-process_material = SubResource( 4 )
+direction = Vector2( 0, 0 )
+spread = 180.0
+gravity = Vector2( 0, 0 )
+initial_velocity = 64.0
+initial_velocity_random = 1.0
+color = Color( 1, 0.129412, 0.32549, 1 )
 __meta__ = {
 "_edit_lock_": true
 }

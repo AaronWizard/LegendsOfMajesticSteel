@@ -81,7 +81,7 @@ onready var _tween := $Tween as Tween
 
 onready var _sprite := $Center/Offset/Sprite as Sprite
 onready var _blood_splatter := $Center/BloodSplatter \
-		as Particles2D
+		as CPUParticles2D
 
 onready var _stamina_bar := $Center/Offset/Sprite/StaminaBar as StaminaBar
 onready var _condition_icons := $Center/Offset/Sprite/ConditionIcons \
@@ -138,11 +138,9 @@ func set_size(value: int) -> void:
 	if _other_target_cursor:
 		_other_target_cursor.rect_size = Vector2(size, size)
 	if _blood_splatter:
-		var pixel_rect_size := (size * Constants.TILE_SIZE_V) + Vector2(8, 8)
-		_blood_splatter.amount = int(max(pixel_rect_size.x, pixel_rect_size.y))
+		var pixel_rect_size := size * Constants.TILE_SIZE * 2
+		_blood_splatter.amount = pixel_rect_size
 		_blood_splatter.lifetime = _AnimationTimes.BLOOD * size
-		_blood_splatter.visibility_rect = Rect2(
-				-pixel_rect_size / 2, pixel_rect_size)
 
 
 func set_virtual_origin_cell(value: Vector2) -> void:

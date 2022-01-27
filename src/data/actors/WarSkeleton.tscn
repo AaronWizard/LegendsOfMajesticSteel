@@ -36,9 +36,11 @@ position = Vector2( 0, -24 )
 position = Vector2( -24, -24 )
 
 [node name="BloodSplatter" parent="Center" index="1"]
-amount = 56
+amount = 96
 lifetime = 0.6
-visibility_rect = Rect2( -28, -28, 56, 56 )
 
-[node name="TargetCursor" parent="." index="5"]
+[node name="TargetCursor" parent="." index="4"]
+rect_size = Vector2( 2, 2 )
+
+[node name="OtherTargetCursor" parent="." index="5"]
 rect_size = Vector2( 2, 2 )
