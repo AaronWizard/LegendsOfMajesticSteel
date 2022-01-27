@@ -34,6 +34,8 @@ func remove_child(node: Node) -> void:
 	if not Engine.editor_hint:
 		var index := node.get_index()
 		.remove_child(node)
+		if index < _turn_index:
+			_turn_index -= 1
 		emit_signal("actor_removed", node, index)
 
 
