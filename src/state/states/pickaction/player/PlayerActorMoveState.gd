@@ -118,9 +118,10 @@ func _try_select_other_actor(other_actor: Actor) -> void:
 				other_actor,
 				_game.get_walk_range(other_actor).get_visible_move_range(),
 				_game.get_threat_range(other_actor))
-	else:
+	elif _game.interface.gui.other_actor != null:
 		StandardSounds.play_cancel()
 		_game.interface.clear_other_actor()
+		_game.interface.camera.follow_actor(_game.current_actor)
 
 
 func _on_turn_panel_actor_selected(actor) -> void:
