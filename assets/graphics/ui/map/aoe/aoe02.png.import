@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/aoe03.png-04bfd3f155970a23d653dbdca304b785.stex"
+path="res://.import/aoe02.png-29426acada249d12da9eb015a6b0f594.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/graphics/ui/map/aoe03.png"
-dest_files=[ "res://.import/aoe03.png-04bfd3f155970a23d653dbdca304b785.stex" ]
+source_file="res://assets/graphics/ui/map/aoe/aoe02.png"
+dest_files=[ "res://.import/aoe02.png-29426acada249d12da9eb015a6b0f594.stex" ]
 
 [params]
 
