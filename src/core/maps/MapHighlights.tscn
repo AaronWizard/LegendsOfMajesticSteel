@@ -12,12 +12,7 @@ tile_set = ExtResource( 3 )
 cell_size = Vector2( 24, 24 )
 format = 1
 
-[node name="OtherMoves" type="TileMap" parent="."]
-tile_set = ExtResource( 3 )
-cell_size = Vector2( 24, 24 )
-format = 1
-
-[node name="OtherTargets" type="TileMap" parent="."]
+[node name="OtherRange" type="TileMap" parent="."]
 tile_set = ExtResource( 3 )
 cell_size = Vector2( 24, 24 )
 format = 1

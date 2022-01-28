@@ -19,18 +19,16 @@ var target_cursor_cell: Vector2 setget set_target_cursor_cell, \
 		get_target_cursor_cell
 
 onready var _moves := $Moves as TileMap
-onready var _other_moves := $OtherMoves as TileMap
-
 onready var _targets := $Targets as TileMap
-onready var _other_targets := $OtherTargets as TileMap
-
 onready var _aoe := $AOE as TileMap
+
+onready var _other_range := $OtherRange as TileMap
+
 onready var _target_cursor := $TargetCursor as TargetCursor
 
 
 func set_moves_visible(value: bool) -> void:
 	_moves.visible = value
-	_other_moves.visible = value
 
 
 func get_moves_visible() -> bool:
@@ -61,29 +59,23 @@ func clear_moves() -> void:
 	_moves.clear()
 
 
-func set_other_moves(cells: Array) -> void:
-	_set_cells(_other_moves, Tiles.OTHER_WALK, cells)
+func set_other_range(move_range: Array, target_range: Array, aoe: Array) \
+		-> void:
+	_set_cells(_other_range, Tiles.AOE, aoe)
+	_set_cells(_other_range, Tiles.TARGET, target_range, false)
+	_set_cells(_other_range, Tiles.OTHER_WALK, move_range, false)
 
 
-func clear_other_moves() -> void:
-	_other_moves.clear()
+func clear_other_range() -> void:
+	_other_range.clear()
 
 
 func set_targets(cells: Array) -> void:
 	_set_cells(_targets, Tiles.TARGET, cells)
 
 
-func set_other_targets(target_range: Array, aoe: Array) -> void:
-	_set_cells(_other_targets, Tiles.AOE, aoe)
-	_set_cells(_other_targets, Tiles.TARGET, target_range, false)
-
-
 func clear_targets() -> void:
 	_targets.clear()
-
-
-func clear_other_targets() -> void:
-	_other_targets.clear()
 
 
 func set_aoe(cells: Array) -> void:

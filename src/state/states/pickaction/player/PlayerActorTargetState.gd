@@ -30,7 +30,7 @@ func start(data: Dictionary) -> void:
 
 	_game.interface.map_highlights.set_targets(_targetting_data.target_range)
 	_game.interface.map_highlights.moves_visible = false
-	_game.interface.map_highlights.clear_other_moves()
+	_game.interface.map_highlights.clear_other_range()
 
 	_game.current_actor.target_visible = false
 
