@@ -5,7 +5,8 @@ enum Tiles {
 	WALK,
 	TARGET,
 	OTHER_WALK,
-	AOE
+	AOE,
+	VALID_TARGET
 }
 
 var moves_visible: bool setget set_moves_visible, get_moves_visible
