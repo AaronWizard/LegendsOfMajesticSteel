@@ -28,7 +28,8 @@ func start(data: Dictionary) -> void:
 		_skill, _targetting_data.valid_targets.size() == 0
 	)
 
-	_game.interface.map_highlights.set_targets(_targetting_data.target_range)
+	_game.interface.map_highlights.set_targets(
+			_targetting_data.target_range, _targetting_data.valid_targets)
 	_game.interface.map_highlights.moves_visible = false
 	_game.interface.map_highlights.clear_other_range()
 

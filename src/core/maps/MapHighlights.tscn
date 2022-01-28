@@ -22,6 +22,11 @@ tile_set = ExtResource( 3 )
 cell_size = Vector2( 24, 24 )
 format = 1
 
+[node name="ValidTargets" type="TileMap" parent="."]
+tile_set = ExtResource( 3 )
+cell_size = Vector2( 24, 24 )
+format = 1
+
 [node name="AOE" type="TileMap" parent="."]
 tile_set = ExtResource( 3 )
 cell_size = Vector2( 24, 24 )

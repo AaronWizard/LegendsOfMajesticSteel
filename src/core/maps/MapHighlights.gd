@@ -20,6 +20,7 @@ var target_cursor_cell: Vector2 setget set_target_cursor_cell, \
 
 onready var _moves := $Moves as TileMap
 onready var _targets := $Targets as TileMap
+onready var _valid_targets := $ValidTargets as TileMap
 onready var _aoe := $AOE as TileMap
 
 onready var _other_range := $OtherRange as TileMap
@@ -70,12 +71,14 @@ func clear_other_range() -> void:
 	_other_range.clear()
 
 
-func set_targets(cells: Array) -> void:
-	_set_cells(_targets, Tiles.TARGET, cells)
+func set_targets(target_range: Array, valid_targets: Array) -> void:
+	_set_cells(_targets, Tiles.TARGET, target_range)
+	_set_cells(_valid_targets, Tiles.VALID_TARGET, valid_targets)
 
 
 func clear_targets() -> void:
 	_targets.clear()
+	_valid_targets.clear()
 
 
 func set_aoe(cells: Array) -> void:
