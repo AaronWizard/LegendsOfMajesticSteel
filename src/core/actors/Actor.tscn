@@ -91,6 +91,7 @@ anims/actor_shake = ExtResource( 17 )
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." index="7"]
 stream = ExtResource( 12 )
+bus = "Sounds"
 
 [node name="Tween" type="Tween" parent="." index="8"]
 
