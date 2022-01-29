@@ -44,6 +44,9 @@ export var actor_definition: Resource setget set_actor_definition
 
 export(Faction) var faction := Faction.ENEMY
 
+export var slide_direction := Vector2.ZERO setget set_slide_direction
+export var slide_distance := 0.0 setget set_slide_distance
+
 var portrait: Texture setget , get_portrait
 
 var round_finished := false
@@ -150,6 +153,16 @@ func set_virtual_origin_cell(value: Vector2) -> void:
 func reset_virtual_origin() -> void:
 	virtual_origin_cell = Vector2.ZERO
 	_using_virtual_origin = false
+
+
+func set_slide_direction(value: Vector2) -> void:
+	slide_direction = value
+	_set_offset_from_slide()
+
+
+func set_slide_distance(value: float) -> void:
+	slide_distance = value
+	_set_offset_from_slide()
 
 
 func set_actor_definition(value: Resource) -> void:
@@ -448,6 +461,10 @@ func set_facing(direction: Vector2) -> void:
 	elif direction.x > 0:
 		_sprite.flip_h = false
 	# else change nothing
+
+
+func _set_offset_from_slide() -> void:
+	set_cell_offset(slide_distance * slide_direction.normalized())
 
 
 func _randomize_idle_start() -> void:
