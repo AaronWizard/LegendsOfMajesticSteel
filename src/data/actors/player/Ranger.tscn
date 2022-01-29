@@ -25,6 +25,3 @@ faction = 0
 [node name="Sprite" parent="Center/Offset" index="0"]
 material = SubResource( 3 )
 texture = ExtResource( 1 )
-
-[node name="BloodSplatter" parent="Center" index="1"]
-amount = 48
