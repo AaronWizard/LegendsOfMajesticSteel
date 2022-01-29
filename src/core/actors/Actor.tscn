@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://src/core/actors/Actor.gd" type="Script" id=1]
 [ext_resource path="res://assets/graphics/actors/fighter.png" type="Texture" id=2]
@@ -8,13 +8,11 @@
 [ext_resource path="res://resources/visual/shaders/dissolve_shader.shader" type="Shader" id=6]
 [ext_resource path="res://src/core/maps/tiles/TileObject.tscn" type="PackedScene" id=7]
 [ext_resource path="res://assets/sounds/hit.wav" type="AudioStream" id=8]
-[ext_resource path="res://resources/visual/animations/actor_death.tres" type="Animation" id=9]
+[ext_resource path="res://assets/sounds/death.wav" type="AudioStream" id=9]
 [ext_resource path="res://assets/sounds/step.wav" type="AudioStream" id=10]
 [ext_resource path="res://src/ui/actor/ConditionIcons.tscn" type="PackedScene" id=11]
-[ext_resource path="res://resources/visual/animations/actor_idle.tres" type="Animation" id=13]
 [ext_resource path="res://assets/sounds/melee_swing.wav" type="AudioStream" id=14]
 [ext_resource path="res://src/ui/actor/StaminaBar.tscn" type="PackedScene" id=16]
-[ext_resource path="res://resources/visual/animations/actor_shake.tres" type="Animation" id=17]
 
 [sub_resource type="OpenSimplexNoise" id=1]
 period = 4.0
@@ -30,6 +28,169 @@ resource_local_to_scene = true
 shader = ExtResource( 6 )
 shader_param/dissolve = 0.0
 shader_param/dissolve_texture = SubResource( 2 )
+
+[sub_resource type="Animation" id=4]
+resource_name = "death"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/path = NodePath("Center/Offset/Sprite:material:shader_param/dissolve")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, 1.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Center/Offset/Sprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 1 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Center/BloodSplatter:emitting")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Center/Offset/Sprite/ConditionIcons:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+tracks/4/type = "audio"
+tracks/4/path = NodePath("AudioStreamPlayer")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"clips": [ {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource( 9 )
+} ],
+"times": PoolRealArray( 0 )
+}
+
+[sub_resource type="Animation" id=6]
+resource_name = "hit_shake"
+length = 0.25
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("Center/Offset/Sprite:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.05, 0.1, 0.15, 0.2, 0.25 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( -4, -4 ), Vector2( -4, 4 ), Vector2( 4, -4 ), Vector2( 4, 4 ), Vector2( -2.38419e-07, 2.38419e-07 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Center/Offset/Sprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 1 ]
+}
+tracks/2/type = "audio"
+tracks/2/path = NodePath("AudioStreamPlayer")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"clips": [ {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource( 8 )
+} ],
+"times": PoolRealArray( 0 )
+}
+
+[sub_resource type="Animation" id=5]
+resource_name = "idle"
+length = 0.8
+loop = true
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("Center/Offset/Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 0, 1 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Center/Offset/Sprite:material:shader_param/dissolve")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Center/BloodSplatter:emitting")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Center/Offset/Sprite/ConditionIcons:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
 
 [node name="Actor" instance=ExtResource( 7 )]
 script = ExtResource( 1 )
@@ -83,13 +244,13 @@ visible = false
 z_index = 1
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." index="6"]
-autoplay = "actor_idle"
-anims/actor_death = ExtResource( 9 )
-anims/actor_idle = ExtResource( 13 )
-anims/actor_shake = ExtResource( 17 )
+autoplay = "idle"
+anims/death = SubResource( 4 )
+anims/hit_shake = SubResource( 6 )
+anims/idle = SubResource( 5 )
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." index="7"]
-stream = ExtResource( 8 )
+stream = ExtResource( 9 )
 bus = "Sounds"
 
 [node name="Tween" type="Tween" parent="." index="8"]

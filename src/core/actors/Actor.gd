@@ -318,9 +318,9 @@ func set_pose(value: int) -> void:
 			Pose.ACTION:
 				_sprite.frame = _ACTION_FRAME
 			Pose.DEATH:
-				_anim.play("actor_death")
+				_anim.play("death")
 			_:
-				_anim.play("actor_idle")
+				_anim.play("idle")
 
 
 func reset_pose() -> void:
@@ -452,7 +452,7 @@ func set_facing(direction: Vector2) -> void:
 
 func _randomize_idle_start() -> void:
 	if not Engine.editor_hint:
-		assert(_anim.current_animation == "actor_idle")
+		assert(_anim.current_animation == "idle")
 		var offset := rand_range(0, _anim.current_animation_length)
 		_anim.advance(offset)
 
@@ -489,7 +489,7 @@ func _animate_hit(direction: Vector2) -> void:
 			"completed"
 		)
 	else:
-		_anim.play("actor_shake")
+		_anim.play("shake")
 		yield(_anim, "animation_finished")
 
 	reset_pose()
