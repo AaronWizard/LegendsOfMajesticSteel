@@ -3,8 +3,6 @@ class_name Actor, "res://assets/editor/actor.png"
 extends TileObject
 
 class _AnimationTimes:
-	const MOVE := 0.15
-
 	const HIT_REACT := 0.1
 	const HIT_RECOVER := 0.2
 
@@ -87,7 +85,6 @@ onready var _condition_icons := $Center/Offset/Sprite/ConditionIcons \
 onready var _target_cursor := $TargetCursor as TargetCursor
 onready var _other_target_cursor := $OtherTargetCursor as TargetCursor
 
-onready var _step_sound := $StepSound as AudioStreamPlayer
 onready var _hit_sound := $HitSound as AudioStreamPlayer
 
 
@@ -350,21 +347,19 @@ func animate_offset(new_offset: Vector2, duration: float,
 
 func move_step(target_cell: Vector2) -> void:
 	assert(get_origin_cell().distance_squared_to(target_cell) == 1)
-	var diff := target_cell - get_origin_cell()
-
-	set_origin_cell(target_cell)
-	set_cell_offset(-diff)
-
-	set_facing(diff)
 
 	set_pose(Pose.WALK)
 
-	_step_sound.play()
-	yield(
-		animate_offset(Vector2.ZERO, _AnimationTimes.MOVE,
-			Tween.TRANS_QUAD, Tween.EASE_OUT),
-		"completed"
-	)
+	var direction := target_cell - get_origin_cell()
+
+	set_facing(direction)
+	set_slide_direction(direction)
+
+	set_origin_cell(target_cell)
+	set_cell_offset(-direction)
+
+	_anim.play("move_step")
+	yield(_anim, "animation_finished")
 
 	reset_pose()
 
