@@ -2,21 +2,15 @@ tool
 class_name Actor, "res://assets/editor/actor.png"
 extends TileObject
 
-class _AnimationTimes:
-	const HIT_REACT := 0.1
-	const HIT_RECOVER := 0.2
-
-	const BLOOD := 0.3
-
-
 class _AnimationDistances:
-	const HIT_REACT := 0.25
 	const DEATH := 0.5
 
 
 const _WALK_FRAME := 0
 const _ACTION_FRAME := 0
 const _REACT_FRAME := 1
+
+const _BASE_BLOOD_TIME := 0.3
 
 signal animation_finished
 # warning-ignore:unused_signal
@@ -132,7 +126,7 @@ func set_size(value: int) -> void:
 	if _blood_splatter:
 		var pixel_rect_size := size * Constants.TILE_SIZE * 2
 		_blood_splatter.amount = pixel_rect_size
-		_blood_splatter.lifetime = _AnimationTimes.BLOOD * size
+		_blood_splatter.lifetime = _BASE_BLOOD_TIME * size
 
 
 func set_virtual_origin_cell(value: Vector2) -> void:
