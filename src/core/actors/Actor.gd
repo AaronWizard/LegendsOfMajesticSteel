@@ -66,6 +66,8 @@ onready var remote_transform := $Center/Offset/RemoteTransform2D \
 
 onready var _anim := $AnimationPlayer as AnimationPlayer
 onready var _audio := $AudioStreamPlayer as AudioStreamPlayer
+onready var _audio_2 := $AudioStreamPlayer2 as AudioStreamPlayer
+
 onready var _tween := $Tween as Tween
 
 onready var _sprite := $Center/Offset/Sprite as Sprite
@@ -383,28 +385,14 @@ func animate_attack(direction: Vector2, reduce_lunge := false,
 func animate_death(direction: Vector2, play_hit_sound: bool) -> void:
 	emit_signal("dying")
 
-	var real_direction := direction.normalized()
-	var new_offset := get_cell_offset() \
-			+ (real_direction * _AnimationDistances.DEATH)
-
-	var waiter := SignalWaiter.new()
-
 	if play_hit_sound:
-		waiter.wait_for_signal(_hit_sound, "finished")
-		_hit_sound.play()
+		_audio_2.volume_db = linear2db(1)
+	else:
+		_audio_2.volume_db = linear2db(0)
 
-
-	set_pose(Pose.DEATH)
-	if direction != Vector2.ZERO:
-		yield(
-			animate_offset(new_offset, _anim.current_animation_length,
-				Tween.TRANS_QUAD, Tween.EASE_OUT),
-			"completed"
-		)
-	if _anim.is_playing():
-		yield(_anim, "animation_finished")
-	if waiter.waiting:
-		yield(waiter, "finished")
+	set_slide_direction(direction)
+	_anim.play("death")
+	yield(_anim, "animation_finished")
 
 	emit_signal("died")
 
