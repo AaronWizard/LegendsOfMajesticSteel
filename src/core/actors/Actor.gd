@@ -454,21 +454,10 @@ func _animate_staminabar(change: int) -> void:
 
 
 func _animate_hit(direction: Vector2) -> void:
-
 	if direction != Vector2.ZERO:
-		set_pose(Pose.REACT)
-		_hit_sound.play()
-		var real_direction := direction.normalized()
-		yield(
-			animate_offset(real_direction * _AnimationDistances.HIT_REACT,
-				_AnimationTimes.HIT_REACT, Tween.TRANS_QUART, Tween.EASE_OUT),
-			"completed"
-		)
-		yield(
-			animate_offset(Vector2.ZERO, _AnimationTimes.HIT_RECOVER,
-					Tween.TRANS_QUAD, Tween.EASE_OUT),
-			"completed"
-		)
+		set_slide_direction(direction)
+		_anim.play("hit")
+		yield(_anim, "animation_finished")
 	else:
 		_anim.play("shake")
 		yield(_anim, "animation_finished")
