@@ -5,11 +5,6 @@ extends TileObject
 class _AnimationTimes:
 	const MOVE := 0.15
 
-	const ATTACK_PREP := 0.15
-	const ATTACK_HIT := 0.1
-	const ATTACK_PAUSE := 0.05
-	const ATTACK_RECOVER := 0.1
-
 	const HIT_REACT := 0.1
 	const HIT_RECOVER := 0.2
 
@@ -17,10 +12,6 @@ class _AnimationTimes:
 
 
 class _AnimationDistances:
-	const ATTACK_PREP := 0.25
-	const ATTACK_HIT_REDUCED := 0.25
-	const ATTACK_HIT := 0.5
-
 	const HIT_REACT := 0.25
 	const DEATH := 0.5
 
@@ -30,6 +21,7 @@ const _ACTION_FRAME := 0
 const _REACT_FRAME := 1
 
 signal animation_finished
+# warning-ignore:unused_signal
 signal attack_hit
 
 signal dying
@@ -44,6 +36,7 @@ export var actor_definition: Resource setget set_actor_definition
 
 export(Faction) var faction := Faction.ENEMY
 
+# Used for animations that depend on a direction
 export var slide_direction := Vector2.ZERO setget set_slide_direction
 export var slide_distance := 0.0 setget set_slide_distance
 
@@ -80,6 +73,7 @@ onready var remote_transform := $Center/Offset/RemoteTransform2D \
 		as RemoteTransform2D
 
 onready var _anim := $AnimationPlayer as AnimationPlayer
+onready var _audio := $AudioStreamPlayer as AudioStreamPlayer
 onready var _tween := $Tween as Tween
 
 onready var _sprite := $Center/Offset/Sprite as Sprite
@@ -94,7 +88,6 @@ onready var _target_cursor := $TargetCursor as TargetCursor
 onready var _other_target_cursor := $OtherTargetCursor as TargetCursor
 
 onready var _step_sound := $StepSound as AudioStreamPlayer
-onready var _melee_attack_sound := $MeleeAttackSound as AudioStreamPlayer
 onready var _hit_sound := $HitSound as AudioStreamPlayer
 
 
@@ -156,7 +149,7 @@ func reset_virtual_origin() -> void:
 
 
 func set_slide_direction(value: Vector2) -> void:
-	slide_direction = value
+	slide_direction = value.normalized()
 	_set_offset_from_slide()
 
 
@@ -380,50 +373,26 @@ func animate_attack(direction: Vector2, reduce_lunge := false,
 		play_sound := true) -> void:
 	_animating = true
 
-	var real_direction := direction.normalized()
-
-	set_pose(Pose.ACTION)
-	set_facing(real_direction)
-
-	var hit_pos := real_direction
-	if reduce_lunge:
-		hit_pos *= _AnimationDistances.ATTACK_HIT_REDUCED
-	else:
-		hit_pos *= _AnimationDistances.ATTACK_HIT
-
-	yield(
-		animate_offset(-real_direction * _AnimationDistances.ATTACK_PREP,
-			_AnimationTimes.ATTACK_PREP, Tween.TRANS_QUAD, Tween.EASE_OUT),
-		"completed"
-	)
+	set_facing(direction)
+	set_slide_direction(direction)
 
 	if play_sound:
-		_melee_attack_sound.play()
+		_audio.volume_db = linear2db(1)
+	else:
+		_audio.volume_db = linear2db(0)
 
-	yield(
-		animate_offset(hit_pos, _AnimationTimes.ATTACK_PREP,
-			Tween.TRANS_QUAD, Tween.EASE_OUT),
-		"completed"
-	)
-
-	emit_signal("attack_hit")
-
-	yield(
-		animate_offset(Vector2.ZERO, _AnimationTimes.ATTACK_RECOVER,
-			Tween.TRANS_QUAD, Tween.EASE_OUT),
-		"completed"
-	)
-
-	reset_pose()
+	if reduce_lunge:
+		_anim.play("attack_reduced")
+	else:
+		_anim.play("attack")
+	_anim.play("attack")
+	yield(_anim, "animation_finished")
 
 	_animating = false
-	emit_signal("animation_finished")
 
 
 func animate_death(direction: Vector2, play_hit_sound: bool) -> void:
 	emit_signal("dying")
-
-	_stamina_bar.visible = false
 
 	var real_direction := direction.normalized()
 	var new_offset := get_cell_offset() \
@@ -464,7 +433,7 @@ func set_facing(direction: Vector2) -> void:
 
 
 func _set_offset_from_slide() -> void:
-	set_cell_offset(slide_distance * slide_direction.normalized())
+	set_cell_offset(slide_distance * slide_direction)
 
 
 func _randomize_idle_start() -> void:

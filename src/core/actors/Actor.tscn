@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://src/core/actors/Actor.gd" type="Script" id=1]
 [ext_resource path="res://assets/graphics/actors/fighter.png" type="Texture" id=2]
@@ -28,6 +28,213 @@ resource_local_to_scene = true
 shader = ExtResource( 6 )
 shader_param/dissolve = 0.0
 shader_param/dissolve_texture = SubResource( 2 )
+
+[sub_resource type="Animation" id=8]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:slide_distance")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Center/Offset/Sprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 0 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath(".:cell_offset")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath(".:origin_cell")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Center/Offset/Sprite:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ) ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("Center/Offset/Sprite/ConditionIcons:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("Center/Offset/Sprite/StaminaBar:visible")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+
+[sub_resource type="Animation" id=7]
+resource_name = "attack_reduced"
+length = 0.4
+step = 0.01
+tracks/0/type = "value"
+tracks/0/path = NodePath("Center/Offset/Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:slide_distance")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.15, 0.25, 0.3, 0.4 ),
+"transitions": PoolRealArray( 0.5, 0.5, 0, 0.5, 1 ),
+"update": 0,
+"values": [ 0.0, -0.25, 0.5, 0.5, 0.0 ]
+}
+tracks/2/type = "audio"
+tracks/2/path = NodePath("AudioStreamPlayer")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"clips": [ {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource( 14 )
+} ],
+"times": PoolRealArray( 0.15 )
+}
+tracks/3/type = "method"
+tracks/3/path = NodePath(".")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0.25, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"values": [ {
+"args": [ "attack_hit" ],
+"method": "emit_signal"
+}, {
+"args": [ "animation_finished" ],
+"method": "emit_signal"
+} ]
+}
+
+[sub_resource type="Animation" id=9]
+resource_name = "attack_reduced"
+length = 0.4
+step = 0.01
+tracks/0/type = "value"
+tracks/0/path = NodePath("Center/Offset/Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:slide_distance")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.15, 0.25, 0.3, 0.4 ),
+"transitions": PoolRealArray( 0.5, 0.5, 0, 0.5, 1 ),
+"update": 0,
+"values": [ 0.0, -0.25, 0.25, 0.25, 0.0 ]
+}
+tracks/2/type = "audio"
+tracks/2/path = NodePath("AudioStreamPlayer")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"clips": [ {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource( 14 )
+} ],
+"times": PoolRealArray( 0.15 )
+}
+tracks/3/type = "method"
+tracks/3/path = NodePath(".")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0.25, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"values": [ {
+"args": [ "attack_hit" ],
+"method": "emit_signal"
+}, {
+"args": [ "animation_finished" ],
+"method": "emit_signal"
+} ]
+}
 
 [sub_resource type="Animation" id=4]
 resource_name = "death"
@@ -93,6 +300,18 @@ tracks/4/keys = {
 "stream": ExtResource( 9 )
 } ],
 "times": PoolRealArray( 0 )
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("Center/Offset/Sprite/StaminaBar:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
 }
 
 [sub_resource type="Animation" id=6]
@@ -199,7 +418,6 @@ script = ExtResource( 1 )
 material = SubResource( 3 )
 texture = ExtResource( 2 )
 hframes = 2
-frame = 1
 
 [node name="StaminaBar" parent="Center/Offset/Sprite" index="0" instance=ExtResource( 16 )]
 visible = false
@@ -245,12 +463,15 @@ z_index = 1
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." index="6"]
 autoplay = "idle"
+anims/RESET = SubResource( 8 )
+anims/attack = SubResource( 7 )
+anims/attack_reduced = SubResource( 9 )
 anims/death = SubResource( 4 )
 anims/hit_shake = SubResource( 6 )
 anims/idle = SubResource( 5 )
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." index="7"]
-stream = ExtResource( 9 )
+stream = ExtResource( 14 )
 bus = "Sounds"
 
 [node name="Tween" type="Tween" parent="." index="8"]
@@ -259,11 +480,7 @@ bus = "Sounds"
 stream = ExtResource( 10 )
 bus = "Sounds"
 
-[node name="MeleeAttackSound" type="AudioStreamPlayer" parent="." index="10"]
-stream = ExtResource( 14 )
-bus = "Sounds"
-
-[node name="HitSound" type="AudioStreamPlayer" parent="." index="11"]
+[node name="HitSound" type="AudioStreamPlayer" parent="." index="10"]
 stream = ExtResource( 8 )
 bus = "Sounds"
 
