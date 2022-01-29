@@ -379,6 +379,7 @@ func animate_attack(direction: Vector2, reduce_lunge := false,
 	_anim.play("attack")
 	yield(_anim, "animation_finished")
 
+	_audio.volume_db = linear2db(1)
 	_animating = false
 
 
@@ -394,6 +395,7 @@ func animate_death(direction: Vector2, play_hit_sound: bool) -> void:
 	_anim.play("death")
 	yield(_anim, "animation_finished")
 
+	_audio_2.volume_db = linear2db(1)
 	emit_signal("died")
 
 
