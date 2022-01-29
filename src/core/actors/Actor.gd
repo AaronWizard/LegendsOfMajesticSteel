@@ -2,26 +2,7 @@ tool
 class_name Actor, "res://assets/editor/actor.png"
 extends TileObject
 
-class _AnimationTimes:
-	const MOVE := 0.15
-
-	const ATTACK_PREP := 0.15
-	const ATTACK_HIT := 0.1
-	const ATTACK_PAUSE := 0.05
-	const ATTACK_RECOVER := 0.1
-
-	const HIT_REACT := 0.1
-	const HIT_RECOVER := 0.2
-
-	const BLOOD := 0.3
-
-
 class _AnimationDistances:
-	const ATTACK_PREP := 0.25
-	const ATTACK_HIT_REDUCED := 0.25
-	const ATTACK_HIT := 0.5
-
-	const HIT_REACT := 0.25
 	const DEATH := 0.5
 
 
@@ -29,7 +10,10 @@ const _WALK_FRAME := 0
 const _ACTION_FRAME := 0
 const _REACT_FRAME := 1
 
+const _BASE_BLOOD_TIME := 0.3
+
 signal animation_finished
+# warning-ignore:unused_signal
 signal attack_hit
 
 signal dying
@@ -43,6 +27,10 @@ export var character_name := "Actor"
 export var actor_definition: Resource setget set_actor_definition
 
 export(Faction) var faction := Faction.ENEMY
+
+# Used for animations that depend on a direction
+export var slide_direction := Vector2.ZERO setget set_slide_direction
+export var slide_distance := 0.0 setget set_slide_distance
 
 var portrait: Texture setget , get_portrait
 
@@ -77,6 +65,9 @@ onready var remote_transform := $Center/Offset/RemoteTransform2D \
 		as RemoteTransform2D
 
 onready var _anim := $AnimationPlayer as AnimationPlayer
+onready var _audio := $AudioStreamPlayer as AudioStreamPlayer
+onready var _audio_2 := $AudioStreamPlayer2 as AudioStreamPlayer
+
 onready var _tween := $Tween as Tween
 
 onready var _sprite := $Center/Offset/Sprite as Sprite
@@ -90,8 +81,6 @@ onready var _condition_icons := $Center/Offset/Sprite/ConditionIcons \
 onready var _target_cursor := $TargetCursor as TargetCursor
 onready var _other_target_cursor := $OtherTargetCursor as TargetCursor
 
-onready var _step_sound := $StepSound as AudioStreamPlayer
-onready var _melee_attack_sound := $MeleeAttackSound as AudioStreamPlayer
 onready var _hit_sound := $HitSound as AudioStreamPlayer
 
 
@@ -139,7 +128,7 @@ func set_size(value: int) -> void:
 	if _blood_splatter:
 		var pixel_rect_size := size * Constants.TILE_SIZE * 2
 		_blood_splatter.amount = pixel_rect_size
-		_blood_splatter.lifetime = _AnimationTimes.BLOOD * size
+		_blood_splatter.lifetime = _BASE_BLOOD_TIME * size
 
 
 func set_virtual_origin_cell(value: Vector2) -> void:
@@ -150,6 +139,16 @@ func set_virtual_origin_cell(value: Vector2) -> void:
 func reset_virtual_origin() -> void:
 	virtual_origin_cell = Vector2.ZERO
 	_using_virtual_origin = false
+
+
+func set_slide_direction(value: Vector2) -> void:
+	slide_direction = value.normalized()
+	_set_offset_from_slide()
+
+
+func set_slide_distance(value: float) -> void:
+	slide_distance = value
+	_set_offset_from_slide()
 
 
 func set_actor_definition(value: Resource) -> void:
@@ -318,9 +317,9 @@ func set_pose(value: int) -> void:
 			Pose.ACTION:
 				_sprite.frame = _ACTION_FRAME
 			Pose.DEATH:
-				_anim.play("actor_death")
+				_anim.play("death")
 			_:
-				_anim.play("actor_idle")
+				_anim.play("idle")
 
 
 func reset_pose() -> void:
@@ -344,21 +343,19 @@ func animate_offset(new_offset: Vector2, duration: float,
 
 func move_step(target_cell: Vector2) -> void:
 	assert(get_origin_cell().distance_squared_to(target_cell) == 1)
-	var diff := target_cell - get_origin_cell()
-
-	set_origin_cell(target_cell)
-	set_cell_offset(-diff)
-
-	set_facing(diff)
 
 	set_pose(Pose.WALK)
 
-	_step_sound.play()
-	yield(
-		animate_offset(Vector2.ZERO, _AnimationTimes.MOVE,
-			Tween.TRANS_QUAD, Tween.EASE_OUT),
-		"completed"
-	)
+	var direction := target_cell - get_origin_cell()
+
+	set_facing(direction)
+	set_slide_direction(direction)
+
+	set_origin_cell(target_cell)
+	set_cell_offset(-direction)
+
+	_anim.play("move_step")
+	yield(_anim, "animation_finished")
 
 	reset_pose()
 
@@ -367,74 +364,38 @@ func animate_attack(direction: Vector2, reduce_lunge := false,
 		play_sound := true) -> void:
 	_animating = true
 
-	var real_direction := direction.normalized()
-
-	set_pose(Pose.ACTION)
-	set_facing(real_direction)
-
-	var hit_pos := real_direction
-	if reduce_lunge:
-		hit_pos *= _AnimationDistances.ATTACK_HIT_REDUCED
-	else:
-		hit_pos *= _AnimationDistances.ATTACK_HIT
-
-	yield(
-		animate_offset(-real_direction * _AnimationDistances.ATTACK_PREP,
-			_AnimationTimes.ATTACK_PREP, Tween.TRANS_QUAD, Tween.EASE_OUT),
-		"completed"
-	)
+	set_facing(direction)
+	set_slide_direction(direction)
 
 	if play_sound:
-		_melee_attack_sound.play()
+		_audio.volume_db = linear2db(1)
+	else:
+		_audio.volume_db = linear2db(0)
 
-	yield(
-		animate_offset(hit_pos, _AnimationTimes.ATTACK_PREP,
-			Tween.TRANS_QUAD, Tween.EASE_OUT),
-		"completed"
-	)
+	if reduce_lunge:
+		_anim.play("attack_reduced")
+	else:
+		_anim.play("attack")
+	_anim.play("attack")
+	yield(_anim, "animation_finished")
 
-	emit_signal("attack_hit")
-
-	yield(
-		animate_offset(Vector2.ZERO, _AnimationTimes.ATTACK_RECOVER,
-			Tween.TRANS_QUAD, Tween.EASE_OUT),
-		"completed"
-	)
-
-	reset_pose()
-
+	_audio.volume_db = linear2db(1)
 	_animating = false
-	emit_signal("animation_finished")
 
 
 func animate_death(direction: Vector2, play_hit_sound: bool) -> void:
 	emit_signal("dying")
 
-	_stamina_bar.visible = false
-
-	var real_direction := direction.normalized()
-	var new_offset := get_cell_offset() \
-			+ (real_direction * _AnimationDistances.DEATH)
-
-	var waiter := SignalWaiter.new()
-
 	if play_hit_sound:
-		waiter.wait_for_signal(_hit_sound, "finished")
-		_hit_sound.play()
+		_audio_2.volume_db = linear2db(1)
+	else:
+		_audio_2.volume_db = linear2db(0)
 
+	set_slide_direction(direction)
+	_anim.play("death")
+	yield(_anim, "animation_finished")
 
-	set_pose(Pose.DEATH)
-	if direction != Vector2.ZERO:
-		yield(
-			animate_offset(new_offset, _anim.current_animation_length,
-				Tween.TRANS_QUAD, Tween.EASE_OUT),
-			"completed"
-		)
-	if _anim.is_playing():
-		yield(_anim, "animation_finished")
-	if waiter.waiting:
-		yield(waiter, "finished")
-
+	_audio_2.volume_db = linear2db(1)
 	emit_signal("died")
 
 
@@ -450,9 +411,13 @@ func set_facing(direction: Vector2) -> void:
 	# else change nothing
 
 
+func _set_offset_from_slide() -> void:
+	set_cell_offset(slide_distance * slide_direction)
+
+
 func _randomize_idle_start() -> void:
 	if not Engine.editor_hint:
-		assert(_anim.current_animation == "actor_idle")
+		assert(_anim.current_animation == "idle")
 		var offset := rand_range(0, _anim.current_animation_length)
 		_anim.advance(offset)
 
@@ -473,23 +438,12 @@ func _animate_staminabar(change: int) -> void:
 
 
 func _animate_hit(direction: Vector2) -> void:
-
 	if direction != Vector2.ZERO:
-		set_pose(Pose.REACT)
-		_hit_sound.play()
-		var real_direction := direction.normalized()
-		yield(
-			animate_offset(real_direction * _AnimationDistances.HIT_REACT,
-				_AnimationTimes.HIT_REACT, Tween.TRANS_QUART, Tween.EASE_OUT),
-			"completed"
-		)
-		yield(
-			animate_offset(Vector2.ZERO, _AnimationTimes.HIT_RECOVER,
-					Tween.TRANS_QUAD, Tween.EASE_OUT),
-			"completed"
-		)
+		set_slide_direction(direction)
+		_anim.play("hit")
+		yield(_anim, "animation_finished")
 	else:
-		_anim.play("actor_shake")
+		_anim.play("shake")
 		yield(_anim, "animation_finished")
 
 	reset_pose()
