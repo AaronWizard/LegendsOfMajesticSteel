@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://src/core/actors/Actor.gd" type="Script" id=1]
 [ext_resource path="res://assets/graphics/actors/fighter.png" type="Texture" id=2]
@@ -11,7 +11,6 @@
 [ext_resource path="res://resources/visual/animations/actor_death.tres" type="Animation" id=9]
 [ext_resource path="res://assets/sounds/step.wav" type="AudioStream" id=10]
 [ext_resource path="res://src/ui/actor/ConditionIcons.tscn" type="PackedScene" id=11]
-[ext_resource path="res://assets/sounds/death.wav" type="AudioStream" id=12]
 [ext_resource path="res://resources/visual/animations/actor_idle.tres" type="Animation" id=13]
 [ext_resource path="res://assets/sounds/melee_swing.wav" type="AudioStream" id=14]
 [ext_resource path="res://src/ui/actor/StaminaBar.tscn" type="PackedScene" id=16]
@@ -90,7 +89,7 @@ anims/actor_idle = ExtResource( 13 )
 anims/actor_shake = ExtResource( 17 )
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." index="7"]
-stream = ExtResource( 12 )
+stream = ExtResource( 8 )
 bus = "Sounds"
 
 [node name="Tween" type="Tween" parent="." index="8"]

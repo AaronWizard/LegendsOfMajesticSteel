@@ -473,10 +473,10 @@ func _animate_staminabar(change: int) -> void:
 
 
 func _animate_hit(direction: Vector2) -> void:
-	set_pose(Pose.REACT)
-	_hit_sound.play()
 
 	if direction != Vector2.ZERO:
+		set_pose(Pose.REACT)
+		_hit_sound.play()
 		var real_direction := direction.normalized()
 		yield(
 			animate_offset(real_direction * _AnimationDistances.HIT_REACT,

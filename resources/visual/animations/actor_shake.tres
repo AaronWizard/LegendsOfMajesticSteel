@@ -1,4 +1,6 @@
-[gd_resource type="Animation" format=2]
+[gd_resource type="Animation" load_steps=2 format=2]
+
+[ext_resource path="res://assets/sounds/hit.wav" type="AudioStream" id=1]
 
 [resource]
 resource_name = "actor_shake"
@@ -27,4 +29,18 @@ tracks/1/keys = {
 "transitions": PoolRealArray( 1 ),
 "update": 1,
 "values": [ 1 ]
+}
+tracks/2/type = "audio"
+tracks/2/path = NodePath("AudioStreamPlayer")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"clips": [ {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource( 1 )
+} ],
+"times": PoolRealArray( 0 )
 }
