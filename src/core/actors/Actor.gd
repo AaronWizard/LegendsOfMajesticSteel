@@ -93,7 +93,6 @@ onready var _other_target_cursor := $OtherTargetCursor as TargetCursor
 onready var _step_sound := $StepSound as AudioStreamPlayer
 onready var _melee_attack_sound := $MeleeAttackSound as AudioStreamPlayer
 onready var _hit_sound := $HitSound as AudioStreamPlayer
-onready var _death_sound := $DeathSound as AudioStreamPlayer
 
 
 func _ready() -> void:
@@ -423,8 +422,6 @@ func animate_death(direction: Vector2, play_hit_sound: bool) -> void:
 		waiter.wait_for_signal(_hit_sound, "finished")
 		_hit_sound.play()
 
-	waiter.wait_for_signal(_death_sound, "finished")
-	_death_sound.play()
 
 	set_pose(Pose.DEATH)
 	if direction != Vector2.ZERO:
