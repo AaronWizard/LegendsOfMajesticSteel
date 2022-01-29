@@ -3,6 +3,8 @@ extends Node2D
 
 
 var _enabled_icons := []
+
+var _icon_index := 0
 var _visible_icon_index := 0
 
 onready var _stat_mod_icons := $StatModIcons as Node2D
@@ -16,9 +18,6 @@ onready var _move_up := _stat_mod_icons.get_node("MoveUp") as CanvasItem
 onready var _move_down := _stat_mod_icons.get_node("MoveDown") as CanvasItem
 
 
-onready var _timer := $Timer as Timer
-
-
 func update_icons(stats: Stats) -> void:
 	_clear()
 
@@ -30,11 +29,9 @@ func update_icons(stats: Stats) -> void:
 	if _enabled_icons.size() > 0:
 		var first_icon := _enabled_icons.front() as CanvasItem
 		first_icon.visible = true
-		_timer.start()
 
 
 func _clear() -> void:
-	_timer.stop()
 	_enabled_icons.clear()
 	_visible_icon_index = 0
 
@@ -54,15 +51,17 @@ func _add_stat_mod_icon(stats: Stats, stat_type: int,
 
 
 func _on_Timer_timeout() -> void:
-	if _enabled_icons.size() > 1:
-		var old_icon := _enabled_icons[_visible_icon_index] as CanvasItem
-		old_icon.visible = false
+	_icon_index = (_icon_index + 1) % _stat_mod_icons.get_child_count()
 
-		_visible_icon_index = (_visible_icon_index + 1) % _enabled_icons.size()
+	if not _enabled_icons.empty():
+		if _enabled_icons.size() > 1:
+			var old_icon := _enabled_icons[_visible_icon_index] as CanvasItem
+			old_icon.visible = false
 
-		var new_icon := _enabled_icons[_visible_icon_index] as CanvasItem
-		new_icon.visible = true
-	else:
-		assert(_enabled_icons.size() == 1)
-		var icon := _enabled_icons.front() as CanvasItem
-		icon.visible = not icon.visible
+			_visible_icon_index = _icon_index % _enabled_icons.size()
+
+			var new_icon := _enabled_icons[_visible_icon_index] as CanvasItem
+			new_icon.visible = true
+		else:
+			var icon := _enabled_icons.front() as CanvasItem
+			icon.visible = (_icon_index % 2) == 0
