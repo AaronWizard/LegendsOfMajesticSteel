@@ -50,8 +50,6 @@ var other_target_visible: bool setget \
 var stamina_bar_modifier: int setget set_stamina_bar_modifier, \
 		get_stamina_bar_modifier
 
-var pose: int = Pose.IDLE setget set_pose
-
 var animating: bool setget , get_is_animating
 
 var virtual_origin_cell: Vector2 setget set_virtual_origin_cell
@@ -322,11 +320,8 @@ func start_round(first_round: bool) -> void:
 	round_finished = false
 
 
-func set_pose(value: int) -> void:
-	var old_pose := pose
-	pose = value
-
-	if _anim and _sprite and (old_pose != pose):
+func set_pose(pose: int) -> void:
+	if _anim and _sprite:
 		_anim.stop(true)
 		match pose:
 			Pose.WALK:
@@ -360,8 +355,6 @@ func animate_offset(new_offset: Vector2, duration: float,
 
 func move_step(target_cell: Vector2) -> void:
 	assert(get_origin_cell().distance_squared_to(target_cell) == 1)
-
-	set_pose(Pose.WALK)
 
 	var direction := target_cell - get_origin_cell()
 
@@ -398,6 +391,8 @@ func animate_attack(direction: Vector2, reduce_lunge := false,
 
 	_audio.volume_db = linear2db(1)
 	_animating = false
+
+	reset_pose()
 
 
 func animate_death(direction: Vector2, play_hit_sound: bool) -> void:
