@@ -1,27 +1,14 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://resources/visual/shaders/dissolve_shader.shader" type="Shader" id=1]
 [ext_resource path="res://src/core/actors/Actor.tscn" type="PackedScene" id=2]
 [ext_resource path="res://assets/graphics/actors/warrior_maiden.png" type="Texture" id=3]
 [ext_resource path="res://resources/data/stats/player/WarriorMaiden.tres" type="Resource" id=4]
-
-[sub_resource type="OpenSimplexNoise" id=1]
-seed = 1
-
-[sub_resource type="NoiseTexture" id=2]
-noise = SubResource( 1 )
-
-[sub_resource type="ShaderMaterial" id=3]
-resource_local_to_scene = true
-shader = ExtResource( 1 )
-shader_param/dissolve = 0.0
-shader_param/dissolve_texture = SubResource( 2 )
 
 [node name="WarriorMaiden" instance=ExtResource( 2 )]
 character_name = "Sekma"
 actor_definition = ExtResource( 4 )
 faction = 0
+fakes_death = true
 
 [node name="Sprite" parent="Center/Offset" index="0"]
-material = SubResource( 3 )
 texture = ExtResource( 3 )

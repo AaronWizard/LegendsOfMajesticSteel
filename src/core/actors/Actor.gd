@@ -2,15 +2,13 @@ tool
 class_name Actor, "res://assets/editor/actor.png"
 extends TileObject
 
-class _AnimationDistances:
-	const DEATH := 0.5
-
-
 const _WALK_FRAME := 0
 const _ACTION_FRAME := 0
 const _REACT_FRAME := 1
 
 const _BASE_BLOOD_TIME := 0.3
+
+const _FAKE_DEATH_FLY_SPEED := 200
 
 signal animation_finished
 # warning-ignore:unused_signal
@@ -20,13 +18,15 @@ signal dying
 signal died
 
 enum Faction { PLAYER, ENEMY }
-enum Pose { IDLE, WALK, ACTION, REACT, DEATH }
+enum Pose { IDLE, WALK, ACTION, REACT }
 
 export var character_name := "Actor"
 
 export var actor_definition: Resource setget set_actor_definition
 
 export(Faction) var faction := Faction.ENEMY
+
+export var fakes_death := false
 
 # Used for animations that depend on a direction
 export var slide_direction := Vector2.ZERO setget set_slide_direction
@@ -50,8 +50,6 @@ var other_target_visible: bool setget \
 var stamina_bar_modifier: int setget set_stamina_bar_modifier, \
 		get_stamina_bar_modifier
 
-var pose: int = Pose.IDLE setget set_pose
-
 var animating: bool setget , get_is_animating
 
 var virtual_origin_cell: Vector2 setget set_virtual_origin_cell
@@ -60,6 +58,8 @@ var _animating := false
 var _stamina_bar_animating := false
 
 var _using_virtual_origin := false
+
+var _fly_direction := Vector2.ZERO
 
 onready var remote_transform := $Center/Offset/RemoteTransform2D \
 		as RemoteTransform2D
@@ -74,6 +74,9 @@ onready var _sprite := $Center/Offset/Sprite as Sprite
 onready var _blood_splatter := $Center/BloodSplatter \
 		as CPUParticles2D
 
+onready var _visibility := $Center/Offset/Sprite/VisibilityNotifier2D \
+		as VisibilityNotifier2D
+
 onready var _stamina_bar := $Center/Offset/Sprite/StaminaBar as StaminaBar
 onready var _condition_icons := $Center/Offset/Sprite/ConditionIcons \
 		as ConditionIcons
@@ -87,6 +90,8 @@ onready var _hit_sound := $HitSound as AudioStreamPlayer
 func _ready() -> void:
 	._ready()
 
+	set_process(false)
+
 	if not Engine.editor_hint:
 		set_actor_definition(actor_definition)
 
@@ -94,6 +99,12 @@ func _ready() -> void:
 		_condition_icons.update_icons(get_stats())
 
 		_randomize_idle_start()
+
+
+func _process(delta: float) -> void:
+	# For fake deaths
+	if not Engine.editor_hint and (_fly_direction.length_squared() > 0):
+		position += _fly_direction * _FAKE_DEATH_FLY_SPEED * delta
 
 
 # Override
@@ -126,9 +137,15 @@ func set_size(value: int) -> void:
 	if _other_target_cursor:
 		_other_target_cursor.rect_size = Vector2(size, size)
 	if _blood_splatter:
-		var pixel_rect_size := size * Constants.TILE_SIZE * 2
-		_blood_splatter.amount = pixel_rect_size
+		var splatter_size := size * Constants.TILE_SIZE * 2
+		_blood_splatter.amount = splatter_size
 		_blood_splatter.lifetime = _BASE_BLOOD_TIME * size
+	if _visibility:
+		var bounds_rect := Rect2(
+				(Vector2(size, size) / -2.0) * Constants.TILE_SIZE,
+				Vector2(size, size) * Constants.TILE_SIZE
+		)
+		_visibility.rect = bounds_rect
 
 
 func set_virtual_origin_cell(value: Vector2) -> void:
@@ -303,11 +320,8 @@ func start_round(first_round: bool) -> void:
 	round_finished = false
 
 
-func set_pose(value: int) -> void:
-	var old_pose := pose
-	pose = value
-
-	if _anim and _sprite and (old_pose != pose):
+func set_pose(pose: int) -> void:
+	if _anim and _sprite:
 		_anim.stop(true)
 		match pose:
 			Pose.WALK:
@@ -316,8 +330,6 @@ func set_pose(value: int) -> void:
 				_sprite.frame = _REACT_FRAME
 			Pose.ACTION:
 				_sprite.frame = _ACTION_FRAME
-			Pose.DEATH:
-				_anim.play("death")
 			_:
 				_anim.play("idle")
 
@@ -343,8 +355,6 @@ func animate_offset(new_offset: Vector2, duration: float,
 
 func move_step(target_cell: Vector2) -> void:
 	assert(get_origin_cell().distance_squared_to(target_cell) == 1)
-
-	set_pose(Pose.WALK)
 
 	var direction := target_cell - get_origin_cell()
 
@@ -382,6 +392,8 @@ func animate_attack(direction: Vector2, reduce_lunge := false,
 	_audio.volume_db = linear2db(1)
 	_animating = false
 
+	reset_pose()
+
 
 func animate_death(direction: Vector2, play_hit_sound: bool) -> void:
 	emit_signal("dying")
@@ -391,9 +403,20 @@ func animate_death(direction: Vector2, play_hit_sound: bool) -> void:
 	else:
 		_audio_2.volume_db = linear2db(0)
 
-	set_slide_direction(direction)
-	_anim.play("death")
-	yield(_anim, "animation_finished")
+	if fakes_death:
+		_anim.play("fake_death")
+
+		if direction.length_squared() > 0:
+			_fly_direction = direction.normalized()
+		else:
+			_fly_direction = Vector2.DOWN
+
+		set_process(true)
+		yield(_visibility, "screen_exited")
+	else:
+		set_slide_direction(direction)
+		_anim.play("death")
+		yield(_anim, "animation_finished")
 
 	_audio_2.volume_db = linear2db(1)
 	emit_signal("died")
@@ -438,7 +461,7 @@ func _animate_staminabar(change: int) -> void:
 
 
 func _animate_hit(direction: Vector2) -> void:
-	if direction != Vector2.ZERO:
+	if direction.length_squared() > 0:
 		set_slide_direction(direction)
 		_anim.play("hit")
 		yield(_anim, "animation_finished")
