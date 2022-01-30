@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://src/core/actors/Actor.gd" type="Script" id=1]
 [ext_resource path="res://assets/graphics/actors/fighter.png" type="Texture" id=2]
@@ -11,54 +11,9 @@
 [ext_resource path="res://assets/sounds/death.wav" type="AudioStream" id=9]
 [ext_resource path="res://assets/sounds/step.wav" type="AudioStream" id=10]
 [ext_resource path="res://src/ui/actor/ConditionIcons.tscn" type="PackedScene" id=11]
+[ext_resource path="res://resources/visual/shaders/actor_shader.tres" type="Material" id=12]
 [ext_resource path="res://assets/sounds/melee_swing.wav" type="AudioStream" id=14]
 [ext_resource path="res://src/ui/actor/StaminaBar.tscn" type="PackedScene" id=16]
-
-[sub_resource type="Shader" id=13]
-code = "shader_type canvas_item;
-
-const float TIME_MULT = 6.28 * 2f;
-
-uniform bool flashing;
-uniform float dissolve_value : hint_range(0, 1);
-
-uniform vec4 flash_colour : hint_color;
-uniform vec4 black_colour : hint_color;
-uniform sampler2D dissolve_texture : hint_albedo;
-
-void fragment()
-{
-	vec4 main_texture = texture(TEXTURE, UV);
-	
-	if (flashing && (main_texture != black_colour)
-			&& (sin(TIME * TIME_MULT) > 0f))
-	{
-		main_texture.rgb = flash_colour.rgb;
-	}
-	
-	vec4 noise_texture = texture(dissolve_texture, UV);
-	main_texture.a *= floor(dissolve_value + min(1, noise_texture.x));
-	
-	COLOR = main_texture;
-}"
-
-[sub_resource type="OpenSimplexNoise" id=14]
-period = 8.0
-
-[sub_resource type="NoiseTexture" id=15]
-flags = 0
-width = 256
-height = 256
-noise = SubResource( 14 )
-
-[sub_resource type="ShaderMaterial" id=12]
-resource_local_to_scene = true
-shader = SubResource( 13 )
-shader_param/flashing = false
-shader_param/dissolve_value = 1.0
-shader_param/flash_colour = Color( 1, 0.129412, 0.32549, 1 )
-shader_param/black_colour = Color( 0.0627451, 0.0627451, 0.0627451, 1 )
-shader_param/dissolve_texture = SubResource( 15 )
 
 [sub_resource type="Animation" id=8]
 length = 0.001
@@ -624,7 +579,7 @@ tracks/1/keys = {
 script = ExtResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="Center/Offset" index="0"]
-material = SubResource( 12 )
+material = ExtResource( 12 )
 texture = ExtResource( 2 )
 hframes = 2
 
