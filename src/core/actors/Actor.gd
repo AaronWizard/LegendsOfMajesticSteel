@@ -20,7 +20,7 @@ signal dying
 signal died
 
 enum Faction { PLAYER, ENEMY }
-enum Pose { IDLE, WALK, ACTION, REACT, DEATH }
+enum Pose { IDLE, WALK, ACTION, REACT }
 
 export var character_name := "Actor"
 
@@ -316,8 +316,6 @@ func set_pose(value: int) -> void:
 				_sprite.frame = _REACT_FRAME
 			Pose.ACTION:
 				_sprite.frame = _ACTION_FRAME
-			Pose.DEATH:
-				_anim.play("death")
 			_:
 				_anim.play("idle")
 
