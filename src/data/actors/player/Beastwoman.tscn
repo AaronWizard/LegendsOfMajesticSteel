@@ -8,6 +8,7 @@
 character_name = "Urbarra"
 actor_definition = ExtResource( 3 )
 faction = 0
+fakes_death = true
 
 [node name="Sprite" parent="Center/Offset" index="0"]
 texture = ExtResource( 2 )
