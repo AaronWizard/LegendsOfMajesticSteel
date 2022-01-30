@@ -8,6 +8,8 @@ const _REACT_FRAME := 1
 
 const _BASE_BLOOD_TIME := 0.3
 
+const _FAKE_DEATH_FLY_SPEED := 200
+
 signal animation_finished
 # warning-ignore:unused_signal
 signal attack_hit
@@ -59,6 +61,8 @@ var _stamina_bar_animating := false
 
 var _using_virtual_origin := false
 
+var _fly_direction := Vector2.ZERO
+
 onready var remote_transform := $Center/Offset/RemoteTransform2D \
 		as RemoteTransform2D
 
@@ -71,6 +75,7 @@ onready var _tween := $Tween as Tween
 onready var _sprite := $Center/Offset/Sprite as Sprite
 onready var _blood_splatter := $Center/BloodSplatter \
 		as CPUParticles2D
+
 onready var _visibility := $Center/Offset/Sprite/VisibilityNotifier2D \
 		as VisibilityNotifier2D
 
@@ -87,6 +92,8 @@ onready var _hit_sound := $HitSound as AudioStreamPlayer
 func _ready() -> void:
 	._ready()
 
+	set_process(false)
+
 	if not Engine.editor_hint:
 		set_actor_definition(actor_definition)
 
@@ -94,6 +101,12 @@ func _ready() -> void:
 		_condition_icons.update_icons(get_stats())
 
 		_randomize_idle_start()
+
+
+func _process(delta: float) -> void:
+	# For fake deaths
+	if not Engine.editor_hint and (_fly_direction.length_squared() > 0):
+		position += _fly_direction * _FAKE_DEATH_FLY_SPEED * delta
 
 
 # Override
@@ -398,11 +411,12 @@ func animate_death(direction: Vector2, play_hit_sound: bool) -> void:
 	if fakes_death:
 		_anim.play("fake_death")
 
-		if direction.length_squared() == 0:
-			pass
+		if direction.length_squared() > 0:
+			_fly_direction = direction.normalized()
 		else:
-			pass
+			_fly_direction = Vector2.DOWN
 
+		set_process(true)
 		yield(_visibility, "screen_exited")
 	else:
 		set_slide_direction(direction)
