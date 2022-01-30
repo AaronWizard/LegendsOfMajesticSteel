@@ -2,10 +2,6 @@ tool
 class_name Actor, "res://assets/editor/actor.png"
 extends TileObject
 
-class _AnimationDistances:
-	const DEATH := 0.5
-
-
 const _WALK_FRAME := 0
 const _ACTION_FRAME := 0
 const _REACT_FRAME := 1
@@ -27,6 +23,8 @@ export var character_name := "Actor"
 export var actor_definition: Resource setget set_actor_definition
 
 export(Faction) var faction := Faction.ENEMY
+
+export var fakes_death := false
 
 # Used for animations that depend on a direction
 export var slide_direction := Vector2.ZERO setget set_slide_direction
@@ -73,6 +71,8 @@ onready var _tween := $Tween as Tween
 onready var _sprite := $Center/Offset/Sprite as Sprite
 onready var _blood_splatter := $Center/BloodSplatter \
 		as CPUParticles2D
+onready var _visibility := $Center/Offset/Sprite/VisibilityNotifier2D \
+		as VisibilityNotifier2D
 
 onready var _stamina_bar := $Center/Offset/Sprite/StaminaBar as StaminaBar
 onready var _condition_icons := $Center/Offset/Sprite/ConditionIcons \
@@ -126,9 +126,15 @@ func set_size(value: int) -> void:
 	if _other_target_cursor:
 		_other_target_cursor.rect_size = Vector2(size, size)
 	if _blood_splatter:
-		var pixel_rect_size := size * Constants.TILE_SIZE * 2
-		_blood_splatter.amount = pixel_rect_size
+		var splatter_size := size * Constants.TILE_SIZE * 2
+		_blood_splatter.amount = splatter_size
 		_blood_splatter.lifetime = _BASE_BLOOD_TIME * size
+	if _visibility:
+		var bounds_rect := Rect2(
+				(Vector2(size, size) / -2.0) * Constants.TILE_SIZE,
+				Vector2(size, size) * Constants.TILE_SIZE
+		)
+		_visibility.rect = bounds_rect
 
 
 func set_virtual_origin_cell(value: Vector2) -> void:
@@ -389,9 +395,19 @@ func animate_death(direction: Vector2, play_hit_sound: bool) -> void:
 	else:
 		_audio_2.volume_db = linear2db(0)
 
-	set_slide_direction(direction)
-	_anim.play("death")
-	yield(_anim, "animation_finished")
+	if fakes_death:
+		_anim.play("fake_death")
+
+		if direction.length_squared() == 0:
+			pass
+		else:
+			pass
+
+		yield(_visibility, "screen_exited")
+	else:
+		set_slide_direction(direction)
+		_anim.play("death")
+		yield(_anim, "animation_finished")
 
 	_audio_2.volume_db = linear2db(1)
 	emit_signal("died")
@@ -436,7 +452,7 @@ func _animate_staminabar(change: int) -> void:
 
 
 func _animate_hit(direction: Vector2) -> void:
-	if direction != Vector2.ZERO:
+	if direction.length_squared() > 0:
 		set_slide_direction(direction)
 		_anim.play("hit")
 		yield(_anim, "animation_finished")
