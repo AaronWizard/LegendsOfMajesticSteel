@@ -1,10 +1,11 @@
-[gd_scene load_steps=25 format=2]
+[gd_scene load_steps=27 format=2]
 
 [ext_resource path="res://src/core/actors/Actor.gd" type="Script" id=1]
 [ext_resource path="res://assets/graphics/actors/fighter.png" type="Texture" id=2]
 [ext_resource path="res://src/core/actors/Stats.gd" type="Script" id=3]
 [ext_resource path="res://src/core/maps/OtherTargetCursor.tscn" type="PackedScene" id=4]
 [ext_resource path="res://src/core/maps/TargetCursor.tscn" type="PackedScene" id=5]
+[ext_resource path="res://assets/sounds/fake_death.wav" type="AudioStream" id=6]
 [ext_resource path="res://src/core/maps/tiles/TileObject.tscn" type="PackedScene" id=7]
 [ext_resource path="res://assets/sounds/hit.wav" type="AudioStream" id=8]
 [ext_resource path="res://assets/sounds/death.wav" type="AudioStream" id=9]
@@ -169,6 +170,18 @@ tracks/8/keys = {
 "update": 1,
 "values": [ false ]
 }
+tracks/9/type = "value"
+tracks/9/path = NodePath("Center/BloodSplatter:emitting")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
 
 [sub_resource type="Animation" id=7]
 resource_name = "attack_reduced"
@@ -312,10 +325,10 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
 "update": 1,
-"values": [ true ]
+"values": [ true, false ]
 }
 tracks/2/type = "value"
 tracks/2/path = NodePath("Center/Offset/Sprite/ConditionIcons:visible")
@@ -392,6 +405,61 @@ tracks/7/keys = {
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
 "values": [ 1.0, 0.0 ]
+}
+
+[sub_resource type="Animation" id=16]
+resource_name = "fake_death"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Center/Offset/Sprite:material:shader_param/flashing")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/1/type = "audio"
+tracks/1/path = NodePath("AudioStreamPlayer")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"clips": [ {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource( 6 )
+} ],
+"times": PoolRealArray( 0 )
+}
+tracks/2/type = "audio"
+tracks/2/path = NodePath("AudioStreamPlayer2")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"clips": [ {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource( 8 )
+} ],
+"times": PoolRealArray( 0 )
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Center/BloodSplatter:emitting")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
 }
 
 [sub_resource type="Animation" id=11]
@@ -608,13 +676,14 @@ anims/RESET = SubResource( 8 )
 anims/attack = SubResource( 7 )
 anims/attack_reduced = SubResource( 9 )
 anims/death = SubResource( 4 )
+anims/fake_death = SubResource( 16 )
 anims/hit = SubResource( 11 )
 anims/hit_shake = SubResource( 6 )
 anims/idle = SubResource( 5 )
 anims/move_step = SubResource( 10 )
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." index="7"]
-stream = ExtResource( 9 )
+stream = ExtResource( 6 )
 bus = "Sounds"
 
 [node name="AudioStreamPlayer2" type="AudioStreamPlayer" parent="." index="8"]
