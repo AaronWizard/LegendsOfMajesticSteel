@@ -16,15 +16,28 @@
 [sub_resource type="Shader" id=13]
 code = "shader_type canvas_item;
 
+const float TIME_MULT = 6.28 * 2f;
+
+uniform bool flashing;
 uniform float dissolve_value : hint_range(0, 1);
 
+uniform vec4 flash_colour : hint_color;
+uniform vec4 black_colour : hint_color;
 uniform sampler2D dissolve_texture : hint_albedo;
 
 void fragment()
 {
 	vec4 main_texture = texture(TEXTURE, UV);
+	
+	if (flashing && (main_texture != black_colour)
+			&& (sin(TIME * TIME_MULT) > 0f))
+	{
+		main_texture.rgb = flash_colour.rgb;
+	}
+	
 	vec4 noise_texture = texture(dissolve_texture, UV);
 	main_texture.a *= floor(dissolve_value + min(1, noise_texture.x));
+	
 	COLOR = main_texture;
 }"
 
@@ -40,7 +53,10 @@ noise = SubResource( 14 )
 [sub_resource type="ShaderMaterial" id=12]
 resource_local_to_scene = true
 shader = SubResource( 13 )
+shader_param/flashing = false
 shader_param/dissolve_value = 1.0
+shader_param/flash_colour = Color( 1, 0.129412, 0.32549, 1 )
+shader_param/black_colour = Color( 0.0627451, 0.0627451, 0.0627451, 1 )
 shader_param/dissolve_texture = SubResource( 15 )
 
 [sub_resource type="Animation" id=8]
@@ -140,6 +156,18 @@ tracks/7/keys = {
 "transitions": PoolRealArray( 1 ),
 "update": 0,
 "values": [ 1.0 ]
+}
+tracks/8/type = "value"
+tracks/8/path = NodePath("Center/Offset/Sprite:material:shader_param/flashing")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
 }
 
 [sub_resource type="Animation" id=7]
