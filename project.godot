@@ -94,6 +94,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/ui/battle/ActorStatusPanel.gd"
 }, {
+"base": "SkillAOE",
+"class": "ActorsInAttackRangeAOE",
+"language": "GDScript",
+"path": "res://src/core/skills/aoe/ActorsInAttackRangeAOE.gd"
+}, {
 "base": "SkillEffect",
 "class": "AddConditionToTargetEffect",
 "language": "GDScript",
@@ -457,6 +462,7 @@ _global_script_class_icons={
 "ActorStartTurnState": "",
 "ActorStatDetails": "",
 "ActorStatusPanel": "",
+"ActorsInAttackRangeAOE": "",
 "AddConditionToTargetEffect": "res://assets/editor/add_condition_effect.png",
 "AnimateAttackEffect": "res://assets/editor/animateattack_effect.png",
 "AoeEffect": "res://assets/editor/aoe_effect.png",
