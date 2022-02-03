@@ -39,7 +39,7 @@ func get_target_info(target_cell: Vector2, source_cell: Vector2,
 
 
 func _run_self(target_cell: Vector2, source_cell: Vector2,
-		source_actor: Actor, map: Map):
+		source_actor: Actor, map: Map) -> void:
 	assert(get_child_count() == 1)
 
 	var targets := _get_targets(target_cell, source_cell, source_actor, map)

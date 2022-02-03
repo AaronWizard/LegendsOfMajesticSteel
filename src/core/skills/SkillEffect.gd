@@ -42,5 +42,5 @@ func _run_main(target_cell: Vector2, source_cell: Vector2,
 
 
 func _run_self(_target_cell: Vector2, _source_cell: Vector2,
-		_source_actor: Actor, _map: Map):
+		_source_actor: Actor, _map: Map) -> void:
 	push_warning("SkillEffect: Need to implement _run_self()")

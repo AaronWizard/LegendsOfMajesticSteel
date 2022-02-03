@@ -6,7 +6,7 @@ export var rotated := false
 
 
 func _run_self(target_cell: Vector2, _source_cell: Vector2,
-		source_actor: Actor, map: Map):
+		source_actor: Actor, map: Map) -> void:
 	var map_anim := map_anim_scene.instance() as MapAnimation
 	map.add_effect(map_anim)
 

@@ -131,7 +131,7 @@ func get_target_info(target_cell: Vector2, source_cell: Vector2,
 
 
 func _run_self(target_cell: Vector2, source_cell: Vector2,
-		source_actor: Actor, map: Map):
+		source_actor: Actor, map: Map) -> void:
 	var push_data := _PushData.new(max_distance, block_damages_allies_only,
 			target_cell, source_cell, map)
 

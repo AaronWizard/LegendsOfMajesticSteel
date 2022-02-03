@@ -6,7 +6,7 @@ export var target_is_actor := false
 
 
 func _run_self(target_cell: Vector2, source_cell: Vector2,
-		source_actor: Actor, map: Map):
+		source_actor: Actor, map: Map) -> void:
 	if source_cell != target_cell:
 		var projectile := projectile_scene.instance() as Projectile
 		map.add_effect(projectile)
