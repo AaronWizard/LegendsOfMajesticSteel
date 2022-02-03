@@ -21,6 +21,23 @@ A Skill is a special attack actors may take. Skills are defined with the followi
 
 An array of Vector2s representing the cells in the range.
 
+## SkillAOE
+
+### `get_aoe`
+
+`get_aoe(target_cell: Vector2, source_cell: Vector2, source_actor: Actor, map: Map) -> Array`
+
+#### Parameters
+
+- `target_cell`: The position of the target
+- `source_cell`: The position of the source effect
+- `source_actor`: The actor using the skill the AOE applies to
+- `map`: The current map
+
+#### Result
+
+An array of Vector2s representing the cells in the AOE.
+
 ## SkillEffect
 
 ### `get_target_info`
