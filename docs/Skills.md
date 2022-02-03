@@ -25,7 +25,7 @@ An array of Vector2s representing the cells in the range.
 
 ### `get_target_info`
 
-`get_target_info(target_cell: Vector2, source_cell: Vector2, source_actor: Actor, map: Map) -> TargetingData.TargetInfo:`
+`get_target_info(target_cell: Vector2, source_cell: Vector2, source_actor: Actor, map: Map) -> TargetingData.TargetInfo`
 
 #### Parameters
 
