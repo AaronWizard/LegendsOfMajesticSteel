@@ -339,6 +339,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/ui/actor/StaminaBar.gd"
 }, {
+"base": "SkillEffect",
+"class": "StandardAttackTargetEffect",
+"language": "GDScript",
+"path": "res://src/core/skills/effects/StandardAttackTargetEffect.gd"
+}, {
 "base": "Resource",
 "class": "StatModifier",
 "language": "GDScript",
@@ -501,6 +506,7 @@ _global_script_class_icons={
 "SoundCheckButton": "",
 "SoundEffect": "res://assets/editor/sound_effect.png",
 "StaminaBar": "",
+"StandardAttackTargetEffect": "res://assets/editor/animateattack_effect.png",
 "StatModifier": "",
 "StatType": "",
 "State": "",

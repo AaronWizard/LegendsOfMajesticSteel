@@ -53,6 +53,13 @@ func _init(new_source_cell: Vector2, new_target_range: Array,
 	_infos_by_target = new_infos_by_target
 
 
+func get_target_info(target: Vector2) -> TargetInfo:
+	var result: TargetInfo = null
+	if _infos_by_target.has(target):
+		result = _infos_by_target[target] as TargetInfo
+	return result
+
+
 func get_aoe(target: Vector2) -> Array:
 	var result := []
 	if _infos_by_target.has(target):
