@@ -6,12 +6,14 @@ const _CONFIG_RESOLUTION := "resolution"
 const _CONFIG_FULLSCREEN := "fullscreen"
 const _CONFIG_SOUND_VOLUME := "sound_volume"
 const _CONFIG_MUSIC_VOLUME := "music_volume"
+const _CONFIG_UI_VOLUME := "ui_volume"
 
 var resolution: Vector2 setget set_resolution
 var fullscreen: bool setget set_fullscreen
 
 var sound_volume: float setget set_sound_volume
 var music_volume: float setget set_music_volume
+var ui_volume: float setget set_ui_volume
 
 
 func _ready() -> void:
@@ -46,6 +48,12 @@ func set_music_volume(value: float) -> void:
 	_set_volume(value, Constants.MUSIC_BUS)
 
 
+func set_ui_volume(value: float) -> void:
+	ui_volume = value
+	_save_single_setting(_CONFIG_UI_VOLUME, ui_volume)
+	_set_volume(value, Constants.UI_BUS)
+
+
 func _load() -> void:
 	var config := ConfigFile.new()
 	var load_err := config.load(_CONFIG_FILE)
@@ -59,12 +67,16 @@ func _load() -> void:
 
 	sound_volume = config.get_value("", _CONFIG_SOUND_VOLUME, 1.0)
 	music_volume = config.get_value("", _CONFIG_MUSIC_VOLUME, 1.0)
+	ui_volume = config.get_value("", _CONFIG_UI_VOLUME, 1.0)
 
 	if load_err != OK:
 		config.set_value("", _CONFIG_RESOLUTION, resolution)
 		config.set_value("", _CONFIG_FULLSCREEN, fullscreen)
+
 		config.set_value("", _CONFIG_SOUND_VOLUME, sound_volume)
 		config.set_value("", _CONFIG_MUSIC_VOLUME, music_volume)
+		config.set_value("", _CONFIG_UI_VOLUME, ui_volume)
+
 		var save_err := config.save(_CONFIG_FILE)
 		if save_err != OK:
 			push_error("Could not save config file '%s'" % _CONFIG_FILE)
@@ -72,6 +84,7 @@ func _load() -> void:
 	_set_window_properties()
 	_set_volume(sound_volume, Constants.SOUND_BUS)
 	_set_volume(music_volume, Constants.MUSIC_BUS)
+	_set_volume(ui_volume, Constants.UI_BUS)
 
 
 func _on_screen_resized() -> void:

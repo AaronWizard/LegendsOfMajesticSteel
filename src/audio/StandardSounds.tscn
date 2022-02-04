@@ -9,8 +9,8 @@ script = ExtResource( 3 )
 
 [node name="Select" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 1 )
-bus = "Sounds"
+bus = "UI"
 
 [node name="Cancel" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 2 )
-bus = "Sounds"
+bus = "UI"

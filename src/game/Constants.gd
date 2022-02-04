@@ -7,3 +7,4 @@ const TILE_HALF_SIZE_V := TILE_SIZE_V / 2
 
 const SOUND_BUS := "Sounds"
 const MUSIC_BUS := "Music"
+const UI_BUS := "UI"
