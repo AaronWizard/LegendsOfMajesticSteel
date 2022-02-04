@@ -6,8 +6,9 @@
 [ext_resource path="res://src/ui/controlswithsound/SoundCheckButton.gd" type="Script" id=4]
 
 [node name="ConfigPanel" type="PopupPanel"]
+visible = true
 margin_right = 78.0
-margin_bottom = 121.0
+margin_bottom = 130.0
 popup_exclusive = true
 script = ExtResource( 3 )
 __meta__ = {
@@ -19,7 +20,7 @@ __meta__ = {
 margin_left = 3.0
 margin_top = 3.0
 margin_right = 75.0
-margin_bottom = 118.0
+margin_bottom = 127.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -56,13 +57,13 @@ script = ExtResource( 4 )
 [node name="SouindOptions" type="PanelContainer" parent="VBoxContainer"]
 margin_top = 32.0
 margin_right = 72.0
-margin_bottom = 89.0
+margin_bottom = 98.0
 
 [node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/SouindOptions"]
 margin_left = 3.0
 margin_top = 3.0
 margin_right = 69.0
-margin_bottom = 54.0
+margin_bottom = 63.0
 custom_constants/margin_top = 1
 custom_constants/margin_left = 1
 custom_constants/margin_bottom = 1
@@ -71,17 +72,24 @@ custom_constants/margin_bottom = 1
 margin_left = 1.0
 margin_top = 1.0
 margin_right = 66.0
-margin_bottom = 50.0
+margin_bottom = 59.0
 
-[node name="SoundLabel" type="Label" parent="VBoxContainer/SouindOptions/MarginContainer/VBoxContainer"]
+[node name="VolumeLabel" type="Label" parent="VBoxContainer/SouindOptions/MarginContainer/VBoxContainer"]
 margin_right = 65.0
 margin_bottom = 7.0
+text = "Volume"
+align = 1
+
+[node name="SoundLabel2" type="Label" parent="VBoxContainer/SouindOptions/MarginContainer/VBoxContainer"]
+margin_top = 9.0
+margin_right = 65.0
+margin_bottom = 16.0
 text = "Sound"
 
 [node name="SoundVolume" type="HSlider" parent="VBoxContainer/SouindOptions/MarginContainer/VBoxContainer"]
-margin_top = 9.0
+margin_top = 18.0
 margin_right = 65.0
-margin_bottom = 15.0
+margin_bottom = 24.0
 max_value = 1.0
 step = 0.1
 __meta__ = {
@@ -89,15 +97,15 @@ __meta__ = {
 }
 
 [node name="MusicLabel" type="Label" parent="VBoxContainer/SouindOptions/MarginContainer/VBoxContainer"]
-margin_top = 17.0
+margin_top = 26.0
 margin_right = 65.0
-margin_bottom = 24.0
+margin_bottom = 33.0
 text = "Music"
 
 [node name="MusicVolume" type="HSlider" parent="VBoxContainer/SouindOptions/MarginContainer/VBoxContainer"]
-margin_top = 26.0
+margin_top = 35.0
 margin_right = 65.0
-margin_bottom = 32.0
+margin_bottom = 41.0
 max_value = 1.0
 step = 0.1
 __meta__ = {
@@ -105,15 +113,15 @@ __meta__ = {
 }
 
 [node name="UILabel" type="Label" parent="VBoxContainer/SouindOptions/MarginContainer/VBoxContainer"]
-margin_top = 34.0
+margin_top = 43.0
 margin_right = 65.0
-margin_bottom = 41.0
+margin_bottom = 50.0
 text = "UI"
 
 [node name="UIVolume" type="HSlider" parent="VBoxContainer/SouindOptions/MarginContainer/VBoxContainer"]
-margin_top = 43.0
+margin_top = 52.0
 margin_right = 65.0
-margin_bottom = 49.0
+margin_bottom = 58.0
 max_value = 1.0
 step = 0.1
 __meta__ = {
@@ -122,9 +130,9 @@ __meta__ = {
 
 [node name="OK" type="Button" parent="VBoxContainer"]
 margin_left = 24.0
-margin_top = 91.0
+margin_top = 100.0
 margin_right = 72.0
-margin_bottom = 115.0
+margin_bottom = 124.0
 rect_min_size = Vector2( 48, 24 )
 size_flags_horizontal = 8
 text = "OK"
