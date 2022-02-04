@@ -466,7 +466,7 @@ func _animate_hit(direction: Vector2) -> void:
 		_anim.play("hit")
 		yield(_anim, "animation_finished")
 	else:
-		_anim.play("shake")
+		_anim.play("hit_shake")
 		yield(_anim, "animation_finished")
 
 	reset_pose()
