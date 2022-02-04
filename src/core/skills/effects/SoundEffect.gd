@@ -5,7 +5,7 @@ export var stream: AudioStream
 
 
 func _run_self(_target_cell: Vector2, _source_cell: Vector2,
-		_source_actor: Actor, map: Map):
+		_source_actor: Actor, map: Map) -> void:
 	var stream_player := AudioStreamPlayer.new()
 	stream_player.stream = stream
 	stream_player.bus = Constants.SOUND_BUS

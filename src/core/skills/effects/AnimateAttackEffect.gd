@@ -7,7 +7,7 @@ export var default_sound := true
 
 
 func _run_self(target_cell: Vector2, source_cell: Vector2,
-		source_actor: Actor, map: Map):
+		source_actor: Actor, map: Map) -> void:
 	var direction: Vector2
 	if target_is_actor:
 		var target_actor := map.get_actor_on_cell(target_cell)

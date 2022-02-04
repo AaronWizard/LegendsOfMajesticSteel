@@ -2,18 +2,43 @@ tool
 class_name AoeEffect, "res://assets/editor/aoe_effect.png"
 extends SkillEffectWrapper
 
-enum TargetType { ALL_CELLS, ALL_ACTORS, ENEMIES, ALLIES }
+enum TargetType {
+	ALL_CELLS,
+	ALL_ACTORS,
+	ENEMIES,
+	ALLIES
+}
+
+enum ChildEffectTargetCellType {
+	AOE_TARGET_CELL,
+	EFFECT_TARGET_CELL
+}
+
 enum ChildEffectSourceCellType {
-		EFFECT_SOURCE_CELL, EFFECT_TARGET_CELL, AOE_TARGET_CELL }
+	AOE_TARGET_CELL,
+	EFFECT_SOURCE_CELL,
+	EFFECT_TARGET_CELL
+}
+
+enum ChildEffectSourceActorType {
+	EFFECT_SOURCE_ACTOR,
+	AOE_TARGET_ACTOR
+}
+
 enum ChildEffectDelaySortType { FROM_EFFECT_SOURCE, FROM_EFFECT_TARGET }
 
 export var aoe: Resource
 export(TargetType) var target_type := TargetType.ALL_CELLS
-export(ChildEffectSourceCellType) var child_effect_source_cell \
-		:= ChildEffectSourceCellType.AOE_TARGET_CELL
 
-export(ChildEffectDelaySortType) var child_effect_delay_sort_type \
-		:= ChildEffectDelaySortType.FROM_EFFECT_TARGET
+export(ChildEffectTargetCellType) var child_effect_target_cell := \
+		ChildEffectTargetCellType.AOE_TARGET_CELL
+export(ChildEffectSourceCellType) var child_effect_source_cell := \
+		ChildEffectSourceCellType.AOE_TARGET_CELL
+export(ChildEffectSourceActorType) var child_effect_source_actor := \
+		ChildEffectSourceActorType.EFFECT_SOURCE_ACTOR
+
+export(ChildEffectDelaySortType) var child_effect_delay_sort_type := \
+		ChildEffectDelaySortType.FROM_EFFECT_TARGET
 export var child_effect_delay_speed := 0.0 # Tiles per second
 
 
@@ -29,17 +54,27 @@ func get_target_info(target_cell: Vector2, source_cell: Vector2,
 
 	for t in targets:
 		var aoe_target_cell := t as Vector2
-		var aoe_source_cell := _get_aoe_source_cell(
+
+		var child_target_cell := _get_child_effect_target_cell(
+				aoe_target_cell, target_cell)
+		var child_source_cell := _get_child_effect_source_cell(
 				aoe_target_cell, target_cell, source_cell)
+		var child_source_actor := _get_child_effect_source_actor(
+				source_actor, map, aoe_target_cell)
+
 		var child_target_info := _get_child_target_info(
-				aoe_target_cell, aoe_source_cell, source_actor, map)
+				child_target_cell,
+				child_source_cell,
+				child_source_actor,
+				map
+			)
 		result.add(child_target_info)
 
 	return result
 
 
 func _run_self(target_cell: Vector2, source_cell: Vector2,
-		source_actor: Actor, map: Map):
+		source_actor: Actor, map: Map) -> void:
 	assert(get_child_count() == 1)
 
 	var targets := _get_targets(target_cell, source_cell, source_actor, map)
@@ -55,16 +90,26 @@ func _run_self(target_cell: Vector2, source_cell: Vector2,
 		for i in range(targets.size()):
 			var index := i as int
 			var aoe_target_cell := targets[index] as Vector2
-			var aoe_source_cell := _get_aoe_source_cell(
+
+			var child_target_cell := _get_child_effect_target_cell(
+					aoe_target_cell, target_cell)
+			var child_source_cell := _get_child_effect_source_cell(
 					aoe_target_cell, target_cell, source_cell)
+			var child_source_actor := _get_child_effect_source_actor(
+					source_actor, map, aoe_target_cell)
+
 			var child_effect := get_child(index) as SkillEffect
 
 			var delay := _get_delay(
 					aoe_target_cell, target_cell, source_cell, map)
 			child_effect.delay = delay
 
-			child_effect.run(aoe_target_cell, aoe_source_cell,
-					source_actor, map)
+			child_effect.run(
+					child_target_cell,
+					child_source_cell,
+					child_source_actor,
+					map
+				)
 			assert(child_effect.running)
 			waiter.wait_for_signal(child_effect, "finished")
 
@@ -114,8 +159,21 @@ func _get_targets(target_cell: Vector2, source_cell: Vector2,
 	return result
 
 
-func _get_aoe_source_cell(aoe_target_cell: Vector2, effect_target_cell: Vector2,
-		effect_source_cell: Vector2) -> Vector2:
+func _get_child_effect_target_cell(aoe_target_cell: Vector2,
+		effect_target_cell: Vector2) -> Vector2:
+	var result: Vector2
+
+	match child_effect_target_cell:
+		ChildEffectTargetCellType.EFFECT_TARGET_CELL:
+			result = effect_target_cell
+		_:
+			result = aoe_target_cell
+
+	return result
+
+
+func _get_child_effect_source_cell(aoe_target_cell: Vector2,
+		effect_target_cell: Vector2, effect_source_cell: Vector2) -> Vector2:
 	var result: Vector2
 	match child_effect_source_cell:
 		ChildEffectSourceCellType.EFFECT_SOURCE_CELL:
@@ -124,6 +182,22 @@ func _get_aoe_source_cell(aoe_target_cell: Vector2, effect_target_cell: Vector2,
 			result = effect_target_cell
 		_:
 			result = aoe_target_cell
+	return result
+
+
+func _get_child_effect_source_actor(source_actor: Actor, map: Map,
+		aoe_target_cell: Vector2) -> Actor:
+	var result: Actor
+
+	match child_effect_source_actor:
+		ChildEffectSourceActorType.AOE_TARGET_ACTOR:
+			result = map.get_actor_on_cell(aoe_target_cell)
+			if not result:
+				push_warning("No actor at %s for child effect source actor" \
+						% aoe_target_cell)
+		_:
+			result = source_actor
+
 	return result
 
 
