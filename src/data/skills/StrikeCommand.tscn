@@ -1,21 +1,38 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://src/core/skills/Skill.gd" type="Script" id=1]
 [ext_resource path="res://src/core/skills/ranges/DiamondRange.gd" type="Script" id=2]
 [ext_resource path="res://assets/graphics/ui/icons/actions/skills/strike_command.png" type="Texture" id=3]
+[ext_resource path="res://src/core/skills/effects/StandardAttackTargetEffect.gd" type="Script" id=4]
+[ext_resource path="res://src/core/skills/effects/AoeEffect.gd" type="Script" id=5]
+[ext_resource path="res://src/core/skills/aoe/ActorsInAttackRangeAOE.gd" type="Script" id=6]
 
 [sub_resource type="Resource" id=1]
 script = ExtResource( 2 )
-min_dist = 3
-max_dist = 1
+min_dist = 1
+max_dist = 3
 include_diagonals = true
+
+[sub_resource type="Resource" id=2]
+script = ExtResource( 6 )
+faction = 1
 
 [node name="StrikeCommand" type="Node"]
 script = ExtResource( 1 )
 icon = ExtResource( 3 )
 skill_name = "Strike Command"
 description = "Command your allies to attack the target."
-max_cooldown = 0
+max_cooldown = 4
 range_type = SubResource( 1 )
 target_type = 2
 use_action_pose = true
+
+[node name="AoeEffect" type="Node" parent="."]
+script = ExtResource( 5 )
+aoe = SubResource( 2 )
+target_type = 3
+child_effect_target_cell = 1
+child_effect_source_actor = 1
+
+[node name="StandardAttackTargetEffect" type="Node" parent="AoeEffect"]
+script = ExtResource( 4 )
