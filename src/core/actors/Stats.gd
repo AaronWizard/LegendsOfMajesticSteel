@@ -1,16 +1,18 @@
 class_name Stats
 extends Node
 
-signal conditions_changed
+signal stat_changed(stat_type, old_value, new_value)
 
 signal damaged(amount, direction, standard_hit_anim)
 signal healed(amount)
 
-# Damage reduction turned into percentage based on this value
-const DAMAGE_REDUCTION_RANGE := 100.0
-
+# Keys are StatType.Type
+# Values are integers
 var _base_stats := {}
-var _conditions := []
+
+# Keys are StatType.Type
+# Values are arrays of StatModifiers
+var _stat_mods := {}
 
 var stamina: int
 
@@ -20,10 +22,6 @@ var max_stamina: int setget , get_max_stamina
 var attack: int setget , get_attack
 var move: int setget , get_move
 var speed: int setget , get_speed
-
-
-func _ready() -> void:
-	_base_stats[StatType.Type.DEFENCE] = 0.0
 
 
 func init_from_def(def: ActorDefinition) -> void:
@@ -43,40 +41,51 @@ func get_base_stat(stat_type: int) -> int:
 
 func get_stat(stat_type: int) -> int:
 	var base := _base_stats[stat_type] as int
-	var add := 0
 
-	for c in _conditions:
-		var condition := c as Condition
-		if condition.stat_modifiers.has(stat_type):
-			var modifier := condition.stat_modifiers[stat_type] as StatModifier
-			add += modifier.value
+	var add_constant := 0
+	var add_percent := 0.0
 
-	return base + add
+	var mods := _stat_mods[stat_type] as Array
+	for m in mods:
+		var mod := m as StatModifier
+		add_constant += mod.add_constant
+		add_percent += mod.add_percent
+
+	return int(float(base + add_constant) * (1.0 + add_percent))
 
 
 func get_stat_mod(stat_type: int) -> int:
 	return get_stat(stat_type) - get_base_stat(stat_type)
 
 
-func add_condition(condition: Condition) -> void:
-	if _conditions.find(condition) == -1:
-		_conditions.append(condition)
+func add_stat_mod(mod: StatModifier) -> void:
+	var old_stat := get_stat(mod.stat_type)
 
-		assert(not condition.is_connected("finished", self, "remove_condition"))
-		# warning-ignore:return_value_discarded
-		condition.connect("finished", self, "remove_condition", [condition])
+	var mods: Array
+	if _stat_mods.has(mod.stat_type):
+		mods = _stat_mods[mod.stat_type] as Array
+	else:
+		mods = []
+		_stat_mods[mod.stat_type] = mods
 
-		emit_signal("conditions_changed")
+	if mods.find(mod) == -1:
+		mods.append(mod)
+
+		var new_stat := get_stat(mod.stat_type)
+		if new_stat != old_stat:
+			emit_signal("stat_changed", mod.stat_type, old_stat, new_stat)
 
 
-func remove_condition(condition: Condition) -> void:
-	if _conditions.find(condition) > -1:
-		_conditions.erase(condition)
+func remove_stat_mod(mod: StatModifier) -> void:
+	var old_stat := get_stat(mod.stat_type)
 
-		if condition.is_connected("finished", self, "remove_condition"):
-			condition.disconnect("finished", self, "remove_condition")
+	if _stat_mods.has(mod.stat_type):
+		var mods := _stat_mods[mod.stat_type] as Array
+		mods.erase(mod)
 
-		emit_signal("conditions_changed")
+		var new_stat := get_stat(mod.stat_type)
+		if new_stat != old_stat:
+			emit_signal("stat_changed", mod.stat_type, old_stat, new_stat)
 
 
 func get_max_stamina() -> int:
@@ -104,18 +113,29 @@ func start_battle() -> void:
 
 
 func start_round() -> void:
-	for c in _conditions:
-		var condition := c as Condition
-		condition.start_round()
+	for ms in _stat_mods.values():
+		var mods := ms as Array
+		for m in mods:
+			var mod := m as StatModifier
+			mod.start_round()
 
 
 # Get how much damage will be done with a given base damage
 func damage_from_attack(base_damage: int) -> int:
-	var dr := get_stat(StatType.Type.DEFENCE)
-	var attack_mod := (DAMAGE_REDUCTION_RANGE - dr) / DAMAGE_REDUCTION_RANGE
-	var reduced_damage := base_damage * attack_mod
-	var final_damage := max(1, reduced_damage)
-	return int(final_damage)
+	var add_constant := 0
+	var add_percent := 0.0
+
+	var mods := _stat_mods[StatType.Type.DEFENCE] as Array
+	for m in mods:
+		var mod := m as StatModifier
+		add_constant += mod.add_constant
+		add_percent += mod.add_percent
+
+	var reduced_damage := int(
+			float(base_damage - add_constant) * (1.0 - add_percent)
+	)
+	var final_damage := int(max(1, reduced_damage))
+	return final_damage
 
 
 func take_damage(base_damage: int, direction: Vector2,
