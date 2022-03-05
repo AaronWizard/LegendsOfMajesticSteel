@@ -39,11 +39,6 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/state/states/doaction/ActorActionState.gd"
 }, {
-"base": "TabContainer",
-"class": "ActorConditionDetails",
-"language": "GDScript",
-"path": "res://src/ui/battle/actordetails/ActorStatusEffectDetails.gd"
-}, {
 "base": "Resource",
 "class": "ActorDefinition",
 "language": "GDScript",
@@ -88,6 +83,11 @@ _global_script_classes=[ {
 "class": "ActorStatDetails",
 "language": "GDScript",
 "path": "res://src/ui/battle/actordetails/ActorStatDetails.gd"
+}, {
+"base": "TabContainer",
+"class": "ActorStatusEffectDetails",
+"language": "GDScript",
+"path": "res://src/ui/battle/actordetails/ActorStatusEffectDetails.gd"
 }, {
 "base": "Control",
 "class": "ActorStatusPanel",
@@ -270,7 +270,7 @@ _global_script_classes=[ {
 "path": "res://src/game/SignalWaiter.gd"
 }, {
 "base": "HBoxContainer",
-"class": "SingleConditionDetails",
+"class": "SingleStatusEffectDetails",
 "language": "GDScript",
 "path": "res://src/ui/battle/actordetails/SingleStatusEffectDetails.gd"
 }, {
@@ -451,7 +451,6 @@ _global_script_class_icons={
 "ActionMenu": "",
 "Actor": "res://assets/editor/actor.png",
 "ActorActionState": "",
-"ActorConditionDetails": "",
 "ActorDefinition": "",
 "ActorDetailsPanel": "",
 "ActorLineAOE": "",
@@ -461,6 +460,7 @@ _global_script_class_icons={
 "ActorSkillsDetails": "",
 "ActorStartTurnState": "",
 "ActorStatDetails": "",
+"ActorStatusEffectDetails": "",
 "ActorStatusPanel": "",
 "ActorsInAttackRangeAOE": "",
 "AddConditionToTargetEffect": "res://assets/editor/add_condition_effect.png",
@@ -497,7 +497,7 @@ _global_script_class_icons={
 "PushAttackTargetEffect": "res://assets/editor/pushattack_effect.png",
 "ScreenTransition": "",
 "SignalWaiter": "",
-"SingleConditionDetails": "",
+"SingleStatusEffectDetails": "",
 "Skill": "res://assets/editor/skill.png",
 "SkillAOE": "res://assets/editor/skill_aoe.png",
 "SkillDetails": "",
