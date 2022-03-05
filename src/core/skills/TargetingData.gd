@@ -14,8 +14,8 @@ class TargetInfo:
 	# Keys are Actors and values are ints
 	var predicted_damage := {}
 
-	# Keys are Actors and values are arrays of ConditionDefinitions
-	var predicted_conditions := {}
+	# Keys are Actors and values are arrays of StatModifiers
+	var predicted_stat_mods := {}
 
 	func add(other_info: TargetInfo) -> void:
 		for c in other_info.aoe:
@@ -29,12 +29,12 @@ class TargetInfo:
 				predicted_damage[actor] = 0
 			predicted_damage[actor] += damage
 
-		for a in other_info.predicted_conditions:
+		for a in other_info.predicted_stat_mods:
 			var actor := a as Actor
-			var conditions := other_info.predicted_conditions[actor] as Array
-			if not predicted_conditions.has(actor):
-				predicted_conditions[actor] = []
-			(predicted_conditions[actor] as Array).append_array(conditions)
+			var stat_mods := other_info.predicted_stat_mods[actor] as Array
+			if not predicted_stat_mods.has(actor):
+				predicted_stat_mods[actor] = []
+			(predicted_stat_mods[actor] as Array).append_array(stat_mods)
 
 
 var source_cell: Vector2
@@ -76,9 +76,9 @@ func get_predicted_damage(target: Vector2) -> Dictionary:
 	return result
 
 
-func get_predicted_conditions(target: Vector2) -> Dictionary:
+func get_predicted_stat_mods(target: Vector2) -> Dictionary:
 	var result := {}
 	if _infos_by_target.has(target):
 		var target_info := _infos_by_target[target] as TargetInfo
-		result = target_info.predicted_conditions
+		result = target_info.predicted_stat_mods_conditions
 	return result

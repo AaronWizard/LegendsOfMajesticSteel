@@ -121,24 +121,21 @@ func _score_damage() -> void:
 
 
 func _score_conditions() -> void:
-	var predicted_conditions := targeting_data.get_predicted_conditions(
+	var predicted_stat_mods := targeting_data.get_predicted_stat_mods(
 			target_cell)
-	for a in predicted_conditions:
+	for a in predicted_stat_mods:
 		var other_actor := a as Actor
-		var conditions := predicted_conditions[other_actor] as Array
+		var stat_mods := predicted_stat_mods[other_actor] as Array
 
-		for c in conditions:
-			var condition := c as ConditionDefinition
+		for m in stat_mods:
+			var stat_mod := m as StatModifier
 
-			for m in condition.get_grouped_stat_modifiers().values():
-				var modifier := m as StatModifier
+			var current_stat := other_actor.stats.get_stat(stat_mod.type)
+			var modifier_score := clamp(
+					float(stat_mod.value) / float(current_stat), -1, 1
+			)
 
-				var current_stat := other_actor.stats.get_stat(modifier.type)
-				var modifier_score := clamp(
-						float(modifier.value) / float(current_stat), -1, 1
-				)
+			if other_actor.faction != _actor.faction:
+				modifier_score *= -1
 
-				if other_actor.faction != _actor.faction:
-					modifier_score *= -1
-
-				score += modifier_score * _STAT_MOD_WEIGHT
+			score += modifier_score * _STAT_MOD_WEIGHT
