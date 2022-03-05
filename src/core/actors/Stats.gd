@@ -166,39 +166,33 @@ func get_is_alive() -> bool:
 
 
 # {
-#   StatType.Type:
-#   {
-#     # Rounds left: stat mod
-#     int: int
+#   Vector3: { # (StatType.Type, StatusEffectTiming.Type, rounds left)
+#     add_constant: int
+#     add_percent: float
 #   }
 # }
-# Stat mods with the same number of rounds left are combined.
-# Perminant stat mods have a key of -1
 func get_condition_stat_mods() -> Dictionary:
 	var result := {}
 
-	for c in _conditions:
-		var condition := c as Condition
-		for m in condition.stat_modifiers.values():
-			var modifier := m as StatModifier
+	for m in _stat_mods:
+		var stat_mod := m as StatModifier
 
-			var modifier_data: Dictionary
-			if not result.has(modifier.type):
-				modifier_data = {}
-				result[modifier.type] = modifier_data
-			else:
-				modifier_data = result[modifier.type]
+		var stat_type := stat_mod.stat_type
+		var timing_type := stat_mod.timing_type
+		var rounds := -1
+		if timing_type == StatusEffectTiming.Type.ROUNDS:
+			rounds = stat_mod.rounds
 
-			var md_key: int
-			if condition.definition.time_type \
-					== ConditionDefinition.TimeType.ROUNDS:
-				md_key = condition.rounds_left
-			else:
-				md_key = -1
+		var key := Vector3(stat_type, timing_type, rounds)
 
-			if modifier_data.has(md_key):
-				modifier_data[md_key] += modifier.value
-			else:
-				modifier_data[md_key] = modifier.value
+		var value: Dictionary
+		if result.has(key):
+			value = result[key] as Dictionary
+		else:
+			value = { add_constant = 0, add_float = 0.0 }
+			result[key] = value
+
+		value.add_constant += stat_mod.add_constant
+		value.add_percent += stat_mod.add_percent
 
 	return result
