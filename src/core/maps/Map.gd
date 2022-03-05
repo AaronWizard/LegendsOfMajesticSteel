@@ -10,9 +10,12 @@ enum Decal { BLOOD_SPLATTER = 0 }
 const MOVE_COST_CLEAR := 1
 const MOVE_COST_ROUGH := 2
 
-const _COVER_EFFECT := preload("res://resources/data/conditions/Cover.tres")
+#const _COVER_EFFECT := preload("res://resources/data/conditions/Cover.tres")
 
-var _COVER_CONDITION := Condition.new(_COVER_EFFECT)
+const _COVER_STAT_MOD_DEF := preload(
+		"res://resources/data/statmodifiers/cover.tres")
+
+var _COVER_STAT_MOD := StatModifier.new(_COVER_STAT_MOD_DEF)
 
 var turn_queue: TurnQueue setget , get_turn_queue
 
@@ -242,9 +245,9 @@ func update_terrain_effects() -> void:
 	for a in get_actors():
 		var actor := a as Actor
 		if _on_defensive_terrain(actor):
-			actor.stats.add_condition(_COVER_CONDITION)
+			actor.stats.add_stat_mod(_COVER_STAT_MOD)
 		else:
-			actor.stats.remove_condition(_COVER_CONDITION)
+			actor.stats.remove_stat_mod(_COVER_STAT_MOD)
 
 
 func add_effect(effect: Node2D) -> void:
