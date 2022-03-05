@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://src/core/skills/Skill.gd" type="Script" id=1]
 [ext_resource path="res://assets/graphics/ui/icons/actions/skills/knockdown_shot.png" type="Texture" id=2]
@@ -9,13 +9,21 @@
 [ext_resource path="res://src/core/skills/effects/SkillEffectGroup.gd" type="Script" id=7]
 [ext_resource path="res://src/core/skills/effects/PushAttackTargetEffect.gd" type="Script" id=8]
 [ext_resource path="res://src/core/skills/effects/AddConditionToTargetEffect.gd" type="Script" id=9]
-[ext_resource path="res://resources/data/conditions/KnockbackShotPenalty.tres" type="Resource" id=10]
+[ext_resource path="res://src/core/statuseffects/StatModifierDefinition.gd" type="Script" id=10]
 
 [sub_resource type="Resource" id=1]
 script = ExtResource( 3 )
 min_dist = 1
 max_dist = 2
 include_diagonals = false
+
+[sub_resource type="Resource" id=2]
+script = ExtResource( 10 )
+stat_type = 2
+add_constant = 0
+add_percent = -0.5
+timing_type = 0
+rounds = 2
 
 [node name="KnockbackShot" type="Node"]
 script = ExtResource( 1 )
@@ -43,6 +51,6 @@ projectile_scene = ExtResource( 6 )
 script = ExtResource( 8 )
 max_distance = 2
 
-[node name="AddConditionToTargetEffect" type="Node" parent="AnimateAttackEffect/SkillEffectGroup/PushAttackTargetEffect"]
+[node name="AddStatModifierToTargetEffect" type="Node" parent="AnimateAttackEffect/SkillEffectGroup/PushAttackTargetEffect"]
 script = ExtResource( 9 )
-condition_effect = ExtResource( 10 )
+stat_mod = SubResource( 2 )

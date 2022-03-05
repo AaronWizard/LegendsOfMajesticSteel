@@ -100,7 +100,7 @@ _global_script_classes=[ {
 "path": "res://src/core/skills/aoe/ActorsInAttackRangeAOE.gd"
 }, {
 "base": "SkillEffect",
-"class": "AddConditionToTargetEffect",
+"class": "AddStatModifierToTargetEffect",
 "language": "GDScript",
 "path": "res://src/core/skills/effects/AddConditionToTargetEffect.gd"
 }, {
@@ -463,7 +463,7 @@ _global_script_class_icons={
 "ActorStatusEffectDetails": "",
 "ActorStatusPanel": "",
 "ActorsInAttackRangeAOE": "",
-"AddConditionToTargetEffect": "res://assets/editor/add_condition_effect.png",
+"AddStatModifierToTargetEffect": "res://assets/editor/add_status_effect.png",
 "AnimateAttackEffect": "res://assets/editor/animateattack_effect.png",
 "AoeEffect": "res://assets/editor/aoe_effect.png",
 "ArcAOE": "",

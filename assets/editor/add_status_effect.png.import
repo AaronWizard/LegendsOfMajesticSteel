@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/add_condition_effect.png-2641772c73a125b978121af82d4ff056.stex"
+path="res://.import/add_status_effect.png-40b5b49e823284ee4585cf6cb5b5a69f.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/editor/add_condition_effect.png"
-dest_files=[ "res://.import/add_condition_effect.png-2641772c73a125b978121af82d4ff056.stex" ]
+source_file="res://assets/editor/add_status_effect.png"
+dest_files=[ "res://.import/add_status_effect.png-40b5b49e823284ee4585cf6cb5b5a69f.stex" ]
 
 [params]
 
