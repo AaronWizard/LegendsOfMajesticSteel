@@ -1,4 +1,4 @@
-class_name SingleConditionDetails
+class_name SingleStatusEffectDetails
 extends HBoxContainer
 
 const _ROUND_LEFT_SINGLE := "1 round"

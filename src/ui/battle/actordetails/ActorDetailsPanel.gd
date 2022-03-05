@@ -18,7 +18,7 @@ onready var _speed := _stats.get_node("SpeedInfo") as ActorStatDetails
 
 onready var _skills := $Main/SkillsContainer/Skills as ActorSkillsDetails
 onready var _conditions := $Main/ConditionsContainer/Conditions \
-		as ActorConditionDetails
+		as ActorStatusEffectDetails
 
 
 func set_actor(actor: Actor) -> void:

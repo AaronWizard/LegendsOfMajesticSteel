@@ -42,7 +42,7 @@ _global_script_classes=[ {
 "base": "TabContainer",
 "class": "ActorConditionDetails",
 "language": "GDScript",
-"path": "res://src/ui/battle/actordetails/ActorConditionDetails.gd"
+"path": "res://src/ui/battle/actordetails/ActorStatusEffectDetails.gd"
 }, {
 "base": "Resource",
 "class": "ActorDefinition",
@@ -272,7 +272,7 @@ _global_script_classes=[ {
 "base": "HBoxContainer",
 "class": "SingleConditionDetails",
 "language": "GDScript",
-"path": "res://src/ui/battle/actordetails/SingleConditionDetails.gd"
+"path": "res://src/ui/battle/actordetails/SingleStatusEffectDetails.gd"
 }, {
 "base": "Node",
 "class": "Skill",

@@ -1,8 +1,8 @@
-class_name ActorConditionDetails
+class_name ActorStatusEffectDetails
 extends TabContainer
 
 var _single_condition_details_scene := preload( \
-		"res://src/ui/battle/actordetails/SingleConditionDetails.tscn" \
+		"res://src/ui/battle/actordetails/SingleStatusEffectDetails.tscn" \
 		) as PackedScene
 
 var _stat_icons := {
@@ -73,7 +73,7 @@ func _show_stat_mods(actor: Actor) -> void:
 
 func _show_single_stat_mod(stat_type: int, mod: int, rounds_left: int) -> void:
 	var condition_info := _single_condition_details_scene.instance() \
-			as SingleConditionDetails
+			as SingleStatusEffectDetails
 	_list.add_child(condition_info)
 
 	var stat_ui_data := _stat_icons[stat_type] as Dictionary
