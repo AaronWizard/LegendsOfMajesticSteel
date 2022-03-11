@@ -45,11 +45,12 @@ func get_stat(stat_type: int) -> int:
 	var add_constant := 0
 	var add_percent := 0.0
 
-	var mods := _stat_mods[stat_type] as Array
-	for m in mods:
-		var mod := m as StatModifier
-		add_constant += mod.add_constant
-		add_percent += mod.add_percent
+	if _stat_mods.has(stat_type):
+		var mods := _stat_mods[stat_type] as Array
+		for m in mods:
+			var mod := m as StatModifier
+			add_constant += mod.add_constant
+			add_percent += mod.add_percent
 
 	return int(float(base + add_constant) * (1.0 + add_percent))
 
