@@ -14,9 +14,6 @@ rect_min_size = Vector2( 0, 24 )
 theme = SubResource( 2 )
 tabs_visible = false
 script = ExtResource( 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="ConditionsContainer" type="MarginContainer" parent="."]
 anchor_right = 1.0

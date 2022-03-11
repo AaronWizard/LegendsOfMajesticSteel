@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/energy.png-c1b5fd1452c3a1a11735cd6f82292165.stex"
+path="res://.import/attack_up.png-15c59a37aa35c4ebd86afbb5613df64a.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/graphics/ui/icons/stats/energy.png"
-dest_files=[ "res://.import/energy.png-c1b5fd1452c3a1a11735cd6f82292165.stex" ]
+source_file="res://assets/graphics/ui/icons/statmods/attack_up.png"
+dest_files=[ "res://.import/attack_up.png-15c59a37aa35c4ebd86afbb5613df64a.stex" ]
 
 [params]
 

@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/attack_down.png-4914322d7e10d3f1a1663973f693a7f7.stex"
+path="res://.import/speed_up.png-7f0784de5f0fefafe0aae90df98a7169.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/graphics/ui/icons/conditions/attack_down.png"
-dest_files=[ "res://.import/attack_down.png-4914322d7e10d3f1a1663973f693a7f7.stex" ]
+source_file="res://assets/graphics/ui/icons/statmods/speed_up.png"
+dest_files=[ "res://.import/speed_up.png-7f0784de5f0fefafe0aae90df98a7169.stex" ]
 
 [params]
 

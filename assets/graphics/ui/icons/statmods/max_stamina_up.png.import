@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/defence_down.png-419fbbd92268b08fc55b30fa9d530130.stex"
+path="res://.import/max_stamina_up.png-9ff792b73ab2dfdb389ce3d744b88ce4.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/graphics/ui/icons/conditions/defence_down.png"
-dest_files=[ "res://.import/defence_down.png-419fbbd92268b08fc55b30fa9d530130.stex" ]
+source_file="res://assets/graphics/ui/icons/statmods/max_stamina_up.png"
+dest_files=[ "res://.import/max_stamina_up.png-9ff792b73ab2dfdb389ce3d744b88ce4.stex" ]
 
 [params]
 

@@ -5,36 +5,6 @@ var _single_condition_details_scene := preload( \
 		"res://src/ui/battle/actordetails/SingleStatusEffectDetails.tscn" \
 		) as PackedScene
 
-var _stat_icons := {
-	StatType.Type.ATTACK: {
-		name = "Attack",
-		up = preload( \
-				"res://assets/graphics/ui/icons/conditions/attack_up.png") \
-				as Texture,
-		down = preload( \
-				"res://assets/graphics/ui/icons/conditions/attack_down.png") \
-				as Texture
-	},
-	StatType.Type.DEFENCE: {
-		name = "Defence",
-		up = preload( \
-				"res://assets/graphics/ui/icons/conditions/defence_up.png") \
-				as Texture,
-		down = preload( \
-				"res://assets/graphics/ui/icons/conditions/defence_down.png") \
-				as Texture
-	},
-	StatType.Type.MOVE: {
-		name = "Move",
-		up = preload( \
-				"res://assets/graphics/ui/icons/conditions/move_up.png") \
-				as Texture,
-		down = preload( \
-				"res://assets/graphics/ui/icons/conditions/move_down.png") \
-				as Texture
-	}
-}
-
 onready var _no_conditions_container := $NoConditionsContainer as Control
 onready var _conditions_container := $ConditionsContainer as Control
 
@@ -76,7 +46,7 @@ func _show_single_stat_mod(stat_type: int, mod: int, rounds_left: int) -> void:
 			as SingleStatusEffectDetails
 	_list.add_child(condition_info)
 
-	var stat_ui_data := _stat_icons[stat_type] as Dictionary
+	var stat_ui_data := Constants.STAT_MODS[stat_type] as Dictionary
 
 	var icon: Texture
 	if mod > 0:

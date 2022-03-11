@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/move_up.png-9113ea8f58b60c865b6588912039c17a.stex"
+path="res://.import/move_up.png-af8ff4053d56b1c7004f1e59c55b509a.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/graphics/ui/icons/conditions/move_up.png"
-dest_files=[ "res://.import/move_up.png-9113ea8f58b60c865b6588912039c17a.stex" ]
+source_file="res://assets/graphics/ui/icons/statmods/move_up.png"
+dest_files=[ "res://.import/move_up.png-af8ff4053d56b1c7004f1e59c55b509a.stex" ]
 
 [params]
 
