@@ -41,18 +41,20 @@ func get_base_stat(stat_type: int) -> int:
 
 func get_stat(stat_type: int) -> int:
 	var base := _base_stats[stat_type] as int
+	var mod := get_stat_mod_percent(stat_type)
+	return _stat_from_base_and_mod(base, mod)
 
-	var add_constant := 0
-	var add_percent := 0.0
+
+func get_stat_mod_percent(stat_type: int) -> float:
+	var result := 0.0
 
 	if _stat_mods.has(stat_type):
 		var mods := _stat_mods[stat_type] as Array
 		for m in mods:
 			var mod := m as StatModifier
-			add_constant += mod.add_constant
-			add_percent += mod.add_percent
+			result += mod.add_percent
 
-	return int(float(base + add_constant) * (1.0 + add_percent))
+	return result
 
 
 func get_stat_mod(stat_type: int) -> int:
@@ -123,18 +125,8 @@ func start_round() -> void:
 
 # Get how much damage will be done with a given base damage
 func damage_from_attack(base_damage: int) -> int:
-	var add_constant := 0
-	var add_percent := 0.0
-
-	var mods := _stat_mods[StatType.Type.DEFENCE] as Array
-	for m in mods:
-		var mod := m as StatModifier
-		add_constant += mod.add_constant
-		add_percent += mod.add_percent
-
-	var reduced_damage := int(
-			float(base_damage - add_constant) * (1.0 - add_percent)
-	)
+	var damage_mod := get_stat_mod_percent(StatType.Type.DEFENCE)
+	var reduced_damage := _stat_from_base_and_mod(base_damage, damage_mod)
 	var final_damage := int(max(1, reduced_damage))
 	return final_damage
 
@@ -197,3 +189,7 @@ func get_condition_stat_mods() -> Dictionary:
 		value.add_percent += stat_mod.add_percent
 
 	return result
+
+
+static func _stat_from_base_and_mod(base_stat: int, mod: float) -> int:
+	return int(float(base_stat) * (1.0 + mod))

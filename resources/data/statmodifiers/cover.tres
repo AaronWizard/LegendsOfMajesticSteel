@@ -5,7 +5,6 @@
 [resource]
 script = ExtResource( 1 )
 stat_type = 3
-add_constant = 0
 add_percent = 0.25
 timing_type = 1
 rounds = 0
