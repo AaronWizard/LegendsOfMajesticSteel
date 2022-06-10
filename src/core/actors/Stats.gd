@@ -185,34 +185,31 @@ func get_is_alive() -> bool:
 
 
 # {
-#   Vector3: { # (StatType.Type, StatusEffectTiming.Type, rounds left)
-#     add_constant: int
-#     add_percent: float
-#   }
+#   # (StatType.Type, StatusEffectTiming.Type, rounds_left): add_percent
+#   Vector3: float
 # }
 func get_condition_stat_mods() -> Dictionary:
 	var result := {}
 
-	for m in _stat_mods:
-		var stat_mod := m as StatModifier
+	for s in _stat_mods:
+		var stat_type := s as int
+		var mod_set := _stat_mods[stat_type] as Array
+		for m in mod_set:
+			var stat_mod := m as StatModifier
+			assert(stat_mod.stat_type == stat_type)
 
-		var stat_type := stat_mod.stat_type
-		var timing_type := stat_mod.timing_type
-		var rounds := -1
-		if timing_type == StatusEffectTiming.Type.ROUNDS:
-			rounds = stat_mod.rounds
+			var timing_type := stat_mod.timing_type
+			var rounds := -1
+			if timing_type == StatusEffectTiming.Type.ROUNDS:
+				rounds = stat_mod.rounds
 
-		var key := Vector3(stat_type, timing_type, rounds)
+			var key := Vector3(stat_type, timing_type, rounds)
 
-		var value: Dictionary
-		if result.has(key):
-			value = result[key] as Dictionary
-		else:
-			value = { add_constant = 0, add_float = 0.0 }
-			result[key] = value
-
-		value.add_constant += stat_mod.add_constant
-		value.add_percent += stat_mod.add_percent
+			if result.has(key):
+				var value := result[key] as float
+				result[key] = value + stat_mod.add_percent
+			else:
+				result[key] = stat_mod.add_percent
 
 	return result
 

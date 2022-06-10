@@ -20,10 +20,8 @@ func set_condition_name(value: String) -> void:
 	_name.text = value
 
 
-func set_magnitude(magnitude: int, is_percentage := false) -> void:
-	var text := str(magnitude)
-	if is_percentage:
-		text += "%"
+func set_magnitude(magnitude: float) -> void:
+	var text := str(magnitude * 100) + "%"
 	_magnitude.text = text
 
 

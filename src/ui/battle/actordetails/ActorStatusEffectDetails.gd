@@ -32,16 +32,17 @@ func clear() -> void:
 func _show_stat_mods(actor: Actor) -> void:
 	var stat_mods := actor.stats.get_condition_stat_mods()
 
-	for s in stat_mods:
-		var stat_id := s as int
-		var modifier_data := stat_mods[stat_id] as Dictionary
-		for m in modifier_data:
-			var rounds := m as int
-			var modifier := modifier_data[rounds] as int
-			_show_single_stat_mod(stat_id, modifier, rounds)
+	for k in stat_mods:
+		var key := k as Vector3
+
+		var stat_type := int(key.x)
+		var rounds := int(key.z)
+		var modifier := stat_mods[key] as float
+		_show_single_stat_mod(stat_type, modifier, rounds)
 
 
-func _show_single_stat_mod(stat_type: int, mod: int, rounds_left: int) -> void:
+func _show_single_stat_mod(stat_type: int, mod: float, rounds_left: int) \
+		-> void:
 	var condition_info := _single_condition_details_scene.instance() \
 			as SingleStatusEffectDetails
 	_list.add_child(condition_info)
@@ -58,7 +59,7 @@ func _show_single_stat_mod(stat_type: int, mod: int, rounds_left: int) -> void:
 	var name := stat_ui_data.name as String
 	condition_info.set_condition_name(name)
 
-	condition_info.set_magnitude(mod, stat_type == StatType.Type.DEFENCE)
+	condition_info.set_magnitude(mod)
 	if rounds_left > -1:
 		condition_info.show_rounds_left(rounds_left)
 	else:
