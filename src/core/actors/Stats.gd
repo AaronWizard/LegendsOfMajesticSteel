@@ -1,10 +1,17 @@
 class_name Stats
 extends Node
 
-signal stat_changed(stat_type, old_value, new_value)
+# int (StatType.Type), float, float, int, int
+signal stat_changed(stat_type, old_mod, new_mod, old_value, new_value)
 
 signal damaged(amount, direction, standard_hit_anim)
 signal healed(amount)
+
+const _MOD_ONLY_WARNING_GET_STAT := "Stats.get_stat: stat type %d is only " \
+		+ "for modifiers and does not have a base value"
+
+const _MOD_ONLY_WARNING_GET_STAT_MOD := "Stats.get_stat_mod: stat type %d is " \
+		+ "only for modifiers and is only available as a percentage"
 
 # Keys are StatType.Type
 # Values are integers
@@ -35,34 +42,41 @@ func set_base_stat(stat_type: int, value: int) -> void:
 	_base_stats[stat_type] = value
 
 
-func get_base_stat(stat_type: int) -> int:
-	return _base_stats[stat_type] as int
-
-
 func get_stat(stat_type: int) -> int:
-	var base := _base_stats[stat_type] as int
-	var mod := get_stat_mod_percent(stat_type)
-	return _stat_from_base_and_mod(base, mod)
+	var result := 0
+	if StatType.is_mod_only(stat_type):
+		push_warning(_MOD_ONLY_WARNING_GET_STAT % stat_type)
+	else:
+		var base := _base_stats[stat_type] as int
+		var mod := get_stat_mod_percent(stat_type)
+		result = _stat_from_base_and_mod(base, mod)
+	return result
 
 
 func get_stat_mod_percent(stat_type: int) -> float:
 	var result := 0.0
-
 	if _stat_mods.has(stat_type):
 		var mods := _stat_mods[stat_type] as Array
 		for m in mods:
 			var mod := m as StatModifier
 			result += mod.add_percent
-
 	return result
 
 
 func get_stat_mod(stat_type: int) -> int:
-	return get_stat(stat_type) - get_base_stat(stat_type)
+	var result := 0
+	if StatType.is_mod_only(stat_type):
+		push_warning(_MOD_ONLY_WARNING_GET_STAT_MOD % stat_type)
+	else:
+		result = get_stat(stat_type) - (_base_stats[stat_type] as int)
+	return result
 
 
 func add_stat_mod(mod: StatModifier) -> void:
-	var old_stat := get_stat(mod.stat_type)
+	var old_mod := get_stat_mod_percent(mod.stat_type)
+	var old_stat := 0
+	if not StatType.is_mod_only(mod.stat_type):
+		old_stat = get_stat(mod.stat_type)
 
 	var mods: Array
 	if _stat_mods.has(mod.stat_type):
@@ -74,21 +88,33 @@ func add_stat_mod(mod: StatModifier) -> void:
 	if mods.find(mod) == -1:
 		mods.append(mod)
 
-		var new_stat := get_stat(mod.stat_type)
-		if new_stat != old_stat:
-			emit_signal("stat_changed", mod.stat_type, old_stat, new_stat)
+		var new_mod := get_stat_mod_percent(mod.stat_type)
+		var new_stat := 0
+		if not StatType.is_mod_only(mod.stat_type):
+			new_stat = get_stat(mod.stat_type)
+
+		if new_mod != old_mod:
+			emit_signal("stat_changed", mod.stat_type, old_mod, new_mod, old_stat, new_stat)
 
 
 func remove_stat_mod(mod: StatModifier) -> void:
-	var old_stat := get_stat(mod.stat_type)
+	var old_mod := get_stat_mod_percent(mod.stat_type)
+	var old_stat := 0
+	if not StatType.is_mod_only(mod.stat_type):
+		old_stat = get_stat(mod.stat_type)
 
 	if _stat_mods.has(mod.stat_type):
 		var mods := _stat_mods[mod.stat_type] as Array
 		mods.erase(mod)
 
-		var new_stat := get_stat(mod.stat_type)
-		if new_stat != old_stat:
-			emit_signal("stat_changed", mod.stat_type, old_stat, new_stat)
+
+		var new_mod := get_stat_mod_percent(mod.stat_type)
+		var new_stat := 0
+		if not StatType.is_mod_only(mod.stat_type):
+			new_stat = get_stat(mod.stat_type)
+
+		if new_mod != old_mod:
+			emit_signal("stat_changed", mod.stat_type, old_mod, new_mod, old_stat, new_stat)
 
 
 func get_max_stamina() -> int:

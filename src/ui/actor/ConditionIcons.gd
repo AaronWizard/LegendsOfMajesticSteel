@@ -55,11 +55,11 @@ func _clear() -> void:
 
 
 func _add_stat_mod_icon(stats: Stats, stat_type) -> void:
-	var mod := stats.get_stat_mod(stat_type)
-	if mod != 0:
+	var mod := stats.get_stat_mod_percent(stat_type)
+	if mod != 0.0:
 		var icon: CanvasItem
 
-		if mod > 0:
+		if mod > 0.0:
 			icon = _up_icons[stat_type] as CanvasItem
 		else:
 			icon = _down_icons[stat_type] as CanvasItem
