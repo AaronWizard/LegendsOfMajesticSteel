@@ -49,7 +49,7 @@ func get_stat(stat_type: int) -> int:
 	else:
 		var base := _base_stats[stat_type] as int
 		var mod := get_stat_mod_percent(stat_type)
-		result = _stat_from_base_and_mod(base, mod)
+		result = int(float(base) * (1.0 + mod))
 	return result
 
 
@@ -94,7 +94,8 @@ func add_stat_mod(mod: StatModifier) -> void:
 			new_stat = get_stat(mod.stat_type)
 
 		if new_mod != old_mod:
-			emit_signal("stat_changed", mod.stat_type, old_mod, new_mod, old_stat, new_stat)
+			emit_signal("stat_changed", mod.stat_type, old_mod, new_mod,
+					old_stat, new_stat)
 
 
 func remove_stat_mod(mod: StatModifier) -> void:
@@ -114,7 +115,8 @@ func remove_stat_mod(mod: StatModifier) -> void:
 			new_stat = get_stat(mod.stat_type)
 
 		if new_mod != old_mod:
-			emit_signal("stat_changed", mod.stat_type, old_mod, new_mod, old_stat, new_stat)
+			emit_signal("stat_changed", mod.stat_type, old_mod, new_mod,
+					old_stat, new_stat)
 
 
 func get_max_stamina() -> int:
@@ -151,10 +153,10 @@ func start_round() -> void:
 
 # Get how much damage will be done with a given base damage
 func damage_from_attack(base_damage: int) -> int:
-	var damage_mod := get_stat_mod_percent(StatType.Type.DEFENCE)
-	var reduced_damage := _stat_from_base_and_mod(base_damage, damage_mod)
-	var final_damage := int(max(1, reduced_damage))
-	return final_damage
+	var base_f := float(base_damage)
+	var defence_mod := get_stat_mod_percent(StatType.Type.DEFENCE)
+	var reduced_damage := int(base_f * (1.0 - defence_mod))
+	return int(max(1, reduced_damage))
 
 
 func take_damage(base_damage: int, direction: Vector2,
@@ -212,7 +214,3 @@ func get_condition_stat_mods() -> Dictionary:
 				result[key] = stat_mod.add_percent
 
 	return result
-
-
-static func _stat_from_base_and_mod(base_stat: int, mod: float) -> int:
-	return int(float(base_stat) * (1.0 + mod))
