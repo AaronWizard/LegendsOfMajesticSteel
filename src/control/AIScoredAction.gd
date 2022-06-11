@@ -129,12 +129,7 @@ func _score_conditions() -> void:
 
 		for m in stat_mods:
 			var stat_mod := m as StatModifier
-
-			var current_stat := other_actor.stats.get_stat(stat_mod.type)
-			var modifier_score := clamp(
-					float(stat_mod.value) / float(current_stat), -1, 1
-			)
-
+			var modifier_score := stat_mod.add_percent
 			if other_actor.faction != _actor.faction:
 				modifier_score *= -1
 

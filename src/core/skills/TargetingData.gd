@@ -80,5 +80,5 @@ func get_predicted_stat_mods(target: Vector2) -> Dictionary:
 	var result := {}
 	if _infos_by_target.has(target):
 		var target_info := _infos_by_target[target] as TargetInfo
-		result = target_info.predicted_stat_mods_conditions
+		result = target_info.predicted_stat_mods
 	return result
