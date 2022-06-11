@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://src/core/skills/Skill.gd" type="Script" id=1]
 [ext_resource path="res://resources/data/skillranges/melee_range.tres" type="Resource" id=2]
@@ -11,10 +11,18 @@
 [ext_resource path="res://src/core/skills/aoe/ArcAOE.gd" type="Script" id=9]
 [ext_resource path="res://src/core/skills/effects/AttackTargetedActorEffect.gd" type="Script" id=10]
 [ext_resource path="res://src/core/skills/effects/AddConditionToTargetEffect.gd" type="Script" id=11]
-[ext_resource path="res://resources/data/conditions/ShiningStrikeDefenceDown.tres" type="Resource" id=12]
+[ext_resource path="res://src/core/statuseffects/StatModifierDefinition.gd" type="Script" id=12]
 
 [sub_resource type="Resource" id=1]
 script = ExtResource( 9 )
+
+[sub_resource type="Resource" id=2]
+script = ExtResource( 12 )
+stat_type = 3
+add_constant = 0
+add_percent = -1.0
+timing_type = 0
+rounds = 2
 
 [node name="ShineStrike" type="Node"]
 script = ExtResource( 1 )
@@ -47,6 +55,6 @@ script = ExtResource( 7 )
 [node name="AttackTargetedActorEffect" type="Node" parent="AnimateAttackEffect/SkillEffectGroup/AoeEffect/SkillEffectGroup"]
 script = ExtResource( 10 )
 
-[node name="AddConditionToTargetEffect" type="Node" parent="AnimateAttackEffect/SkillEffectGroup/AoeEffect/SkillEffectGroup"]
+[node name="AddStatModifierToTargetEffect" type="Node" parent="AnimateAttackEffect/SkillEffectGroup/AoeEffect/SkillEffectGroup"]
 script = ExtResource( 11 )
-condition_effect = ExtResource( 12 )
+stat_mod = SubResource( 2 )

@@ -9,22 +9,36 @@ var _visible_icon_index := 0
 
 onready var _stat_mod_icons := $StatModIcons as Node2D
 
-onready var _attack_up := _stat_mod_icons.get_node("AttackUp") as CanvasItem
-onready var _attack_down := _stat_mod_icons.get_node("AttackDown") as CanvasItem
-onready var _defence_up := _stat_mod_icons.get_node("DefenceUp") as CanvasItem
-onready var _defence_down := _stat_mod_icons.get_node("DefenceDown") \
-		as CanvasItem
-onready var _move_up := _stat_mod_icons.get_node("MoveUp") as CanvasItem
-onready var _move_down := _stat_mod_icons.get_node("MoveDown") as CanvasItem
+var _up_icons := {}
+var _down_icons := {}
+
+
+func _ready() -> void:
+	for s in Constants.STAT_MODS:
+		var stat_type := s as int
+		var data := Constants.STAT_MODS[stat_type] as Dictionary
+
+		var up = Sprite.new()
+		up.texture = data.up as Texture
+
+		var down = Sprite.new()
+		down.texture = data.down as Texture
+
+		_stat_mod_icons.add_child(up)
+		_stat_mod_icons.add_child(down)
+
+		_up_icons[stat_type] = up
+		_down_icons[stat_type] = down
 
 
 func update_icons(stats: Stats) -> void:
 	_clear()
 
-	_add_stat_mod_icon(stats, StatType.Type.ATTACK, _attack_up, _attack_down)
-	_add_stat_mod_icon(stats, StatType.Type.DEFENCE,
-			_defence_up, _defence_down)
-	_add_stat_mod_icon(stats, StatType.Type.MOVE, _move_up, _move_down)
+	_add_stat_mod_icon(stats, StatType.Type.MAX_STAMINA)
+	_add_stat_mod_icon(stats, StatType.Type.ATTACK)
+	_add_stat_mod_icon(stats, StatType.Type.DEFENCE)
+	_add_stat_mod_icon(stats, StatType.Type.MOVE)
+	_add_stat_mod_icon(stats, StatType.Type.SPEED)
 
 	if _enabled_icons.size() > 0:
 		var first_icon := _enabled_icons.front() as CanvasItem
@@ -40,14 +54,17 @@ func _clear() -> void:
 		icon.visible = false
 
 
-func _add_stat_mod_icon(stats: Stats, stat_type: int,
-		stat_up: CanvasItem, stat_down: CanvasItem) -> void:
-	var mod := stats.get_stat_mod(stat_type)
-	if mod != 0:
-		if mod > 0:
-			_enabled_icons.append(stat_up)
+func _add_stat_mod_icon(stats: Stats, stat_type) -> void:
+	var mod := stats.get_stat_mod_percent(stat_type)
+	if mod != 0.0:
+		var icon: CanvasItem
+
+		if mod > 0.0:
+			icon = _up_icons[stat_type] as CanvasItem
 		else:
-			_enabled_icons.append(stat_down)
+			icon = _down_icons[stat_type] as CanvasItem
+
+		_enabled_icons.append(icon)
 
 
 func _on_Timer_timeout() -> void:

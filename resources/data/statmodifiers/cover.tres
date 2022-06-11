@@ -1,0 +1,10 @@
+[gd_resource type="Resource" load_steps=2 format=2]
+
+[ext_resource path="res://src/core/statuseffects/StatModifierDefinition.gd" type="Script" id=1]
+
+[resource]
+script = ExtResource( 1 )
+stat_type = 3
+add_percent = 0.25
+timing_type = 1
+rounds = 0

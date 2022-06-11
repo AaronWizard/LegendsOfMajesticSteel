@@ -477,7 +477,8 @@ func _on_StaminaBar_animation_finished() -> void:
 	_stamina_bar.visible = false
 
 
-func _on_Stats_conditions_changed() -> void:
+func _on_Stats_stat_changed(_stat_type: int, _old_mod: float, _new_mod: float,
+		_old_value: int, _new_value: int) -> void:
 	_condition_icons.update_icons(get_stats())
 
 
