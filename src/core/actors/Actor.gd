@@ -10,6 +10,8 @@ const _BASE_BLOOD_TIME := 0.3
 
 const _FAKE_DEATH_FLY_SPEED := 200
 
+signal moved
+
 signal animation_finished # Emitted using animations
 # warning-ignore:unused_signal
 signal attack_hit # Emitted using animations
@@ -53,6 +55,8 @@ var stamina_bar_modifier: int setget set_stamina_bar_modifier, \
 var animating: bool setget , get_is_animating
 
 var virtual_origin_cell: Vector2 setget set_virtual_origin_cell
+
+var report_moves := true
 
 var _animating := false
 var _stamina_bar_animating := false
@@ -112,6 +116,9 @@ func _process(delta: float) -> void:
 func set_origin_cell(value: Vector2) -> void:
 	.set_origin_cell(value)
 	_using_virtual_origin = false
+
+	if report_moves:
+		emit_signal("moved")
 
 
 # Override
