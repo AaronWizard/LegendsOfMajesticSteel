@@ -14,6 +14,6 @@ void fragment()
 	}
 	else
 	{
-		COLOR.a -= 1f;
+		COLOR.a -= 1.;
 	}
 }

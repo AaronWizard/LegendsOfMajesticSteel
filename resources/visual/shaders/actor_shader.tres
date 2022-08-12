@@ -3,7 +3,7 @@
 [sub_resource type="Shader" id=13]
 code = "shader_type canvas_item;
 
-const float TIME_MULT = 6.28 * 2f;
+const float TIME_MULT = 6.28 * 2.;
 
 uniform bool flashing;
 uniform float dissolve_value : hint_range(0, 1);
@@ -17,7 +17,7 @@ void fragment()
 	vec4 main_texture = texture(TEXTURE, UV);
 	
 	if (flashing && (main_texture != black_colour)
-			&& (sin(TIME * TIME_MULT) > 0f))
+			&& (sin(TIME * TIME_MULT) > 0.))
 	{
 		main_texture.rgb = flash_colour.rgb;
 	}

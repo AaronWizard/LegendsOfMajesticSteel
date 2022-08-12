@@ -28,7 +28,7 @@ Mightiest Steel is an in-development Strategy RPG that will emphasize rapid game
 
 ## Credits
 
-- Built using Godot 3.4: <https://godotengine.org/>
+- Built using Godot 3.5: <https://godotengine.org/>
 - Graphics made using Aseprite: <https://www.aseprite.org/>
 - Tiles designed using Tilesetter: <https://www.tilesetter.org/>
 - Sound effects made using ChipTone: <https://sfbgames.itch.io/chiptone>
