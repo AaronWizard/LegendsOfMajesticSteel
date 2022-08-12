@@ -621,6 +621,7 @@ z_index = 1
 [node name="ConditionIcons" parent="Center/Offset/Sprite" index="1" instance=ExtResource( 11 )]
 visible = false
 position = Vector2( -12, -12 )
+z_index = 2
 
 [node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="Center/Offset/Sprite" index="2"]
 rect = Rect2( -12, -12, 24, 24 )
