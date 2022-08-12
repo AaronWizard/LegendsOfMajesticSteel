@@ -10,9 +10,9 @@ const _BASE_BLOOD_TIME := 0.3
 
 const _FAKE_DEATH_FLY_SPEED := 200
 
-signal animation_finished
+signal animation_finished # Emitted using animations
 # warning-ignore:unused_signal
-signal attack_hit
+signal attack_hit # Emitted using animations
 
 signal dying
 signal died
