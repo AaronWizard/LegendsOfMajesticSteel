@@ -601,6 +601,12 @@ tracks/2/keys = {
 
 [node name="Actor" instance=ExtResource( 7 )]
 script = ExtResource( 1 )
+character_name = "Actor"
+actor_definition = null
+faction = 1
+fakes_death = false
+slide_direction = Vector2( 0, 0 )
+slide_distance = 0.0
 
 [node name="Sprite" type="Sprite" parent="Center/Offset" index="0"]
 material = ExtResource( 12 )

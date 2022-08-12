@@ -94,6 +94,7 @@ func _ready() -> void:
 
 	if not Engine.editor_hint:
 		set_actor_definition(actor_definition)
+		_init_stats_and_skills()
 
 		_stamina_bar.max_stamina = get_stats().max_stamina
 		_condition_icons.update_icons(get_stats())
@@ -171,26 +172,11 @@ func set_slide_distance(value: float) -> void:
 func set_actor_definition(value: Resource) -> void:
 	actor_definition = value
 
-	_clear_skills()
 	if actor_definition:
 		var ad := actor_definition as ActorDefinition
 		set_size(ad.size)
 		if _sprite:
 			_sprite.texture = ad.sprite
-
-		if not Engine.editor_hint:
-			get_stats().init_from_def(ad)
-
-			if ad.attack_skill:
-				var new_attack_skill := ad.attack_skill.instance()
-				new_attack_skill.is_attack = true
-				$Attack.add_child(new_attack_skill)
-
-			for s in ad.skills:
-				var skill_scene := s as PackedScene
-				var skill := skill_scene.instance() as Node
-				skill.is_attack = false
-				$Skills.add_child(skill)
 	else:
 		set_size(1)
 		if _sprite:
@@ -386,7 +372,6 @@ func animate_attack(direction: Vector2, reduce_lunge := false,
 		_anim.play("attack_reduced")
 	else:
 		_anim.play("attack")
-	_anim.play("attack")
 	yield(_anim, "animation_finished")
 
 	_audio.volume_db = linear2db(1)
@@ -445,13 +430,21 @@ func _randomize_idle_start() -> void:
 		_anim.advance(offset)
 
 
-func _clear_skills() -> void:
-	for a in $Attack.get_children():
-		var attack := a as Node
-		attack.queue_free()
-	for s in $Skills.get_children():
-		var skill := s as Node
-		skill.queue_free()
+func _init_stats_and_skills():
+	if actor_definition:
+		var ad := actor_definition as ActorDefinition
+
+		get_stats().init_from_def(ad)
+		if ad.attack_skill:
+			var new_attack_skill := ad.attack_skill.instance()
+			new_attack_skill.is_attack = true
+			$Attack.add_child(new_attack_skill)
+
+		for s in ad.skills:
+			var skill_scene := s as PackedScene
+			var skill := skill_scene.instance() as Node
+			skill.is_attack = false
+			$Skills.add_child(skill)
 
 
 func _animate_staminabar(change: int) -> void:
