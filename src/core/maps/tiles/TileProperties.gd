@@ -18,7 +18,7 @@ enum DefenceType {
 	COVER
 }
 
-export(Array, String) var tile_names := PoolStringArray()
+export var tile_names := PoolStringArray()
 
 export(MoveType) var move_type := MoveType.CLEAR
 export(PushType) var push_type := PushType.CLEAR
