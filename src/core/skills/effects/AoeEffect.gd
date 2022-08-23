@@ -126,8 +126,7 @@ func _run_self(target_cell: Vector2, source_cell: Vector2,
 func _get_base_aoe(target_cell: Vector2, source_cell: Vector2,
 		source_actor: Actor) -> Array:
 	var aoe_obj := aoe as SkillAOE
-	return aoe_obj.get_aoe(
-			target_cell, source_cell, source_actor, source_actor.map as Map)
+	return aoe_obj.get_aoe(target_cell, source_cell, source_actor)
 
 
 func _get_targets_from_base(base_aoe: Array, source_actor_faction: int,

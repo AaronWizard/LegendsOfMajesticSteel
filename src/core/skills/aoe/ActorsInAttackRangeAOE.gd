@@ -5,11 +5,11 @@ enum Faction { ANY, ALLIES, ENEMIES }
 
 export(Faction) var faction := 1
 
-func get_aoe(target_cell: Vector2, _source_cell: Vector2, source_actor: Actor,
-		map: Map) -> Array:
+func get_aoe(target_cell: Vector2, _source_cell: Vector2, source_actor: Actor) \
+		-> Array:
 	var result := []
 
-	for a in map.get_actors():
+	for a in (source_actor.map as Map).get_actors():
 		var actor := a as Actor
 
 		var same_faction := actor.faction == source_actor.faction

@@ -4,8 +4,8 @@ extends SkillAOE
 export var include_start := true
 export var include_end := true
 
-func get_aoe(target_cell: Vector2, source_cell: Vector2, source_actor: Actor,
-		_map: Map) -> Array:
+func get_aoe(target_cell: Vector2, source_cell: Vector2, source_actor: Actor) \
+		-> Array:
 	var result := TileGeometry.get_thick_line(
 			source_cell, target_cell, source_actor.size)
 	if not include_start:
