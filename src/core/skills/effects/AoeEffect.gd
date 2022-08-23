@@ -43,14 +43,15 @@ export var child_effect_delay_speed := 0.0 # Tiles per second
 
 
 func get_target_info(target_cell: Vector2, source_cell: Vector2,
-		source_actor: Actor, map: Map) -> TargetingData.TargetInfo:
+		source_actor: Actor) -> TargetingData.TargetInfo:
 	var result :=  TargetingData.TargetInfo.new()
 
-	var base_aoe := _get_base_aoe(target_cell, source_cell, source_actor, map)
+	var base_aoe := _get_base_aoe(target_cell, source_cell, source_actor)
 	for b in base_aoe:
 		result.aoe[b] = true
 
-	var targets := _get_targets_from_base(base_aoe, source_actor.faction, map)
+	var targets := _get_targets_from_base(
+			base_aoe, source_actor.faction, source_actor.map as Map)
 
 	for t in targets:
 		var aoe_target_cell := t as Vector2
@@ -60,13 +61,12 @@ func get_target_info(target_cell: Vector2, source_cell: Vector2,
 		var child_source_cell := _get_child_effect_source_cell(
 				aoe_target_cell, target_cell, source_cell)
 		var child_source_actor := _get_child_effect_source_actor(
-				source_actor, map, aoe_target_cell)
+				source_actor, aoe_target_cell)
 
 		var child_target_info := _get_child_target_info(
 				child_target_cell,
 				child_source_cell,
-				child_source_actor,
-				map
+				child_source_actor
 			)
 		result.add(child_target_info)
 
@@ -74,10 +74,10 @@ func get_target_info(target_cell: Vector2, source_cell: Vector2,
 
 
 func _run_self(target_cell: Vector2, source_cell: Vector2,
-		source_actor: Actor, map: Map) -> void:
+		source_actor: Actor) -> void:
 	assert(get_child_count() == 1)
 
-	var targets := _get_targets(target_cell, source_cell, source_actor, map)
+	var targets := _get_targets(target_cell, source_cell, source_actor)
 	if not targets.empty():
 		var main_effect := _child_effect()
 		for _i in range(1, targets.size()):
@@ -96,19 +96,18 @@ func _run_self(target_cell: Vector2, source_cell: Vector2,
 			var child_source_cell := _get_child_effect_source_cell(
 					aoe_target_cell, target_cell, source_cell)
 			var child_source_actor := _get_child_effect_source_actor(
-					source_actor, map, aoe_target_cell)
+					source_actor, aoe_target_cell)
 
 			var child_effect := get_child(index) as SkillEffect
 
-			var delay := _get_delay(
-					aoe_target_cell, target_cell, source_cell, map)
+			var delay := _get_delay(aoe_target_cell, target_cell, source_cell,
+					source_actor.map as Map)
 			child_effect.delay = delay
 
 			child_effect.run(
 					child_target_cell,
 					child_source_cell,
-					child_source_actor,
-					map
+					child_source_actor
 				)
 			assert(child_effect.running)
 			waiter.wait_for_signal(child_effect, "finished")
@@ -125,9 +124,9 @@ func _run_self(target_cell: Vector2, source_cell: Vector2,
 
 
 func _get_base_aoe(target_cell: Vector2, source_cell: Vector2,
-		source_actor: Actor, map: Map) -> Array:
+		source_actor: Actor) -> Array:
 	var aoe_obj := aoe as SkillAOE
-	return aoe_obj.get_aoe(target_cell, source_cell, source_actor, map)
+	return aoe_obj.get_aoe(target_cell, source_cell, source_actor)
 
 
 func _get_targets_from_base(base_aoe: Array, source_actor_faction: int,
@@ -153,9 +152,10 @@ func _get_targets_from_base(base_aoe: Array, source_actor_faction: int,
 
 
 func _get_targets(target_cell: Vector2, source_cell: Vector2,
-		source_actor: Actor, map: Map) -> Array:
-	var base_aoe := _get_base_aoe(target_cell, source_cell, source_actor, map)
-	var result := _get_targets_from_base(base_aoe, source_actor.faction, map)
+		source_actor: Actor) -> Array:
+	var base_aoe := _get_base_aoe(target_cell, source_cell, source_actor)
+	var result := _get_targets_from_base(
+			base_aoe, source_actor.faction, source_actor.map as Map)
 	return result
 
 
@@ -185,12 +185,13 @@ func _get_child_effect_source_cell(aoe_target_cell: Vector2,
 	return result
 
 
-func _get_child_effect_source_actor(source_actor: Actor, map: Map,
-		aoe_target_cell: Vector2) -> Actor:
+func _get_child_effect_source_actor(
+		source_actor: Actor, aoe_target_cell: Vector2) -> Actor:
 	var result: Actor
 
 	match child_effect_source_actor:
 		ChildEffectSourceActorType.AOE_TARGET_ACTOR:
+			var map := source_actor.map as Map
 			result = map.get_actor_on_cell(aoe_target_cell)
 			if not result:
 				push_warning("No actor at %s for child effect source actor" \

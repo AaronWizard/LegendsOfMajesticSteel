@@ -193,8 +193,7 @@ func _get_threat_range(actor: Actor) -> Dictionary:
 		var cell := c as Vector2
 		for s in skills:
 			var skill := s as Skill
-			var targetting_data := skill.get_targeting_data(
-					cell, actor, get_map())
+			var targetting_data := skill.get_targeting_data(cell, actor)
 			for t in targetting_data.target_range:
 				var target_cell := t as Vector2
 				all_targets[target_cell] = true

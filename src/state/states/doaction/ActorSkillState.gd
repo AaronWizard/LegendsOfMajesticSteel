@@ -27,4 +27,4 @@ func _show_move_range() -> bool:
 
 
 func _run() -> void:
-	yield(_skill.run(_game.current_actor, _game.map, _target), "completed")
+	yield(_skill.run(_game.current_actor, _target), "completed")

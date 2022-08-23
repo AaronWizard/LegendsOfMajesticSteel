@@ -30,6 +30,9 @@ func _ready() -> void:
 	if not Engine.editor_hint:
 		for a in get_actors():
 			var actor := a as Actor
+
+			actor.map = self
+
 			# warning-ignore:return_value_discarded
 			actor.connect("moved", self, "_on_actor_moved", [actor])
 			# warning-ignore:return_value_discarded
@@ -231,9 +234,21 @@ func actor_can_be_pushed_into_cell(actor: Actor, cell: Vector2) -> bool:
 	return result
 
 
+func add_actor(actor: Actor) -> void:
+	assert(not actor in _actors.get_children())
+	if actor.map:
+		var other_map := actor.map as Map
+		other_map.remove_actor(actor)
+
+	_actors.add_child(actor)
+	actor.map = self
+
+
 func remove_actor(actor: Actor) -> void:
 	assert(actor in _actors.get_children())
 	_actors.remove_child(actor)
+	actor.map = null
+
 	emit_signal("actor_removed", actor)
 
 

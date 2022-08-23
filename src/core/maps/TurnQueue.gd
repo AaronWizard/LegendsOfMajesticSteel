@@ -2,6 +2,7 @@ tool
 class_name TurnQueue
 extends YSort
 
+signal actor_added(actor, turn_index)
 signal actor_removed(actor, turn_index)
 
 var _turn_index := -1
@@ -22,12 +23,13 @@ func _get_configuration_warning() -> String:
 func _ready() -> void:
 	if not Engine.editor_hint:
 		_turn_index = -1
+		_sort_actors()
 
-		var actors := get_children()
-		actors.sort_custom(self, "_compare_actors")
-		for a in actors:
-			var actor := a as Node
-			actor.raise()
+
+func add_child(node: Node, legible_unique_name: bool = false) -> void:
+	.add_child(node, legible_unique_name)
+	_sort_actors()
+	emit_signal("actor_added", node, node.get_index())
 
 
 func remove_child(node: Node) -> void:
@@ -56,6 +58,14 @@ static func _compare_actors(a: Actor, b: Actor) -> bool:
 		or ((a.faction == Actor.Faction.PLAYER) \
 			and (a.faction != b.faction)) \
 		or (a.get_index() < b.get_index())
+
+
+func _sort_actors() -> void:
+	var actors := get_children()
+	actors.sort_custom(self, "_compare_actors")
+	for a in actors:
+		var actor := a as Node
+		actor.raise()
 
 
 func _start_round(is_first_round: bool) -> void:

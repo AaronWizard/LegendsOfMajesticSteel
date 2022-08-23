@@ -7,9 +7,10 @@ export var default_sound := true
 
 
 func _run_self(target_cell: Vector2, source_cell: Vector2,
-		source_actor: Actor, map: Map) -> void:
+		source_actor: Actor) -> void:
 	var direction: Vector2
 	if target_is_actor:
+		var map := source_actor.map as Map
 		var target_actor := map.get_actor_on_cell(target_cell)
 		direction = target_actor.center_cell - source_actor.center_cell
 	else:
@@ -21,7 +22,7 @@ func _run_self(target_cell: Vector2, source_cell: Vector2,
 		yield(source_actor, "attack_hit")
 
 		var child_state = _run_child_effect(target_cell, source_cell,
-				source_actor, map)
+				source_actor)
 		if child_state is GDScriptFunctionState:
 			yield(child_state, "completed")
 

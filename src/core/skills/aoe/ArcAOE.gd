@@ -2,8 +2,8 @@ class_name ArcAOE
 extends SkillAOE
 
 
-func get_aoe(target_cell: Vector2, source_cell: Vector2, source_actor: Actor,
-		_map: Map) -> Array:
+func get_aoe(target_cell: Vector2, source_cell: Vector2, source_actor: Actor) \
+		-> Array:
 	var rect := source_actor.get_cell_rect_at_cell(source_cell)
 
 	var direction_type := TileGeometry.direction_from_rect_to_cell(

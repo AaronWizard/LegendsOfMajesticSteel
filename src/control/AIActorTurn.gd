@@ -59,7 +59,7 @@ func _get_best_action(actor: Actor, map: Map, walk_range: WalkRange) \
 		for s in actor.all_active_skills:
 			var skill := s as Skill
 
-			var targeting_data := skill.get_targeting_data(cell, actor, map)
+			var targeting_data := skill.get_targeting_data(cell, actor)
 			for t in targeting_data.valid_targets:
 				var target_cell := t as Vector2
 				var skill_action := AIScoredAction.new_skill_action(

@@ -79,11 +79,11 @@ export var block_damages_allies_only := true
 
 
 func get_target_info(target_cell: Vector2, source_cell: Vector2,
-		source_actor: Actor, map: Map) -> TargetingData.TargetInfo:
+		source_actor: Actor) -> TargetingData.TargetInfo:
 	var result :=  TargetingData.TargetInfo.new()
 
 	var push_data := _PushData.new(max_distance, block_damages_allies_only,
-			target_cell, source_cell, map)
+			target_cell, source_cell, source_actor.map as Map)
 
 	# AOE
 
@@ -124,14 +124,15 @@ func get_target_info(target_cell: Vector2, source_cell: Vector2,
 
 	push_data.actor.virtual_origin_cell = push_data.end_cell
 	var landing_info := _get_child_target_info(push_data.end_cell, source_cell,
-			source_actor, map)
+			source_actor)
 	result.add(landing_info)
 
 	return result
 
 
 func _run_self(target_cell: Vector2, source_cell: Vector2,
-		source_actor: Actor, map: Map) -> void:
+		source_actor: Actor) -> void:
+	var map := source_actor.map as Map
 	var push_data := _PushData.new(max_distance, block_damages_allies_only,
 			target_cell, source_cell, map)
 
@@ -189,7 +190,7 @@ func _run_self(target_cell: Vector2, source_cell: Vector2,
 		yield(other_attack_waiter, "finished")
 
 	var landing_state = _run_child_effect(push_data.end_cell, source_cell,
-			source_actor, map)
+			source_actor)
 	if landing_state is GDScriptFunctionState:
 		yield(landing_state, "completed")
 

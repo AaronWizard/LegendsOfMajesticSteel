@@ -6,9 +6,10 @@ export var use_direction := true
 
 
 func get_target_info(target_cell: Vector2, _source_cell: Vector2,
-		source_actor: Actor, map: Map) -> TargetingData.TargetInfo:
+		source_actor: Actor) -> TargetingData.TargetInfo:
 	var result := TargetingData.TargetInfo.new()
 
+	var map := source_actor.map as Map
 	var actor := map.get_actor_on_cell(target_cell)
 	if actor:
 		for c in actor.covered_cells:
@@ -21,7 +22,8 @@ func get_target_info(target_cell: Vector2, _source_cell: Vector2,
 
 
 func _run_self(target_cell: Vector2, source_cell: Vector2,
-		source_actor: Actor, map: Map) -> void:
+		source_actor: Actor) -> void:
+	var map := source_actor.map as Map
 	var actor := map.get_actor_on_cell(target_cell)
 	if actor:
 		var direction := Vector2.ZERO

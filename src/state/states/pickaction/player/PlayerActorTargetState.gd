@@ -19,7 +19,7 @@ func start(data: Dictionary) -> void:
 
 	_skill = data.skill as Skill
 	_targetting_data = _skill.get_targeting_data(
-			_game.current_actor.origin_cell, _game.current_actor, _game.map)
+			_game.current_actor.origin_cell, _game.current_actor)
 
 	# warning-ignore:return_value_discarded
 	_game.interface.gui.connect("skill_cleared", self, "_skill_cleared")
