@@ -17,19 +17,19 @@ func _get_configuration_warning() -> String:
 
 
 func get_target_info(target_cell: Vector2, source_cell: Vector2,
-		source_actor: Actor, map: Map) -> TargetingData.TargetInfo:
-	return _get_child_target_info(target_cell, source_cell, source_actor, map)
+		source_actor: Actor) -> TargetingData.TargetInfo:
+	return _get_child_target_info(target_cell, source_cell, source_actor)
 
 
 func _get_child_target_info(target_cell: Vector2, source_cell: Vector2,
-		source_actor: Actor, map: Map) -> TargetingData.TargetInfo:
+		source_actor: Actor) -> TargetingData.TargetInfo:
 	return _child_effect().get_target_info(
-			target_cell, source_cell, source_actor, map)
+			target_cell, source_cell, source_actor)
 
 
 func _run_child_effect(target_cell: Vector2, source_cell: Vector2,
-		source_actor: Actor, map: Map) -> void:
-	_child_effect().run(target_cell, source_cell, source_actor, map)
+		source_actor: Actor) -> void:
+	_child_effect().run(target_cell, source_cell, source_actor)
 	yield(_child_effect(), "finished")
 
 

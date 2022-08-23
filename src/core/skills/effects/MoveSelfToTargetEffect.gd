@@ -5,7 +5,8 @@ export var speed := 0.0 # Tiles per second
 
 
 func _run_self(target_cell: Vector2, _source_cell: Vector2,
-		source_actor: Actor, map: Map) -> void:
+		source_actor: Actor) -> void:
+	var map := source_actor.map as Map
 	if not map.actor_can_enter_cell(source_actor, target_cell):
 		push_error("'%s' can not enter cell at %s"
 				% [source_actor.name, target_cell])
