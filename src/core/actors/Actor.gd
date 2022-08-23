@@ -34,6 +34,8 @@ export var fakes_death := false
 export var slide_direction := Vector2.ZERO setget set_slide_direction
 export var slide_distance := 0.0 setget set_slide_distance
 
+var map: Node setget set_map, get_map # Map
+
 var portrait: Texture setget , get_portrait
 
 var round_finished := false
@@ -57,6 +59,8 @@ var animating: bool setget , get_is_animating
 var virtual_origin_cell: Vector2 setget set_virtual_origin_cell
 
 var report_moves := true
+
+var _map: Node = null
 
 var _animating := false
 var _stamina_bar_animating := false
@@ -110,6 +114,10 @@ func _process(delta: float) -> void:
 	# For fake deaths
 	if not Engine.editor_hint and (_fly_direction.length_squared() > 0):
 		position += _fly_direction * _FAKE_DEATH_FLY_SPEED * delta
+
+
+func _exit_tree() -> void:
+	_map = null
 
 
 # Override
@@ -211,6 +219,18 @@ func get_other_target_visible() -> bool:
 
 func set_other_target_visible(new_value: bool) -> void:
 	_other_target_cursor.visible = new_value
+
+
+func set_map(new_map: Node) -> void:
+	if _map and (self in _map.get_actors()):
+		push_error("Actor not removed from old map using Map.remove_actor")
+	if new_map and not (self in new_map.get_actors()):
+		push_error("Actor not added to new map using Map.add_actor")
+	_map = new_map
+
+
+func get_map() -> Node:
+	return _map
 
 
 func get_stats() -> Stats:
