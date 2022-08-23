@@ -90,8 +90,7 @@ func _get_range(source_cell: Vector2, source_actor: Actor) -> Array:
 	var skill_range := range_type as SkillRange
 	var result := [source_cell]
 	if skill_range:
-		result = skill_range.get_range(
-				source_cell, source_actor, source_actor.map as Map)
+		result = skill_range.get_range(source_cell, source_actor)
 	return result
 
 
