@@ -4,6 +4,7 @@
 
 [resource]
 script = ExtResource( 1 )
+target_type = 2
 min_dist = 1
 max_dist = 1
 include_diagonals = true

@@ -11,6 +11,7 @@
 
 [sub_resource type="Resource" id=1]
 script = ExtResource( 5 )
+target_type = 2
 min_dist = 2
 max_dist = 2
 include_diagonals = true
@@ -20,9 +21,7 @@ script = ExtResource( 3 )
 icon = ExtResource( 8 )
 skill_name = "Attack"
 description = "Pierce the foe from afar"
-energy_cost = -1
 range_type = SubResource( 1 )
-target_type = 2
 
 [node name="AnimateAttackEffect" type="Node" parent="."]
 script = ExtResource( 7 )

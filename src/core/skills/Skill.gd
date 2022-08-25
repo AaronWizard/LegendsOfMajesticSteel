@@ -2,7 +2,7 @@ tool
 class_name Skill, "res://assets/editor/skill.png"
 extends Node
 
-enum TargetType { ANY, ANY_ACTOR, ENEMY, ALLY, EMPTY_CELL, ENTERABLE_CELL }
+
 
 export var icon: Texture
 export var skill_name := "Skill"
@@ -11,7 +11,6 @@ export var description := "Skill description"
 export var max_cooldown := 1
 
 export var range_type: Resource
-export(TargetType) var target_type := TargetType.ANY
 
 export var use_action_pose := false
 
@@ -48,27 +47,31 @@ func charge() -> void:
 
 func get_targeting_data(source_cell: Vector2, source_actor: Actor) \
 		-> TargetingData:
-	var target_range := _get_range(source_cell, source_actor)
+	var full_range := [source_cell]
+	var valid_range := [source_cell]
 
-	var valid_targets := []
+	var skill_range := range_type as TargetRange
+	if skill_range:
+		var ranges := skill_range.get_ranges(source_cell, source_actor)
+		full_range = ranges.full as Array
+		valid_range = ranges.valid as Array
+
 	var infos_by_target := {}
 
-	for c in target_range:
+	for c in valid_range:
 		var target_cell := c as Vector2
-		if _is_valid_target(target_cell, source_actor):
-			valid_targets.append(target_cell)
 
-			if source_cell != source_actor.origin_cell:
-				source_actor.virtual_origin_cell = source_cell
+		if source_cell != source_actor.origin_cell:
+			source_actor.virtual_origin_cell = source_cell
 
-			var target_info := _get_effect().get_target_info(target_cell,
-					source_cell, source_actor)
-			infos_by_target[target_cell] = target_info
+		var target_info := _get_effect().get_target_info(target_cell,
+				source_cell, source_actor)
+		infos_by_target[target_cell] = target_info
 
-			(source_actor.map as Map).reset_actor_virtual_origins()
+		(source_actor.map as Map).reset_actor_virtual_origins()
 
 	return TargetingData.new(
-			source_cell, target_range, valid_targets, infos_by_target)
+			source_cell, full_range, valid_range, infos_by_target)
 
 
 func run(source_actor: Actor, target: Vector2) -> void:
@@ -84,47 +87,6 @@ func run(source_actor: Actor, target: Vector2) -> void:
 		source_actor.charge_skills()
 	else:
 		current_cooldown = max_cooldown
-
-
-func _get_range(source_cell: Vector2, source_actor: Actor) -> Array:
-	var skill_range := range_type as SkillRange
-	var result := [source_cell]
-	if skill_range:
-		result = skill_range.get_range(source_cell, source_actor)
-	return result
-
-
-func _is_valid_target(target_cell: Vector2, source_actor: Actor) -> bool:
-	var result := false
-
-	var map := source_actor.map as Map
-	if target_type == TargetType.ENTERABLE_CELL:
-		result = map.actor_can_enter_cell(source_actor, target_cell)
-	else:
-		var actor_on_target := map.get_actor_on_cell(target_cell)
-
-		match target_type:
-			TargetType.ANY_ACTOR:
-				result = actor_on_target != null
-			TargetType.EMPTY_CELL:
-				result = actor_on_target == null
-			TargetType.ENEMY, TargetType.ALLY:
-				if actor_on_target:
-					match target_type:
-						TargetType.ENEMY:
-							result = actor_on_target.faction \
-									!= source_actor.faction
-						_:
-							assert(target_type == TargetType.ALLY)
-							result = actor_on_target.faction \
-									== source_actor.faction
-				else:
-					result = false
-			_:
-				assert(target_type == TargetType.ANY)
-				result = true
-
-	return result
 
 
 func _get_effect() -> SkillEffect:

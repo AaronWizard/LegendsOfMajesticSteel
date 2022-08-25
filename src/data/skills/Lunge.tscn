@@ -11,6 +11,7 @@
 
 [sub_resource type="Resource" id=1]
 script = ExtResource( 2 )
+target_type = 5
 min_dist = 2
 max_dist = 3
 include_diagonals = true
@@ -26,7 +27,6 @@ icon = ExtResource( 3 )
 skill_name = "Lunge"
 max_cooldown = 4
 range_type = SubResource( 1 )
-target_type = 5
 use_action_pose = true
 
 [node name="SkillEffectGroup" type="Node" parent="."]

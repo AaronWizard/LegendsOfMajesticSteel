@@ -5,10 +5,10 @@
 
 [sub_resource type="Resource" id=1]
 script = ExtResource( 2 )
+target_type = 2
 min_dist = 1
 max_dist = 2
 include_diagonals = true
 
 [node name="NimbleRangedAttack" instance=ExtResource( 1 )]
-energy_cost = -1
 range_type = SubResource( 1 )

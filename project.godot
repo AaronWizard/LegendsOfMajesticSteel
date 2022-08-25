@@ -154,7 +154,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/core/skills/aoe/DiamondAOE.gd"
 }, {
-"base": "SkillRange",
+"base": "TargetRange",
 "class": "DiamondRange",
 "language": "GDScript",
 "path": "res://src/core/skills/ranges/DiamondRange.gd"
@@ -309,11 +309,6 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/ui/battle/SkillPanel.gd"
 }, {
-"base": "Resource",
-"class": "SkillRange",
-"language": "GDScript",
-"path": "res://src/core/skills/SkillRange.gd"
-}, {
 "base": "Button",
 "class": "SoundButton",
 "language": "GDScript",
@@ -378,6 +373,11 @@ _global_script_classes=[ {
 "class": "TargetCursor",
 "language": "GDScript",
 "path": "res://src/core/maps/TargetCursor.gd"
+}, {
+"base": "Resource",
+"class": "TargetRange",
+"language": "GDScript",
+"path": "res://src/core/skills/TargetRange.gd"
 }, {
 "base": "Reference",
 "class": "TargetingData",
@@ -505,7 +505,6 @@ _global_script_class_icons={
 "SkillEffectGroup": "res://assets/editor/skilleffectgroup.png",
 "SkillEffectWrapper": "",
 "SkillPanel": "",
-"SkillRange": "res://assets/editor/skill_range.png",
 "SoundButton": "",
 "SoundCheckButton": "",
 "SoundEffect": "res://assets/editor/sound_effect.png",
@@ -519,6 +518,7 @@ _global_script_class_icons={
 "Stats": "",
 "StatusEffectTiming": "",
 "TargetCursor": "",
+"TargetRange": "res://assets/editor/skill_range.png",
 "TargetingData": "",
 "TerrainTileSet": "res://assets/editor/tile_properties_set.png",
 "TileGeometry": "",

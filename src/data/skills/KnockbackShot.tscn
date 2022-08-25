@@ -13,6 +13,7 @@
 
 [sub_resource type="Resource" id=1]
 script = ExtResource( 3 )
+target_type = 2
 min_dist = 1
 max_dist = 2
 include_diagonals = false
@@ -20,7 +21,6 @@ include_diagonals = false
 [sub_resource type="Resource" id=2]
 script = ExtResource( 10 )
 stat_type = 2
-add_constant = 0
 add_percent = -0.5
 timing_type = 0
 rounds = 2
@@ -32,7 +32,6 @@ skill_name = "Knockback Shot"
 description = "Knock the enemy prone with pummeling arrows."
 max_cooldown = 3
 range_type = SubResource( 1 )
-target_type = 2
 
 [node name="AnimateAttackEffect" type="Node" parent="."]
 script = ExtResource( 4 )
