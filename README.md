@@ -40,4 +40,4 @@ Mightiest Steel is an in-development Strategy RPG that will emphasize rapid game
 
 The source code and data files are under the MIT Licence.
 
-All rights reserved on the graphical and audio assets.
+Graphical and audio assets are under the [Creative Commons Attribution 4.0 International License (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/) unless explicitly stated otherwise.
